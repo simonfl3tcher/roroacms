@@ -1,0 +1,53 @@
+.adminBar {
+	position: relative;
+	width: 100%;
+	height:39px;
+	background-color: #333333;
+}
+
+p.editable {
+	/*border-bottom:1px solid #e3e3e3;*/
+	padding-bottom:10px;
+	margin-bottom:10px;
+}
+
+p.editable #saveButton {
+	display: none;
+}
+
+.adminBar #main-nav > li > a, .adminBar #main-nav > li > a:hover, .adminBar #main-nav > li.open > a {
+  background:none;
+  box-shadow: none;
+  border:none;
+  background-color: #3C3C3C;
+}
+
+.adminBar #main-nav > li {
+  margin: 0 0px 0 0;
+  border-right:1px solid #333333;
+}
+
+.adminBar #main-nav {
+  display: inline-block;
+    margin-bottom: 0;
+    margin-right: 30px;
+    margin-top: -1px;
+    padding: 0;
+    position: relative;
+}
+
+.loggedInAs {
+  color: #FFFFFF;
+    float: left;
+    margin-left: 50px;
+    margin-top: 8px;
+    font-size: 12px
+}
+
+.loggedInAs i {
+  margin-right:10px;
+}
+
+.loggedInAs strong {
+  color:#FFA31A;
+}

@@ -1,0 +1,53 @@
+<div class="row-fluid">
+  <div class="span12">
+          
+    <h2 class="title">Administrators</h2>
+
+    <div class="well">
+
+      <%= link_to new_admin_administrator_path do %>
+        <button class="pull-right btn btn-small btn-success"><span class="icon-plus"></span>&nbsp;Add New Administrator</button>
+      <% end %>
+
+      <div class="input-append pull-left">
+      <%= form_tag admin_administrators_path, :method => 'get' do %>
+        <p>
+          <%= text_field_tag :search, params[:search] %>
+          <%= submit_tag "Search", :name => nil, :class => 'btn' %>
+        </p>
+      <% end %>
+      </div>
+    </div>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email Address</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <% @admins.each do |admin| %>
+        <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+
+          <td><%= admin.id %></td>
+      	<td><%= admin.first_name + " " + admin.last_name %></td>
+      	<td><%= admin.email %></td>
+          <td>
+            <div class="btn-group">
+              <%= link_to edit_admin_administrator_path(admin), :class => 'btn' do %>
+                <i class="icon-pencil"></i>
+              <% end %>        
+              <%= link_to admin_administrator_path(admin), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' do %>
+                <i class="icon-trash"></i>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+      

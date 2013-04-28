@@ -1,0 +1,27 @@
+    <div class="accordion" id="accordionSeo">
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionSeo" href="#collapseThree">Search Engine Optimisation</a>
+        </div>
+        <div id="collapseThree" class="accordion-body collapse in">
+          <div id="revisionsContainer" class="accordion-inner">
+            <div class="field">
+              <%= f.label :post_seo_title %>
+              <%= f.text_field :post_seo_title, size: 40 %>
+            </div>
+            <div class="field">
+              <%= f.label :post_seo_description %>
+               <%= f.text_area :post_seo_description, size: 40 %>
+            </div>
+            <div class="field">
+              <%= f.label :post_seo_keywords %>
+              <%= f.text_field :post_seo_keywords, size: 40 %>
+            </div>
+            <div class="field">
+              <%= f.label :post_seo_is_active %>
+              <%= f.check_box :post_seo_is_disabled %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  

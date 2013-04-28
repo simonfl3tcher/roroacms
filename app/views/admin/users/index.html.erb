@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="span12">
+
+            
+    <h2 class="title">Customers</h2>
+
+    <div class="well">
+
+      <%= link_to new_admin_user_path do %>
+        <button class="pull-right btn btn-small btn-success"><span class="icon-plus"></span>&nbsp;Add New User</button>
+      <% end %>
+
+      <div class="input-append pull-left">
+      <%= form_tag admin_users_path, :method => 'get' do %>
+        <p>
+          <%= text_field_tag :search, params[:search] %>
+          <%= submit_tag "Search", :name => nil, :class => 'btn' %>
+        </p>
+      <% end %>
+      </div>
+    </div>
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email Address</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <% @users.each do |customer| %>
+        <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+
+          <td><%= customer.id %></td>
+        	<td><%= customer.first_name + " " + customer.last_name %></td>
+        	<td><%= customer.email %></td>
+          <td>
+
+            <div class="btn-group">
+              <%= link_to edit_admin_user_path(customer), :class => 'btn' do %>
+                <i class="icon-pencil"></i>
+              <% end %>        
+              <%= link_to admin_user_path(customer), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' do %>
+                <i class="icon-trash"></i>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

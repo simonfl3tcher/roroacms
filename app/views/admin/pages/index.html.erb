@@ -1,0 +1,57 @@
+<div class="row-fluid">
+  <div class="span12">
+<h2 class="title">Pages</h2>
+
+<div class="well">
+
+  <%= link_to new_admin_page_path do %>
+    <button class="pull-right btn btn-small btn-success"><span class="icon-plus"></span>&nbsp;Add New Page</button>
+  <% end %>
+
+  <div class="input-append pull-left">
+  <%= form_tag admin_pages_path, :method => 'get' do %>
+    <p>
+      <%= text_field_tag :search, params[:search] %>
+      <%= submit_tag "Search", :name => nil, :class => 'btn' %>
+    </p>
+  <% end %>
+  </div>
+</div>
+<%= form_tag "/admin/pages/bulk_update" do %>
+  <table class="table table-condensed table-striped">
+  <thead>
+    <tr>
+      <th><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
+      <th>Page Title</th>
+      <th>Published Date</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <% @pages.each do |page| %>
+    <tr class="<%= cycle('list_line_odd', 'list_line_even') %> <%= page.post_status == "Draft" ? 'draft' : '' %>">
+
+    <td><%= check_box_tag 'pages[]', page.id %></td>
+  	<td><%= page.post_title %><%= page.post_status == "Draft" ? ' - draft' : '' %></td>
+  	<td><%= page.post_date.strftime "%d-%m-%Y" %></td>
+      <td>
+        <div class="btn-group">
+          <%= link_to edit_admin_page_path(page), :class => 'btn' do %>
+            <i class="icon-pencil"></i>
+          <% end %>        
+          <%= link_to admin_page_path(page), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' do %>
+            <i class="icon-trash"></i>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+  <%= select_tag "to_do", "<option>Publish</option><option>Draft</option><option>Move To Trash</option>".html_safe, prompt: 'Bulk Action', :class => 'span2' %>
+  <%= submit_tag 'Submit', :class => "btn" %>
+<% end %>
+</div>
+</div>
+
+<script type='text/javascript'>
+    $('#check_all').on("click", function(){ $('td input[type="checkbox"]').click(); });
+</script>

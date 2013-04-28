@@ -1,0 +1,210 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ */
+label {
+ 	display: block;
+ }
+
+ #notice {
+ 	display: block;
+ 	padding:3px;
+ 	background-color: green;
+ 	width:100%;
+ 	text-align: center;
+ }
+
+ div.title {
+ 	display: block;
+	width: 100%;
+	padding: 0;
+	margin-bottom: 20px;
+	font-size: 21px;
+	line-height: 40px;
+	color: #333333;
+	border: 0;
+	border-bottom: 1px solid #e5e5e5;
+ }
+
+ .table tr.draft td {
+ 	opacity: 0.7;
+ }
+
+ .trashArea thead, .trashArea table, .trashArea tbody {
+ 	display: table;
+    width: 100%;
+ }
+
+ .trashArea .tableOverflowWrapper {
+ 	height: 286px;
+    overflow: auto;
+    display: block;
+    margin-bottom: 20px;
+ }
+
+  .trashArea th {
+  	text-align: left;
+  	padding-bottom:10px;
+  }
+
+  .trashArea th input {
+  	margin:0;
+  }
+
+  .trashArea th.nth-child(2){
+  	width:348px;
+  }
+
+ .trashArea th:first-child {
+ 	padding-left: 6px;
+    text-align: left;
+    width: 24px;
+ }
+
+ li {
+  list-style: none;
+ }
+
+ #postPage .span9 input[type=text] {
+    width:98%;
+ }
+
+ #postPage .span9 .redactor_editor {
+  min-height: 300px;
+ }
+
+ #content .row {
+  margin-top: 1em !important;
+ }
+
+ input[type=checkbox] {
+  margin:0 !important;
+ }
+
+ input[type=checkbox] + label {
+  display: inline-block;
+  margin-left:5px;
+ }
+
+ select {
+  font-size: 10px !important;
+ }
+
+ select.span1 {
+  height:24px;
+ }
+
+ .categoriesForm input[type=text]{
+  width:96% !important;
+ }
+
+ .categoriesForm textarea{
+  width:96% !important;
+  min-height: 150px;
+ }
+
+ .autosaveAccordion {
+  margin-top:20px;
+ }
+
+.adminBar #main-nav > li > a, .adminBar #main-nav > li > a:hover, .adminBar #main-nav > li.open > a {
+  background:none;
+  box-shadow: none;
+  border:none;
+  background-color: #3C3C3C;
+}
+
+.adminBar #main-nav > li {
+  margin: 0 -1px 0 0;
+}
+
+.adminBar #main-nav {
+  display: inline-block;
+    margin-bottom: 0;
+    margin-right: 30px;
+    margin-top: -1px;
+    padding: 0;
+    position: relative;
+}
+
+.seoDataTable tbody > tr > td {
+  padding:10px;
+
+}
+
+.seoDataTable tbody > tr > td > input[type=checkbox] + span {
+  margin-left:10px;
+}
+
+.seoDataTable tr td:first-child {
+  vertical-align: top;
+  text-align: right;
+}
+
+.seoDataTable textarea {
+  height:100px;
+  width:98%;
+}
+
+.attachmentsDataTable textarea {
+    margin: 0px 8px 8px 8px;
+    width: 96%;
+    height:60px;
+}
+
+.attachmentsDataTable select,
+.attachmentsDataTable input[type=text]{
+    margin: 0px 8px 8px 0px;
+    width: 92% !important;
+}
+
+.attachmentsDataTable {
+  width:98%;
+}
+
+.attachmentsDataTable td {
+  vertical-align: top;
+  width:50%;
+}
+
+.attachmentsDataTable tbody tr td {
+  padding-left:0;
+}
+
+.accordion-toggle.collapsed .accordionSign,
+.accordion-toggle .accordionSign {
+  width:20px;
+  height:20px;
+  background-image: url('../images/glyphicons-halflings.png');
+ background-position: -24px -95px;
+}
+
+.accordion-toggle.collapsed .accordionSign {
+  background-position: 0 -95px;
+}
+
+.accordion-group .accordion-heading a {
+  line-height: 15px;
+}
+
+table i {
+  margin-left: -1px;
+  opacity: 1.0;
+}
+
+.dateselect {
+  width:56px;
+  height: 26px;
+}
+  
+
+

@@ -1,0 +1,30 @@
+<% @p.each do |p| %>
+
+
+<tr class="<%= cycle('list_line_odd', 'list_line_even') %> <%= p.post_status == "Draft" ? 'draft' : '' %>">
+
+<td><%= check_box_tag 'posts[]', p.id %></td>
+	<td><%= @level.html_safe %>&nbsp;<%= p.post_title %><%= p.post_status == "Draft" ? ' - draft' : '' %></td>
+	<td><%= p.post_date.strftime "%d-%m-%Y" %></td>
+  <td>
+    <div class="btn-group">
+      <%= link_to edit_admin_post_path(p), :class => 'btn' do %>
+        <i class="icon-pencil"></i>
+      <% end %>        
+      <%= link_to page_path(p), :class => 'btn' do %>
+        <i class="icon-search"></i>
+      <% end %>        
+      <%= link_to admin_post_path(p), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn' do %>
+        <i class="icon-trash"></i>
+      <% end %>
+    </div>
+  </td>
+
+  <% if !p.child.blank? %>
+  <% @p = p.child
+  @level = "#{@level}<i class=\"icon-minus\"></i>"
+   %>
+ 	<%= render 'posts_table' %>
+  <% end %>
+</tr>
+<% end %>
