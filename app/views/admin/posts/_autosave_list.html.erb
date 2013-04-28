@@ -1,0 +1,13 @@
+<% if !@revisions.blank? %>
+          	
+  	<% @revisions.each do |d| %>
+  		<%= link_to edit_admin_revision_path(d) do %>
+  			<li>Revision saved at <%= d.created_at.strftime "%d %B, %Y at %H:%M" %> by <%= d.admin.username %></li>
+        <% end %>  
+  	<% end %>
+
+<% else %>
+
+	There is no revisions records saved against this article
+
+<% end %>

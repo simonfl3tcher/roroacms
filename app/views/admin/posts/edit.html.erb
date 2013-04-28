@@ -1,0 +1,29 @@
+<h1 class="title">Edit Article
+
+<div class="btn-group pull-right">
+  <%= link_to admin_posts_path, :class => 'btn btn-mini pull-left' do %>
+    <i class="icon-arrow-left"></i>
+  <% end %>   
+  <%= link_to admin_post_path(@post), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-mini btn-danger pull-left' do %>
+    <i class="icon-trash"></i>
+  <% end %> 
+  <%= link_to admin_posts_path, :class => 'btn btn-mini pull-right updatepost' do %>
+    <i class="icon-refresh"></i>
+  <% end %> 
+</div>
+</h1>
+
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+		$('.updatepost').bind('click', function(e){
+			$('body').find('form').submit();
+			e.preventDefault();
+		})
+	});
+	
+</script>
+
+
+
+<%= render 'form' %>

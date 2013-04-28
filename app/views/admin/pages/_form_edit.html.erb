@@ -1,0 +1,69 @@
+<%= form_for [:admin, @page], :url => { :action => :update } do |f| %>
+  <% if @page.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@page.errors.count, "error") %> errors:</h2>
+
+      <ul>
+      <% @page.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <legend>Enter Details</legend>
+
+    <div class="field">
+      <%= f.hidden_field :admin_id, :value => session[:admin_id], size: 40 %>
+      <%= f.hidden_field :id %>
+    </div>
+    <div class="field">
+      <%= f.hidden_field :post_type, :value => "page" %>
+    </div>
+    <div class="field">
+      <%= f.label 'Page Title' %>
+      <%= f.text_field :post_title, size: 40 %>
+    </div>
+    <div class="field">
+      <%= f.label 'Page Slug' %>
+      <%= f.text_field :post_slug, size: 40 %>
+    </div>
+    <div class="field">
+      <%= f.label 'Page Status' %>
+       <%= f.select :post_status, Post::POST_STATUS, prompt: 'Select a Post Status' %>
+    </div>
+    <div class="field">
+      <%= f.label 'Page Parent' %>
+      <%= f.select :post_parent, Post.all.collect {|p| [ p.post_title, p.id ] }, prompt: 'Select a parent post' %>
+    </div>
+    <div class="field">
+      <%= f.label 'Page Date' %>
+      <%= f.date_select :post_date %>
+    </div>
+    <div class="field">
+      <%= f.label 'Page Content' %>
+      <%= f.text_area :post_content %>
+    </div>
+    <div class="field">
+       <%= f.submit "Update Page", :class => 'btn' %>
+    </div>
+  </fieldset>
+<% end %>
+
+
+<script type="text/javascript">
+    
+//     $(document).ready(function(){
+//       setInterval(function(){
+//         var form = $('form');
+//         var method = form.attr('method').toLowerCase();      // "get" or "post"
+//         var action = form.attr('action');    
+//         $.post('/admin/posts/autosave', form.serialize(), function(data){
+//           // Do something with the server response data      
+//           // Or at least let the user know it saved
+//         });
+//       },60000);
+//     })
+
+</script>
