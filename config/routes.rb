@@ -12,13 +12,15 @@ Railsoverview::Application.routes.draw do
   resources :sessions
   resources :profile
   resources :upload
+  resources :comments
 
   namespace :admin do
     get '', to: 'dashboard#index'
     get 'login', to: 'login#new', as: 'login'
     get 'trash', to: 'trash#index', as: 'trash'
     get 'logout', to: 'login#destroy', as: 'logout'
-    get 'posts/categories', to: 'terms#index', as: 'post_categories'
+    get 'posts/categories', to: 'terms#categories', as: 'post_categories'
+    get 'posts/tags', to: 'terms#tags', as: 'post_tags'
     
     resources :login, :users, :administrators, :upload, :reports
 

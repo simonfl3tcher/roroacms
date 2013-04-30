@@ -9,6 +9,7 @@
 
 	<div class="span8">
 	<%= form_tag "/admin/terms/bulk_update" do %>
+		<%= hidden_field_tag :type_taxonomy, 'category' %>
 		<div class="title">Post Categories</div>
 
 		<table class="table table-condensed table-striped">

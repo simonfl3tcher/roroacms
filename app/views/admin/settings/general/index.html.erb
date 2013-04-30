@@ -5,6 +5,16 @@
 <div class="title">General Settings</div>
 
 <div class="field">
+	<%= label_tag(:display_url, "Display Url") %>
+	<%= text_field_tag(:display_url, Setting.find_by_setting_name('display_url')[:setting]) %>
+</div>
+
+<div class="field">
+	<%= label_tag(:site_url, "Site Url") %>
+	<%= text_field_tag(:site_url, Setting.find_by_setting_name('site_url')[:setting]) %>
+</div>
+
+<div class="field">
 	<%= label_tag(:articles_slug, "Articles Slug") %>
 	<%= text_field_tag(:articles_slug, Setting.find_by_setting_name('articles_slug')[:setting]) %>
 </div>
@@ -76,6 +86,19 @@
 <div class="field">
 	<%= label_tag(:seo_additional_headers, "Additional Headers") %>
 	<%= text_area_tag(:seo_additional_headers, Setting.find_by_setting_name('seo_additional_headers')[:setting]) %>
+</div>
+
+<div class="title">Comments</div>
+
+<div class="field">
+	<%= label_tag "Article Comments On" %>
+	<%= hidden_field_tag :article_comments, 'N' %>
+    <%= check_box_tag :article_comments, 'Y', Setting.find_by_setting_name('article_comments')[:setting] == 'Y' ? true : false %>
+</div>
+<div class="field">
+<%= label_tag "Article Comment type" %>
+<%= radio_button(:article_comment_type, nil, "R", :checked => Setting.find_by_setting_name('article_comment_type')[:setting] == 'R' ? true : false) %>Roroa Comments
+<%= radio_button(:article_comment_type, nil, "F", :checked => Setting.find_by_setting_name('article_comment_type')[:setting] == 'F' ? true : false) %>Facebook Comments
 </div>
 <div class="field">
 	<%= submit_tag "Update", :class => 'btn btn-primary' %>
