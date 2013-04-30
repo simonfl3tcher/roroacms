@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130416182556) do
+ActiveRecord::Schema.define(:version => 20130430201106) do
 
   create_table "admins", :force => true do |t|
     t.string   "email"
@@ -32,6 +32,18 @@ ActiveRecord::Schema.define(:version => 20130416182556) do
     t.text     "attachment_content"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+  end
+
+  create_table "comments", :force => true do |t|
+    t.integer  "post_id"
+    t.text     "author"
+    t.text     "email"
+    t.text     "website"
+    t.text     "comment"
+    t.text     "comment_approved"
+    t.text     "comment_parent"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "post_abstractions", :force => true do |t|
@@ -73,11 +85,10 @@ ActiveRecord::Schema.define(:version => 20130416182556) do
   create_table "term_anatomies", :force => true do |t|
     t.integer  "term_id"
     t.string   "taxonomy"
-    t.text     "description"
     t.integer  "parent"
     t.integer  "count"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "term_relationships", :force => true do |t|
@@ -92,9 +103,10 @@ ActiveRecord::Schema.define(:version => 20130416182556) do
   create_table "terms", :force => true do |t|
     t.string   "name"
     t.string   "slug"
-    t.integer  "term_group", :default => 0
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.text     "description"
+    t.integer  "term_group",  :default => 0
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "users", :force => true do |t|

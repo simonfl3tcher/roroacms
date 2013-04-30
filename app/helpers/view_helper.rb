@@ -100,4 +100,27 @@ module ViewHelper
 	    	render :inline => html.html_safe
 	    end
 	end
+
+	def get_comments_form
+
+		comments_on = Setting.where(:setting_name => 'article_comments').first.setting
+
+		if comments_on == 'Y'
+
+			type = Setting.where(:setting_name => 'article_comment_type').first.setting
+
+			render(:template =>"pages/comments_form.html.erb", :layout => nil, :locals => { :type => type }).to_s
+
+		else
+
+			return false
+
+		end
+
+	end
+
+	def site_url
+
+		return Setting.where(:setting_name => 'site_url').first.setting
+	end
 end

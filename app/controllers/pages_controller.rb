@@ -84,6 +84,7 @@ class PagesController < ApplicationController
 
 					gloalize Post.where(status, :post_type => 'post').find_by_post_slug(segments[1])
 					render_404 and return if @content.nil?
+					@comment = Comment.new
 					render :template => "pages/single"
 
 				end
@@ -97,7 +98,7 @@ class PagesController < ApplicationController
 
 			gloalize Post.where(status, :post_type => 'page').find_by_post_slug(segments[0])
 			render_404 and return if @content.nil?
-			render :template => "pages/single"
+			render :template => "pages/page"
 
 		end
 
