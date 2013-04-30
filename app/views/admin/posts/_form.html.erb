@@ -183,11 +183,7 @@
         <div id="collapseTags" class="accordion-body collapse">
           <div class="accordion-inner">
               <div class="field">
-                <% Term.all.each do |category| %>
-                    <li>
-                      <%= check_box_tag 'category_ids[]', category.id, @post.terms.find_by_id(category.id) ? true : false %><%= label_tag category.name %>
-                    </li>
-                <% end %>
+               <input type="text" data-provide="typeahead" autocomplete="off" data-source='["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]'>
               </div>
           </div>
         </div>

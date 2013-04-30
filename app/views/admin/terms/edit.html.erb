@@ -1,5 +1,15 @@
-<div class="title">Post Category</div>
 
-<%= render :partial => 'form', :locals => {:edit => true} %>
+<% if @type == 'category' %>
+	<div class="title">Post Category</div>
+<% else %>
+	<div class="title">Post Tag</div>
+<% end %>
+
+
+<% if @type == 'category' %>
+	<%= render :partial => 'form', :locals => {:edit => true} %>
+<% else %>
+	<%= render :partial => 'form_tag', :locals => {:edit => true} %>
+<% end %>
 
 <%= link_to 'Back', admin_post_categories_path %>

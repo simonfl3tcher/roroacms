@@ -1,28 +1,56 @@
 class Admin::TermsController < AdminController
 
-	def index 
-		@categories = Term.order('name asc')
+	# def index
+	# 	abort()
+	# 	@categories = Term.order('name asc')
 		
-		@category = Term.new
+	# 	@category = Term.new
 	
-		# if params.has_key?(:search)
-		# 	# @posts = Post.where("id like ? or post_title like ? or post_slug like ?", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
-		# end
+	# 	# if params.has_key?(:search)
+	# 	# 	# @posts = Post.where("id like ? or post_title like ? or post_slug like ?", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
+	# 	# end
+	# end
+
+	def categories
+		@categories = Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
+		@category = Term.new
+
+	end
+
+	def tags
+		@categories = Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy)
+		@category = Term.new
+
 	end
 
 	def create
+
+		taxonomy = params[:type_taxonomy]
 		@category = Term.new(params[:term])
 		@categories = Term.order('name asc')
 
 		if @category.slug.empty?
 			@category.slug = @category.name.gsub(' ', '-')
+		else
+			@category.slug = @category.slug.gsub(' ', '-')
+		end
+
+		if taxonomy == 'category'
+
+			redirect_url = "admin_post_categories_path"
+			type = "Category"
+
+		else
+			redirect_url = "admin_post_tags_path"
+			type = "Tag"
+
 		end
 
 
 		respond_to do |format|
 		  if @category.save
-			@term_anatomy = @category.create_term_anatomy(:description => params[:description], :taxonomy => "category")
-		    format.html { redirect_to admin_post_categories_path, notice: 'Category was successfully created' }
+			@term_anatomy = @category.create_term_anatomy(:taxonomy => taxonomy)
+		    format.html { redirect_to send(redirect_url), notice:  "#{type} was successfully created" }
 		  else
 		    format.html { render action: "index" }
 		  end
@@ -31,14 +59,26 @@ class Admin::TermsController < AdminController
 
 	def edit 
 		@category = Term.find(params[:id])
+		@type = @category.term_anatomy.taxonomy
 	end
 
 	def update
 	    @term = Term.find(params[:id])
 
+
+	    if params[:type_taxonomy] == 'category'
+
+			redirect_url = "admin_post_categories_path"
+			type = "Category"
+
+		else
+			redirect_url = "admin_post_tags_path"
+			type = "Tag"
+
+		end
 	    respond_to do |format|
 	      if @term.update_attributes(params[:term])
-	        format.html { redirect_to admin_post_categories_path(@term), notice: 'Category was successfully updated' }
+	        format.html { redirect_to send(redirect_url), notice: "#{type} was successfully updated" }
 	      else
 	        format.html { render action: "edit" }
 	      end
@@ -47,10 +87,22 @@ class Admin::TermsController < AdminController
 
 	def destroy
 	    @term = Term.find(params[:id])
+
+	    if @term.term_anatomy.taxonomy == 'category'
+
+			redirect_url = "admin_post_categories_path"
+			type = "Category"
+
+		else
+			redirect_url = "admin_post_tags_path"
+			type = "Tag"
+
+		end
+
 	    @term.destroy
 
 	    respond_to do |format|
-	      format.html { redirect_to admin_post_categories_path, notice: 'Category successfully deleted' }
+	      format.html { redirect_to send(redirect_url), notice: "#{type} successfully deleted" }
 	    end
 
 	end
@@ -60,20 +112,29 @@ class Admin::TermsController < AdminController
 		action = action.gsub(' ', '_')
 
 		if params[:categories].nil?
-			abort('123131');
 			action = ""
 		end
 
+		if params[:type_taxonomy] == 'category'
+
+			redirect_url = "admin_post_categories_path"
+			type = "Categories"
+
+		else
+			redirect_url = "admin_post_tags_path"
+			type = "Tags"
+
+		end
 		case action.downcase 
 			when "move_to_trash"
 				bulk_update_move_to_trash params[:categories]
 				respond_to do |format|
-			      format.html { redirect_to admin_post_categories_path, notice: 'Categories were successfully moved to trash' }
+			      format.html { redirect_to send(redirect_url), notice: "#{type} were successfully moved to trash" }
 			    end
 			else
 
 				respond_to do |format|
-			      format.html { redirect_to admin_post_categories_path, notice: 'Nothing was done' }
+			      format.html { redirect_to send(redirect_url), notice: 'Nothing was done' }
 			    end
 		end
 	end
