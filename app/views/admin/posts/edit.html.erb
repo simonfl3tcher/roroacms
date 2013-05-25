@@ -7,6 +7,9 @@
   <%= link_to admin_post_path(@post), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-mini btn-danger pull-left' do %>
     <i class="icon-trash"></i>
   <% end %> 
+  <%= link_to page_path(@post), :class => 'btn btn-mini pull-left' do %>
+    <i class="icon-search"></i>
+  <% end %>  
   <%= link_to admin_posts_path, :class => 'btn btn-mini pull-right updatepost' do %>
     <i class="icon-refresh"></i>
   <% end %> 

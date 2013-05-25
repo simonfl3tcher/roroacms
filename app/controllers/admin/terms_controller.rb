@@ -30,9 +30,9 @@ class Admin::TermsController < AdminController
 		@categories = Term.order('name asc')
 
 		if @category.slug.empty?
-			@category.slug = @category.name.gsub(' ', '-')
+			@category.slug = @category.name.gsub(' ', '-').downcase
 		else
-			@category.slug = @category.slug.gsub(' ', '-')
+			@category.slug = @category.slug.gsub(' ', '-').downcase
 		end
 
 		if taxonomy == 'category'
@@ -126,10 +126,10 @@ class Admin::TermsController < AdminController
 
 		end
 		case action.downcase 
-			when "move_to_trash"
+			when "destroy"
 				bulk_update_move_to_trash params[:categories]
 				respond_to do |format|
-			      format.html { redirect_to send(redirect_url), notice: "#{type} were successfully moved to trash" }
+			      format.html { redirect_to send(redirect_url), notice: "#{type} were successfully deleted" }
 			    end
 			else
 

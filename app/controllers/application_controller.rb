@@ -4,14 +4,6 @@ class ApplicationController < ActionController::Base
 
   require 'ext/string'
 
-  #   private
-
-  # def render(*args)
-  #   options = args.extract_options!
-  #   options[:template] = "../../mycustomfolder/#{params[:action]}"
-  #   super(*(args << options))
-  # end
-
   private 
   
   def render_404
@@ -30,10 +22,7 @@ class ApplicationController < ActionController::Base
 
   helper ViewHelper 
   helper SeoHelper 
-
-  def authorize
-  	redirect_to login_path, alert: "Not Authorized" if current_user.nil?
-  end
+  helper GoogleAnalyticsHelper 
 
   def current_admin
   	@current_admin ||= Admin.find(session[:admin_id]) if session[:admin_id]
@@ -61,9 +50,13 @@ class ApplicationController < ActionController::Base
 
   def authorize_admin_access
 
-    flash[:error] = "Not authorized"
+    if current_admin_access == 'editor'
 
-    redirect_to admin_path if current_admin_access == 'editor'
+      flash[:error] = "Not authorized"
+
+      redirect_to admin_path
+
+    end
 
   end
 

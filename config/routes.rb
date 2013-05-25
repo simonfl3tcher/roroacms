@@ -22,16 +22,20 @@ Railsoverview::Application.routes.draw do
     get 'posts/categories', to: 'terms#categories', as: 'post_categories'
     get 'posts/tags', to: 'terms#tags', as: 'post_tags'
     
-    resources :login, :users, :administrators, :upload, :reports
+    resources :login, :users, :administrators, :reports, :pagination, :upload
 
     resources :revisions do
         member {get 'restore'}
-      # collection do 
-      #   # get 'restore'
-      # end
     end
 
     resources :terms do
+      collection do
+        post 'bulk_update'
+      end
+    end
+
+    resources :comments do
+      member {get 'mark_as_spam'}
       collection do
         post 'bulk_update'
       end

@@ -3,79 +3,29 @@
 		<h2 class="title">Trash Can</h2>
 	</div>
 
-<div class="trashArea">
+	<div class="trashArea">
 
-	<% if @posts.blank? && @pages.blank? %>
-		<div class="span12" style="text-align:center;">
-			<strong style="margin-top:100px; font-size:25px; display:block; ">The trash can is currently empty</strong>
-		</div>
+		<% if @posts.blank? && @pages.blank? %>
+			<div class="span12" style="text-align:center;">
+				<strong style="margin-top:100px; font-size:25px; display:block; ">The trash can is currently empty</strong>
+			</div>
 
-	<% end %>
+		<% end %>
 
-    <% if !@posts.blank? %>
-	
-		<div class="span6">
+	    <% if !@posts.blank? %>
+		
+			<div class="span6">
 
-		    <div class="title">Articles
-			   	<div class="btn-group pull-right">
-		          <%= link_to empty_posts_admin_trash_index_path('post'), :class => 'btn btn-mini btn-danger', data: { confirm: 'Are you sure?' } do %>
-		            <i class="icon-trash"></i>
-		          <% end %>    
-		        </div> 
-		    </div>
+			    <div class="title">Articles
+				   	<div class="btn-group pull-right">
+			          <%= link_to empty_posts_admin_trash_index_path('post'), :class => 'btn btn-mini btn-danger', data: { confirm: 'Are you sure?' } do %>
+			            <i class="icon-trash"></i>
+			          <% end %>    
+			        </div> 
+			    </div>
 
-		    <%= form_tag "/admin/trash/deal_with_form" do %>
-		    <table>
-		    	<tr>
-		    		<th><%= check_box_tag 'all', 'all', false, :class => 'check_all' %></th>
-		    		<th style="width: 358px;">name</th>
-		    		<th>date</th>
-		    		<th>&nbsp;</th>
-
-		    	</tr>
-
-		    </table>
-			  <div class="tableOverflowWrapper">
-			  	<table class="table table-condensed table-striped">
-				  <% @posts.each do |post| %>
-				    <tr class="<%= cycle('list_line_odd', 'list_line_even') %> <%= post.post_status == "Draft" ? 'draft' : '' %>">
-
-				    <td><%= check_box_tag 'posts[]', post.id %></td>
-				  	<td><%= post.post_title %><%= post.post_status == "Draft" ? ' - draft' : '' %></td>
-				  	<td><%= post.post_date.strftime "%d-%m-%Y" %>&nbsp;</td>
-				      <td>
-				        <div class="btn-group">
-				          <%= link_to edit_admin_trash_path(post, :type => 'post'), :class => 'btn btn-mini btn-warning' do %>
-				            <i class="icon-reply"></i>
-				          <% end %>    
-				        </div>
-				      </td>
-				    </tr>
-				  <% end %>
-				  </table>
-				</div>
-			  <%= submit_tag 'Reinstate', :class => "btn btn-small btn-warning" %>
-			<% end %>
-
-		</div>
-
-	<% end %>
-
-	<% if !@pages.blank? %>
-
-		<div class="span6">
-
-		    <div class="title">Pages
-			   	<div class="btn-group pull-right">
-		          <%= link_to empty_posts_admin_trash_index_path('page'), :class => 'btn btn-mini btn-danger', data: { confirm: 'Are you sure?' } do %>
-		            <i class="icon-trash"></i>
-		          <% end %>    
-		        </div> 
-		    </div>
-
-
-		    <%= form_tag "/admin/trash/deal_with_form" do %>
-		    	<table>
+			    <%= form_tag "/admin/trash/deal_with_form" do %>
+			    <table>
 			    	<tr>
 			    		<th><%= check_box_tag 'all', 'all', false, :class => 'check_all' %></th>
 			    		<th style="width: 358px;">name</th>
@@ -83,18 +33,19 @@
 			    		<th>&nbsp;</th>
 
 			    	</tr>
-		    	</table>
-			  	<div class="tableOverflowWrapper">
-				  	<table class="table table-condensed table-striped">
-					  <% @pages.each do |page| %>
-					    <tr class="<%= cycle('list_line_odd', 'list_line_even') %> <%= page.post_status == "Draft" ? 'draft' : '' %>">
 
-					    <td><%= check_box_tag 'pages[]', page.id %></td>
-					  	<td><%= page.post_title %><%= page.post_status == "Draft" ? ' - draft' : '' %></td>
-					  	<td><%= page.post_date.strftime "%d-%m-%Y" %></td>
+			    </table>
+				  <div class="tableOverflowWrapper">
+				  	<table class="table table-condensed table-striped">
+					  <% @posts.each do |post| %>
+					    <tr class="<%= cycle('list_line_odd', 'list_line_even') %> <%= post.post_status == "Draft" ? 'draft' : '' %>">
+
+					    <td><%= check_box_tag 'posts[]', post.id %></td>
+					  	<td><%= post.post_title %><%= post.post_status == "Draft" ? ' - draft' : '' %></td>
+					  	<td><%= post.post_date.strftime "%d-%m-%Y" %>&nbsp;</td>
 					      <td>
 					        <div class="btn-group">
-					          <%= link_to edit_admin_trash_path(page, :type => 'page'), :class => 'btn btn-mini btn-warning' do %>
+					          <%= link_to edit_admin_trash_path(post, :type => 'post'), :class => 'btn btn-mini btn-warning' do %>
 					            <i class="icon-reply"></i>
 					          <% end %>    
 					        </div>
@@ -102,19 +53,71 @@
 					    </tr>
 					  <% end %>
 					  </table>
-				</div>
-			  <%= submit_tag 'Reinstate', :class => "btn btn-small btn-warning" %>
-			<% end %>
+					</div>
+					<div class="formSepUpp">
+				 		<%= submit_tag 'Reinstate', :class => "btn btn-small btn-warning" %>
+				 	</div>
+				<% end %>
 
-		</div>
-	<% end %>
+			</div>
 
-	<div class="clear"></div>
+		<% end %>
+
+		<% if !@pages.blank? %>
+
+			<div class="span6">
+
+			    <div class="title">Pages
+				   	<div class="btn-group pull-right">
+			          <%= link_to empty_posts_admin_trash_index_path('page'), :class => 'btn btn-mini btn-danger', data: { confirm: 'Are you sure?' } do %>
+			            <i class="icon-trash"></i>
+			          <% end %>    
+			        </div> 
+			    </div>
+
+
+			    <%= form_tag "/admin/trash/deal_with_form" do %>
+			    	<table>
+				    	<tr>
+				    		<th><%= check_box_tag 'all', 'all', false, :class => 'check_all' %></th>
+				    		<th style="width: 358px;">name</th>
+				    		<th>date</th>
+				    		<th>&nbsp;</th>
+
+				    	</tr>
+			    	</table>
+				  	<div class="tableOverflowWrapper">
+					  	<table class="table table-condensed table-striped">
+						  <% @pages.each do |page| %>
+						    <tr class="<%= cycle('list_line_odd', 'list_line_even') %> <%= page.post_status == "Draft" ? 'draft' : '' %>">
+
+						    <td><%= check_box_tag 'pages[]', page.id %></td>
+						  	<td><%= page.post_title %><%= page.post_status == "Draft" ? ' - draft' : '' %></td>
+						  	<td><%= page.post_date.strftime "%d-%m-%Y" %></td>
+						      <td>
+						        <div class="btn-group">
+						          <%= link_to edit_admin_trash_path(page, :type => 'page'), :class => 'btn btn-mini btn-warning' do %>
+						            <i class="icon-reply"></i>
+						          <% end %>    
+						        </div>
+						      </td>
+						    </tr>
+						  <% end %>
+						  </table>
+					</div>
+					<div class="formSepUpp">
+						<%= submit_tag 'Reinstate', :class => "btn btn-small btn-warning" %>
+					</div>
+				<% end %>
+
+			</div>
+		<% end %>
+
+		<div class="clearboth"></div>
+
+	</div>
 
 </div>
-<div class="clear"></div>
-</div>
-<div class="clear"></div>
 
 <script type="text/javascript">
 	$('.check_all').on("click", function(){

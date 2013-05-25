@@ -21,10 +21,11 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   gem "therubyracer"
   gem "less-rails"
-  gem "twitter-bootstrap-rails"
   gem "awesome_nested_set"
 end
 
+gem 'twitter-bootstrap-rails'
+gem 'aws-s3', :require => 'aws/s3'
 gem 'jquery-rails'
 
 group :test, :development do

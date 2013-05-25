@@ -2,3 +2,7 @@
 <small><%= display_date %></small>
 
 <%= display_content %>
+
+<hr>
+
+<%= get_the_excerpt @content, 200, '...' %>

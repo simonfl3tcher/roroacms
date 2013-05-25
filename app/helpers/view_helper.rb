@@ -1,16 +1,13 @@
 module ViewHelper
 
 	def display_content
-
-		
-
 		if !session[:admin_id].blank?
 
 			admin = Admin.find(session[:admin_id])
 
 			if admin.inline_editing == 'Y'
 
-				html = "<p class='editable'><button id='editButton'class='btn btn-mini' onclick='clickToEdit();'><i class='icon-pencil'></i>&nbsp;Edit</button><button id='saveButton' class='btn btn-mini' onclick='clickToSave();'><i class='icon-save'></i>&nbsp;Save</button></p><div id='editable_content' data-reference='#{@content.id}'>#{@content.post_content.html_safe}</div>"
+				html = "<div class='editable'><button id='editButton'class='btn btn-mini' onclick='clickToEdit();'><i class='icon-pencil'></i>&nbsp;Edit</button><button id='saveButton' class='btn btn-mini' onclick='clickToSave();'><i class='icon-save'></i>&nbsp;Save</button></div><div id='editable_content' data-reference='#{@content.id}'>#{@content.post_content.html_safe}</div>"
 				render :inline => html.html_safe
 			end
 
@@ -51,6 +48,13 @@ module ViewHelper
 	def get_the_title post
 
 		render :inline => post.post_title
+
+	end
+
+	def get_the_excerpt post, length = 15, omission = '...'
+
+		render :inline => truncate(post.post_content, :omission => omission, :length => length)
+
 
 	end
 
@@ -113,14 +117,70 @@ module ViewHelper
 
 		else
 
-			return false
+			# do nothing 
 
 		end
+
+	end
+
+	def get_comments_loop id = nil
+
+		if !id.nil?
+
+			@comments = Comment.where(:post_id => id)
+
+		else
+
+			@comments = Comment.where(:post_id => @content.id, :comment_approved => 'Y')
+
+		end
+
+
+		html = '<ol>'
+		count = 1
+		
+		@comments.each do |comment|
+
+			html += "<li class='comment' id='li-comment-#{count}'>
+		<article id='comment-#{count}' class='comment'>
+			<section class='comment-content comment'>
+				<p>#{comment.comment}</p>
+				<div class='comment-meta' data-author='#{comment.author}'><a href='http://#{comment.website}' target='_blank'>#{comment.author}</a></div>
+			</section>
+			<a href='#' class='reply' data-parent='#{comment.id}'>Reply</a>
+		</article>"
+	    html += "</li>"
+			count = count + 1
+
+		end
+
+		html += '</ol>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$(\'.reply\').click(function(){
+					$("#comment_comment_parent").val($(this).attr("data-parent"));
+					$("#replyToTitle").html("Reply To:- " + $(this).parent().find(".comment-meta").attr("data-author"));
+			        $(\'html,body\').animate({
+			            scrollTop: $("fieldset.commentForm").offset().top
+			        }, \'slow\');
+				})
+			});
+
+		</script>'
+
+		render :inline => html.html_safe
 
 	end
 
 	def site_url
 
 		return Setting.where(:setting_name => 'site_url').first.setting
+	end
+
+	def excerpt content, length = 255, omission = '...'
+
+		render :inline => truncate(content, :omission => omission, :length => length)
+
+
 	end
 end

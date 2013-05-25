@@ -56,3 +56,60 @@ body {
 .input-append input[type=text] {
 	height:17px;
 }
+
+
+.nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
+  background-color: #FBB450;
+  background-image: -moz-linear-gradient(top, #FBB450, #F89406);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FBB450), to(#F89406));
+  background-image: -webkit-linear-gradient(top, #FBB450, #F89406);
+  background-image: -o-linear-gradient(top, #FBB450, #F89406);
+  background-image: linear-gradient(to bottom, #FBB450, #F89406);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffFBB450', endColorstr='#ffF89406', GradientType=0);
+}
+
+input[type="radio"], input[type="checkbox"] {
+	margin:0 5px 0 0
+}
+
+.seo_input {
+	width:306px;
+}
+
+.seo_textarea {
+	height: 100px;
+    width: 91%;
+}
+
+.container:after {
+	padding:0 15px;
+}
+
+.input-append select {
+	height:27px;
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+	input[type=text],
+	textarea {
+		width:98% !important;
+	}
+	select,
+	input.btn {
+		width:100% !important;
+	}
+}
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) {
+	input[type=text],
+	textarea {
+		width:96% !important;
+	}
+	select,
+	input.btn {
+		width:100% !important;
+	}
+}

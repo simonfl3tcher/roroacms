@@ -7,21 +7,21 @@
 <div class="well">
 
   <%= link_to new_admin_post_path do %>
-    <button class="pull-right btn btn-small btn-success"><span class="icon-plus"></span>&nbsp;Add New Article</button>
+    <button class="pull-right btn btn-small btn btn-warning"><span class="icon-plus"></span>&nbsp;Add New Article</button>
   <% end %>
 
   <div class="input-append pull-left">
   <%= form_tag admin_posts_path, :method => 'get' do %>
     <p>
-      <%= text_field_tag :search, params[:search] %>
-      <%= submit_tag "Search", :name => nil, :class => 'btn' %>
+      <%= text_field_tag :search, params[:search], :placeholder => "Search..." %>
+      <%= submit_tag "Search", :name => nil, :class => 'btn btn-small btn-warning' %>
     </p>
   <% end %>
   </div>
 </div>
 
 <%= form_tag "/admin/posts/bulk_update" do %>
-  <table class="table table-condensed table-striped">
+  <table class="table table-bordered table-striped table_vam">
   <thead>
     <tr>
       <th><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
@@ -38,13 +38,13 @@
   	<td><%= post.post_date.strftime "%d-%m-%Y" %></td>
       <td>
         <div class="btn-group">
-          <%= link_to edit_admin_post_path(post), :class => 'btn' do %>
+          <%= link_to edit_admin_post_path(post), :class => 'btn btn-small' do %>
             <i class="icon-pencil"></i>
           <% end %>        
-          <%= link_to page_path(post), :class => 'btn' do %>
+          <%= link_to page_path(post), :class => 'btn btn-small', :target => "_blank" do %>
             <i class="icon-search"></i>
-          <% end %>        
-          <%= link_to admin_post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn' do %>
+          <% end %>       
+          <%= link_to admin_post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-small' do %>
             <i class="icon-trash"></i>
           <% end %>
         </div>
@@ -59,12 +59,8 @@
     </tr>
   <% end %>
   </table>
-  <%= select_tag "to_do", "<option>Publish</option><option>Draft</option><option>Move To Trash</option>".html_safe, prompt: 'Bulk Action', :class => 'span2' %>
-  <%= submit_tag 'Submit', :class => "btn" %>
+  <%= bulk_update_dropdown Hash['publish' => 'Publish', 'draft' => 'Draft', 'move_to_trash' => 'Move To Trash'] %>
+
 <% end %>
 </div>
 </div>
-
-<script type='text/javascript'>
-    $('#check_all').on("click", function(){ $('td input[type="checkbox"]').click(); });
-</script>

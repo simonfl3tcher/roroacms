@@ -49,7 +49,7 @@
                   //   });
                   }
                 }
-            }, 120000);
+            }, 12000);
 
             $("#post_post_title").keyup(function(){
                 $("#post_post_slug").val($(this).val().toLowerCase().split(' ').join('-'));
@@ -93,33 +93,6 @@
       </div>
     </div>  
 
-    <!-- <div class="accordion" id="accordionAttachments">
-      <div class="accordion-group">
-        <div class="accordion-heading">
-          <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionAttachments" href="#collapseFour"><i class="icon-pushpin pull-left"></i>&nbsp;Attachments<i class="accordionSign pull-right"></i></a>
-        </div>
-        <div id="collapseFour" class="accordion-body collapse">
-          <div class="accordion-inner">
-            <table class="attachmentsDataTable table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Value</th>
-                </tr>
-              </thead>
-                <tr>
-                    <td>
-                      <%= f.text_field :post_seo_title, size: 40 %>
-                      <a href="#" class="btn">Add Attachment</a>
-                    </td>
-                    <td><%= f.text_area :post_seo_description %></td>
-                </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>  -->
-
   <%= render 'autosave' %>
 
   </div>
@@ -148,10 +121,6 @@
               <%= f.label :post_date %>
               <%= f.datetime_select :post_date, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true}, :class => 'dateselect' %>
             </div>
-
-<!--              <div class="field">
-              <%= f.submit :class => 'btn btn-small' %>
-            </div> -->
           </div>
         </div>
       </div>
@@ -165,7 +134,8 @@
         <div id="collapseTwo" class="accordion-body collapse">
           <div class="accordion-inner">
               <div class="field">
-                <% Term.all.each do |category| %>
+                <% Post::POST_CATEGORIES.each do |category| %>
+                  
                     <li>
                       <%= check_box_tag 'category_ids[]', category.id, @post.terms.find_by_id(category.id) ? true : false %><%= label_tag category.name %>
                     </li>
@@ -175,15 +145,19 @@
         </div>
       </div>
     </div>   
-    <div class="accordion" id="accordionTags">
+    <div class="accordion tagsAccordion" id="accordionTags">
       <div class="accordion-group">
         <div class="accordion-heading">
           <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionTags" href="#collapseTags"><i class="icon-tags pull-left"></i>&nbsp;Article Tags<i class="accordionSign pull-right"></i></a>
         </div>
         <div id="collapseTags" class="accordion-body collapse">
-          <div class="accordion-inner">
+           <div class="accordion-inner">
               <div class="field">
-               <input type="text" data-provide="typeahead" autocomplete="off" data-source='["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]'>
+                <% Post::POST_TAGS.each do |tag| %>
+                    <li>
+                      <%= check_box_tag 'tag_ids[]', tag.id, @post.terms.find_by_id(tag.id) ? true : false %><%= label_tag tag.name %>
+                    </li>
+                <% end %>
               </div>
           </div>
         </div>
