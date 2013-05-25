@@ -1,4 +1,4 @@
-<%= form_for @admin, :url => url_for(:controller => 'administrators', :action => 'create') do |f| %>
+<%= form_for @admin, :url => url_for(:controller => 'administrators', :action => @action) do |f| %>
   <% if @admin.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@admin.errors.count, "error") %> errors:</h2>
@@ -10,45 +10,59 @@
       </ul>
     </div>
   <% end %>
-
-  <fieldset>
-    <legend>Enter User Details</legend>
-
-    <div class="field">
-      <%= f.label :first_name %>
-      <%= f.text_field :first_name, size: 40 %>
-    </div>
-    <div class="field">
-      <%= f.label :last_name %>
-      <%= f.text_field :last_name, size: 40 %>
-    </div>
-    <div class="field">
-      <%= f.label :email %>
-      <%= f.text_field :email, size: 40 %>
-    </div>
-    <div class="field">
-      <%= f.label :username %>
-      <%= f.text_field :username, size: 40 %>
-    </div>
-    <div class="field">
-      <%= f.label :access_level %>
-       <%= f.select :access_level, Admin::ACCESS_LEVELS, prompt: 'Select access level' %>
-    </div>
-    <div class="field">
-      <%= f.label 'Inline Editing' %>
-      <%= f.radio_button :inline_editing, 'Y', :checked => (@admin.inline_editing == 'Y') ?  true : false  %>Yes
-      <%= f.radio_button :inline_editing, 'N', :checked => (@admin.inline_editing == 'N') ?  true : false %>No
-    </div>
-	    <div class="field">
-	        <%= f.label :password, 'Password' %>
-	        <%= f.password_field :password, size: 40 %>
-	      </div>
-	      <div class="field">
-	        <%= f.label :password_confirmation, 'Confirm' %>
-	        <%= f.password_field :password_confirmation, size: 40 %>
-	    </div>
-    <div class="field">
-      <%= f.submit %>
-    </div>
-  </fieldset>
+  <div class="row">
+      <div class="span8">
+        <fieldset>
+            <div class="formSep">
+              <div class="row">
+                <div class="field span4">
+                  <%= f.label :first_name %>
+                  <%= f.text_field :first_name, size: 40 %>
+                </div>
+                <div class="field span4">
+                  <%= f.label :last_name %>
+                  <%= f.text_field :last_name, size: 40 %>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </div>
+          <div class="field formSep">
+            <%= f.label :email %>
+            <%= f.text_field :email, size: 40 %>
+          </div>
+          <div class="field formSep">
+            <%= f.label :username %>
+            <%= f.text_field :username, size: 40 %>
+          </div>
+          <div class="field formSep">
+            <%= f.label :access_level %>
+             <%= f.select :access_level, Admin::ACCESS_LEVELS, prompt: 'Select access level' %>
+          </div>
+          <div class="field formSep">
+            <%= f.label 'Inline Editing' %>
+            <%= f.radio_button :inline_editing, 'Y', :checked => (@admin.inline_editing == 'Y') ?  true : false  %>Yes
+            <%= f.radio_button :inline_editing, 'N', :checked => (@admin.inline_editing == 'N') ?  true : false %>No
+          </div>
+      	    <div class="field formSep">
+                <div class="row">
+                <div class="field span4">
+                <%= f.label :password, 'Password' %>
+                <%= f.password_field :password, size: 40 %>
+                </div>
+                <div class="field span4">
+                <%= f.label :password_confirmation, 'Confirm' %>
+                <%= f.password_field :password_confirmation, size: 40 %>
+                </div>
+              </div>
+      	    </div>
+          <div class="field">
+            <% if @action == 'create' %>
+              <%= f.submit "Create Administrator", :class => 'btn btn-small btn-warning'  %>
+            <% else %>
+              <%= f.submit "Update Administrator", :class => 'btn btn-small btn-warning'  %>
+            <% end %>
+          </div>
+        </fieldset>
+      </div>
+  </div>
 <% end %>

@@ -2,10 +2,14 @@ class Admin::PostsController < AdminController
 
 	def index
 
-		@posts = Post.where(:disabled => 'N', :post_type => 'post', ).order('post_date desc')
-		if params.has_key?(:search)
-			@posts = Post.where("(id like ? or post_title like ? or post_slug like ?) and disabled = 'N' and post_type = 'post' and post_status != 'Autosave'", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
-		end
+			@posts = Post.where(:disabled => 'N', :post_type => 'post', ).order('post_date desc')
+			if params.has_key?(:search) && !params[:search].blank?
+				@posts = Post.where("(id like ? or post_title like ? or post_slug like ?) and disabled = 'N' and post_type = 'post' and post_status != 'Autosave'", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
+			end
+
+			if params.has_key?(:pagination)
+				@posts = Post.where(:disabled => 'N', :post_type => 'post', ).order('post_date desc').limit(params[:pagination])
+			end
 	end
 
 	def new
@@ -14,6 +18,7 @@ class Admin::PostsController < AdminController
 
 	def create
 		@cats = params[:category_ids]
+		@tags = params[:tag_ids]
 		@post = Post.new(params[:post])
 
 		if @post.post_slug.empty?
@@ -29,6 +34,11 @@ class Admin::PostsController < AdminController
 			if !@cats.blank?
 				@cats.each do |val|
 					# return render :text => "The object is #{val}"
+					TermRelationship.create(:term_id => val, :post_id => @post.id)
+				end
+			end
+			if !@tags.blank?
+				@tags.each do |val|
 					TermRelationship.create(:term_id => val, :post_id => @post.id)
 				end
 			end
@@ -48,6 +58,7 @@ class Admin::PostsController < AdminController
 	def update
 	    @post = Post.find(params[:id])
 	    @cats = params[:category_ids]
+	    @tags = params[:tag_ids]
 
 	    respond_to do |format|
 	      if @post.update_attributes(params[:post])
@@ -66,6 +77,12 @@ class Admin::PostsController < AdminController
 
 	    	if !@cats.blank?
 	    		@cats.each do |val|
+					# return render :text => "The object is #{val}"
+					TermRelationship.create(:term_id => val, :post_id => @post.id)
+				end
+			end
+			if !@tags.blank?
+	    		@tags.each do |val|
 					# return render :text => "The object is #{val}"
 					TermRelationship.create(:term_id => val, :post_id => @post.id)
 				end
@@ -173,6 +190,10 @@ class Admin::PostsController < AdminController
 		action = params[:to_do]
 		action = action.gsub(' ', '_')
 
+		if params[:posts].nil?
+			action = ""
+		end
+
 		case action.downcase 
 			when "publish"
 				bulk_update_publish params[:posts]
@@ -189,6 +210,11 @@ class Admin::PostsController < AdminController
 				respond_to do |format|
 			      format.html { redirect_to admin_posts_path, notice: 'Posts were successfully moved to trash' }
 			    end
+			else
+			
+			respond_to do |format|
+		      format.html { redirect_to admin_posts_path, notice: 'Nothing was done' }
+		    end
 		end
 	end
 

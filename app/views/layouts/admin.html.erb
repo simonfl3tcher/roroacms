@@ -1,46 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Dashboard | Roroa CMS</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+  <head>
+    <title>Dashboard | Roroa CMS</title>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
 
-</head>
-<body>
-<div id="wrapper">  
-  
-<div id="header">
-  <%= render :partial => 'layouts/navigation' %>
-</div> 
-
-
-<div id="content">
-
-  <div class="container">
-    <%= get_notifications %>
-    <%= yield %>
- </div> 
-
-</div> 
-
-</div> 
-
-<div id="footer">
-    
-  <div class="container">
-    
-    <div class="row">
+  </head>
+  <body>
+    <div id="wrapper">  
       
-      <div class="span12">
-        &nbsp;
+      <div id="header">
+        <%= render :partial => 'layouts/navigation' %>
       </div> 
-      
-    </div> 
-    
-  </div> 
-  
-</div> 
-</body>
+
+
+      <div id="content">
+
+        <div class="container">
+          <%= get_notifications %>
+          <%= yield %>
+       </div> 
+
+      </div> 
+    </div>
+
+    <div class="clearboth"></div> 
+
+
+      <div id="footer">
+        
+        <div class="container">
+          
+          <div class="row">
+            
+            <div class="span12">
+              &nbsp;
+            </div> 
+            
+          </div> 
+          
+        </div> 
+        
+      </div> 
+  </body>
 </html>

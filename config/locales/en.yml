@@ -3,13 +3,3 @@
 
 en:
   hello: "Hello world"
-  activerecord:
-    attributes:
-      user:
-        password_digest: 'Password'
-    errors:
-      models:
-        user:
-          attributes:
-            password_digest:
-              blank: "is required"

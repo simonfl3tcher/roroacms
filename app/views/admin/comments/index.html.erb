@@ -1,0 +1,86 @@
+<div class="row-fluid">
+	<div class="span12">
+        
+
+		<h2 class="title">Comments</h2>
+
+		<div class="well">
+
+<!-- 		  <%= link_to new_admin_post_path do %>
+		    <button class="pull-right btn btn-small btn btn-warning"><span class="icon-plus"></span>&nbsp;Add New Comment</button>
+		  <% end %> -->
+
+		  <%= form_tag admin_comments_path, :method => 'get' do %>
+		  <div class="input-append pull-left">
+		    <p>
+		      <%= text_field_tag :search, params[:search], :placeholder => "Search..." %>
+		      <%= submit_tag "Search", :name => nil, :class => 'btn btn-small btn-warning' %>
+		    </p>
+		  </div>
+		  <div class="input-append pull-right">
+		      <%= select_tag "filter", "<option value='filter'></option><option value='Y'>Approved</option><option value='N'>Unapproved</option><option value='S'>Spam</option>".html_safe %>
+		      <%= submit_tag "Filter", :name => nil, :class => 'btn btn-warning' %>
+		  </div>
+		  <% end %>
+		</div>
+
+<%= form_tag "/admin/comments/bulk_update" do %>
+  <table class="table table-bordered table-striped table_vam">
+  <thead>
+    <tr>
+      <th><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
+      <th>Author</th>
+      <th style="width:600px">Comment</th>
+      <th>In Response To</th>
+      <th>Action</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <% @comments.each do |comment| %>
+    <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+
+    <td><%= check_box_tag 'comments[]', comment.id %></td>
+  	<td>
+  		<%= comment.author %><br />
+  		<small><%= comment.email %></small>
+  	</td>
+  	<td>
+  		<small>Comment submitted on:- <%= comment.submitted_on.strftime "%d-%m-%Y"%></small><br />
+  		<%= excerpt comment.comment %>
+  	</td>
+  	<td>
+  		<%= link_to page_path(comment.post), :target => '_blank' do %>
+  			<%= comment.post.post_title %>
+  		<% end %>
+  	</td>
+      <td>
+        <div class="btn-group">
+          <%= link_to edit_admin_comment_path(comment), :class => 'btn btn-small' do %>
+            <i class="icon-pencil"></i>
+          <% end %>
+           <%= link_to mark_as_spam_admin_comment_path(comment), :class => 'btn btn-small' do %>
+            <i class="icon-fire"></i>
+          <% end %>              
+          <%= link_to admin_comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-small' do %>
+            <i class="icon-trash"></i>
+          <% end %>
+        </div>
+      </td>
+      <td style="text-align:center;">
+      	<% if comment.comment_approved == 'Y' %>
+      		<i class="icon-ok-circle"></i>
+      	<% elsif comment.comment_approved == 'N' %>
+      		<i class="icon-time"></i>
+      	<% else %>
+      		<i class="icon-fire"></i>
+      	<% end %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+<%= bulk_update_dropdown Hash['unapprove' => 'Unapprove', 'approve' => 'Approve', 'mark_as_spam' => 'Mark as spam', 'destroy' => 'Destroy'] %>
+<% end %>
+
+
+	</div>
+</div>

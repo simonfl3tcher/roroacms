@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require_tree .
-//= require redactor.min
 
 $('.checkall').change(function() {
   var checkboxes = $(this).closest('form').find(':checkbox');
@@ -23,4 +22,12 @@ $('.checkall').change(function() {
 
 $("#collapseThree").on("hide", function(e){
 	console.log('hello');
+});
+
+$('#editButton').click(function(){
+	clickToEdit();
+});
+
+$.ajaxSetup({
+	beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
 });
