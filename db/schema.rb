@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130430201106) do
+ActiveRecord::Schema.define(:version => 20130524172809) do
 
   create_table "admins", :force => true do |t|
     t.string   "email"
@@ -42,8 +42,10 @@ ActiveRecord::Schema.define(:version => 20130430201106) do
     t.text     "comment"
     t.text     "comment_approved"
     t.text     "comment_parent"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "submitted_on"
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+    t.string   "is_spam",          :limit => 1, :default => "N"
   end
 
   create_table "post_abstractions", :force => true do |t|
@@ -72,6 +74,19 @@ ActiveRecord::Schema.define(:version => 20130430201106) do
     t.string   "post_seo_is_disabled",                       :default => "N"
     t.string   "post_seo_no_index",                          :default => "N"
     t.string   "post_seo_no_follow",                         :default => "N"
+  end
+
+  create_table "rich_rich_files", :force => true do |t|
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+    t.string   "rich_file_file_name"
+    t.string   "rich_file_content_type"
+    t.integer  "rich_file_file_size"
+    t.datetime "rich_file_updated_at"
+    t.string   "owner_type"
+    t.integer  "owner_id"
+    t.text     "uri_cache"
+    t.string   "simplified_type",        :default => "file"
   end
 
   create_table "settings", :force => true do |t|

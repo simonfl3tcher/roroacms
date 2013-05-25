@@ -1,4 +1,4 @@
-class UploadController < AdminController
+class UploadController < ApplicationController
 
 	def index 
 		return render :text => "The object is 123"

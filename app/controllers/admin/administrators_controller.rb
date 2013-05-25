@@ -11,6 +11,7 @@ class Admin::AdministratorsController < AdminController
 
 	def edit 
 		@admin = Admin.find(params[:id])
+		@action = 'update'
 	end
 
 	def update
@@ -37,6 +38,7 @@ class Admin::AdministratorsController < AdminController
 
 	def new
 	    @admin = Admin.new
+	    @action = 'create'
 	end
 
 	def create

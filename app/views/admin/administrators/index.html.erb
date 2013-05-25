@@ -6,20 +6,20 @@
     <div class="well">
 
       <%= link_to new_admin_administrator_path do %>
-        <button class="pull-right btn btn-small btn-success"><span class="icon-plus"></span>&nbsp;Add New Administrator</button>
+        <button class="pull-right btn btn-small btn-warning"><span class="icon-plus"></span>&nbsp;Add New Administrator</button>
       <% end %>
 
       <div class="input-append pull-left">
       <%= form_tag admin_administrators_path, :method => 'get' do %>
         <p>
-          <%= text_field_tag :search, params[:search] %>
-          <%= submit_tag "Search", :name => nil, :class => 'btn' %>
+          <%= text_field_tag :search, params[:search], :placeholder => "Search..." %>
+          <%= submit_tag "Search", :name => nil, :class => 'btn btn-warning' %>
         </p>
       <% end %>
       </div>
     </div>
 
-    <table class="table table-striped">
+    <table class="table table-bordered table-striped">
       <thead>
         <tr>
           <th>#</th>
@@ -36,10 +36,10 @@
       	<td><%= admin.email %></td>
           <td>
             <div class="btn-group">
-              <%= link_to edit_admin_administrator_path(admin), :class => 'btn' do %>
+              <%= link_to edit_admin_administrator_path(admin), :class => 'btn btn-small' do %>
                 <i class="icon-pencil"></i>
               <% end %>        
-              <%= link_to admin_administrator_path(admin), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' do %>
+              <%= link_to admin_administrator_path(admin), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-small' do %>
                 <i class="icon-trash"></i>
               <% end %>
             </div>
@@ -49,5 +49,3 @@
     </table>
   </div>
 </div>
-
-      

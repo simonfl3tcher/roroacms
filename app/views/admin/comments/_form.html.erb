@@ -1,0 +1,71 @@
+<div class="row" id="postPage">
+    <%= form_for [:admin, @comment] do |f| %>
+      <div class="span9">
+      <% if @comment.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@comment.errors.count, "error") %> errors:</h2>
+
+          <ul>
+          <% @comment.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+  <fieldset>
+
+    <div class="accordion" id="accordion2">
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"><i class="icon-user pull-left"></i>&nbsp;Author<i class="accordionSign pull-right"></i></a>
+        </div>
+        <div id="collapseTwo" class="accordion-body collapse in">
+          <div class="accordion-inner">
+	        <div class="field">
+	          <%= f.text_field :author, size: 40, :placeholder => 'Author' %>
+	        </div>
+	        <div class="field">
+	          <%= f.text_field :email, size: 40, :placeholder => 'Email' %>
+	        </div>
+	        <div class="field">
+	          <%= f.text_field :website, size: 40, :placeholder => 'Website' %>
+	        </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+ 
+        <div class="field">
+          <%= f.text_area :comment, :class => 'redactor' %>
+        </div>
+      </fieldset>
+
+  </div>
+  <div class="span3">
+
+    <div class="accordion" id="accordion1">
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne"><i class="icon-lightbulb pull-left"></i>&nbsp;Status<i class="accordionSign pull-right"></i></a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse in">
+          <div class="accordion-inner">
+
+          	<div class="field">
+			<%= f.radio_button :comment_approved, "Y", :checked => @comment.comment_approved == 'Y' ? true : false %>Approved<br />
+			<%= f.radio_button :comment_approved, "N", :checked => @comment.comment_approved == 'N' ? true : false %>Pending<br />
+			<%= f.radio_button :comment_approved, "S", :checked => @comment.comment_approved == 'S' ? true : false %>Spam<br />
+          	</div>
+
+          	<div class="field">
+              <%= f.label :submitted_on %>
+              <%= f.datetime_select :submitted_on, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true}, :class => 'dateselect' %>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

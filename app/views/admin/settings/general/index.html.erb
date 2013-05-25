@@ -1,108 +1,130 @@
 <%= form_tag('/admin/settings/general') do %>
 
 <%= hidden_field_tag 'redirect', 'general' %>
+<fieldset>
+	<div class="row">
+		<div class="span6">
 
-<div class="title">General Settings</div>
+			<div class="title">General Settings</div>
 
-<div class="field">
-	<%= label_tag(:display_url, "Display Url") %>
-	<%= text_field_tag(:display_url, Setting.find_by_setting_name('display_url')[:setting]) %>
-</div>
+			<div class="field formSep">
+				<%= label_tag(:display_url, "Display Url") %>
+				<%= text_field_tag(:display_url, Setting.find_by_setting_name('display_url')[:setting]) %>
+			</div>
 
-<div class="field">
-	<%= label_tag(:site_url, "Site Url") %>
-	<%= text_field_tag(:site_url, Setting.find_by_setting_name('site_url')[:setting]) %>
-</div>
+			<div class="field formSep">
+				<%= label_tag(:site_url, "Site Url") %>
+				<%= text_field_tag(:site_url, Setting.find_by_setting_name('site_url')[:setting]) %>
+			</div>
 
-<div class="field">
-	<%= label_tag(:articles_slug, "Articles Slug") %>
-	<%= text_field_tag(:articles_slug, Setting.find_by_setting_name('articles_slug')[:setting]) %>
-</div>
+			<div class="field formSep">
+				<%= label_tag(:articles_slug, "Articles Slug") %>
+				<%= text_field_tag(:articles_slug, Setting.find_by_setting_name('articles_slug')[:setting]) %>
+			</div>
 
-<div class="field">
-	<%= label_tag(:category_slug, "Category Slug") %>
-	<%= text_field_tag(:category_slug, Setting.find_by_setting_name('category_slug')[:setting]) %>
-</div>
+			<div class="field formSep">
+				<%= label_tag(:category_slug, "Category Slug") %>
+				<%= text_field_tag(:category_slug, Setting.find_by_setting_name('category_slug')[:setting]) %>
+			</div>
 
-<div class="field">
-	<%= label_tag(:home_page, "Homepage") %>
-	<%= select_tag :home_page, options_for_select(Post.where(:post_type => 'page').collect {|p| [ p.post_title, p.id ] }, Setting.find_by_setting_name('home_page')[:setting]), prompt: 'Select a homepage' %>
-</div>
+			<div class="field">
+				<%= label_tag(:home_page, "Homepage") %>
+				<%= select_tag :home_page, options_for_select(Post.where(:post_type => 'page').collect {|p| [ p.post_title, p.id ] }, Setting.find_by_setting_name('home_page')[:setting]), prompt: 'Select a homepage' %>
+			</div>
+		</div>
 
-<div class="title">SEO Settings</div>
+		<div class="span6">
 
-<div class="field">
-	<%= label_tag(:seo_site_title, "Website Title") %>
-	<%= text_field_tag(:seo_site_title, Setting.find_by_setting_name('seo_site_title')[:setting]) %>
-</div>
-<div class="field">
-	<%= label_tag(:seo_home_title, "Home Title") %>
-	<%= text_field_tag(:seo_home_title, Setting.find_by_setting_name('seo_home_title')[:setting]) %>
-</div>
-<div class="field">
-	<%= label_tag(:seo_home_description, "Home Description") %>
-	<%= text_area_tag(:seo_home_description, Setting.find_by_setting_name('seo_home_description')[:setting]) %>
-</div>
+			<div class="title">Comments</div>
 
-<div class="field">
-	<%= label_tag(:seo_404_title, "404 Title") %>
-	<%= text_field_tag(:seo_404_title, Setting.find_by_setting_name('seo_404_title')[:setting]) %>
-</div>
+			<div class="field formSep">
+				<%= hidden_field_tag :article_comments, 'N' %>
+			    <%= check_box_tag :article_comments, 'Y', Setting.find_by_setting_name('article_comments')[:setting] == 'Y' ? true : false %>
+				<%= label_tag "Article Comments On" %>
+			</div>
+			<div class="field">
+			<%= label_tag "Article Comment type" %>
+			<%= radio_button(:article_comment_type, nil, "R", :checked => Setting.find_by_setting_name('article_comment_type')[:setting] == 'R' ? true : false) %>Roroa Comments
+			<%= radio_button(:article_comment_type, nil, "F", :checked => Setting.find_by_setting_name('article_comment_type')[:setting] == 'F' ? true : false) %>Facebook Comments
+			</div>
 
-<div class="field">
-	<%= label_tag(:seo_404_description, "404 Description") %>
-	<%= text_area_tag(:seo_404_description, Setting.find_by_setting_name('seo_404_description')[:setting]) %>
-</div>
 
-<div class="field">
-	<%= label_tag(:seo_google_analytics_code, "Google Analytics ID") %>
-	<%= text_field_tag(:seo_google_analytics_code, Setting.find_by_setting_name('seo_google_analytics_code')[:setting]) %>
-</div>
+		</div>
 
-<div class="field">
-	<%= label_tag "Rewrite Titles" %>
-	<%= hidden_field_tag :seo_rewrite_titles, 'N' %>
-    <%= check_box_tag :seo_rewrite_titles, 'Y', Setting.find_by_setting_name('seo_rewrite_titles')[:setting] == 'Y' ? true : false %>
-</div>
+	</div>
 
-<div class="field">
-	<%= label_tag "No index categories" %>
-	<%= hidden_field_tag :seo_no_index_categories, 'N' %>
-    <%= check_box_tag :seo_no_index_categories, 'Y', Setting.find_by_setting_name('seo_no_index_categories')[:setting] == 'Y' ? true : false %>
-</div>
+	<br />
 
-<div class="field">
-	<%= label_tag "No index archives" %>
-	<%= hidden_field_tag :seo_no_index_archives, 'N' %>
-    <%= check_box_tag :seo_no_index_archives, 'Y', Setting.find_by_setting_name('seo_no_index_archives')[:setting] == 'Y' ? true : false %>
-</div>
+	<div class="title">SEO Settings</div>
+	<div class="row">
 
-<div class="field">
-	<%= label_tag "Autogenerate Decriptions" %>
-	<%= hidden_field_tag :seo_autogenerate_descriptions, 'N' %>
-    <%= check_box_tag :seo_autogenerate_descriptions, 'Y', Setting.find_by_setting_name('seo_autogenerate_descriptions')[:setting] == 'Y' ? true : false %>
-</div>
+		<div class="span8">
 
-<div class="field">
-	<%= label_tag(:seo_additional_headers, "Additional Headers") %>
-	<%= text_area_tag(:seo_additional_headers, Setting.find_by_setting_name('seo_additional_headers')[:setting]) %>
-</div>
+			<div class="field formSep">
+				<%= label_tag(:seo_site_title, "Website Title") %>
+				<%= text_field_tag(:seo_site_title, Setting.find_by_setting_name('seo_site_title')[:setting], :class => 'seo_input') %>
+			</div>
+			<div class="field formSep">
+				<%= label_tag(:seo_home_title, "Home Title") %>
+				<%= text_field_tag(:seo_home_title, Setting.find_by_setting_name('seo_home_title')[:setting], :class => 'seo_input') %>
+			</div>
+			<div class="field formSep">
+				<%= label_tag(:seo_home_description, "Home Description") %>
+				<%= text_area_tag(:seo_home_description, Setting.find_by_setting_name('seo_home_description')[:setting], :class => 'seo_textarea') %>
+			</div>
 
-<div class="title">Comments</div>
+			<div class="field formSep">
+				<%= label_tag(:seo_404_title, "404 Title") %>
+				<%= text_field_tag(:seo_404_title, Setting.find_by_setting_name('seo_404_title')[:setting], :class => 'seo_input') %>
+			</div>
 
-<div class="field">
-	<%= label_tag "Article Comments On" %>
-	<%= hidden_field_tag :article_comments, 'N' %>
-    <%= check_box_tag :article_comments, 'Y', Setting.find_by_setting_name('article_comments')[:setting] == 'Y' ? true : false %>
-</div>
-<div class="field">
-<%= label_tag "Article Comment type" %>
-<%= radio_button(:article_comment_type, nil, "R", :checked => Setting.find_by_setting_name('article_comment_type')[:setting] == 'R' ? true : false) %>Roroa Comments
-<%= radio_button(:article_comment_type, nil, "F", :checked => Setting.find_by_setting_name('article_comment_type')[:setting] == 'F' ? true : false) %>Facebook Comments
-</div>
-<div class="field">
-	<%= submit_tag "Update", :class => 'btn btn-primary' %>
-</div>
+			<div class="field formSep">
+				<%= label_tag(:seo_404_description, "404 Description") %>
+				<%= text_area_tag(:seo_404_description, Setting.find_by_setting_name('seo_404_description')[:setting], :class => 'seo_textarea') %>
+			</div>
 
+			<div class="field formSep">
+				<%= label_tag(:seo_google_analytics_code, "Google Analytics ID") %>
+				<%= text_field_tag(:seo_google_analytics_code, Setting.find_by_setting_name('seo_google_analytics_code')[:setting], :class => 'seo_input') %>
+			</div>
+
+			<div class="field formSep">
+				<%= hidden_field_tag :seo_rewrite_titles, 'N' %>
+			    <%= check_box_tag :seo_rewrite_titles, 'Y', Setting.find_by_setting_name('seo_rewrite_titles')[:setting] == 'Y' ? true : false %>
+				<%= label_tag "Rewrite Titles" %>
+			</div>
+
+			<div class="field formSep">
+				<%= hidden_field_tag :seo_no_index_categories, 'N' %>
+			    <%= check_box_tag :seo_no_index_categories, 'Y', Setting.find_by_setting_name('seo_no_index_categories')[:setting] == 'Y' ? true : false %>
+				<%= label_tag "No index categories" %>
+			</div>
+
+			<div class="field formSep">
+				<%= hidden_field_tag :seo_no_index_archives, 'N' %>
+			    <%= check_box_tag :seo_no_index_archives, 'Y', Setting.find_by_setting_name('seo_no_index_archives')[:setting] == 'Y' ? true : false %>
+				<%= label_tag "No index archives" %>
+			</div>
+
+			<div class="field formSep">
+				<%= hidden_field_tag :seo_autogenerate_descriptions, 'N' %>
+			    <%= check_box_tag :seo_autogenerate_descriptions, 'Y', Setting.find_by_setting_name('seo_autogenerate_descriptions')[:setting] == 'Y' ? true : false %>
+				<%= label_tag "Autogenerate Decriptions" %>
+			</div>
+
+			<div class="field">
+				<%= label_tag(:seo_additional_headers, "Additional Headers") %>
+				<%= text_area_tag(:seo_additional_headers, Setting.find_by_setting_name('seo_additional_headers')[:setting], :class => 'seo_textarea') %>
+			</div>
+		</div>
+	</div>
+
+			<div class="formSepUpp">
+
+				<div class="field">
+					<%= submit_tag "Update", :class => 'btn btn-small btn-warning' %>
+				</div>
+			</div>
+</fieldset>
 <% end %>
 		

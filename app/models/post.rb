@@ -18,6 +18,10 @@ class Post < ActiveRecord::Base
 
   POST_STATUS = ["Published", "Draft", "Disabled"]
 
+  POST_TAGS =   Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy)
+
+  POST_CATEGORIES = Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
+
   scope :from_this_year, where("post_date > ? AND < ?", Time.now.beginning_of_year, Time.now.end_of_year)
 
 end

@@ -28,6 +28,7 @@ class PagesController < ApplicationController
 		segments = params[:slug].split('/')
 		article_url = Setting.where(:setting_name => 'articles_slug').first.setting
 		category_url = Setting.where(:setting_name => 'category_slug').first.setting
+		tag_url = Setting.where(:setting_name => 'tag_slug').first.setting
 
 		if !session[:admin_id].blank?
 
@@ -37,7 +38,7 @@ class PagesController < ApplicationController
 
 		else
 
-			status = "post_status = 'Published'"
+			status = "(post_status = 'Published' AND post_date <= DATE(NOW()))"
 
 		end
 
@@ -48,17 +49,31 @@ class PagesController < ApplicationController
 				if segments[1] == category_url
 
 					if segments[2].blank?
-						redirect_to "blog"
+						redirect_to article_url
 
 					else
 
 						term = Term.where(:slug => segments[2])
-						gloalize Post.where(terms: {id: term}, :post_type => 'post').includes(:terms)
+						gloalize Post.where(status, terms: {id: term}, :post_type => 'post'	).includes(:terms)
 						render :template => "pages/category"
 
 
 					end
 
+				elsif segments[1] == tag_url
+
+
+					if segments[2].blank?
+						redirect_to article_url
+
+					else
+
+						term = Term.where(:slug => segments[2])
+						gloalize Post.where(status, terms: {id: term}, :post_type => 'post').includes(:terms)
+						render :template => "pages/category"
+
+
+					end
 
 				elsif segments[1].nonnegative_float?
 
@@ -78,6 +93,7 @@ class PagesController < ApplicationController
 						render :template => "pages/archive"
 
 					end
+
 
 
 				else

@@ -64,13 +64,14 @@
           <% end %>              
           </a>
         </li>
-
-         <li class="nav-icon">
-          <%= link_to admin_reports_path do %>
-            <i class="icon-comments"></i>
-          <% end %>              
-          </a>
-        </li>
+        <% if Setting.find_by_setting_name('article_comment_type')[:setting] == 'R' %>
+           <li class="nav-icon">
+            <%= link_to admin_comments_path do %>
+              <i class="icon-comments"></i>
+            <% end %>              
+            </a>
+          </li>
+        <% end %>
 
         <% if @current_admin.access_level == "admin" %>
 	         <li class="nav-icon">

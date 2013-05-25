@@ -25,13 +25,13 @@
     </div>
     <div class="field">
       <%= label_tag 'Description' %>
-      <%= f.text_area :description %>
+      <%= f.text_area :description, :rows => "3" %>
     </div>
     <div class="field">
       <% if defined?(edit) && edit %>
-        <%= f.submit "Edit Tag", :class => 'btn' %>
+        <%= f.submit "Edit Tag", :class => 'btn btn-small btn-warning' %>
       <% else %>
-        <%= f.submit "Add Tag", :class => 'btn' %>
+        <%= f.submit "Add Tag", :class => 'btn btn-small btn-warning' %>
       <% end %>
     </div>
   </fieldset>
