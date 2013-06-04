@@ -3,6 +3,9 @@
 
 <%= display_content %>
 
-<hr>
 
-<%= get_the_excerpt @content, 200, '...' %>
+<% get_banners(Hash[:key => 'home', :limit => '3']).each do |f| %>
+	
+	<p><img src="<%= f.image %>" /></p>
+
+<% end %>

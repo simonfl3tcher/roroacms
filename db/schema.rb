@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130524172809) do
+ActiveRecord::Schema.define(:version => 20130602173439) do
 
   create_table "admins", :force => true do |t|
     t.string   "email"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20130524172809) do
     t.datetime "updated_at",                                    :null => false
     t.string   "avatar"
     t.string   "inline_editing",  :limit => 1, :default => "Y"
+    t.string   "overlord",        :limit => 1, :default => "N"
   end
 
   create_table "attachments", :force => true do |t|
@@ -34,6 +35,14 @@ ActiveRecord::Schema.define(:version => 20130524172809) do
     t.datetime "updated_at",         :null => false
   end
 
+  create_table "banners", :force => true do |t|
+    t.string   "name"
+    t.string   "image"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "comments", :force => true do |t|
     t.integer  "post_id"
     t.text     "author"
@@ -41,12 +50,15 @@ ActiveRecord::Schema.define(:version => 20130524172809) do
     t.text     "website"
     t.text     "comment"
     t.text     "comment_approved"
-    t.text     "comment_parent"
+    t.text     "parent_id"
     t.datetime "submitted_on"
     t.datetime "created_at",                                     :null => false
     t.datetime "updated_at",                                     :null => false
     t.string   "is_spam",          :limit => 1, :default => "N"
+    t.string   "ancestry"
   end
+
+  add_index "comments", ["ancestry"], :name => "index_comments_on_ancestry"
 
   create_table "post_abstractions", :force => true do |t|
     t.integer  "posts_id"
@@ -63,7 +75,7 @@ ActiveRecord::Schema.define(:version => 20130524172809) do
     t.text     "post_title"
     t.string   "post_status"
     t.string   "post_name"
-    t.integer  "post_parent"
+    t.integer  "parent_id"
     t.string   "post_type"
     t.text     "post_slug"
     t.datetime "created_at",                                                  :null => false
@@ -74,20 +86,10 @@ ActiveRecord::Schema.define(:version => 20130524172809) do
     t.string   "post_seo_is_disabled",                       :default => "N"
     t.string   "post_seo_no_index",                          :default => "N"
     t.string   "post_seo_no_follow",                         :default => "N"
+    t.string   "ancestry"
   end
 
-  create_table "rich_rich_files", :force => true do |t|
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
-    t.string   "rich_file_file_name"
-    t.string   "rich_file_content_type"
-    t.integer  "rich_file_file_size"
-    t.datetime "rich_file_updated_at"
-    t.string   "owner_type"
-    t.integer  "owner_id"
-    t.text     "uri_cache"
-    t.string   "simplified_type",        :default => "file"
-  end
+  add_index "posts", ["ancestry"], :name => "index_posts_on_ancestry"
 
   create_table "settings", :force => true do |t|
     t.string   "setting_name"

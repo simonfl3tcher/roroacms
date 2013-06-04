@@ -1,6 +1,13 @@
-<h1>Create Page</h1>
+<h2 class="title">Create Page
 
+	<div class="btn-group pull-right">
+  <%= link_to admin_posts_path, :class => 'btn btn-mini pull-left' do %>
+    <i class="icon-arrow-left"></i>
+  <% end %>   
+  <%= link_to admin_posts_path, :class => 'btn btn-mini pull-right updatepost' do %>
+    <i class="icon-refresh"></i>
+  <% end %> 
+</div>
+</h2>
 
 <%= render 'form' %>
-
-<%= link_to 'Back', :back %>

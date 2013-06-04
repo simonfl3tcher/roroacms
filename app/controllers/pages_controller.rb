@@ -12,6 +12,8 @@ class PagesController < ApplicationController
  		post = Post.find(params[:id])
  		article_url = Setting.where(:setting_name => 'articles_slug').first.setting
 
+ 		@url = ''
+ 		
  		if post.post_type == 'post'
  			@url = "/#{article_url}"
  		end
@@ -54,7 +56,7 @@ class PagesController < ApplicationController
 					else
 
 						term = Term.where(:slug => segments[2])
-						gloalize Post.where(status, terms: {id: term}, :post_type => 'post'	).includes(:terms)
+						gloalize Post.where(status, terms: {id: term}, :post_type => 'post').includes(:terms)
 						render :template => "pages/category"
 
 

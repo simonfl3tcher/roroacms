@@ -1,22 +1,7 @@
 module ViewHelper
 
 	def display_content
-		if !session[:admin_id].blank?
-
-			admin = Admin.find(session[:admin_id])
-
-			if admin.inline_editing == 'Y'
-
-				html = "<div class='editable'><button id='editButton'class='btn btn-mini' onclick='clickToEdit();'><i class='icon-pencil'></i>&nbsp;Edit</button><button id='saveButton' class='btn btn-mini' onclick='clickToSave();'><i class='icon-save'></i>&nbsp;Save</button></div><div id='editable_content' data-reference='#{@content.id}'>#{@content.post_content.html_safe}</div>"
-				render :inline => html.html_safe
-			end
-
-		else 
-
-			render :inline => @content.post_content.html_safe
-
-		end
-
+		render :inline => @content.post_content.html_safe
 	end
 
 	def display_title
@@ -72,6 +57,18 @@ module ViewHelper
 
 	end
 
+	def get_category_data 
+
+		return @content
+
+	end
+
+	def get_archive_date
+
+		return @content
+
+	end
+
 	def get_the_permalink post
 
 		article_url = Setting.where(:setting_name => 'articles_slug').first.setting
@@ -105,7 +102,7 @@ module ViewHelper
 	    end
 	end
 
-	def get_comments_form
+	def display_comments_form
 
 		comments_on = Setting.where(:setting_name => 'article_comments').first.setting
 
@@ -123,7 +120,7 @@ module ViewHelper
 
 	end
 
-	def get_comments_loop id = nil
+	def display_comments_loop id = nil
 
 		if !id.nil?
 
@@ -146,9 +143,9 @@ module ViewHelper
 			<section class='comment-content comment'>
 				<p>#{comment.comment}</p>
 				<div class='comment-meta' data-author='#{comment.author}'><a href='http://#{comment.website}' target='_blank'>#{comment.author}</a></div>
-			</section>
-			<a href='#' class='reply' data-parent='#{comment.id}'>Reply</a>
-		</article>"
+			</section></article>"
+			#<a href='#' class='reply' data-parent='#{comment.id}'>Reply</a>"
+		
 	    html += "</li>"
 			count = count + 1
 
@@ -180,7 +177,16 @@ module ViewHelper
 	def excerpt content, length = 255, omission = '...'
 
 		render :inline => truncate(content, :omission => omission, :length => length)
-
-
 	end
+
+	def nested_messages(messages)
+	  messages.map do |message, sub_messages|
+	    render(message) + content_tag(:div, nested_messages(sub_messages), :class => "nested_messages")
+	  end.join.html_safe
+	end
+
+	def get_banners hash
+		return Banner.where(terms: {slug: hash[:key]}).includes(:terms).limit(hash[:limit]).order('sort_order')
+	end
+
 end

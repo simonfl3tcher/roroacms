@@ -9,7 +9,9 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree .
+ *= require admin
+ *= require bootstrap_and_overrides
+ *= require font-awesome
  */
 label {
  	display: block;
@@ -39,7 +41,7 @@ label {
  	opacity: 0.7;
  }
 
- .trashArea thead, .trashArea table, .trashArea tbody {
+/* .trashArea thead, .trashArea table, .trashArea tbody {
  	display: table;
     width: 100%;
  }
@@ -68,7 +70,7 @@ label {
  	padding-left: 6px;
     text-align: left;
     width: 24px;
- }
+ }*/
 
  li {
   list-style: none;
@@ -203,8 +205,8 @@ table i {
 }
 
 .dateselect {
-  width:56px;
-  height: 26px;
+width: 71px;
+height: 25px;
 }
 
 .tagsAccordion .accordion-group
@@ -212,8 +214,10 @@ table i {
   overflow: visible;
 }
 
+.categoriesAccordion .accordion-group .field, 
 .tagsAccordion .accordion-group .field {
-  height:40px;
+  height: 100px;
+  overflow: auto;
 }
 
 fieldset .formSep {
@@ -238,6 +242,13 @@ fieldset .formSepUpp {
   margin-top: 20px;
 }
 
+.dropdown-toggle span {
+  display: none;
+}
+
+.dropdown-toggle span.caret {
+  display: inline-block;
+}
 .one_half{ width:48%; }
 .one_third{ width:30.66%; }
 .two_third{ width:65.33%; }

@@ -46,6 +46,7 @@ class Admin::AdministratorsController < AdminController
 
 		respond_to do |format|
 		  if @admin.save
+		  	Notifier.profile(@admin).deliver
 		    format.html { redirect_to admin_administrators_path, notice: 'Admin was successfully created.' }
 		  else
 		    format.html { render action: "new" }

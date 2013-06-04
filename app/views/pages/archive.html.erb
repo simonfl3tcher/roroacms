@@ -1,11 +1,17 @@
 <h1>Archive</h1>
 
-<strong><%= get_archive_caption %></strong>
-
 <br />
 
-<% @content.each do |p| %>
+<% if !get_archive_date.blank?
 
-	<a href="<%= get_the_permalink p %>"><%= get_the_title p %> - <%= get_the_date p %></a><br />
+ 	get_archive_date.each do |p| %>
+
+		<a href="<%= get_the_permalink p %>"><%= get_the_title p %> - <%= get_the_date p %></a><br />
+
+	<% end %>
+
+<% else %>
+	
+	<p>No posts match the criteria.</p>
 
 <% end %>

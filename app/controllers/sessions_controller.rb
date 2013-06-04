@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+
 		
 	def create 
 		# abort("doing this for you")
