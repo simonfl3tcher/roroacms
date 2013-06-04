@@ -1,0 +1,47 @@
+<h2 class="title">
+	File Browser 
+
+	<small class="pull-right">size:- <%= get_bucket_size %></small>
+
+</h2>   
+<% @files.each do |file| %>  
+	<div class="span2">
+		<img src="<%= download_url_for(file.key) %>" data-image="<%= download_url_for(file.key) %>">
+		<br />
+		<%= link_to "Download", download_url_for(file.key) %>
+		<%= link_to "Delete",  "filebrowser/delete/?file=" + file.key, :confirm => 'Are you sure you want to delete ' + file.key + '?', :confirm => "Are you sure?" %>
+	</div>  
+<% end %>  
+<div class="clearboth"></div>
+
+<hr>
+
+<div class="pull-left">
+	
+		<%= form_tag("/admin/filebrowser/upload", :method => "post", :multipart => true) do %>  
+		    <%= file_field_tag "file" %>  
+		    <%= submit_tag "Upload", :class => 'btn btn-warning' %>  
+		<% end %>  
+	</div>
+
+	<div class="pull-right">
+
+		<a href="https://console.aws.amazon.com/s3/" class="btn btn-warning">S3 Console</a>
+	</div>
+
+
+
+
+<script type="text/javascript">
+	
+	$('.span2').on('click', 'img', function(){
+		var image = $(this).attr('data-image');
+		getUrl(1, image);
+	});
+
+	function getUrl(cback, image_file){
+		window.opener.CKEDITOR.tools.callFunction(cback, image_file);
+		window.close();
+	}
+
+</script>

@@ -125,7 +125,7 @@ ul.list li {
 .dropdown-menu > li > a:hover > [class*=" icon-"],
 .dropdown-menu > .active > a > [class^="icon-"],
 .dropdown-menu > .active > a > [class*=" icon-"] {
-  background-image: none;
+  /*background-image: none;*/
 }
 /*------------------------------------------------------------------
  
@@ -1057,18 +1057,14 @@ Signin
   font-family: 'Open Sans';
   font-size: 13px;
   color: #8e8d8d;
-  padding: 11px 15px 7px 50px;
+  padding: 11px 15px 7px 15px;
   background-color: #fdfdfd;
-  width: 255px;
+  width: 89%;
   display: block;
   margin: 0;
+  text-align: center;
   box-shadow: inset 2px 2px 4px #f1f1f1;
-}
-.login-fields .username-field {
-  background: url(../images/signin/user.png) no-repeat;
-}
-.login-fields .password-field {
-  background: url(../images/signin/password.png) no-repeat;
+  background-color: #000000;
 }
 .login-actions {
   float: left;
@@ -1271,9 +1267,9 @@ Shortcuts
   text-align: center;
 }
 .shortcuts .shortcut {
-  width: 30%;
+  width: 100%;
   display: inline-block;
-  padding: 12px 0;
+  padding: 51px 0 12px;
   margin: 0 .9% 1em;
   vertical-align: top;
   text-decoration: none;
@@ -1833,14 +1829,14 @@ Layout: Header
   top: 24px;
   display: block;
   overflow: hidden;
-  width: 280px;
+  width: 128px;
   height: 32px;
   margin-right: .75em;
   color: #FFF;
   font-size: 18px;
   font-weight: 600;
   line-height: 600;
-  background: url(../images/logo3.png) no-repeat 0 0;
+  background: url(../images/logo4.png) no-repeat 0 0;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 #header .btn-navbar {
@@ -2858,6 +2854,7 @@ h2 + .row {
   background-color: rgba(255,0,0,.25);
 }
 
+.short
 /* Example page
 ------------------------- */
 .bootstrap-examples h4 {
@@ -3373,4 +3370,6 @@ form.bs-docs-example {
     padding-bottom: 20px;
   }
 }
+
+
 

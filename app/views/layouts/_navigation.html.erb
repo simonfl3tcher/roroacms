@@ -19,6 +19,7 @@
         <li class="dropdown">         
           <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
             <i class="icon-file"></i>
+             <span>Content</span> 
             <b class="caret"></b>
           </a>  
         
@@ -30,12 +31,17 @@
             <li><%= link_to 'Add New Article', new_admin_post_path %></li>
             <li><%= link_to 'Categories', admin_post_categories_path %></li>
             <li><%= link_to 'Tags', admin_post_tags_path %></li>
+            <li class="divider"></li>
+            <li><%= link_to 'Banners', admin_banners_path %></li>
+            <li><%= link_to 'Add New Banner', new_admin_banner_path %></li>
+            <li><%= link_to 'Banner Categories', categories_admin_banners_path %></li>
           </ul>           
         </li>
         
         <li class="dropdown">         
           <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
             <i class="icon-user"></i>
+             <span>Admins</span> 
             <b class="caret"></b>
           </a>  
         
@@ -54,20 +60,23 @@
 	        <li class="nav-icon">
 	          <%= link_to admin_settings_general_index_path do %>
 	            <i class="icon-cogs"></i>
+              <span>Settings</span>  
 	          <% end %>              
 	          </a>
 	        </li>
 	    <% end %>
         <li class="nav-icon">
-          <%= link_to admin_reports_path do %>
-            <i class="icon-bar-chart"></i>
+          <%= link_to admin_media_path do %>
+            <i class="icon-cloud"></i>
+            <span>Media</span>
           <% end %>              
           </a>
         </li>
-        <% if Setting.find_by_setting_name('article_comment_type')[:setting] == 'R' %>
+        <% if Setting.find_by_setting_name('article_comment_type')[:setting] == 'R' && Setting.find_by_setting_name('article_comments')[:setting] == 'Y' %>
            <li class="nav-icon">
             <%= link_to admin_comments_path do %>
               <i class="icon-comments"></i>
+              <span>Comments</span>
             <% end %>              
             </a>
           </li>
@@ -77,6 +86,7 @@
 	         <li class="nav-icon">
 	          <%= link_to admin_trash_index_path do %>
 	            <i class="icon-trash"></i>
+              <span>Trash</span>
 	          <% end %>              
 	          </a>
 	        </li>

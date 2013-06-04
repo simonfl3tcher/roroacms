@@ -12,7 +12,7 @@ class Admin < ActiveRecord::Base
 
 	ACCESS_LEVELS = ["admin", "editor"]
 
-	validates_uniqueness_of :email
+	validates_uniqueness_of :email, :username
 
 	validates_presence_of :password, :on => :create
 	

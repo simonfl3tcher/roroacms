@@ -2,7 +2,7 @@ class Admin::PostsController < AdminController
 
 	def index
 
-			@posts = Post.where(:disabled => 'N', :post_type => 'post', ).order('post_date desc')
+			@posts = Post.where(:disabled => 'N', :post_type => 'post', ).order('post_date desc').limit(10)
 			if params.has_key?(:search) && !params[:search].blank?
 				@posts = Post.where("(id like ? or post_title like ? or post_slug like ?) and disabled = 'N' and post_type = 'post' and post_status != 'Autosave'", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
 			end
@@ -17,6 +17,7 @@ class Admin::PostsController < AdminController
 	end
 
 	def create
+		Rails.cache.clear 
 		@cats = params[:category_ids]
 		@tags = params[:tag_ids]
 		@post = Post.new(params[:post])
@@ -51,11 +52,12 @@ class Admin::PostsController < AdminController
 	end
 
 	def edit 
-		@revisions = Post.where(:post_parent => params[:id], :post_type => 'autosave').order('created_at desc')
+		@revisions = Post.where(:parent_id => params[:id], :post_type => 'autosave').order('created_at desc')
 		@post = Post.find(params[:id])
 	end
 
 	def update
+		Rails.cache.clear 
 	    @post = Post.find(params[:id])
 	    @cats = params[:category_ids]
 	    @tags = params[:tag_ids]
@@ -139,7 +141,7 @@ class Admin::PostsController < AdminController
 
 		# Check to see if there is more than 15 autosave records and if there is delete the ones that aren't used.
 		parent = params[:post][:id]
-		@autosave_records = Post.where("post_parent = ? and post_type = 'autosave'", parent).order("created_at DESC")
+		@autosave_records = Post.where("parent_id = ? and post_type = 'autosave'", parent).order("created_at DESC")
 
 		if @autosave_records.length > 9
 			Post.destroy(@autosave_records.last[:id])
@@ -150,7 +152,7 @@ class Admin::PostsController < AdminController
 		@post = Post.new(params[:post])
 
 		@post.id = nil
-		@post.post_parent = params[:post][:id]
+		@post.parent_id = params[:post][:id]
 
 		if @post.post_slug.empty?
 			@post.post_slug = @post.post_title.gsub(' ', '-')
@@ -177,7 +179,7 @@ class Admin::PostsController < AdminController
 					TermRelationship.create(:term_id => val, :post_id => @post.id)
 				end
 			end
-			@revisions = Post.where(:post_parent => params[:post][:id], :post_type => 'autosave').order('created_at desc')
+			@revisions = Post.where(:parent_id => params[:post][:id], :post_type => 'autosave').order('created_at desc')
 			render :partial => "autosave_list"
 			return @return = "passed"
 		else

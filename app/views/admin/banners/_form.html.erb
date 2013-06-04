@@ -1,0 +1,76 @@
+<div class="row" id="postPage">
+    <%= form_for [:admin, @banner] do |f| %>
+      <div class="span9">
+      <% if @banner.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@banner.errors.count, "error") %> errors:</h2>
+
+          <ul>
+          <% @banner.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <fieldset>
+        <div class="field">
+          <%= f.text_field :name, size: 40, :placeholder => 'Banner Name' %>
+        </div>
+        <div class="field">
+          <%= f.text_field :image, size: 40, :placeholder => 'Image Url' %>
+        </div>
+        <div class="field">
+          <%= f.text_field :sort_order, size: 40, :placeholder => 'Sort Order' %>
+        </div>
+ 
+        <div class="field">
+          <%= f.text_area :description, :class => 'ckeditor' %>
+        </div>
+      </fieldset>
+
+
+  </div>
+  <div class="span3">
+
+    <div class="accordion tagsAccordion" id="accordionTags">
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionTags" href="#collapseTags"><i class="icon-sitemap pull-left"></i>&nbsp;Banner Category<i class="accordionSign pull-right"></i></a>
+        </div>
+        <div id="collapseTags" class="accordion-body collapse in">
+           <div class="accordion-inner">
+              <div class="field">
+              <% if !Banner::BANNER_CATEGORIES.blank? %>
+                <ul>
+                  <% Banner::BANNER_CATEGORIES.each do |tag| %>
+                      <li>
+                        <%= check_box_tag 'category_ids[]', tag.id, @banner.terms.find_by_id(tag.id) ? true : false %><%= label_tag tag.name %>
+                      </li>
+                  <% end %>
+                </ul>
+              <% else %>
+                <div style="text-align:center;">
+                  <strong>No tags!</strong>
+                </div>
+              <% end %>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>      
+
+  </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  
+  $(document).ready(function(){
+    $('.updatepost').bind('click', function(e){
+      $('body').find('form').submit();
+      e.preventDefault();
+    });
+  });
+  
+</script>

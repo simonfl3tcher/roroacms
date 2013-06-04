@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dashboard | Roroa CMS</title>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
+
+  </head>
+  <body>
+    <div id="wrapper">  
+      
+      <div id="header">
+         <div class="container">
+
+    		<%= link_to 'Dashboard Admin', admin_path, :class => 'brand' %>
+    	</div>
+      </div> 
+
+
+      <div id="content">
+
+        <div class="container">
+          <%= get_notifications %>
+          <%= yield %>
+       </div> 
+
+      </div> 
+    </div>
+
+    <div class="clearboth"></div> 
+  </body>
+</html>

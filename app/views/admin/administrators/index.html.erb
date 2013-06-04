@@ -5,18 +5,18 @@
 
     <div class="well">
 
-      <%= link_to new_admin_administrator_path do %>
-        <button class="pull-right btn btn-small btn-warning"><span class="icon-plus"></span>&nbsp;Add New Administrator</button>
-      <% end %>
-
-      <div class="input-append pull-left">
-      <%= form_tag admin_administrators_path, :method => 'get' do %>
-        <p>
-          <%= text_field_tag :search, params[:search], :placeholder => "Search..." %>
-          <%= submit_tag "Search", :name => nil, :class => 'btn btn-warning' %>
-        </p>
-      <% end %>
+      <div class="input-append pull-left span6">
+        <%= form_tag admin_administrators_path, :method => 'get' do %>
+            <%= text_field_tag :search, params[:search], :placeholder => "Search..." %>
+            <%= submit_tag "Search", :name => nil, :class => 'btn btn-warning' %>
+        <% end %>
       </div>
+      <div class="span6">
+        <%= link_to new_admin_administrator_path do %>
+          <button class="pull-right btn btn-small btn-warning"><span class="icon-plus"></span>&nbsp;Add New Administrator</button>
+        <% end %>
+      </div>
+      <div class="clearboth"></div>
     </div>
 
     <table class="table table-bordered table-striped">
@@ -31,16 +31,18 @@
       <% @admins.each do |admin| %>
         <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 
-          <td><%= admin.id %></td>
-      	<td><%= admin.first_name + " " + admin.last_name %></td>
-      	<td><%= admin.email %></td>
+        <td><span class="hhfr inline">#</span><%= admin.id %></td>
+      	<td><span class="hhfr">Name:-</span><%= admin.first_name + " " + admin.last_name %></td>
+      	<td><span class="hhfr">Email Address:-</span><%= admin.email %></td>
           <td>
             <div class="btn-group">
               <%= link_to edit_admin_administrator_path(admin), :class => 'btn btn-small' do %>
                 <i class="icon-pencil"></i>
-              <% end %>        
-              <%= link_to admin_administrator_path(admin), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-small' do %>
-                <i class="icon-trash"></i>
+              <% end %> 
+              <% if admin.overlord != 'Y' %>       
+                <%= link_to admin_administrator_path(admin), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-small' do %>
+                  <i class="icon-trash"></i>
+                <% end %>
               <% end %>
             </div>
           </td>

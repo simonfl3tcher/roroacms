@@ -1,69 +1,142 @@
-<%= form_for [:admin, @page], :url => { :action => :create } do |f| %>
-  <% if @page.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@page.errors.count, "error") %> errors:</h2>
+<div class="row" id="postPage">
+    <%= form_for [:admin, @page], :url => { :action => :create } do |f| %>
+      <div class="span9">
+      <% if @page.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@page.errors.count, "error") %> errors:</h2>
 
-      <ul>
-      <% @page.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+          <ul>
+          <% @page.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
+
+      <fieldset>
+        <div class="field">
+          <%= f.hidden_field :admin_id, :value => session[:admin_id], size: 40 %>
+          <%= f.hidden_field :id %>
+        </div>
+        <div class="field">
+          <%= f.hidden_field :post_type, :value => "page" %>
+        </div>
+        <div class="field">
+          <%= f.text_field :post_title, size: 40, :placeholder => 'Page Title' %>
+        </div>
+ 
+        <div class="field">
+          <%= f.text_area :post_content, :class => 'ckeditor' %>
+        </div>
+      </fieldset>
+
+
+    <script type="text/javascript">
+        
+        $(document).ready(function(){
+            setInterval(function(){
+              if($('#post_post_title').val() != ""){
+                var form = $('form');
+                var method = form.attr('method').toLowerCase();      // "get" or "post"
+                var action = form.attr('action');  
+                 if($('input[name="_method"]').length > 0){  
+                    $.post('/admin/posts/autosave_update', form.serialize(), function(data){
+                      $('#revisionsContainer').html(data)
+                    });
+                  } else {
+                  //   $.post('/admin/posts/autosave_create', form.serialize(), function(data){
+                  //   conosle.log('done that for you bud!')
+                  //   });
+                  }
+                }
+            }, 12000);
+
+            $("#post_post_title").keyup(function(){
+                $("#post_post_slug").val($(this).val().toLowerCase().split(' ').join('-'));
+            });
+        })
+
+    </script>
+    <div class="accordion" id="accordionSeo">
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionSeo" href="#collapseThree"><i class="icon-bar-chart pull-left"></i>&nbsp;Search Engine Optimisation<i class="accordionSign pull-right"></i></a>
+        </div>
+        <div id="collapseThree" class="accordion-body collapse">
+          <div class="accordion-inner">
+            <table class="seoDataTable">
+              <tbody>
+                <tr>
+                    <td><%= f.label 'Title:' %></td>
+                    <td><%= f.text_field :post_seo_title, size: 40 %><span><small>* The contents of this tag are generally shown as the title in search results (and of course in the user's browser)</small></span></td>
+                </tr>
+                <tr>
+                    <td><%= f.label 'Description:' %></td>
+                    <td><%= f.text_area :post_seo_description %><span><small>* This tag provides a short description of the page. In some situations this description is used as a part of the snippet shown in the search results</small></span></td>
+                </tr>
+                <tr>
+                    <td><%= f.label 'Is disabled on this page:' %></td>
+                    <td><%= f.check_box :post_seo_is_disabled, {checked: false}, 'Y', 'N'  %><span><small>* if you want to leave these blank</small></span></td>
+                </tr>
+                <tr>
+                    <td><%= f.label 'No Index:' %></td>
+                    <td><%= f.check_box :post_seo_no_index, {}, 'Y', 'N' %><span><small>* prevents the page from being indexed</small></span></td>
+                </tr>
+                <tr>
+                    <td><%= f.label 'No Follow:' %></td>
+                    <td><%= f.check_box :post_seo_no_follow, {}, 'Y', 'N'  %><span><small>* prevents the Googlebot from following links from this page</small></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>  
+
+  <%= render 'autosave' %>
+
+  </div>
+  <div class="span3">
+
+    <div class="accordion" id="accordion1">
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne"><i class="icon-lightbulb pull-left"></i>&nbsp;Publish<i class="accordionSign pull-right"></i></a>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse in">
+          <div class="accordion-inner">
+            <div class="field">
+              <%= f.label 'Page Slug' %>
+              <%= f.text_field :post_slug, size: 40 %>
+            </div>
+            <div class="field">
+              <%= f.label 'Page Status' %>
+               <%= f.select :post_status, Post::POST_STATUS, prompt: 'Select a Post Status' %>
+            </div>
+            <div class="field">
+              <%= f.label 'Page Parent' %>
+              <%= f.select :parent_id, Post.where(:post_type => 'post', :disabled => 'N').collect {|p| [ p.post_title, p.id ] }, prompt: 'Select a parent post' %>
+            </div>
+            <div class="field">
+              <%= f.label 'Page Date' %>
+              <%= f.datetime_select :post_date, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => 'Time:- '}, :class => 'dateselect' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>        
+
+  </div>
   <% end %>
-
-  <fieldset>
-    <legend>Enter Details</legend>
-
-    <div class="field">
-      <%= f.hidden_field :admin_id, :value => session[:admin_id], size: 40 %>
-      <%= f.hidden_field :id %>
-    </div>
-    <div class="field">
-      <%= f.hidden_field :post_type, :value => "page" %>
-    </div>
-    <div class="field">
-      <%= f.label 'Page Title' %>
-      <%= f.text_field :post_title, size: 40 %>
-    </div>
-    <div class="field">
-      <%= f.label 'Page Slug' %>
-      <%= f.text_field :post_slug, size: 40 %>
-    </div>
-    <div class="field">
-      <%= f.label 'Page Status' %>
-       <%= f.select :post_status, Post::POST_STATUS, prompt: 'Select a Post Status' %>
-    </div>
-    <div class="field">
-      <%= f.label 'Page Parent' %>
-      <%= f.select :post_parent, Post.all.collect {|p| [ p.post_title, p.id ] }, prompt: 'Select a parent post' %>
-    </div>
-    <div class="field">
-      <%= f.label 'Page Date' %>
-      <%= f.date_select :post_date %>
-    </div>
-    <div class="field">
-      <%= f.label 'Page Content' %>
-      <%= f.text_area :post_content%>
-    </div>
-    <div class="field">
-       <%= f.submit "Add Page", :class => 'btn' %>
-    </div>
-  </fieldset>
-<% end %>
-
+</div>
 
 <script type="text/javascript">
-    
-//     $(document).ready(function(){
-//       setInterval(function(){
-//         var form = $('form');
-//         var method = form.attr('method').toLowerCase();      // "get" or "post"
-//         var action = form.attr('action');    
-//         $.post('/admin/posts/autosave', form.serialize(), function(data){
-//           // Do something with the server response data      
-//           // Or at least let the user know it saved
-//         });
-//       },60000);
-//     })
-
+  
+  $(document).ready(function(){
+    $('.updatepost').bind('click', function(e){
+      $('body').find('form').submit();
+      e.preventDefault();
+    })
+  });
+  
 </script>

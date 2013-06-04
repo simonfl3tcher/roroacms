@@ -1,4 +1,4 @@
-<h1 class="title">Edit Article
+<h2 class="title">Edit Article
 
 <div class="btn-group pull-right">
   <%= link_to admin_posts_path, :class => 'btn btn-mini pull-left' do %>
@@ -14,19 +14,6 @@
     <i class="icon-refresh"></i>
   <% end %> 
 </div>
-</h1>
-
-<script type="text/javascript">
-	
-	$(document).ready(function(){
-		$('.updatepost').bind('click', function(e){
-			$('body').find('form').submit();
-			e.preventDefault();
-		})
-	});
-	
-</script>
-
-
+</h2>
 
 <%= render 'form' %>

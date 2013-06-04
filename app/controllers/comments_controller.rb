@@ -13,6 +13,7 @@ class CommentsController < ApplicationController
 
 			respond_to do |format|
 			  if @comment.save
+			  	Notifier.comment(@comment).deliver
 			    format.html { redirect_to session[:return_to], notice: 'Comment was successfully created. Awaiting Review' }
 			  else
 

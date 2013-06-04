@@ -27,14 +27,14 @@
 
     <% end %>
 
-    <%= get_comments_loop %>
+    <%= display_comments_loop %>
 
     <%= form_for [@comment] do |f| %>
 
       <fieldset class="commentForm">
 
         <%= f.hidden_field :post_id, :value => @content.id %>
-        <%= f.hidden_field :comment_parent, :value => nil %>
+        <%= f.hidden_field :parent_id, :value => nil, :id => 'comment_comment_parent' %>
 
         <div id="replyToTitle"></div>
 
@@ -61,33 +61,3 @@
     <% end %>
 
 <% end %>
-<!-- 
-<script type="text/javascript">
-  
-  jQuery(function () {
-    var replyTo = $(".reply");
-    var buttons = $(".replyBtn");
-    $(".replyBtn").click(function (e) {
-        e.preventDefault();
-        replyTo.val($(this).attr("data-id"));
-        var title = $(this).siblings(".blogPostTitle").children('.blogEntry').html();
-        $('#commentArea .blogEntry').html('Reply to:- ' + title);
-        $('#commentArea input[name="submit"]').val('Reply');
-        $('html,body').animate({
-            scrollTop: $("#commentArea").offset().top
-        }, 'slow');
-    });
-    $(".commentBtn").click(function (e) {
-        e.preventDefault();
-        replyTo.val('');
-        var title = $(this).siblings(".blogPostTitle").children('.blogEntry').html();
-        $('#commentArea .blogEntry').html('Comment');
-        $('#commentArea input[name="submit"]').val('Comment');
-        $('html,body').animate({
-            scrollTop: $("#commentArea").offset().top
-        }, 'slow');
-    });
-});
-
-
-</script> -->

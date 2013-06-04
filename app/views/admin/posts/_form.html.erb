@@ -26,7 +26,7 @@
         </div>
  
         <div class="field">
-          <%= f.text_area :post_content, :class => 'redactor' %>
+          <%= f.text_area :post_content, :class => 'ckeditor' %>
         </div>
       </fieldset>
 
@@ -114,19 +114,19 @@
                <%= f.select :post_status, Post::POST_STATUS, prompt: 'Select a Post Status' %>
             </div>
             <div class="field">
-              <%= f.label :post_parent %>
-              <%= f.select :post_parent, Post.where(:post_type => 'post', :disabled => 'N').collect {|p| [ p.post_title, p.id ] }, prompt: 'Select a parent post' %>
+              <%= f.label :parent_id %>
+              <%= f.select :parent_id, Post.where(:post_type => 'post', :disabled => 'N').collect {|p| [ p.post_title, p.id ] }, prompt: 'Select a parent post' %>
             </div>
             <div class="field">
               <%= f.label :post_date %>
-              <%= f.datetime_select :post_date, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true}, :class => 'dateselect' %>
+              <%= f.datetime_select :post_date, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => 'Time:- '}, :class => 'dateselect' %>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="accordion" id="accordion2">
+    <div class="accordion categoriesAccordion" id="accordion2">
       <div class="accordion-group">
         <div class="accordion-heading">
           <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"><i class="icon-sitemap pull-left"></i>&nbsp;Article Categories<i class="accordionSign pull-right"></i></a>
@@ -134,12 +134,21 @@
         <div id="collapseTwo" class="accordion-body collapse">
           <div class="accordion-inner">
               <div class="field">
+
+              <% if !Post::POST_CATEGORIES.blank? %>
+              <ul>
                 <% Post::POST_CATEGORIES.each do |category| %>
                   
                     <li>
                       <%= check_box_tag 'category_ids[]', category.id, @post.terms.find_by_id(category.id) ? true : false %><%= label_tag category.name %>
                     </li>
                 <% end %>
+              </ul>
+              <% else %>
+                <div style="text-align:center;">
+                  <strong>No categories!</strong>
+                </div>
+              <% end %>
               </div>
           </div>
         </div>
@@ -153,11 +162,19 @@
         <div id="collapseTags" class="accordion-body collapse">
            <div class="accordion-inner">
               <div class="field">
-                <% Post::POST_TAGS.each do |tag| %>
-                    <li>
-                      <%= check_box_tag 'tag_ids[]', tag.id, @post.terms.find_by_id(tag.id) ? true : false %><%= label_tag tag.name %>
-                    </li>
-                <% end %>
+              <% if !Post::POST_TAGS.blank? %>
+                <ul>
+                  <% Post::POST_TAGS.each do |tag| %>
+                      <li>
+                        <%= check_box_tag 'tag_ids[]', tag.id, @post.terms.find_by_id(tag.id) ? true : false %><%= label_tag tag.name %>
+                      </li>
+                  <% end %>
+                </ul>
+              <% else %>
+                <div style="text-align:center;">
+                  <strong>No tags!</strong>
+                </div>
+              <% end %>
               </div>
           </div>
         </div>
@@ -167,3 +184,14 @@
   </div>
   <% end %>
 </div>
+
+<script type="text/javascript">
+  
+  $(document).ready(function(){
+    $('.updatepost').bind('click', function(e){
+      $('body').find('form').submit();
+      e.preventDefault();
+    })
+  });
+  
+</script>

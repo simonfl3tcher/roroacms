@@ -16,6 +16,10 @@
 				<%= label_tag(:site_url, "Site Url") %>
 				<%= text_field_tag(:site_url, Setting.find_by_setting_name('site_url')[:setting]) %>
 			</div>
+			<div class="field formSep">
+				<%= label_tag(:site_email, "Site Email Address") %>
+				<%= text_field_tag(:site_email, Setting.find_by_setting_name('site_email')[:setting]) %>
+			</div>
 
 			<div class="field formSep">
 				<%= label_tag(:articles_slug, "Articles Slug") %>
@@ -27,6 +31,11 @@
 				<%= text_field_tag(:category_slug, Setting.find_by_setting_name('category_slug')[:setting]) %>
 			</div>
 
+			<div class="field formSep">
+				<%= label_tag(:tag_slug, "Tag Slug") %>
+				<%= text_field_tag(:tag_slug, Setting.find_by_setting_name('tag_slug')[:setting]) %>
+			</div>
+
 			<div class="field">
 				<%= label_tag(:home_page, "Homepage") %>
 				<%= select_tag :home_page, options_for_select(Post.where(:post_type => 'page').collect {|p| [ p.post_title, p.id ] }, Setting.find_by_setting_name('home_page')[:setting]), prompt: 'Select a homepage' %>
@@ -35,7 +44,7 @@
 
 		<div class="span6">
 
-			<div class="title">Comments</div>
+			<div class="title">Comments Settings</div>
 
 			<div class="field formSep">
 				<%= hidden_field_tag :article_comments, 'N' %>
@@ -48,11 +57,30 @@
 			<%= radio_button(:article_comment_type, nil, "F", :checked => Setting.find_by_setting_name('article_comment_type')[:setting] == 'F' ? true : false) %>Facebook Comments
 			</div>
 
+			<br />
+			<br />
+
+			<div class="title">Amazon S3 Settings</div>
+
+			<div class="field formSep">
+				<%= label_tag(:aws_access_key_id, "Access Key ID") %>
+				<%= text_field_tag(:aws_access_key_id, Setting.find_by_setting_name('aws_access_key_id')[:setting]) %>
+			</div>
+			<div class="field">
+				<%= label_tag(:aws_secret_access_key, "Secret Access Key") %>
+				<%= text_field_tag(:aws_secret_access_key, Setting.find_by_setting_name('aws_secret_access_key')[:setting]) %>
+			</div>
+			<div class="field">
+				<%= label_tag(:aws_bucket_name, "Bucket Name") %>
+				<%= text_field_tag(:aws_bucket_name, Setting.find_by_setting_name('aws_bucket_name')[:setting]) %>
+			</div>
+
 
 		</div>
 
 	</div>
 
+	<br />
 	<br />
 
 	<div class="title">SEO Settings</div>

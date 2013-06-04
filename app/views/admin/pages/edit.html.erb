@@ -1,6 +1,13 @@
-<h1>Edit Page</h1>
+<h2 class="title">Edit Page
 
+	<div class="btn-group pull-right">
+  <%= link_to admin_posts_path, :class => 'btn btn-mini pull-left' do %>
+    <i class="icon-arrow-left"></i>
+  <% end %>   
+  <%= link_to admin_posts_path, :class => 'btn btn-mini pull-right updatepost' do %>
+    <i class="icon-refresh"></i>
+  <% end %> 
+</div>
+</h2>
 
 <%= render 'form_edit' %>
-
-<%= link_to 'Back', admin_post_path %>

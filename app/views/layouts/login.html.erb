@@ -1,13 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Railsoverview</title>
+  <title>Roroa Dashboard | Login Page</title>
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,800">
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= stylesheet_link_tag    "admin", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style type="text/css">
+
+  	body.login {
+  		background-color: #000000;
+	    display: none;
+  	}
+
+  	.background {
+
+    height: 420px;
+    left: 25%;
+    margin: 0 auto;
+    position: absolute;
+    top: 0;
+    width: 570px;
+    z-index: 0;
+  	}
+
+  	#LoginBody {
+  		    background-image: url("../images/roroa_login.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+  	}
+
+  	.account-container {
+  		background: none repeat scroll 0 0 transparent !important;
+	    box-shadow: none !important;
+	    margin: 100px auto 0;
+	    padding-top: 103px;
+	    position: relative;
+	    z-index: 1;
+  	}
+
+  	textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+  		border:1px solid #3A3737;
+  	}
+
+  	.login-fields input {
+  		box-shadow: 2px 2px 4px #302F2F inset;
+  	}
+
+  	textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
+  		border-color: #F4F4F4;
+  		color:#F4F4F4;
+  	}
+
+  	.login-fields input {
+  		color: #F4F4F4;
+  	}
+
+  </style>
+
+  <script type="text/javascript">
+
+  	$('body').hide();
+
+  	$(document).ready(function(){
+	  	$('body').fadeIn(2500);
+  	})
+
+
+  </script>
 </head>
 <body class="login">
 	   <%= yield %>

@@ -21,4 +21,16 @@ module AdminUiHelper
 
 	end
 
+	def deal_with_filecontents filetype
+
+		if filetype[0,5] == 'image'
+
+			render :inline => '<i class="icon-picture icon-3x"></i>'
+
+		else
+			render :inline => '<i class="icon-file icon-3x"></i>'
+		end
+
+	end
+
 end
