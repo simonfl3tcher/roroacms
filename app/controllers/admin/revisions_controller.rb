@@ -8,16 +8,16 @@ class Admin::RevisionsController < AdminController
 
 	def edit
 		post = Post.find(params[:id])
-		parent = Post.find(post.post_parent)
+		parent = Post.find(post.parent_id)
 
-		@revisions = Post.where(:post_parent => post.post_parent, :post_type => 'autosave').order('created_at desc')
+		@revisions = Post.where(:parent_id => post.parent_id, :post_type => 'autosave').order('created_at desc')
 		@revision = { 'parent' => parent, 'revision' => post}
 	end
 
 	def restore
 		
 		post = Post.find(params[:id])
-		parent = Post.find(post.post_parent)
+		parent = Post.find(post.parent_id)
 
 		parent.post_content = post.post_content
 		parent.post_date = post.post_date

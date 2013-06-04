@@ -1,16 +1,17 @@
 <h1>Category Page</h1>
 
-<%
+<br>
 
-if !@content.blank?
+<% if !get_category_data.blank?
 
- 	@content.each do |p| %>
+ 	get_category_data.each do |p| %>
 
 		<a href="<%= get_the_permalink p %>"><%= get_the_title p %> - <%= get_the_date p %></a><br />
 
 	<% end %>
+
 <% else %>
 	
-	<p>No posts match the criteria</p>
-	
+	<p>No posts match the criteria.</p>
+
 <% end %>

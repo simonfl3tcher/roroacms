@@ -10,20 +10,18 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//= require_self
 //= require jquery
-//= require jquery_ujs
+//= require jquery-ui
+//= require jquery-1.9.0
+//= require ckeditor-jquery
 //= require twitter/bootstrap
-//= require_tree .
 
 $('.checkall').change(function() {
   var checkboxes = $(this).closest('form').find(':checkbox');
   checkboxes.attr('checked', $(this).is(':checked'));
 });
-
-$("#collapseThree").on("hide", function(e){
-	console.log('hello');
-});
-
+3
 $('#editButton').click(function(){
 	clickToEdit();
 });

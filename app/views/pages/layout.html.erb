@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<%= get_meta_headers %>
+		<%= stylesheet_link_tag "theme", :media => "all" %>
+		<%= javascript_include_tag "theme" %>
+		<%= csrf_meta_tags %>
+	</head>
+	<body>
+
+		<%= yield %>
+
+	</body>
+</html>

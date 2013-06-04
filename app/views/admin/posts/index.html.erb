@@ -6,60 +6,69 @@
 
 <div class="well">
 
+  <div class="input-append span6">
+  <%= form_tag admin_posts_path, :method => 'get' do %>
+      <%= text_field_tag :search, params[:search], :placeholder => "Search..." %>
+      <%= submit_tag "Search", :name => nil, :class => 'btn btn-small btn-warning' %> 
+  <% end %>
+  </div>
+  <div class="span6">
   <%= link_to new_admin_post_path do %>
     <button class="pull-right btn btn-small btn btn-warning"><span class="icon-plus"></span>&nbsp;Add New Article</button>
   <% end %>
-
-  <div class="input-append pull-left">
-  <%= form_tag admin_posts_path, :method => 'get' do %>
-    <p>
-      <%= text_field_tag :search, params[:search], :placeholder => "Search..." %>
-      <%= submit_tag "Search", :name => nil, :class => 'btn btn-small btn-warning' %>
-    </p>
-  <% end %>
-  </div>
+</div>
+  <div class="clearboth"></div>
 </div>
 
-<%= form_tag "/admin/posts/bulk_update" do %>
-  <table class="table table-bordered table-striped table_vam">
-  <thead>
-    <tr>
-      <th><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
-      <th>Post Title</th>
-      <th>Published Date</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <% @posts.each do |post| %>
-    <tr class="<%= cycle('list_line_odd', 'list_line_even') %> <%= post.post_status == "Draft" ? 'draft' : '' %>">
+<% if @posts.blank? %>
+  <div class="span12" style="text-align:center;">
+    <strong style="margin-top:100px; font-size:25px; display:block; ">You currently have no articles</strong>
+  </div>
 
-    <td><%= check_box_tag 'posts[]', post.id %></td>
-  	<td><%= post.post_title %><%= post.post_status == "Draft" ? ' - draft' : '' %></td>
-  	<td><%= post.post_date.strftime "%d-%m-%Y" %></td>
-      <td>
-        <div class="btn-group">
-          <%= link_to edit_admin_post_path(post), :class => 'btn btn-small' do %>
-            <i class="icon-pencil"></i>
-          <% end %>        
-          <%= link_to page_path(post), :class => 'btn btn-small', :target => "_blank" do %>
-            <i class="icon-search"></i>
-          <% end %>       
-          <%= link_to admin_post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-small' do %>
-            <i class="icon-trash"></i>
-          <% end %>
-        </div>
-      </td>
+<% else %>
 
-      <% if !post.child.blank? %>
-       <% @p = post.child
-          @level = "<i class=\"icon-minus\"></i>"
-        %>
-       <%= render 'posts_table' %>
-      <% end %>
-    </tr>
+  <%= form_tag "/admin/posts/bulk_update" do %>
+    <table class="table table-bordered table-striped table_vam">
+    <thead>
+      <tr>
+        <th><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
+        <th>Post Title</th>
+        <th>Published Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <% @posts.each do |post| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %> <%= post.post_status == "Draft" ? 'draft' : '' %>">
+
+      <td><%= check_box_tag 'posts[]', post.id %></td>
+    	<td><span class="hhfr">Post Title:-</span><%= post.post_title %><%= post.post_status == "Draft" ? ' - draft' : '' %></td>
+    	<td><span class="hhfr">Published Date:-</span><%= post.post_date.strftime "%d-%m-%Y" %></td>
+        <td>
+          <div class="btn-group">
+            <%= link_to edit_admin_post_path(post), :class => 'btn btn-small' do %>
+              <i class="icon-pencil"></i>
+            <% end %>        
+            <%= link_to page_path(post), :class => 'btn btn-small', :target => "_blank" do %>
+              <i class="icon-search"></i>
+            <% end %>       
+            <%= link_to admin_post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-small' do %>
+              <i class="icon-trash"></i>
+            <% end %>
+          </div>
+        </td>
+
+        <% if !post.child.blank? %>
+         <% @p = post.child
+            @level = "<i class=\"icon-minus\"></i>"
+          %>
+         <%= render 'posts_table' %>
+        <% end %>
+      </tr>
+    <% end %>
+    </table>
+    <%= bulk_update_dropdown Hash['publish' => 'Publish', 'draft' => 'Draft', 'move_to_trash' => 'Move To Trash'] %>
+
   <% end %>
-  </table>
-  <%= bulk_update_dropdown Hash['publish' => 'Publish', 'draft' => 'Draft', 'move_to_trash' => 'Move To Trash'] %>
 
 <% end %>
 </div>

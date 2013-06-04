@@ -1,5 +1,7 @@
 <div class="btn-group pull-left">
-    <button data-toggle="dropdown" class="btn btn-small dropdown-toggle">Bulk Action <span class="caret"></span></button>
+    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Bulk Action
+    <span class="caret"></span>
+  </a>
     <ul class="dropdown-menu">
     	<% @options.each do |k, v| %>
 			<% if k == 'publish' %>
@@ -14,6 +16,8 @@
                 <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="icon-ok"></i>&nbsp;<%= v %></a></li>
             <% elsif k == 'unapprove' %>
                 <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="icon-minus"></i>&nbsp;<%= v %></a></li>
+            <% elsif k == 'reinstate' %>
+                <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="icon-reply"></i>&nbsp;<%= v %></a></li>
             <% else %>
 				<li><a href="javascript:void(0)" data-val="<%= k %>"><%= v %></a></li>
 			<% end %>

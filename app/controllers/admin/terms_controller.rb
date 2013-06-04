@@ -1,16 +1,5 @@
 class Admin::TermsController < AdminController
 
-	# def index
-	# 	abort()
-	# 	@categories = Term.order('name asc')
-		
-	# 	@category = Term.new
-	
-	# 	# if params.has_key?(:search)
-	# 	# 	# @posts = Post.where("id like ? or post_title like ? or post_slug like ?", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
-	# 	# end
-	# end
-
 	def categories
 		@categories = Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
 		@category = Term.new
@@ -40,7 +29,13 @@ class Admin::TermsController < AdminController
 			redirect_url = "admin_post_categories_path"
 			type = "Category"
 
+		elsif taxonomy == 'banner'
+
+			redirect_url = "categories_admin_banners_path"
+			type = "Banner category"
+
 		else
+
 			redirect_url = "admin_post_tags_path"
 			type = "Tag"
 

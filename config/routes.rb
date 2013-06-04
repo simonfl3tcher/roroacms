@@ -1,17 +1,11 @@
 Railsoverview::Application.routes.draw do
 
-  resources :articles
+  # mount RedactorRails::Engine => '/redactor_rails'
 
-  get 'register', to: 'users#new', as: 'register'
-  get 'login', to: 'sessions#new', as: 'login'
-  get 'logout', to: 'sessions#destroy', as: 'logout'
-  # get 'profile', to: 'profile#index', as: 'profile'
+  resources :articles
   
   resources :pages 
-  resources :users
   resources :sessions
-  resources :profile
-  resources :upload
   resources :comments
 
   namespace :admin do
@@ -22,7 +16,30 @@ Railsoverview::Application.routes.draw do
     get 'posts/categories', to: 'terms#categories', as: 'post_categories'
     get 'posts/tags', to: 'terms#tags', as: 'post_tags'
     
-    resources :login, :users, :administrators, :reports, :pagination, :upload
+    resources :login, :users, :administrators
+
+    resources :media do
+
+      collection do
+        get 'delete'
+        post 'bulk_update'
+      end
+
+    end
+
+    resources :banners do 
+      collection do
+          get 'categories'
+        end
+    end
+
+    resources :filebrowser do
+        member {post 'upload'}
+        collection do
+          post 'upload'
+          get 'delete'
+        end
+    end
 
     resources :revisions do
         member {get 'restore'}

@@ -1,4 +1,4 @@
-<h1 class="title">
+<h2 class="title">
 
 	<% if @admin.id == session[:admin_id] %>
 		Edit Profile
@@ -6,12 +6,18 @@
 		Edit Administrator
 	<% end %>
 
-  
-    <%= link_to :back, :class => 'btn btn-mini pull-right' do %>
-      <i class="icon-arrow-left"></i>
-    <% end %> 
+  	<div class="btn-group pull-right">
+	    <%= link_to :back, :class => 'btn btn-mini' do %>
+	      <i class="icon-arrow-left"></i>
+	    <% end %>
+	    
+	    <% if @admin.overlord != 'Y' %>  
+		    <%= link_to admin_administrator_path(@admin), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-mini btn-danger' do %>
+			  <i class="icon-trash"></i>
+			<% end %>
+		<% end %>
 
-    <% back_button %>
-</h1>
+	</div>
+</h2>
 
 <%= render 'form' %>

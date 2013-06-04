@@ -1,8 +1,17 @@
-
 <% if @type == 'category' %>
-	<div class="title">Post Category</div>
+	<div class="title">
+		Post Category
+		  <%= link_to admin_posts_path, :class => 'btn btn-mini pull-right' do %>
+		    <i class="icon-arrow-left"></i>
+		  <% end %>   
+	</div>
 <% else %>
-	<div class="title">Post Tag</div>
+	<div class="title">
+		Post Tag
+		<%= link_to admin_posts_path, :class => 'btn btn-mini pull-right' do %>
+		    <i class="icon-arrow-left"></i>
+	  <% end %>   
+	</div>
 <% end %>
 
 
@@ -11,5 +20,3 @@
 <% else %>
 	<%= render :partial => 'form_tag', :locals => {:edit => true} %>
 <% end %>
-
-<%= link_to 'Back', admin_post_categories_path %>

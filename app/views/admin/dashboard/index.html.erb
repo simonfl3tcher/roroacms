@@ -1,2 +1,45 @@
-<h1>Administration</h1>
-<p>Welcome to tyrions admin</p>
+<h2 class="title">Dashboard</h2>
+<div class="row-fluid">
+  <div class="span12 shortcuts">
+    <div class="row-fluid">
+         <div class="span4">
+            <%= link_to admin_pages_path, :class => 'shortcut' do %>
+              <i class="icon-file icon-4x"></i>
+              <span class="shortcut-label">Pages</span>
+            <% end %>
+          </div>
+         <div class="span4">
+            <%= link_to admin_posts_path, :class => 'shortcut' do %>
+              <i class="icon-file-alt icon-4x"></i>
+              <span class="shortcut-label">Articles</span>
+            <% end %>
+          </div>
+         <div class="span4">
+            <%= link_to admin_administrators_path, :class => 'shortcut' do %>
+              <i class="icon-user icon-4x"></i>
+              <span class="shortcut-label">Administrators</span>
+            <% end %>
+          </div>
+    </div>
+    <div class="row-fluid">
+         <div class="span4">
+            <%= link_to admin_settings_general_index_path, :class => 'shortcut' do %>
+              <i class="icon-cogs icon-4x"></i>
+              <span class="shortcut-label">Settings</span>
+            <% end %>
+          </div>
+         <div class="span4">
+            <%= link_to admin_media_path, :class => 'shortcut' do %>
+              <i class="icon-cloud icon-4x"></i>
+              <span class="shortcut-label">Media</span>
+            <% end %>
+          </div>
+         <div class="span4">
+            <%= link_to admin_trash_index_path, :class => 'shortcut' do %>
+              <i class="icon-trash icon-4x"></i>
+              <span class="shortcut-label">Trash</span>
+            <% end %>
+          </div>
+    </div>
+  </div>
+</div>
