@@ -1,9 +1,14 @@
 <h2 class="title">Edit Page
-
-	<div class="btn-group pull-right">
+<div class="btn-group pull-right">
   <%= link_to admin_posts_path, :class => 'btn btn-mini pull-left' do %>
     <i class="icon-arrow-left"></i>
   <% end %>   
+  <%= link_to admin_post_path(@page), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-mini btn-danger pull-left' do %>
+    <i class="icon-trash"></i>
+  <% end %> 
+  <%= link_to page_path(@page), :class => 'btn btn-mini pull-left' do %>
+    <i class="icon-search"></i>
+  <% end %>  
   <%= link_to admin_posts_path, :class => 'btn btn-mini pull-right updatepost' do %>
     <i class="icon-refresh"></i>
   <% end %> 

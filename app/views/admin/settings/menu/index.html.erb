@@ -1,0 +1,45 @@
+<div class="two_third">
+	<ul id="sortable1" class="connectedSortable">
+		<li class="ui-state-default">Item 1</li>
+		<li class="ui-state-default">Item 2</li>
+		<li class="ui-state-default">Item 3</li>
+		<li class="ui-state-default">Item 4</li>
+		<li class="ui-state-default">Item 5</li>
+	</ul>
+</div>
+<div class="one_third last">
+	<ul id="sortable2" class="connectedSortable">
+		<li class="ui-state-highlight">Item 1</li>
+		<li class="ui-state-highlight">Item 2</li>
+		<li class="ui-state-highlight">Item 3</li>
+		<li class="ui-state-highlight">Item 4</li>
+		<li class="ui-state-highlight">Item 5</li>
+	</ul>
+
+	<ul id="sortable3" class="connectedSortable">
+		<li class="ui-state-highlight">Item 1</li>
+		<li class="ui-state-highlight">Item 2</li>
+		<li class="ui-state-highlight">Item 3</li>
+		<li class="ui-state-highlight">Item 4</li>
+		<li class="ui-state-highlight">Item 5</li>
+	</ul>
+
+	<ul id="sortable4" class="connectedSortable">
+		<li class="ui-state-highlight">Item 1</li>
+		<li class="ui-state-highlight">Item 2</li>
+		<li class="ui-state-highlight">Item 3</li>
+		<li class="ui-state-highlight">Item 4</li>
+		<li class="ui-state-highlight">Item 5</li>
+	</ul>
+</div>
+
+
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+		$( "#sortable1, #sortable2, #sortable3, #sortable4" ).sortable({
+			connectWith: ".connectedSortable"
+			}).disableSelection();
+		})
+
+</script>

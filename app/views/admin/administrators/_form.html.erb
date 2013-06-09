@@ -43,6 +43,10 @@
             <%= f.radio_button :inline_editing, 'Y', :checked => (@admin.inline_editing == 'Y') ?  true : false  %>Yes
             <%= f.radio_button :inline_editing, 'N', :checked => (@admin.inline_editing == 'N') ?  true : false %>No
           </div>
+          <div class="field formSep">
+            <%= f.label 'Author Description (this will be displayed against your posts)' %>
+            <%= f.text_area :description, :class => 'seo_textarea' %>
+          </div>
       	    <div class="field formSep">
                 <div class="row">
                 <div class="field span4">
