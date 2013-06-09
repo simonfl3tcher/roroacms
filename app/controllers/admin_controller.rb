@@ -2,7 +2,6 @@ class AdminController < ApplicationController
 
 	helper RoroaHelper
 	helper AdminUiHelper
-	helper GoogleAnalyticsHelper
 
   	before_filter :set_cache_buster
 

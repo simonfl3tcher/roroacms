@@ -117,6 +117,12 @@
               <%= f.label :parent_id %>
               <%= f.select :parent_id, Post.where(:post_type => 'post', :disabled => 'N').collect {|p| [ p.post_title, p.id ] }, prompt: 'Select a parent post' %>
             </div>
+            <% if !get_template_dropdown(@post.post_template).blank? %>
+              <div class="field">
+                  <%= f.label 'Template' %>
+                  <%= f.select :post_template, get_template_dropdown(@post.post_template), include_blank: true %>
+              </div>
+            <% end %>
             <div class="field">
               <%= f.label :post_date %>
               <%= f.datetime_select :post_date, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => 'Time:- '}, :class => 'dateselect' %>

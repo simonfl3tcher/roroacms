@@ -22,7 +22,11 @@ module SeoHelper
 				render :inline => headtags
 
 			else
-				url_arr = params[:slug].split('/')
+				if params[:slug].nil?
+					url_arr = ''
+				else 
+					url_arr = params[:slug].split('/')
+				end
 				last_url = url_arr.last
 				article_url = Setting.where(:setting_name => 'articles_slug').first.setting
 				category_url = Setting.where(:setting_name => 'category_slug').first.setting

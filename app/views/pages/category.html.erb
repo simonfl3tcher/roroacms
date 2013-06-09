@@ -1,17 +1,33 @@
-<h1>Category Page</h1>
+<div class="three_fourth">
+	<h1>News</h1>
 
-<br>
+	<br>
 
-<% if !get_category_data.blank?
+	<% if !get_category_data.blank?
 
- 	get_category_data.each do |p| %>
+	 	get_category_data.each do |p| %>
 
-		<a href="<%= get_the_permalink p %>"><%= get_the_title p %> - <%= get_the_date p %></a><br />
+	 		<div class="blog_article">
+				<h2><a href="<%= get_the_permalink p %>"><%= get_the_title p %></a></h2>
+	 			<span class="date"><%= get_the_date p %></span>
+				<p><%= get_the_excerpt p %></p>
+				<div class="clear"></div>
+				<div class="divide"></div> 
+			</div>
+
+		<% end %>
+
+	<% else %>
+		
+		<p>No posts match the criteria.</p>
 
 	<% end %>
 
-<% else %>
-	
-	<p>No posts match the criteria.</p>
+</div>
+<div class="one_fourth last">
 
-<% end %>
+	<%= render 'sidebar' %>
+	
+</div>
+
+<div class="clear"></div>

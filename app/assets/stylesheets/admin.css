@@ -2085,6 +2085,19 @@ Layout: Footer
 #footer #builtby {
   text-align: right;
 }
+  #error_explanation h2 {
+    font-size:20px;
+
+  }
+
+  #error_explanation ul {
+    margin-left:20px;
+  }
+
+  #error_explanation ul li {
+    list-style: disc;
+    color:#FFA31A;
+  }
 /*------------------------------------------------------------------
  
 Layout: Responsive

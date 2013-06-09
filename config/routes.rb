@@ -84,9 +84,7 @@ Railsoverview::Application.routes.draw do
       resources :general do
         post :update_general
       end
-      # resources :seo do
-      #   # post :update_general
-      # end
+      resources :menu
     end
   end 
 
