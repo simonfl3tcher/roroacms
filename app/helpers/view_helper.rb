@@ -36,9 +36,9 @@ module ViewHelper
 
 	end
 
-	def get_the_excerpt post, length = 15, omission = '...'
+	def get_the_excerpt post, length = 300, omission = '...'
 
-		render :inline => truncate(post.post_content, :omission => omission, :length => length)
+		render :inline => truncate(strip_tags(post.post_content), :omission => omission, :length => length)
 
 
 	end
@@ -132,18 +132,25 @@ module ViewHelper
 
 		end
 
-
-		html = '<ol>'
+		if @comments.count > 0 
+			html = "<h3 id='comments-title'>#{@comments.count} responses to #{display_title}</h3>"
+			html += "<ul class='commentsLoop'>"
+		else 
+			html = "<ul class='commentsLoop'>"
+		end
 		count = 1
 		
 		@comments.each do |comment|
 
 			html += "<li class='comment' id='li-comment-#{count}'>
-		<article id='comment-#{count}' class='comment'>
-			<section class='comment-content comment'>
-				<p>#{comment.comment}</p>
-				<div class='comment-meta' data-author='#{comment.author}'><a href='http://#{comment.website}' target='_blank'>#{comment.author}</a></div>
-			</section></article>"
+			<article id='comment-#{count}' class='comment'>
+				<section class='comment-content comment'>
+					<div class='comment-meta' data-author='#{comment.author}'><a href='http://#{comment.website}' target='_blank'>#{comment.author}</a> says:-</div>
+					<span class='date'>#{comment.submitted_on.strftime("%b %e %Y, %l:%M %p")}</span>
+					<p>#{comment.comment}</p>
+				</section>
+			</article>
+			<div class='divide'></div>"
 			#<a href='#' class='reply' data-parent='#{comment.id}'>Reply</a>"
 		
 	    html += "</li>"
@@ -151,7 +158,7 @@ module ViewHelper
 
 		end
 
-		html += '</ol>
+		html += '</ul>
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$(\'.reply\').click(function(){
@@ -169,24 +176,135 @@ module ViewHelper
 
 	end
 
-	def site_url
+	def display_author_information
 
-		return Setting.where(:setting_name => 'site_url').first.setting
+		@admin = Admin.find(@content.admin_id)
+
+		html = "<div id='author-info'>
+		<div id='author-description'>
+			<h2>About #{@admin.first_name} #{@admin.last_name}</h2>
+			<p>#{@admin.description}</p>						
+		</div>
+	</div>"
+
+	render :inline => html.html_safe
+
+	end
+
+	def site_url str = nil
+
+		url = Setting.where(:setting_name => 'site_url').first.setting
+
+		return "#{url}#{str}"
+	end
+
+	def get_search_form
+
+		render :template => "pages/search_form.html.erb" rescue nil
+
 	end
 
 	def excerpt content, length = 255, omission = '...'
 
 		render :inline => truncate(content, :omission => omission, :length => length)
+
 	end
 
 	def nested_messages(messages)
+	  
 	  messages.map do |message, sub_messages|
+
 	    render(message) + content_tag(:div, nested_messages(sub_messages), :class => "nested_messages")
+
 	  end.join.html_safe
+
 	end
 
 	def get_banners hash
+
 		return Banner.where(terms: {slug: hash[:key]}).includes(:terms).limit(hash[:limit]).order('sort_order')
+
 	end
+
+	def get_archives arr = nil
+
+		@posts = Post.where(:post_type => 'post').uniq.pluck("EXTRACT(YEAR FROM post_date)")
+		article_url = Setting.where(:setting_name => 'articles_slug').first.setting
+		category_url = Setting.where(:setting_name => 'category_slug').first.setting
+			
+		h = {}
+		
+		@posts.each do |f|
+			h["#{article_url}/#{f}"] = f
+		end
+		
+		return li_loop h
+
+	end
+	
+	def get_categories arr = nil
+
+		@terms = Term.where(term_anatomies: {taxonomy: 'category'}).includes(:term_anatomy)
+
+		article_url = Setting.where(:setting_name => 'articles_slug').first.setting
+		category_url = Setting.where(:setting_name => 'category_slug').first.setting
+			
+		h = {}
+		
+		@terms.each do |f|
+			h["#{article_url}/#{category_url}/#{f.slug}"] = f.name
+		end
+		
+		return li_loop h
+
+	end
+	
+	def get_tag_cloud type, arr = nil
+
+		@terms = Term.where(term_anatomies: {taxonomy: 'tag'}).includes(:term_anatomy)
+
+		if type == 'string'
+			return @terms.all.collect {|u| u.name}.join ', '
+		elsif type == 'list'
+
+			article_url = Setting.where(:setting_name => 'articles_slug').first.setting
+			tag_url = Setting.where(:setting_name => 'tag_slug').first.setting
+			
+			h = {}
+			
+			@terms.each do |f|
+				h["#{article_url}/#{tag_url}/#{f.slug}"] = f.name
+			end
+			
+			return li_loop h
+		end
+
+	end
+
+	def the_archive_year
+		segments = params[:slug].split('/')
+		return segments[1]
+	end
+
+	def li_loop arr
+		html = '<ul>'
+		
+		arr.each do |k, v|
+			html += "<li><a href='#{site_url}#{k}'>#{v}</a></li>"
+		end
+		
+		html += '</ul>'
+		render :inline => html
+
+	end
+
+	def create_link arr
+
+	end
+
+	def view_file_exists f
+		return File.exists?("app/views/pages/template-#{f}.html.erb")
+	end
+
 
 end

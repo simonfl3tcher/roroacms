@@ -1,10 +1,35 @@
 class PagesController < ApplicationController
-		
+
 	def index
 
-		home_id = Setting.where(:setting_name => 'home_page').first.setting
-		gloalize Post.find(home_id)
-		render :template => "pages/home"
+		if !params[:search].blank?
+			gloalize Post.where("post_title LIKE :p or post_slug LIKE :p2 or post_content LIKE :p3 and post_type != 'autosave'", {:p => "%#{params[:search]}%", :p2 => "%#{params[:search]}%", :p3 => "%#{params[:search]}%"})
+			render :template => "pages/search"
+
+		else
+
+			home_id = Setting.where(:setting_name => 'home_page').first.setting
+			@content = Post.find(home_id)
+			gloalize @content
+
+			if !@content.post_template.blank?
+
+				if File.exists?("app/views/pages/template-#{@content.post_template.downcase}.html.erb")
+
+					render :template => "pages/template-#{@content.post_template.downcase}"
+
+				else
+
+					render :template => "pages/home"
+
+				end
+
+			else
+
+				render :template => "pages/home"
+
+			end			
+		end
 
  	end
 
@@ -34,9 +59,7 @@ class PagesController < ApplicationController
 
 		if !session[:admin_id].blank?
 
-			# abort('in here')
-
-			status = "(post_status = 'Published' or post_status = 'Draft')"
+			status = "(post_status = 'Published')"
 
 		else
 
@@ -56,7 +79,7 @@ class PagesController < ApplicationController
 					else
 
 						term = Term.where(:slug => segments[2])
-						gloalize Post.where(status, terms: {id: term}, :post_type => 'post').includes(:terms)
+						gloalize Post.where(terms: {id: term}, :post_type => 'post', :post_status => 'Published').includes(:terms)
 						render :template => "pages/category"
 
 
@@ -71,7 +94,7 @@ class PagesController < ApplicationController
 					else
 
 						term = Term.where(:slug => segments[2])
-						gloalize Post.where(status, terms: {id: term}, :post_type => 'post').includes(:terms)
+						gloalize Post.where(terms: {id: term}, :post_type => 'post', :post_status => 'Published').includes(:terms)
 						render :template => "pages/category"
 
 
@@ -81,17 +104,17 @@ class PagesController < ApplicationController
 
 					if !segments[3].blank?
 
-						gloalize Post.where("#{status} AND (YEAR(post_date) = ? AND MONTH(post_date) = ? AND DAY(post_date) = ?)", segments[1], segments[2], segments[3])
+						gloalize Post.where("post_status = 'Published' AND post_type = 'Post' AND (YEAR(post_date) = ? AND MONTH(post_date) = ? AND DAY(post_date) = ?)", segments[1], segments[2], segments[3])
 						render :template => "pages/archive"
 
 					elsif !segments[2].blank?
 
-						gloalize Post.where("#{status} AND (YEAR(post_date) = ? AND MONTH(post_date) = ?)", segments[1], segments[2])
+						gloalize Post.where("post_status = 'Published' AND post_type = 'Post' AND (YEAR(post_date) = ? AND MONTH(post_date) = ?)", segments[1], segments[2])
 						render :template => "pages/archive"
 
 					else
 
-						gloalize Post.where("#{status} AND (YEAR(post_date) = ?)", segments[1])
+						gloalize Post.where("post_status = 'Published' AND post_type = 'Post' AND (YEAR(post_date) = ?)", segments[1])
 						render :template => "pages/archive"
 
 					end
@@ -100,23 +123,77 @@ class PagesController < ApplicationController
 
 				else
 
-					gloalize Post.where(status, :post_type => 'post').find_by_post_slug(segments[1])
+					if !session[:admin_id].blank?
+							
+						@content = Post.where(:post_type => 'post').find_by_post_slug(segments[1])
+
+					else
+
+						@content = Post.where(status, :post_type => 'post').find_by_post_slug(segments[1])
+
+					end
+
+					gloalize @content
 					render_404 and return if @content.nil?
 					@comment = Comment.new
-					render :template => "pages/single"
+					
+					if !@content.post_template.blank?
+
+						if File.exists?("app/views/pages/template-#{@content.post_template.downcase}.html.erb")	
+
+							render :template => "pages/template-#{@content.post_template.downcase}"
+
+						else
+
+							render :template => "pages/single"
+
+						end
+
+					else
+
+						render :template => "pages/single"
+
+					end
 
 				end
 
 			else
-				gloalize Post.where(status, :post_type => 'post')
+				gloalize Post.where("#{status} and post_type ='post'")
 				render :template => "pages/category"
 			end
 
 		else
+			if !session[:admin_id].blank?
+					
+				@content = Post.where(:post_type => 'page').find_by_post_slug(segments[0])
 
-			gloalize Post.where(status, :post_type => 'page').find_by_post_slug(segments[0])
+			else
+
+				@content = Post.where(status, :post_type => 'page').find_by_post_slug(segments[0])
+
+			end
+
+			gloalize @content
 			render_404 and return if @content.nil?
-			render :template => "pages/page"
+
+			if !@content.post_template.blank?
+
+				if File.exists?("app/views/pages/template-#{@content.post_template.downcase}.html.erb")
+
+					render :template => "pages/template-#{@content.post_template.downcase}"
+
+				else
+
+					render :template => "pages/page"
+
+				end
+
+			else
+
+				render :template => "pages/page"
+
+			end
+
 
 		end
 

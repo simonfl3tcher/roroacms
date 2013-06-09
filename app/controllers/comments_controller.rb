@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
 			respond_to do |format|
 			  if @comment.save
 			  	Notifier.comment(@comment).deliver
-			    format.html { redirect_to session[:return_to], notice: 'Comment was successfully created. Awaiting Review' }
+			    format.html { redirect_to "#{session[:return_to]}#commentsArea", notice: '<div class="success">Comment was successfully posted. Awaiting Review</div>'.html_safe }
 			  else
 
 			  	html = ''
@@ -31,7 +31,7 @@ class CommentsController < ApplicationController
 
 				  # <%= pluralize(@page.errors.count, "error") %> errors:
 
-			    format.html { redirect_to session[:return_to], notice: html.html_safe}
+			    format.html { redirect_to "#{session[:return_to]}#commentsArea", notice: html.html_safe}
 			    # format.json { render json: @user.errors, status: :unprocessable_entity }
 			  end
 			end

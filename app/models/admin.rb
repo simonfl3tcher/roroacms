@@ -4,7 +4,7 @@ class Admin < ActiveRecord::Base
 
 	has_many :posts
 
-	attr_accessible :email, :password, :first_name, :last_name, :username, :access_level, :password_confirmation, :avatar, :inline_editing
+	attr_accessible :email, :password, :first_name, :last_name, :username, :access_level, :password_confirmation, :avatar, :inline_editing, :description
 	
 	validates :email, presence: true, uniqueness: true, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i}
 

@@ -1,6 +1,11 @@
 class ApplicationController < ActionController::Base
   
+  before_filter :reload_theme_helper
+  
   protect_from_forgery
+  helper ViewHelper 
+  helper SeoHelper  
+  helper ThemeHelper 
 
   require 'ext/string'
 
@@ -11,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-  	@current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
   helper_method :current_user
@@ -20,16 +25,12 @@ class ApplicationController < ActionController::Base
       @content = content
   end
 
-  helper ViewHelper 
-  helper SeoHelper 
-  helper GoogleAnalyticsHelper 
-
   def current_admin
   	@current_admin ||= Admin.find(session[:admin_id]) if session[:admin_id]
   end
 
   def current_admin_access
-
+    
     @current_admin = Admin.find(session[:admin_id]) if session[:admin_id]
 
     if !@current_admin.nil?
@@ -41,6 +42,15 @@ class ApplicationController < ActionController::Base
       return false;
 
     end
+
+  end
+
+
+  def reload_theme_helper
+
+    file = File.open("app/views/pages/theme_helper.rb", "rb")
+    doc = file.read
+    File.open("app/helpers/theme_helper.rb", 'w') {|f| f.write(doc) }
 
   end
 
