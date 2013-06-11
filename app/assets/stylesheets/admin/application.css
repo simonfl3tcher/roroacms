@@ -1,0 +1,266 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_directory .
+ */
+label {
+ 	display: block;
+ }
+
+ #notice {
+ 	display: block;
+ 	padding:3px;
+ 	background-color: green;
+ 	width:100%;
+ 	text-align: center;
+ }
+
+ div.title {
+ 	display: block;
+	width: 100%;
+	padding: 0;
+	margin-bottom: 20px;
+	font-size: 21px;
+	line-height: 40px;
+	color: #333333;
+	border: 0;
+	border-bottom: 1px solid #e5e5e5;
+ }
+
+ .table tr.draft td {
+ 	opacity: 0.7;
+ }
+
+/* .trashArea thead, .trashArea table, .trashArea tbody {
+ 	display: table;
+    width: 100%;
+ }
+
+ .trashArea .tableOverflowWrapper {
+ 	height: 286px;
+    overflow: auto;
+    display: block;
+    margin-bottom: 20px;
+ }
+
+  .trashArea th {
+  	text-align: left;
+  	padding-bottom:10px;
+  }
+
+  .trashArea th input {
+  	margin:0;
+  }
+
+  .trashArea th.nth-child(2){
+  	width:348px;
+  }
+
+ .trashArea th:first-child {
+ 	padding-left: 6px;
+    text-align: left;
+    width: 24px;
+ }*/
+
+ li {
+  list-style: none;
+ }
+
+ #postPage .span9 input[type=text] {
+    width:98%;
+ }
+
+ #postPage .span9 .redactor_editor {
+  min-height: 300px;
+  margin-bottom: 20px;
+ }
+
+ #content .row {
+  margin-top: 1em !important;
+ }
+
+ input[type=checkbox] {
+  margin:0 !important;
+ }
+
+ input[type=checkbox] + label {
+  display: inline-block;
+  margin-left:5px;
+ }
+
+ select {
+  font-size: 10px !important;
+ }
+
+ select.span1 {
+  height:24px;
+ }
+
+ .categoriesForm input[type=text]{
+  width:96% !important;
+ }
+
+ .categoriesForm textarea{
+  width:96% !important;
+  min-height: 150px;
+ }
+
+ .autosaveAccordion {
+  margin-top:20px;
+ }
+
+.adminBar #main-nav > li > a, .adminBar #main-nav > li > a:hover, .adminBar #main-nav > li.open > a {
+  background:none;
+  box-shadow: none;
+  border:none;
+  background-color: #3C3C3C;
+}
+
+.adminBar #main-nav > li {
+  margin: 0 -1px 0 0;
+}
+
+.adminBar #main-nav {
+  display: inline-block;
+    margin-bottom: 0;
+    margin-right: 30px;
+    margin-top: -1px;
+    padding: 0;
+    position: relative;
+}
+
+.seoDataTable tbody > tr > td {
+  padding:10px;
+
+}
+
+.seoDataTable tbody > tr > td > input[type=checkbox] + span {
+  margin-left:10px;
+}
+
+.seoDataTable tr td:first-child {
+  vertical-align: top;
+  text-align: right;
+}
+
+.seoDataTable textarea {
+  height:100px;
+  width:98%;
+}
+
+.attachmentsDataTable textarea {
+    margin: 0px 8px 8px 8px;
+    width: 96%;
+    height:60px;
+}
+
+.attachmentsDataTable select,
+.attachmentsDataTable input[type=text]{
+    margin: 0px 8px 8px 0px;
+    width: 92% !important;
+}
+
+.attachmentsDataTable {
+  width:98%;
+}
+
+.attachmentsDataTable td {
+  vertical-align: top;
+  width:50%;
+}
+
+.attachmentsDataTable tbody tr td {
+  padding-left:0;
+}
+
+.accordion-toggle.collapsed .accordionSign,
+.accordion-toggle .accordionSign {
+  width:20px;
+  height:20px;
+  background-image: url('../../images/admin/glyphicons-halflings.png');
+ background-position: -24px -95px;
+}
+
+.accordion-toggle.collapsed .accordionSign {
+  background-position: 0 -95px;
+}
+
+.accordion-group .accordion-heading a {
+  line-height: 15px;
+}
+
+table i {
+  margin-left: -1px;
+  opacity: 1.0;
+}
+
+.dateselect {
+width: 71px;
+height: 25px;
+}
+
+.tagsAccordion .accordion-group
+ {
+  overflow: visible;
+}
+
+.categoriesAccordion .accordion-group .field, 
+.tagsAccordion .accordion-group .field {
+  height: 100px;
+  overflow: auto;
+}
+
+fieldset .formSep {
+   border-bottom: 1px dotted #DCDCDC;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+}
+
+fieldset .formSepUpp {
+  border-top: 1px solid #E5E5E5;
+    margin-top: 12px;
+    padding-top: 12px;
+}
+
+.formSepUpp {
+  margin-top:10px;
+  padding-top:10px;
+  border-top: 1px solid #E5E5E5;
+}
+
+#accordionSeo {
+  margin-top: 20px;
+}
+
+.dropdown-toggle span {
+  display: none;
+}
+
+.dropdown-toggle span.caret {
+  display: inline-block;
+}
+.one_half{ width:48%; }
+.one_third{ width:30.66%; }
+.two_third{ width:65.33%; }
+.one_fourth{ width:22%; }
+.three_fourth{ width:74%; }
+.one_fifth{ width:16.8%; }
+.two_fifth{ width:37.6%; }
+.three_fifth{ width:58.4%; }
+.four_fifth{ width:67.2%; }
+.one_sixth{ width:13.33%; }
+.five_sixth{ width:82.67%; }
+.one_half,.one_third,.two_third,.three_fourth,.one_fourth,.one_fifth,.two_fifth,.three_fifth,.four_fifth,.one_sixth,.five_sixth{ position:relative; margin-right:4%; float:left; }
+.last{ margin-right:0 !important; clear:right; }
+.clearboth {clear:both;display:block;font-size:0;height:0;line-height:0;width:100%;}
+
+.input-append .btn-small {
+  padding:4px 10px;
+}

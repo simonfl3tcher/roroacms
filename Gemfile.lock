@@ -36,6 +36,7 @@ GEM
       mime-types
       xml-simple
     bcrypt-ruby (3.0.1)
+    breadcrumbs_on_rails (2.3.0)
     builder (3.0.4)
     ckeditor_rails (4.1.2)
       railties (>= 3.0)
@@ -132,6 +133,7 @@ DEPENDENCIES
   ancestry
   aws-s3
   bcrypt-ruby (~> 3.0.0)
+  breadcrumbs_on_rails
   ckeditor_rails
   coffee-rails (~> 3.2.1)
   jquery-rails

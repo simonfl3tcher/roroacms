@@ -24,6 +24,35 @@ module ViewHelper
 
 	end
 
+	def get_term_name
+		segments = params[:slug].split('/')
+
+		if !segments[2].blank?
+
+			t =  Term.where(:slug => segments[2]).last
+
+			return t.name
+
+		else
+			return nil
+		end
+
+	end
+
+	def get_term_type 
+		segments = params[:slug].split('/')
+
+		if !segments[1].blank?
+
+			term = TermAnatomy.where(:taxonomy => segments[1]).last
+
+			return term.taxonomy
+
+		else
+			return nil
+		end
+	end
+
 	def get_the_content post
 
 		render :inline => post.post_content.html_safe
@@ -110,7 +139,7 @@ module ViewHelper
 
 			type = Setting.where(:setting_name => 'article_comment_type').first.setting
 
-			render(:template =>"pages/comments_form.html.erb", :layout => nil, :locals => { :type => type }).to_s
+			render(:template =>"theme/comments_form.html.erb", :layout => nil, :locals => { :type => type }).to_s
 
 		else
 
@@ -200,7 +229,7 @@ module ViewHelper
 
 	def get_search_form
 
-		render :template => "pages/search_form.html.erb" rescue nil
+		render :template => "theme/search_form.html.erb" rescue nil
 
 	end
 
@@ -226,18 +255,47 @@ module ViewHelper
 
 	end
 
-	def get_archives arr = nil
+	def get_archives type, blockbydate = nil
 
-		@posts = Post.where(:post_type => 'post').uniq.pluck("EXTRACT(YEAR FROM post_date)")
-		article_url = Setting.where(:setting_name => 'articles_slug').first.setting
-		category_url = Setting.where(:setting_name => 'category_slug').first.setting
+		if type == 'Y'
+
+			@posts = Post.where(:post_type => 'post').uniq.pluck("EXTRACT(YEAR FROM post_date)")
+			article_url = Setting.where(:setting_name => 'articles_slug').first.setting
+			category_url = Setting.where(:setting_name => 'category_slug').first.setting
+				
+			h = {}
 			
-		h = {}
-		
-		@posts.each do |f|
-			h["#{article_url}/#{f}"] = f
-		end
-		
+			@posts.each do |f|
+				h["#{article_url}/#{f}"] = f
+			end
+
+		elsif type == 'M'
+			
+			@posts = Post.where(:post_type => 'post').uniq.pluck("EXTRACT(YEAR FROM post_date)")
+			article_url = Setting.where(:setting_name => 'articles_slug').first.setting
+			category_url = Setting.where(:setting_name => 'category_slug').first.setting
+
+			h = {}
+			lp = {}
+			mon = {}		
+			@posts.each do |f|
+				lp["#{f}"] = Post.where("YEAR(post_date) = #{f} && post_type = 'post'").uniq.pluck("EXTRACT(MONTH FROM post_date)")
+			end
+
+			lp.each do |k, i|
+
+				if blockbydate
+					h["#{article_url}/#{k}"] = k
+				end
+				
+				i.each do |nm|
+
+					h["#{article_url}/#{k}/#{nm}"] = "#{getdatenamebynumber(nm)} - #{k}"
+
+				end
+			end
+
+		end			
 		return li_loop h
 
 	end
@@ -302,8 +360,25 @@ module ViewHelper
 
 	end
 
+	def getdatenamebynumber s
+        case s
+            when  1 then "Jan"
+            when  2 then "Feb"
+            when  3 then "Mar"
+            when  4 then "Apr"
+            when  5 then "May"
+            when  6 then "Jun"
+            when  7 then "Jul"
+            when  8 then "Aug"
+            when  9 then "Sep"
+            when 10 then "Okt"
+            when 11 then "Nov" 
+            when 12 then "Dec"
+        end
+	end
+
 	def view_file_exists f
-		return File.exists?("app/views/pages/template-#{f}.html.erb")
+		return File.exists?("app/views/theme/template-#{f}.html.erb")
 	end
 
 

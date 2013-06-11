@@ -3,8 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <title>Dashboard | Roroa CMS</title>
-    <%= stylesheet_link_tag "application", :media => "all" %>
-    <%= javascript_include_tag 'application' %>
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <%= stylesheet_link_tag "admin/application", :media => "all" %>
+    <%= javascript_include_tag 'admin/application' %>
     <%= csrf_meta_tags %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
 

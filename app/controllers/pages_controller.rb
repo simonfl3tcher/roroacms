@@ -3,8 +3,10 @@ class PagesController < ApplicationController
 	def index
 
 		if !params[:search].blank?
-			gloalize Post.where("post_title LIKE :p or post_slug LIKE :p2 or post_content LIKE :p3 and post_type != 'autosave'", {:p => "%#{params[:search]}%", :p2 => "%#{params[:search]}%", :p3 => "%#{params[:search]}%"})
-			render :template => "pages/search"
+			gloalize Post.where("(post_title LIKE :p or post_slug LIKE :p2 or post_content LIKE :p3) and (post_type != 'autosave')", {:p => "%#{params[:search]}%", :p2 => "%#{params[:search]}%", :p3 => "%#{params[:search]}%"})
+			add_breadcrumb "Home", :root_path, :title => "Home"
+			add_breadcrumb "Search", "/"
+			render :template => "theme/search"
 
 		else
 
@@ -14,19 +16,19 @@ class PagesController < ApplicationController
 
 			if !@content.post_template.blank?
 
-				if File.exists?("app/views/pages/template-#{@content.post_template.downcase}.html.erb")
+				if File.exists?("app/views/theme/template-#{@content.post_template.downcase}.html.erb")
 
-					render :template => "pages/template-#{@content.post_template.downcase}"
+					render :template => "theme/template-#{@content.post_template.downcase}"
 
 				else
 
-					render :template => "pages/home"
+					render :template => "theme/home"
 
 				end
 
 			else
 
-				render :template => "pages/home"
+				render :template => "theme/home"
 
 			end			
 		end
@@ -51,6 +53,8 @@ class PagesController < ApplicationController
  	end
 
 	def dynamic_page
+
+		add_breadcrumb "Home", :root_path, :title => "Home"
 		
 		segments = params[:slug].split('/')
 		article_url = Setting.where(:setting_name => 'articles_slug').first.setting
@@ -78,9 +82,11 @@ class PagesController < ApplicationController
 
 					else
 
-						term = Term.where(:slug => segments[2])
+						term = Term.where(:slug => segments[2]).first
 						gloalize Post.where(terms: {id: term}, :post_type => 'post', :post_status => 'Published').includes(:terms)
-						render :template => "pages/category"
+						add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
+						add_breadcrumb "#{term.name.capitalize}", "/#{term.name}", :title => "Back to #{term.name.capitalize}"
+						render :template => "theme/category"
 
 
 					end
@@ -93,29 +99,35 @@ class PagesController < ApplicationController
 
 					else
 
-						term = Term.where(:slug => segments[2])
+						term = Term.where(:slug => segments[2]).first
 						gloalize Post.where(terms: {id: term}, :post_type => 'post', :post_status => 'Published').includes(:terms)
-						render :template => "pages/category"
+						add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
+						add_breadcrumb "#{term.name.capitalize}", "/#{term.name}", :title => "Back to #{term.name.capitalize}"
+						render :template => "theme/category"
 
 
 					end
 
 				elsif segments[1].nonnegative_float?
+					add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
 
 					if !segments[3].blank?
 
 						gloalize Post.where("post_status = 'Published' AND post_type = 'Post' AND (YEAR(post_date) = ? AND MONTH(post_date) = ? AND DAY(post_date) = ?)", segments[1], segments[2], segments[3])
-						render :template => "pages/archive"
+						add_breadcrumb "#{segments[3]}", "/#{segments[3]}", :title => "Back to #{segments[3]}"
+						render :template => "theme/archive"
 
 					elsif !segments[2].blank?
 
 						gloalize Post.where("post_status = 'Published' AND post_type = 'Post' AND (YEAR(post_date) = ? AND MONTH(post_date) = ?)", segments[1], segments[2])
-						render :template => "pages/archive"
+						add_breadcrumb "#{segments[2]}", "/#{segments[2]}", :title => "Back to #{segments[2]}"
+						render :template => "theme/archive"
 
 					else
 
 						gloalize Post.where("post_status = 'Published' AND post_type = 'Post' AND (YEAR(post_date) = ?)", segments[1])
-						render :template => "pages/archive"
+						add_breadcrumb "#{segments[1]}", "/#{segments[1]}", :title => "Back to #{segments[1]}"
+						render :template => "theme/archive"
 
 					end
 
@@ -136,30 +148,33 @@ class PagesController < ApplicationController
 					gloalize @content
 					render_404 and return if @content.nil?
 					@comment = Comment.new
+					add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
+					add_breadcrumb "#{@content.post_title}", "/#{@content.post_name}", :title => "Back to #{@content.post_title}"
 					
 					if !@content.post_template.blank?
 
-						if File.exists?("app/views/pages/template-#{@content.post_template.downcase}.html.erb")	
+						if File.exists?("app/views/theme/template-#{@content.post_template.downcase}.html.erb")	
 
-							render :template => "pages/template-#{@content.post_template.downcase}"
+							render :template => "theme/template-#{@content.post_template.downcase}"
 
 						else
 
-							render :template => "pages/single"
+							render :template => "theme/single"
 
 						end
 
 					else
 
-						render :template => "pages/single"
+						render :template => "theme/single"
 
 					end
 
 				end
 
 			else
+				add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
 				gloalize Post.where("#{status} and post_type ='post'")
-				render :template => "pages/category"
+				render :template => "theme/category"
 			end
 
 		else
@@ -175,22 +190,23 @@ class PagesController < ApplicationController
 
 			gloalize @content
 			render_404 and return if @content.nil?
+			add_breadcrumb "#{@content.post_title.capitalize}", "/#{@content.post_slug}", :title => "Back to #{@content.post_title.capitalize}"
 
 			if !@content.post_template.blank?
 
-				if File.exists?("app/views/pages/template-#{@content.post_template.downcase}.html.erb")
+				if File.exists?("app/views/theme/template-#{@content.post_template.downcase}.html.erb")
 
-					render :template => "pages/template-#{@content.post_template.downcase}"
+					render :template => "theme/template-#{@content.post_template.downcase}"
 
 				else
 
-					render :template => "pages/page"
+					render :template => "theme/page"
 
 				end
 
 			else
-
-				render :template => "pages/page"
+				
+				render :template => "theme/page"
 
 			end
 

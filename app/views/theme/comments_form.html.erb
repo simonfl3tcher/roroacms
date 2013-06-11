@@ -1,0 +1,60 @@
+<% if type == 'F' %>
+
+<div class="fb-comments" data-href="<%= site_url() %>" data-width="710" data-num-posts="10"></div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<% else %>
+
+  <%= display_comments_loop %>
+
+  <div id="commentsArea">
+    <h2>Make a comment about <strong><%= display_title %></strong></h2>
+    
+    <% if flash[:notice] %>
+      
+      <div class="notice"><%= flash[:notice] %></div>
+
+    <% end %>
+
+    <%= form_for [@comment] do |f| %>
+
+      <fieldset class="commentForm">
+
+        <%= f.hidden_field :post_id, :value => @content.id %>
+        <%= f.hidden_field :parent_id, :value => nil, :id => 'comment_comment_parent' %>
+
+        <div id="replyToTitle"></div>
+
+        <div class="field">
+          <%= f.label :author %>
+          <%= f.text_field :author, size: 40 %>
+        </div>
+        <div class="field">
+          <%= f.label :email %>
+          <%= f.text_field :email, size: 40 %>
+        </div>
+        <div class="field">
+          <%= f.label :website %>
+          <%= f.text_field :website %>
+        </div>
+         <div class="field">
+          <%= f.label :comment %>
+          <%= f.text_area :comment %>
+        </div>
+        <div class="field">
+            <%= f.submit "Submit Comment", :class => 'btn orangeBtn' %>
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
+
+<% end %>

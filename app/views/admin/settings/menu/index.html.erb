@@ -1,45 +1,41 @@
 <div class="two_third">
-	<ul id="sortable1" class="connectedSortable">
-		<li class="ui-state-default">Item 1</li>
-		<li class="ui-state-default">Item 2</li>
-		<li class="ui-state-default">Item 3</li>
-		<li class="ui-state-default">Item 4</li>
-		<li class="ui-state-default">Item 5</li>
-	</ul>
-</div>
-<div class="one_third last">
-	<ul id="sortable2" class="connectedSortable">
-		<li class="ui-state-highlight">Item 1</li>
-		<li class="ui-state-highlight">Item 2</li>
-		<li class="ui-state-highlight">Item 3</li>
-		<li class="ui-state-highlight">Item 4</li>
-		<li class="ui-state-highlight">Item 5</li>
-	</ul>
+	<ol class="sortable">
+	    <li><div>Some content</div></li>
+	    <li>
+	        <div>Some content</div>
+	        <ol>
+	            <li><div>Some sub-item content</div></li>
+	            <li><div>Some sub-item content</div></li>
+	        </ol>
+	    </li>
+	    <li><div>Some content</div></li>
+	</ol>
 
-	<ul id="sortable3" class="connectedSortable">
-		<li class="ui-state-highlight">Item 1</li>
-		<li class="ui-state-highlight">Item 2</li>
-		<li class="ui-state-highlight">Item 3</li>
-		<li class="ui-state-highlight">Item 4</li>
-		<li class="ui-state-highlight">Item 5</li>
-	</ul>
-
-	<ul id="sortable4" class="connectedSortable">
-		<li class="ui-state-highlight">Item 1</li>
-		<li class="ui-state-highlight">Item 2</li>
-		<li class="ui-state-highlight">Item 3</li>
-		<li class="ui-state-highlight">Item 4</li>
-		<li class="ui-state-highlight">Item 5</li>
-	</ul>
+	<div id="serialize">ser</div>
 </div>
 
 
 <script type="text/javascript">
 	
 	$(document).ready(function(){
-		$( "#sortable1, #sortable2, #sortable3, #sortable4" ).sortable({
-			connectWith: ".connectedSortable"
-			}).disableSelection();
+	
+        $('.sortable').nestedSortable({
+            handle: 'div',
+            items: 'li',
+            toleranceElement: '> div', 
+            opacity: 0.5,
+            accept: 'sortable-element-class',
+    		onChange : function(serialized) {
+    			console.log('23123')
+    		}
+
+        });
+
+        $('#serialize').click(function(){
+			serialized = $('ol.sortable').sortable('serialize',{key:'string'});
+			console.log(serialized)
 		})
+	});
+
 
 </script>
