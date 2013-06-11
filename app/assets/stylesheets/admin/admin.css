@@ -1025,6 +1025,13 @@ jQuery UI Styles
 Signin
 
 ------------------------------------------------------------------- */
+
+.cke_contents {
+
+  min-height: 500px;
+}
+
+
 #LoginBody {
   background-image: url("../images/admin/roroa_login.png");
   background-position: center top;
