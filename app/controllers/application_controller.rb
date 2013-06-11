@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   
-  before_filter :reload_theme_helper
   
   protect_from_forgery
   helper ViewHelper 
@@ -9,12 +8,14 @@ class ApplicationController < ActionController::Base
 
   require 'ext/string'
 
-  private 
-  
+
+  private
+
   def render_404
-    render :action => 'error_404', :status => 404
+    render :template => 'theme/error_404', :layout => true, :status => :not_found
   end
 
+  
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
@@ -46,13 +47,13 @@ class ApplicationController < ActionController::Base
   end
 
 
-  def reload_theme_helper
+  # def reload_theme_helper
 
-    file = File.open("app/views/pages/theme_helper.rb", "rb")
-    doc = file.read
-    File.open("app/helpers/theme_helper.rb", 'w') {|f| f.write(doc) }
+  #   file = File.open("app/views/pages/theme_helper.rb", "rb")
+  #   doc = file.read
+  #   File.open("app/helpers/theme_helper.rb", 'w') {|f| f.write(doc) }
 
-  end
+  # end
 
   def authorize_admin
   	redirect_to admin_login_path, error: "Not Authorized" if current_admin.nil?

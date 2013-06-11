@@ -1,0 +1,13 @@
+<% get_banners(Hash[:key => 'home', :limit => '3']).each do |f| %>
+	
+	<p><img src="<%= f.image %>" /></p>
+
+<% end %>
+
+<div class="two_third">
+	<%= display_content %>
+</div>
+
+<div class="one_third last"></div>
+
+<div class="clear"></div>
