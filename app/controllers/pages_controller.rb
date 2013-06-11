@@ -114,19 +114,22 @@ class PagesController < ApplicationController
 					if !segments[3].blank?
 
 						gloalize Post.where("post_status = 'Published' AND post_type = 'Post' AND (YEAR(post_date) = ? AND MONTH(post_date) = ? AND DAY(post_date) = ?)", segments[1], segments[2], segments[3])
-						add_breadcrumb "#{segments[3]}", "/#{segments[3]}", :title => "Back to #{segments[3]}"
+						add_breadcrumb "#{segments[1]}", "/#{article_url}/#{segments[1]}", :title => "Back to #{segments[1]}"
+						add_breadcrumb "#{segments[2]}", "/#{article_url}/#{segments[1]}/#{segments[2]}", :title => "Back to #{segments[2]}"
+						add_breadcrumb "#{segments[3]}", "/#{article_url}/#{segments[1]}/#{segments[2]}/#{segments[3]}", :title => "Back to #{segments[3]}"
 						render :template => "theme/archive"
 
 					elsif !segments[2].blank?
 
 						gloalize Post.where("post_status = 'Published' AND post_type = 'Post' AND (YEAR(post_date) = ? AND MONTH(post_date) = ?)", segments[1], segments[2])
-						add_breadcrumb "#{segments[2]}", "/#{segments[2]}", :title => "Back to #{segments[2]}"
+						add_breadcrumb "#{segments[1]}", "/#{article_url}/#{segments[1]}", :title => "Back to #{segments[1]}"
+						add_breadcrumb "#{segments[2]}", "/#{article_url}/#{segments[1]}/#{segments[2]}", :title => "Back to #{segments[2]}"
 						render :template => "theme/archive"
 
 					else
 
 						gloalize Post.where("post_status = 'Published' AND post_type = 'Post' AND (YEAR(post_date) = ?)", segments[1])
-						add_breadcrumb "#{segments[1]}", "/#{segments[1]}", :title => "Back to #{segments[1]}"
+						add_breadcrumb "#{segments[1]}", "/#{article_url}/#{segments[1]}", :title => "Back to #{segments[1]}"
 						render :template => "theme/archive"
 
 					end
@@ -189,6 +192,7 @@ class PagesController < ApplicationController
 			end
 
 			gloalize @content
+			do_subpage_loop
 			render_404 and return if @content.nil?
 			add_breadcrumb "#{@content.post_title.capitalize}", "/#{@content.post_slug}", :title => "Back to #{@content.post_title.capitalize}"
 
@@ -213,6 +217,12 @@ class PagesController < ApplicationController
 
 		end
 
+	end
+
+	private 
+
+	def do_subpage_loop
+		puts '124'
 	end
 
 end

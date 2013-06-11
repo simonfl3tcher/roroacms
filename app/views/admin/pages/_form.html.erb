@@ -115,7 +115,7 @@
             </div>
             <div class="field">
               <%= f.label 'Page Parent' %>
-              <%= f.select :parent_id, Post.where(:post_type => 'post', :disabled => 'N').collect {|p| [ p.post_title, p.id ] }, prompt: 'Select a parent post' %>
+              <%= f.select :parent_id, Post.where(:post_type => 'page', :disabled => 'N').collect {|p| [ p.post_title, p.id ] }, prompt: 'Select a parent post' %>
             </div>
             <% if !get_template_dropdown(@page.post_template).blank? %>
               <div class="field">

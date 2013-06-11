@@ -1,7 +1,7 @@
 module ViewHelper
 
 	def display_content
-		render :inline => @content.post_content.html_safe
+		render :inline => prep_content.html_safe
 	end
 
 	def display_title
@@ -380,6 +380,5 @@ module ViewHelper
 	def view_file_exists f
 		return File.exists?("app/views/theme/template-#{f}.html.erb")
 	end
-
 
 end
