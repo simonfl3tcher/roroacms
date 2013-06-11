@@ -5,6 +5,7 @@ gem 'mysql2'
 gem 'aws-s3'
 gem 'ckeditor_rails'
 gem 'ancestry'
+gem "breadcrumbs_on_rails"
 
 
 group :assets do

@@ -3,9 +3,11 @@
 <head>
   <title>Roroa Dashboard | Login Page</title>
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,800">
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= stylesheet_link_tag    "admin", :media => "all" %>
-  <%= javascript_include_tag "application" %>
+  <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <%= stylesheet_link_tag    "admin/application", :media => "all" %>
+  <%= stylesheet_link_tag    "admin/admin", :media => "all" %>
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -25,12 +27,6 @@
     top: 0;
     width: 570px;
     z-index: 0;
-  	}
-
-  	#LoginBody {
-  		    background-image: url("../images/roroa_login.png");
-    background-position: center top;
-    background-repeat: no-repeat;
   	}
 
   	.account-container {
