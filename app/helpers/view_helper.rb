@@ -381,4 +381,45 @@ module ViewHelper
 		return File.exists?("app/views/theme/template-#{f}.html.erb")
 	end
 
+	def create_variables
+		@h = false
+	end
+
+	def set_page i 
+		@p = Post.find(i).first
+
+		if @p.blank?
+			@p = nil
+		end
+
+	end
+
+	def is_page i
+
+		i = i.to_s
+
+		if !@p.blank?
+
+			if i.nonnegative_float?
+				if @p[:id] == i
+					return true
+				else
+					return false
+				end
+			else 
+				if @p[:post_name] == i
+					return true
+				else
+					return false
+				end
+
+			end
+
+		else
+
+			return false
+
+		end
+
+	end
 end
