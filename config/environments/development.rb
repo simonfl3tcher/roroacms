@@ -23,7 +23,7 @@ Railsoverview::Application.configure do
         :domain         => 'simon-fletcher.me',
         :port           => 587,
         :user_name      => 'simonfletcher0@gmail.com',
-        :password       => 'cherylcole18',
+        :password       => '123123213',
         :authentication => :plain
     }
     config.action_mailer.raise_delivery_errors = true

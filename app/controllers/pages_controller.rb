@@ -11,8 +11,9 @@ class PagesController < ApplicationController
 		else
 
 			home_id = Setting.where(:setting_name => 'home_page').first.setting
-			@content = Post.find(home_id)
+			@content = Post.find(home_id).first
 			gloalize @content
+			set_homepage
 
 			if !@content.post_template.blank?
 
@@ -140,11 +141,11 @@ class PagesController < ApplicationController
 
 					if !session[:admin_id].blank?
 							
-						@content = Post.where(:post_type => 'post').find_by_post_slug(segments[1])
+						@content = Post.where(:post_type => 'post').find_by_post_slug(segments[1]).first
 
 					else
 
-						@content = Post.where(status, :post_type => 'post').find_by_post_slug(segments[1])
+						@content = Post.where(status, :post_type => 'post').find_by_post_slug(segments[1]).first
 
 					end
 
@@ -183,11 +184,11 @@ class PagesController < ApplicationController
 		else
 			if !session[:admin_id].blank?
 					
-				@content = Post.where(:post_type => 'page').find_by_post_slug(segments[0])
+				@content = Post.where(:post_type => 'page').find_by_post_slug(segments[0]).first
 
 			else
 
-				@content = Post.where(status, :post_type => 'page').find_by_post_slug(segments[0])
+				@content = Post.where(status, :post_type => 'page').find_by_post_slug(segments[0]).first
 
 			end
 

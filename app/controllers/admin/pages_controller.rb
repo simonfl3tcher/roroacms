@@ -2,7 +2,7 @@ class Admin::PagesController < AdminController
 
 	def index
 
-			@pages = Post.where(:disabled => 'N', :post_type => 'page', ).order('post_date desc').limit(10)
+			@pages = Post.where(:disabled => 'N', :post_type => 'page', ).order('post_date desc')
 			if params.has_key?(:search) && !params[:search].blank?
 				@pages = Post.where("(id like ? or post_title like ? or post_slug like ?) and disabled = 'N' and post_type = 'page' and post_status != 'Autosave'", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
 			end

@@ -65,11 +65,14 @@
 	        
         <div id="main">
 
-        	<div class="breadcrumbWrapper">
-				<%= render_breadcrumbs %>
-				<div class="clear"></div>
-			</div>
+        	<%= if @content.id == 149 %>
 
+	        	<div class="breadcrumbWrapper">
+					<%= render_breadcrumbs %>
+					<div class="clear"></div>
+				</div>
+
+			<% end %>
 
 			<%= yield %>
 
