@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
 
+	include CommentsHelper
+
 	def create
 		comments_on = Setting.where(:setting_name => 'article_comments').first.setting
 		comments_type = Setting.where(:setting_name => 'article_comment_type').first.setting
@@ -14,25 +16,17 @@ class CommentsController < ApplicationController
 			respond_to do |format|
 			  if @comment.save
 			  	Notifier.comment(@comment).deliver
-			    format.html { redirect_to "#{session[:return_to]}#commentsArea", notice: '<div class="success">Comment was successfully posted. Awaiting Review</div>'.html_safe }
+			    format.html { redirect_to "#{session[:return_to]}#commentsArea", notice: comments_success_message }
 			  else
 
 			  	html = ''
 
 			  	if @comment.errors.any?
-					html = "<div id='error_explanation'>
-					<h2>Invalid:</h2><ul>"
-					@comment.errors.full_messages.each do |msg| 
-					html += "<li>#{msg}</li>"
-					end
-					html += "</ul>
-					</div>"
+			  		html = comments_error_display(@comment)
 				  end 
 
-				  # <%= pluralize(@page.errors.count, "error") %> errors:
-
 			    format.html { redirect_to "#{session[:return_to]}#commentsArea", notice: html.html_safe}
-			    # format.json { render json: @user.errors, status: :unprocessable_entity }
+
 			  end
 			end
 		end

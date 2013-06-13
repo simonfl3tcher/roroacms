@@ -20,10 +20,10 @@ Railsoverview::Application.configure do
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
         :address        => 'smtp.gmail.com',
-        :domain         => 'simon-fletcher.me',
+        :domain         => APP_CONFIG['domain'],
         :port           => 587,
-        :user_name      => 'simonfletcher0@gmail.com',
-        :password       => '123123213',
+        :user_name      => APP_CONFIG['email_address'],
+        :password       => APP_CONFIG['password'],
         :authentication => :plain
     }
     config.action_mailer.raise_delivery_errors = true
