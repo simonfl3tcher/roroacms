@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
 
+	include ViewHelper
+
 	def index
 
 		if !params[:search].blank?
@@ -11,9 +13,8 @@ class PagesController < ApplicationController
 		else
 
 			home_id = Setting.where(:setting_name => 'home_page').first.setting
-			@content = Post.find(home_id).first
+			@content = Post.find(home_id)
 			gloalize @content
-			set_homepage
 
 			if !@content.post_template.blank?
 
@@ -141,7 +142,7 @@ class PagesController < ApplicationController
 
 					if !session[:admin_id].blank?
 							
-						@content = Post.where(:post_type => 'post').find_by_post_slug(segments[1]).first
+						@content = Post.where(:post_type => 'post').find_by_post_slug(segments[1])
 
 					else
 
@@ -184,11 +185,11 @@ class PagesController < ApplicationController
 		else
 			if !session[:admin_id].blank?
 					
-				@content = Post.where(:post_type => 'page').find_by_post_slug(segments[0]).first
+				@content = Post.where(:post_type => 'page').find_by_post_slug(segments[0])
 
 			else
 
-				@content = Post.where(status, :post_type => 'page').find_by_post_slug(segments[0]).first
+				@content = Post.where(status, :post_type => 'page').find_by_post_slug(segments[0])
 
 			end
 
