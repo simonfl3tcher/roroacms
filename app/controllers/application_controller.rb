@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   helper ViewHelper 
   helper SeoHelper  
   helper ThemeHelper 
+  helper CommentsHelper
 
   require 'ext/string'
 

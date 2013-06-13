@@ -1,10 +1,8 @@
 Railsoverview::Application.routes.draw do
 
-  # mount RedactorRails::Engine => '/redactor_rails'
-
   resources :articles
   
-  resources :pages 
+  resources :pages,  only: [:index, :show, :dynamic_page]
   resources :sessions
   resources :comments
 

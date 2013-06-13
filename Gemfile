@@ -6,6 +6,7 @@ gem 'aws-s3'
 gem 'ckeditor_rails'
 gem 'ancestry'
 gem "breadcrumbs_on_rails"
+gem "strong_parameters"
 
 
 group :assets do
