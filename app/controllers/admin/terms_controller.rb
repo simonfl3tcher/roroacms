@@ -15,7 +15,7 @@ class Admin::TermsController < AdminController
 	def create
 
 		taxonomy = params[:type_taxonomy]
-		@category = Term.new(params[:term])
+		@category = Term.new(term_params)
 		@categories = Term.order('name asc')
 
 		if @category.slug.empty?
@@ -72,7 +72,7 @@ class Admin::TermsController < AdminController
 
 		end
 	    respond_to do |format|
-	      if @term.update_attributes(params[:term])
+	      if @term.update_attributes(term_params)
 	        format.html { redirect_to send(redirect_url), notice: "#{type} was successfully updated" }
 	      else
 	        format.html { render action: "edit" }
@@ -140,6 +140,12 @@ class Admin::TermsController < AdminController
 		params.each do |val|
 			@category = Term.find(val)
 			@category.destroy
+		end
+	end
+
+	def term_params
+		if !session[:admin_id].blank?
+			params.permit(:name, :slug, :description, :term_group)
 		end
 	end
 end

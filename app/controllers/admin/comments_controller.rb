@@ -35,7 +35,7 @@ class Admin::CommentsController < AdminController
 	def update
 	    @comment = Comment.find(params[:id])
 	    respond_to do |format|
-	      if @comment.update_attributes(params[:comment])
+	      if @comment.update_attributes(comments_params)
 	     	format.html { redirect_to edit_admin_comment_path(@comment), notice: 'Comment was successfully updated.' }
 	      else
 	        format.html { render action: "edit" }
@@ -119,6 +119,14 @@ class Admin::CommentsController < AdminController
 		comments.each do |val|
 			comment = Comment.find(val)
 			comment.destroy
+		end
+	end
+
+	private
+
+	def comments_params
+		if !session[:admin_id].blank?
+			params.require(:comment).permit(:post_id, :author, :email, :website, :comment, :comment_approved, :parent_id, :is_spam, :submitted_on)
 		end
 	end
 

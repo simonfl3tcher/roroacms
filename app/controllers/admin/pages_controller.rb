@@ -17,7 +17,7 @@ class Admin::PagesController < AdminController
 	end
 
 	def create
-		@page = Post.new(params[:post])
+		@page = Post.new(page_params)
 
 		if @page.post_slug.empty?
 			@page.post_slug = @page.post_title.gsub(' ', '-').downcase
@@ -46,7 +46,7 @@ class Admin::PagesController < AdminController
 	    @page = Post.find(params[:id])
 
 	    respond_to do |format|
-	      if @page.update_attributes(params[:post])
+	      if @page.update_attributes(page_params)
 
 	        format.html { redirect_to edit_admin_page_path(@page), notice: 'Page was successfully updated.' }
 	      else
@@ -68,7 +68,7 @@ class Admin::PagesController < AdminController
 
 	def autosave_create
 		# This function is not in use at the moment but can easily be swtiched on!
-		@page = Post.new(params[:post])
+		@page = Post.new(page_params)
 
 		if @page.post_slug.empty?
 			@page.post_slug = @page.post_title.gsub(' ', '-')
@@ -98,7 +98,7 @@ class Admin::PagesController < AdminController
 		end
 		
 		# Do the autosave
-		@page = Post.new(params[:post])
+		@page = Post.new(page_params)
 
 		@page.id = nil
 		@page.parent_id = params[:post][:id]
@@ -188,6 +188,14 @@ class Admin::PagesController < AdminController
 			page = Post.find(val)
 			page.disabled ="Y"
 			page.save
+		end
+	end
+
+	private
+
+	def page_params
+		if !session[:admin_id].blank?	
+			params.require(:post).permit(:admin_id, :post_content, :post_date, :post_name, :parent_id, :post_slug, :post_status, :post_title, :post_template, :post_type, :disabled, :post_seo_title, :post_seo_description, :post_seo_keywords, :post_seo_is_disabled, :post_seo_no_follow, :post_seo_no_index)
 		end
 	end
 end

@@ -9,7 +9,7 @@ class Admin::AdministratorsController < AdminController
 		end
 	end
 
-	def edit 
+	def edit
 		@admin = Admin.find(params[:id])
 		@action = 'update'
 	end
@@ -18,7 +18,7 @@ class Admin::AdministratorsController < AdminController
 	    @admin = Admin.find(params[:id])
 
 	    respond_to do |format|
-	      if @admin.update_attributes(params[:admin])
+	      if @admin.update_attributes(administrator_params)
 	        format.html { redirect_to edit_admin_administrator_path(@admin), notice: 'Admin was successfully updated.' }
 	      else
 	        format.html { render action: "edit" }
@@ -42,7 +42,7 @@ class Admin::AdministratorsController < AdminController
 	end
 
 	def create
-		@admin = Admin.new(params[:admin])
+		@admin = Admin.new(administrator_params)
 
 		respond_to do |format|
 		  if @admin.save
@@ -60,4 +60,13 @@ class Admin::AdministratorsController < AdminController
 	    file.write(uploaded_io.read)
 	  end
 	end
+
+	private
+
+	def administrator_params
+		if !session[:admin_id].blank?
+			params.require(:admin).permit(:email, :password, :first_name, :last_name, :username, :access_level, :password_confirmation, :avatar, :inline_editing, :description)
+		end
+	end
+
 end
