@@ -206,7 +206,7 @@ h1, .h1 {
 }
 
 .divide_shadow {
-  background-image: url(../../images/public/divide.jpg);
+  background-image: url(/assets/theme/theme/divide.jpg);
   background-repeat: no-repeat;
   background-position: center top;
   height: 30px;
@@ -308,7 +308,7 @@ h1, .h1 {
 #header .logo {
   display:block;
   float:left;
-  background-image: url(../../images/public/frontend-logo-2.png);
+  background-image: url(/assets/theme/frontend-logo-2.png);
   background-repeat: no-repeat;
   background-position: -10px 12px;
   height: 135px;
@@ -403,7 +403,7 @@ h1, .h1 {
 }
 .searchform input[type=submit] {
 background-color: #FFFFFF;
-    background-image: url("../../images/public/search.jpg");
+    background-image: url("/assets/theme/public/search.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     border-style: none;
@@ -427,7 +427,7 @@ background-color: #FFFFFF;
   display:block;
   float:right;
   overflow:hidden;
-  background-image: url(../../images/public/public/pager.png);
+  background-image: url(/assets/theme/public/pager.png);
   background-repeat: no-repeat;
   background-position: left top;
   height:14px;
@@ -448,14 +448,14 @@ background-color: #FFFFFF;
 }
 #footer .footer_logo {
   display:block;
-  background-image: url(../../images/public/frontend-logo-footer-2.png);
+  background-image: url(/assets/theme/frontend-logo-footer-2.png);
   background-repeat: no-repeat;
   background-position: 0 top;
   height: 75px;
   width: 326px;
 }
 #footer .social {
-  background-image: url(../../images/public/social.jpg);
+  background-image: url(/assets/theme/public/social.jpg);
   background-repeat: no-repeat;
   background-position: right top;
   height: 50px;
@@ -577,7 +577,7 @@ background-color: #FFFFFF;
   margin:20px 0 0 0
 }
 .testiomionials_page .item .person {
-  background-image: url(../../images/public/t.jpg);
+  background-image: url(/assets/theme/public/t.jpg);
   background-repeat: no-repeat;
   background-position: left top;
   font-family: Arial, Helvetica, sans-serif;

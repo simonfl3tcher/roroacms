@@ -20,7 +20,7 @@ class Admin::PostsController < AdminController
 		Rails.cache.clear 
 		@cats = params[:category_ids]
 		@tags = params[:tag_ids]
-		@post = Post.new(params[:post])
+		@post = Post.new(post_params)
 
 		if @post.post_slug.empty?
 			@post.post_slug = @post.post_title.gsub(' ', '-').downcase
@@ -63,7 +63,7 @@ class Admin::PostsController < AdminController
 	    @tags = params[:tag_ids]
 
 	    respond_to do |format|
-	      if @post.update_attributes(params[:post])
+	      if @post.update_attributes(post_params)
 	      	
 	      	@delcats = TermRelationship.where(:post_id => @post.id)
 
@@ -111,7 +111,7 @@ class Admin::PostsController < AdminController
 	def autosave_create
 		# This function is not in use at the moment but can easily be swtiched on!
 		@cats = params[:category_ids]
-		@post = Post.new(params[:post])
+		@post = Post.new(post_params)
 
 
 		if @post.post_slug.empty?
@@ -149,7 +149,7 @@ class Admin::PostsController < AdminController
 		
 		# Do the autosave
 		@cats = params[:category_ids]
-		@post = Post.new(params[:post])
+		@post = Post.new(post_params)
 
 		@post.id = nil
 		@post.parent_id = params[:post][:id]
@@ -255,6 +255,12 @@ class Admin::PostsController < AdminController
 			post = Post.find(val)
 			post.disabled ="Y"
 			post.save
+		end
+	end
+
+	def post_params
+		if !session[:admin_id].blank?	
+			params.require(:post).permit(:admin_id, :post_content, :post_date, :post_name, :parent_id, :post_slug, :post_status, :post_title, :post_template, :post_type, :disabled, :post_seo_title, :post_seo_description, :post_seo_keywords, :post_seo_is_disabled, :post_seo_no_follow, :post_seo_no_index)
 		end
 	end
 end

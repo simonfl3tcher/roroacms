@@ -16,7 +16,7 @@ class Admin::BannersController < AdminController
 	    @cats = params[:category_ids]
 
 	    respond_to do |format|
-	      if @banner.update_attributes(params[:banner])
+	      if @banner.update_attributes(banner_params)
 
 	      	@delcats = TermRelationshipsBanner.where(:banner_id => @banner.id)
 
@@ -48,7 +48,7 @@ class Admin::BannersController < AdminController
 	end
 
 	def create
-		@banner = Banner.new(params[:banner])
+		@banner = Banner.new(banner_params)
 		@cats = params[:category_ids]
 
 		respond_to do |format|
@@ -81,5 +81,14 @@ class Admin::BannersController < AdminController
 		@category = Term.new
 
 	end
+
+	private
+
+	def banner_params
+		if !session[:admin_id].blank?
+			params.require(:banner).permit(:name, :image, :description, :sort_order)
+		end
+	end
+
 
 end

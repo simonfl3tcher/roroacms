@@ -10,8 +10,6 @@ class CommentsController < ApplicationController
 
 			session[:return_to] ||= request.referer
 			@comment = Comment.new(params[:comment])
-			@comment.comment_approved = 'N'
-			@comment.submitted_on = Time.now.to_s(:db)
 
 			respond_to do |format|
 			  if @comment.save
@@ -30,6 +28,12 @@ class CommentsController < ApplicationController
 			  end
 			end
 		end
+	end
+
+	private
+
+	def comments_params
+		params.require(:comment).permit(:post_id, :author, :email, :website, :comment)
 	end
 
 end

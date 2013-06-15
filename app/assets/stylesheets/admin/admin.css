@@ -813,7 +813,7 @@ jQuery UI Styles
   z-index: 2;
   width: 25px;
   height: 16px;
-  background: url(../images/admin/jquery/handle.png) no-repeat;
+  background: url(/assets/admin/jquery/handle.png) no-repeat;
   border: none;
   cursor: pointer;
 }
@@ -918,7 +918,7 @@ jQuery UI Styles
   margin-bottom: -0.6em;
   width: 15px;
   height: 24px;
-  background: url(../images/admin/jquery/handle-vertical.png) no-repeat;
+  background: url(/assets/admin/jquery/handle-vertical.png) no-repeat;
 }
 .ui-slider-vertical .ui-slider-handle:hover {
   background-position: 0 -24px;
@@ -1033,14 +1033,14 @@ Signin
 
 
 #LoginBody {
-  background-image: url("../images/admin/roroa_login.png");
+  background-image: url("/assets/admin/roroa_login.png");
   background-position: center top;
   background-repeat: no-repeat;
 }
 /*body.login {
   color: #838383;
   font: 13px/1.7em 'Open Sans';
-  background: url(../images/admin/signin/login-bg.png);
+  background: url(/assets/admin/signin/login-bg.png);
 }*/
 .account-container {
   width: 380px;
@@ -1121,7 +1121,7 @@ span.login-checkbox  > input[type='checkbox'] + label {
   margin: 0;
   font-size: 12px;
   line-height: 1.2em;
-  background: url(../images/admin/signin/check.png) no-repeat 0 0;
+  background: url(/assets/admin/signin/check.png) no-repeat 0 0;
   cursor: pointer;
 }
 span.login-checkbox  > input[type='checkbox']:checked + label {
@@ -1134,7 +1134,7 @@ span.login-checkbox  > input[type='checkbox']:checked + label {
   height: 32px;
   width: 157px;
   display: inline-block;
-  background: url(../images/admin/signin/twitter_btn.png) no-repeat;
+  background: url(/assets/admin/signin/twitter_btn.png) no-repeat;
 }
 .twitter:active,
 .fb:active {
@@ -1161,7 +1161,7 @@ span.login-checkbox  > input[type='checkbox']:checked + label {
 }
 .fb {
   width: 162px;
-  background: url(../images/admin/signin/fb_btn.png) no-repeat;
+  background: url(/assets/admin/signin/fb_btn.png) no-repeat;
 }
 .fb a {
   padding: 5px 0 0 31px;
@@ -1264,7 +1264,7 @@ Validation Styles
   display: inline-block;
   width: 15px;
   height: 15px;
-  background: url(../images/admin/validation/validation-success.png) no-repeat 0 0;
+  background: url(/assets/admin/validation/validation-success.png) no-repeat 0 0;
 }
 .control-group.success input + div.clean,
 .control-group.success select + div.clean,
@@ -1689,7 +1689,7 @@ Gallery
   width: 184px;
   height: 120px;
   background-color: rgba(0, 0, 0, 0.65);
-  background-image: url(../images/admin/gallery/zoom.png);
+  background-image: url(/assets/admin/gallery/zoom.png);
   background-position: 50% 50%;
   background-repeat: no-repeat;
   -webkit-border-radius: 3px;
@@ -1849,7 +1849,7 @@ Layout: Header
   font-size: 18px;
   font-weight: 600;
   line-height: 600;
-  background: url(../images/admin/logo4.png) no-repeat 0 0;
+  background: url(/assets/admin/logo4.png) no-repeat 0 0;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 #header .btn-navbar {
