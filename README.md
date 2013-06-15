@@ -1,20 +1,9 @@
-A First Level Header
+ROROA CMS
 ====================
 
-A Second Level Header
+Roroa cms is a really simple cms built on ruby on rails which is fully extendible. Ideal for a small project that could be static HTML but you want to update the content now and again. 
+
+Installation & Documentation 
 ---------------------
 
-Now is the time for all good men to come to
-the aid of their country. This is just a
-regular paragraph.
-
-The quick brown fox jumped over the lazy
-dog's back.
-
-### Header 3
-
-> This is a blockquote.
-> 
-> This is the second paragraph in the blockquote.
->
-> ## This is an H2 in a blockquote
+### Coming soon!
