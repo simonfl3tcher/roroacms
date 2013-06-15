@@ -43,4 +43,9 @@ class Admin::Settings::GeneralController < AdminController
 
 	end
 
+	private 
+
+	def settings_params
+		params.permit(:setting_name, :setting)
+	end
 end

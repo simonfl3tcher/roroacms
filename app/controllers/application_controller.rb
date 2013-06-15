@@ -48,15 +48,6 @@ class ApplicationController < ActionController::Base
 
   end
 
-
-  # def reload_theme_helper
-
-  #   file = File.open("app/views/pages/theme_helper.rb", "rb")
-  #   doc = file.read
-  #   File.open("app/helpers/theme_helper.rb", 'w') {|f| f.write(doc) }
-
-  # end
-
   def authorize_admin
   	redirect_to admin_login_path, error: "Not Authorized" if current_admin.nil?
   end
@@ -73,7 +64,4 @@ class ApplicationController < ActionController::Base
 
   end
 
-  def restricted_access_check
-    # Make function to restrict access via access level on the admin remove - administrators, trash, settings(maybe)
-  end
 end

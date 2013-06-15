@@ -11,8 +11,6 @@ class Post < ActiveRecord::Base
 
   has_many :child, :class_name => "Post", :foreign_key => "parent_id", conditions: "post_type != 'autosave'"
 
-  attr_accessible :admin_id, :post_content, :post_date, :post_name, :parent_id, :post_slug, :post_status, :post_title, :post_template, :post_type, :disabled, :post_seo_title, :post_seo_description, :post_seo_keywords, :post_seo_is_disabled, :post_seo_no_follow, :post_seo_no_index
-
   validates :post_title, :presence => true
   validates_uniqueness_of :post_slug, :scope => [:post_type]
 

@@ -8,9 +8,6 @@ class Admin::Settings::MenuController < AdminController
 
 	def sort
 
-		abort(params.inspect)
-
-
 	end
 
 
