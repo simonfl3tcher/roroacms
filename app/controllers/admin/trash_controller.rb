@@ -27,70 +27,19 @@ class Admin::TrashController < AdminController
 	end
 
 	def deal_with_form
-
-		action = params[:to_do]
-		action = action.gsub(' ', '_')
-
-		case action.downcase 
-			when "reinstate"
-					if !params[:posts].blank? 
-						reinstate_posts params[:posts] 
-					elsif !params[:pages].blank?
-						reinstate_posts params[:pages]
-					else
-						return redirect_to admin_trash_path, notice: "There were no records to reinstate."
-					end
-
-					redirect_to admin_trash_path, notice: "These records was successfully reinstated."
-			when "destroy"
-				if !params[:posts].blank? 
-					delete_posts params[:posts] 
-				elsif !params[:pages].blank?
-					delete_posts params[:pages]
-				else
-					return redirect_to admin_trash_path, notice: "There were no records to delete."
-				end
-				redirect_to admin_trash_path, notice: "These records was successfully deleted."
-			else
-				respond_to do |format|
-			      format.html { redirect_to admin_trash_path, notice: 'Nothing was done' }
-			    end
-		end
-	end
-
-	def edit
-
-		type = params[:type]
 		
-		post = Post.find(params[:id])
-		post.disabled = "N"
-		post.save
-
-		
+		notice = Trash.deal_with_form params
 		respond_to do |format|
-	      format.html { redirect_to admin_trash_path, notice: 'This record was successfully reinstated.' }
+	      format.html { redirect_to admin_trash_path, notice: notice }
 	    end
 
 	end
 
-	private
-
-	def reinstate_posts posts
-
-		posts.each do |val|
-			post = Post.find(val)
-			post.disabled = "N"
-			post.save
-		end
-
-	end
-
-	def delete_posts posts 
-
-		posts.each do |val|
-			post = Post.find(val)
-			post.destroy
-		end
+	def edit
+		Trash.reinstate_post params[:id]
+		respond_to do |format|
+	      format.html { redirect_to admin_trash_path, notice: 'This record was successfully reinstated.' }
+	    end
 
 	end
 end

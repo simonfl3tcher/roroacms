@@ -25,20 +25,14 @@ ActiveRecord::Schema.define(:version => 20130602173439) do
     t.string   "avatar"
     t.string   "inline_editing",  :limit => 1, :default => "Y"
     t.string   "overlord",        :limit => 1, :default => "N"
-  end
-
-  create_table "attachments", :force => true do |t|
-    t.integer  "post_id"
-    t.text     "attachment_name"
-    t.text     "attachment_content"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.text     "description"
   end
 
   create_table "banners", :force => true do |t|
     t.string   "name"
     t.string   "image"
     t.text     "description"
+    t.string   "sort_order"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -74,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20130602173439) do
     t.text     "post_content",         :limit => 2147483647
     t.text     "post_title"
     t.string   "post_status"
+    t.string   "post_template"
     t.string   "post_name"
     t.integer  "parent_id"
     t.string   "post_type"
@@ -117,6 +112,15 @@ ActiveRecord::Schema.define(:version => 20130602173439) do
 
   add_index "term_relationships", ["post_id"], :name => "post_id"
 
+  create_table "term_relationships_banners", :force => true do |t|
+    t.integer  "banner_id"
+    t.integer  "term_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "term_relationships_banners", ["banner_id"], :name => "post_id"
+
   create_table "terms", :force => true do |t|
     t.string   "name"
     t.string   "slug"
@@ -124,16 +128,6 @@ ActiveRecord::Schema.define(:version => 20130602173439) do
     t.integer  "term_group",  :default => 0
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
-  end
-
-  create_table "users", :force => true do |t|
-    t.string   "email"
-    t.string   "password_digest"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "website"
   end
 
 end
