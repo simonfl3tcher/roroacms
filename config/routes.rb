@@ -1,11 +1,17 @@
 Railsoverview::Application.routes.draw do
 
+
   resources :articles
   
   resources :pages,  only: [:index, :show, :dynamic_page]
   resources :sessions
   resources :comments
 
+  mount Mercury::Engine => '/'
+  namespace :mercury do
+    resources :images
+  end
+  
   namespace :admin do
     get '', to: 'dashboard#index'
     get 'login', to: 'login#new', as: 'login'
@@ -13,6 +19,7 @@ Railsoverview::Application.routes.draw do
     get 'logout', to: 'login#destroy', as: 'logout'
     get 'posts/categories', to: 'terms#categories', as: 'post_categories'
     get 'posts/tags', to: 'terms#tags', as: 'post_tags'
+   
     
     resources :login, :users, :administrators
 

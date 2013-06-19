@@ -17,18 +17,8 @@ class Admin::RevisionsController < AdminController
 	def restore
 		
 		post = Post.find(params[:id])
-		parent = Post.find(post.parent_id)
-
-		parent.post_content = post.post_content
-		parent.post_date = post.post_date
-		parent.post_name = post.post_name
-		parent.post_slug = post.post_slug
-		parent.post_title = post.post_title
-		parent.disabled = post.disabled
-
-		parent.save
-
-		redirect_to edit_admin_post_path(parent.id), notice: 'Post was successfully restored.'
+		restore = Post.restore post 
+		redirect_to edit_admin_post_path(restore), notice: 'Post was successfully restored.'
 
 	end
 end

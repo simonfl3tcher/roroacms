@@ -9,12 +9,12 @@
 //
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
+//= require_directory .
 //= require jquery
 //= require jquery-ui
 //= require_self
 //= require ckeditor-jquery
 //= require twitter/bootstrap
-//= require_directory .
 
 $('.checkall').change(function() {
   var checkboxes = $(this).closest('form').find(':checkbox');

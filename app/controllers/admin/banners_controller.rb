@@ -3,7 +3,7 @@ class Admin::BannersController < AdminController
 	before_filter :authorize_admin
 
 	def index 
-		@banners = Banner.all
+		@banners = Banner.where('1+1=2').page(params[:page]).per(Setting.get_pagination_limit)
 	end
 
 
@@ -13,34 +13,20 @@ class Admin::BannersController < AdminController
 
 	def update
 	    @banner = Banner.find(params[:id])
-	    @cats = params[:category_ids]
 
 	    respond_to do |format|
+
 	      if @banner.update_attributes(banner_params)
 
-	      	@delcats = TermRelationshipsBanner.where(:banner_id => @banner.id)
+	      	Banner.deal_with_categories(@banner, params[:category_ids], true)
 
-	      	if !@delcats.blank?
-	      		@delcats.each do |f|
-
-		      		@cat = TermRelationshipsBanner.find(f.id)
-		    		@cat.destroy
-
-	      		end
-	      		# TermRelationship.delete_all('post_id = ?', @post.id)
-	    	end
-
-	    	if !@cats.blank?
-	    		@cats.each do |val|
-					# return render :text => "The object is #{val}"
-					TermRelationshipsBanner.create(:term_id => val, :banner_id => @banner.id)
-				end
-			end
 	        format.html { redirect_to edit_admin_banner_path(@banner), notice: 'Banner was successfully updated.' }
 	      else
 	        format.html { render action: "edit" }
 	      end
+
 	    end
+
 	end
 
 	def new
@@ -49,21 +35,17 @@ class Admin::BannersController < AdminController
 
 	def create
 		@banner = Banner.new(banner_params)
-		@cats = params[:category_ids]
 
 		respond_to do |format|
 		  if @banner.save
-		  	if !@cats.blank?
-				@cats.each do |val|
-					# return render :text => "The object is #{val}"
-					TermRelationshipsBanner.create(:term_id => val, :banner_id => @banner.id)
-				end
-			end
+		  	Banner.deal_with_categories @banner, params[:category_id]
 		    format.html { redirect_to admin_banners_path, notice: 'Banner was successfully created.' }
 		  else
 		    format.html { render action: "new" }
 		  end
+
 		end
+
 	end
 
 	def destroy

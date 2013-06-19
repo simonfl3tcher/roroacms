@@ -16,6 +16,12 @@
 				<%= label_tag(:site_url, "Site Url") %>
 				<%= text_field_tag(:site_url, Setting.find_by_setting_name('site_url')[:setting]) %>
 			</div>
+
+			<div class="field formSep">
+				<%= label_tag(:pagination_per, "Pagination per page") %>
+				<%= text_field_tag(:pagination_per, Setting.find_by_setting_name('pagination_per')[:setting]) %>
+			</div>
+
 			<div class="field formSep">
 				<%= label_tag(:site_email, "Site Email Address") %>
 				<%= text_field_tag(:site_email, Setting.find_by_setting_name('site_email')[:setting]) %>

@@ -3,10 +3,7 @@ class Admin::AdministratorsController < AdminController
 	before_filter :authorize_admin_access, :except => [:edit, :update]
 		
 	def index
-		@admins = Admin.all
-		if params.has_key?(:search)
-			@admins = Admin.where("email like ? or first_name like ? or last_name like ? or username like ?", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
-		end
+		@admins = Admin.setup_and_search params
 	end
 
 	def edit
@@ -55,10 +52,7 @@ class Admin::AdministratorsController < AdminController
 	end
 
 	def upload
-	  	uploaded_io = params[:admin][:avatar]
-	 	File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'w') do |file|
-	    file.write(uploaded_io.read)
-	  end
+		upload_file params[:admin][:avatar]
 	end
 
 	private

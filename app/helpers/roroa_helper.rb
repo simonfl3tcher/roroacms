@@ -39,5 +39,16 @@ module RoroaHelper
 
 	end
 
+	def upload_file file
+
+		File.open(Rails.root.join('public', 'uploads', file.original_filename), 'w') do |file|
+			file.write(file.read)
+		end	
+
+	end
+
+	def get_pagination_limit
+
+	end
 
 end
