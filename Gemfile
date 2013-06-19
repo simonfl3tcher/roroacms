@@ -7,6 +7,8 @@ gem 'ckeditor_rails'
 gem 'ancestry'
 gem "breadcrumbs_on_rails"
 gem "strong_parameters"
+gem 'kaminari'
+gem 'mercury-rails', git: 'git://github.com/jejacks0n/mercury'
 
 
 group :assets do

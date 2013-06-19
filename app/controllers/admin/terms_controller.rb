@@ -14,42 +14,22 @@ class Admin::TermsController < AdminController
 
 	def create
 
-		taxonomy = params[:type_taxonomy]
 		@category = Term.new(term_params)
-		@categories = Term.order('name asc')
+		@category = Term.deal_with_abnormalaties @category
 
-		if @category.slug.empty?
-			@category.slug = @category.name.gsub(' ', '-').downcase
-		else
-			@category.slug = @category.slug.gsub(' ', '-').downcase
-		end
-
-		if taxonomy == 'category'
-
-			redirect_url = "admin_post_categories_path"
-			type = "Category"
-
-		elsif taxonomy == 'banner'
-
-			redirect_url = "categories_admin_banners_path"
-			type = "Banner category"
-
-		else
-
-			redirect_url = "admin_post_tags_path"
-			type = "Tag"
-
-		end
-
+		
+		redirect_url = Term.get_redirect_url params
+		type = Term.get_type_of_term params
 
 		respond_to do |format|
 		  if @category.save
-			@term_anatomy = @category.create_term_anatomy(:taxonomy => taxonomy)
-		    format.html { redirect_to send(redirect_url), notice:  "#{type} was successfully created" }
+		  	@term_anatomy = @category.create_term_anatomy(:taxonomy => params[:type_taxonomy])
+		    format.html { redirect_to send(redirect_url), notice: "#{type} was successfully created." }
 		  else
-		    format.html { render action: "index" }
+		    format.html { render action: "new" }
 		  end
 		end
+
 	end
 
 	def edit 
@@ -59,18 +39,9 @@ class Admin::TermsController < AdminController
 
 	def update
 	    @term = Term.find(params[:id])
+	    redirect_url = Term.get_redirect_url params
+	    type = Term.get_type_of_term params
 
-
-	    if params[:type_taxonomy] == 'category'
-
-			redirect_url = "admin_post_categories_path"
-			type = "Category"
-
-		else
-			redirect_url = "admin_post_tags_path"
-			type = "Tag"
-
-		end
 	    respond_to do |format|
 	      if @term.update_attributes(term_params)
 	        format.html { redirect_to send(redirect_url), notice: "#{type} was successfully updated" }
@@ -82,19 +53,10 @@ class Admin::TermsController < AdminController
 
 	def destroy
 	    @term = Term.find(params[:id])
-
-	    if @term.term_anatomy.taxonomy == 'category'
-
-			redirect_url = "admin_post_categories_path"
-			type = "Category"
-
-		else
-			redirect_url = "admin_post_tags_path"
-			type = "Tag"
-
-		end
-
 	    @term.destroy
+	    
+	    redirect_url = Term.get_redirect_url params
+	    type = Term.get_type_of_term params
 
 	    respond_to do |format|
 	      format.html { redirect_to send(redirect_url), notice: "#{type} successfully deleted" }
@@ -103,49 +65,16 @@ class Admin::TermsController < AdminController
 	end
 
 	def bulk_update
-		action = params[:to_do]
-		action = action.gsub(' ', '_')
-
-		if params[:categories].nil?
-			action = ""
-		end
-
-		if params[:type_taxonomy] == 'category'
-
-			redirect_url = "admin_post_categories_path"
-			type = "Categories"
-
-		else
-			redirect_url = "admin_post_tags_path"
-			type = "Tags"
-
-		end
-		case action.downcase 
-			when "destroy"
-				bulk_update_move_to_trash params[:categories]
-				respond_to do |format|
-			      format.html { redirect_to send(redirect_url), notice: "#{type} were successfully deleted" }
-			    end
-			else
-
-				respond_to do |format|
-			      format.html { redirect_to send(redirect_url), notice: 'Nothing was done' }
-			    end
-		end
-	end
-
-	private 
-
-	def bulk_update_move_to_trash params
-		params.each do |val|
-			@category = Term.find(val)
-			@category.destroy
-		end
+		notice = Term.bulk_update params
+		redirect_url = Term.get_redirect_url params
+		respond_to do |format|
+	      format.html { redirect_to send(redirect_url), notice: notice }
+	    end
 	end
 
 	def term_params
 		if !session[:admin_id].blank?
-			params.permit(:name, :slug, :description, :term_group)
+			params.require(:term).permit(:name, :slug, :description, :term_group)
 		end
 	end
 end

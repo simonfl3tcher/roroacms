@@ -206,10 +206,10 @@ h1, .h1 {
 }
 
 .divide_shadow {
-  background-image: url(/assets/theme/theme/divide.jpg);
+  background-image: url("/assets/theme/divide.jpg");
   background-repeat: no-repeat;
   background-position: center top;
-  height: 30px;
+  height: 15px;
   clear:both
 }
 
@@ -403,7 +403,7 @@ h1, .h1 {
 }
 .searchform input[type=submit] {
 background-color: #FFFFFF;
-    background-image: url("/assets/theme/public/search.jpg");
+    background-image: url("/assets/theme/search.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     border-style: none;
@@ -427,7 +427,7 @@ background-color: #FFFFFF;
   display:block;
   float:right;
   overflow:hidden;
-  background-image: url(/assets/theme/public/pager.png);
+  background-image: url(/assets/theme/pager.png);
   background-repeat: no-repeat;
   background-position: left top;
   height:14px;
@@ -455,7 +455,7 @@ background-color: #FFFFFF;
   width: 326px;
 }
 #footer .social {
-  background-image: url(/assets/theme/public/social.jpg);
+  background-image: url(/assets/theme/social.jpg);
   background-repeat: no-repeat;
   background-position: right top;
   height: 50px;
@@ -577,7 +577,7 @@ background-color: #FFFFFF;
   margin:20px 0 0 0
 }
 .testiomionials_page .item .person {
-  background-image: url(/assets/theme/public/t.jpg);
+  background-image: url(/assets/theme/t.jpg);
   background-repeat: no-repeat;
   background-position: left top;
   font-family: Arial, Helvetica, sans-serif;
