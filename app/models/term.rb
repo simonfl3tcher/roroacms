@@ -10,6 +10,9 @@ class Term < ActiveRecord::Base
 
   	validates :name, :presence => true
 
+  	validates_uniqueness_of :slug
+  	validates_format_of :slug, :with => /^[A-Za-z0-9-]*$/
+
   	def self.create params
 
 		taxonomy = params[:type_taxonomy]
@@ -90,10 +93,10 @@ class Term < ActiveRecord::Base
 
   	def self.deal_with_abnormalaties category
 
-  		if category.slug.nil?
-			category.slug = category.name.to_s.gsub(' ', '-').downcase
+  		if category.slug.blank?
+			category.slug = category.name.gsub(' ', '-').downcase
 		else
-			category.slug = category.slug.to_s.gsub(' ', '-').downcase
+			category.slug = category.slug.gsub(' ', '-').downcase
 		end
 
 		return category

@@ -123,7 +123,6 @@ module RoutingHelper
 		gloalize @content
 		render_404 and return if @content.nil?
 		add_breadcrumb "#{@content.post_title.capitalize}", "/#{@content.post_slug}", :title => "Back to #{@content.post_title.capitalize}"
-		
 		render_template 'page'
 
 	end
@@ -169,7 +168,6 @@ module RoutingHelper
 		@comment = Comment.new
 		add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
 		add_breadcrumb "#{@content.post_title}", "/#{@content.post_name}", :title => "Back to #{@content.post_title}"
-		
 		render_template 'single'
 
 	end

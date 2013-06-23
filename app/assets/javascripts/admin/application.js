@@ -9,9 +9,10 @@
 //
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
-//= require_directory .
 //= require jquery
-//= require jquery-ui
+//= require jquery_ujs
+//= require_tree .
+//= require_directory .
 //= require_self
 //= require ckeditor-jquery
 //= require twitter/bootstrap
@@ -27,4 +28,13 @@ $('#editButton').click(function(){
 
 $.ajaxSetup({
 	beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+});
+
+
+$("#term_name").keyup(function(){
+    $("#term_slug").val($(this).val().toLowerCase().split(' ').join('-'));
+});
+
+$("#term_name").change(function(){
+	$("#term_slug").val($(this).val().toLowerCase().split(' ').join('-'));
 });

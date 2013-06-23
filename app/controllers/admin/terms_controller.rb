@@ -1,13 +1,13 @@
 class Admin::TermsController < AdminController
 
 	def categories
-		@categories = Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
+		@categories = Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy).page(params[:page]).per(Setting.get_pagination_limit)
 		@category = Term.new
 
 	end
 
 	def tags
-		@categories = Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy)
+		@tags = Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy).page(params[:page]).per(Setting.get_pagination_limit)
 		@category = Term.new
 
 	end

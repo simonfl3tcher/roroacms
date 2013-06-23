@@ -304,16 +304,16 @@ module ViewHelper
 
 		@terms = Term.where(term_anatomies: {taxonomy: 'category'}).includes(:term_anatomy)
 
-		article_url = Setting.where(:setting_name => 'articles_slug').first.setting
-		category_url = Setting.where(:setting_name => 'category_slug').first.setting
+			article_url = Setting.where(:setting_name => 'articles_slug').first.setting
+			tag_url = Setting.where(:setting_name => 'category_slug').first.setting
 			
-		h = {}
-		
-		@terms.each do |f|
-			h["#{article_url}/#{category_url}/#{f.slug}"] = f.name
-		end
-		
-		return li_loop h
+			h = {}
+			
+			@terms.each do |f|
+				h["#{article_url}/#{tag_url}/#{f.slug}"] = f.name
+			end
+			
+			return li_loop h
 
 	end
 	

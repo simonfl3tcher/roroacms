@@ -1,7 +1,7 @@
 class Admin::FilebrowserController < AdminController
 
 	helper FilebrowserHelper
-	skip_before_filter :authorize_admin
+	# skip_before_filter :authorize_admin
 
 	layout "filebrowser"
 
@@ -18,6 +18,10 @@ class Admin::FilebrowserController < AdminController
 	def upload
 
 		session[:return_to] ||= request.referer
+
+		if params[:manualBrowse]
+			session[:return_to] = "#{session[:return_to]}?manualBrowse=true"
+		end
 
 	    if !params[:file].blank?
 

@@ -47,9 +47,12 @@
                     // do nothing
                   }
                 }
-            }, 12000);
+            }, 100000);
 
             $("#post_post_title").keyup(function(){
+                $("#post_post_slug").val($(this).val().toLowerCase().split(' ').join('-'));
+            });
+             $("#post_post_title").change(function(){
                 $("#post_post_slug").val($(this).val().toLowerCase().split(' ').join('-'));
             });
         })
@@ -99,7 +102,7 @@
     <div class="accordion" id="accordion1">
       <div class="accordion-group">
         <div class="accordion-heading">
-          <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne"><i class="icon-lightbulb pull-left"></i>&nbsp;Publish<i class="accordionSign pull-right"></i></a>
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne"><i class="icon-lightbulb pull-left"></i>&nbsp;Publish<i class="accordionSign pull-right"></i></a>
         </div>
         <div id="collapseOne" class="accordion-body collapse in">
           <div class="accordion-inner">
@@ -188,14 +191,3 @@
   </div>
   <% end %>
 </div>
-
-<script type="text/javascript">
-  
-  $(document).ready(function(){
-    $('.updatepost').bind('click', function(e){
-      $('body').find('form').submit();
-      e.preventDefault();
-    })
-  });
-  
-</script>
