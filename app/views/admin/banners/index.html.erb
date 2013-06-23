@@ -4,9 +4,17 @@
 
 <div class="well">
 
-  <%= link_to new_admin_banner_path do %>
-    <button class="pull-right btn btn-small btn-warning"><span class="icon-plus"></span>&nbsp;Add New Banner</button>
-  <% end %>
+  <div class="input-append span6">
+    <%= form_tag admin_banners_path, :method => 'get' do %>
+        <%= text_field_tag :search, params[:search], :placeholder => "Search..." %>
+        <%= submit_tag "Search", :name => nil, :class => 'btn btn-small btn-warning' %> 
+    <% end %>
+    </div>
+  <div class="span6">
+    <%= link_to new_admin_banner_path do %>
+      <button class="pull-right btn btn-small btn-warning"><span class="icon-plus"></span>&nbsp;Add New Banner</button>
+    <% end %>
+  </div>
 
 </div>
 
@@ -33,7 +41,7 @@
 
       <td><%= check_box_tag 'banners[]', banner.id %></td>
     	<td><span class="hhfr">Banner Name:-</span><%= banner.name %></td>
-    	<td><span class="hhfr">Image:-</span><img src="<%= download_url_for(banner.image) %>" width="200"/></td>
+    	<td class="image"><span class="hhfr">Image:-</span><img src="<%= banner.image %>" width="100"/></td>
     	<td>
     		<span class="hhfr">Category:-</span>
     		<%= banner.terms.all.collect {|u| u.name}.join ', ' %>
@@ -51,7 +59,7 @@
       </tr>
     <% end %>
     </table>
-  <%= bulk_update_dropdown Hash['publish' => 'Publish', 'draft' => 'Draft', 'move_to_trash' => 'Move To Trash'] %>
+  <%= bulk_update_dropdown Hash['move_to_trash' => 'Move To Trash'] %>
   <% end %>
 <% end %>
 

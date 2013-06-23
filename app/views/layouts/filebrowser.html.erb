@@ -3,6 +3,8 @@
   <head>
     <title>Dashboard | Roroa CMS</title>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <%= stylesheet_link_tag    "admin/application", :media => "all" %>
     <%= javascript_include_tag "admin/application" %>
     <%= csrf_meta_tags %>
@@ -22,7 +24,7 @@
 
       <div id="content">
 
-        <div class="container">
+        <div class="container filebrowser">
           <%= get_notifications %>
           <%= yield %>
        </div> 

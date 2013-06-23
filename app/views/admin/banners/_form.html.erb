@@ -18,7 +18,10 @@
           <%= f.text_field :name, size: 40, :placeholder => 'Banner Name' %>
         </div>
         <div class="field">
-          <%= f.text_field :image, size: 40, :placeholder => 'Image Url' %>
+          <div class="input-append">
+            <%= f.text_field :image, size: 40, :placeholder => 'Image Url' %>
+            <button class="btn" id="filebrowser">Browse Server</button>
+          </div>
         </div>
         <div class="field">
           <%= f.text_field :sort_order, size: 40, :placeholder => 'Sort Order' %>
@@ -36,7 +39,7 @@
     <div class="accordion tagsAccordion" id="accordionTags">
       <div class="accordion-group">
         <div class="accordion-heading">
-          <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionTags" href="#collapseTags"><i class="icon-sitemap pull-left"></i>&nbsp;Banner Category<i class="accordionSign pull-right"></i></a>
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionTags" href="#collapseTags"><i class="icon-sitemap pull-left"></i>&nbsp;Banner Category<i class="accordionSign pull-right"></i></a>
         </div>
         <div id="collapseTags" class="accordion-body collapse in">
            <div class="accordion-inner">
@@ -58,19 +61,40 @@
           </div>
         </div>
       </div>
-    </div>      
+    </div>  
+
+    <h4 class="title">Banner Image</h4>
+
+    <div class="imagePlaceholder">
+      <img width="268" src="<%= @banner.image %>" />
+    </div>    
 
   </div>
   <% end %>
 </div>
 
 <script type="text/javascript">
+
+  function popitup() {
+    var left = (screen.width/2)-(1137/2);
+    var top = (screen.height/2)-(600/2);
+    newwindow=window.open('/admin/filebrowser/?manualBrowse=true','name','height=600,width=1137,scrollbars=yes,top='+top+',left=' + left);
+    if (window.focus) {newwindow.focus()}
+    return false;
+  }
+
+  function returnImageFunction(image){
+    $('#banner_image').val(image);
+    $('.imagePlaceholder').html('<img width="268" src="' + image + '" />');
+  }
   
   $(document).ready(function(){
-    $('.updatepost').bind('click', function(e){
-      $('body').find('form').submit();
+
+    $('#filebrowser').bind('click', function(e){
       e.preventDefault();
-    });
+      popitup();
+    })
+
   });
   
 </script>

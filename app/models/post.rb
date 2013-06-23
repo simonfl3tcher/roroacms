@@ -1,7 +1,5 @@
 class Post < ActiveRecord::Base
 
-  has_ancestry
-
   Rails.cache.clear 
 
   belongs_to :admin

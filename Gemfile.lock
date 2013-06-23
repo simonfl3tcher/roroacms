@@ -1,11 +1,3 @@
-GIT
-  remote: git://github.com/jejacks0n/mercury
-  revision: 49835a0d9080886c90f6ec6593be18d77afb0a8c
-  specs:
-    mercury-rails (0.9.0)
-      coffee-rails (>= 3.2.2)
-      railties (>= 3.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -36,15 +28,12 @@ GEM
     activesupport (3.2.11)
       i18n (~> 0.6)
       multi_json (~> 1.0)
-    ancestry (2.0.0)
-      activerecord (>= 3.0.0)
     arel (3.0.2)
     aws-s3 (0.6.3)
       builder
       mime-types
       xml-simple
     bcrypt-ruby (3.0.1)
-    breadcrumbs_on_rails (2.3.0)
     builder (3.0.4)
     ckeditor_rails (4.1.2)
       railties (>= 3.0)
@@ -145,16 +134,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ancestry
   aws-s3
   bcrypt-ruby (~> 3.0.0)
-  breadcrumbs_on_rails
   ckeditor_rails
   coffee-rails (~> 3.2.1)
   jquery-rails
   kaminari
   less-rails
-  mercury-rails!
   mysql2
   rails (= 3.2.11)
   sass-rails (~> 3.2.3)

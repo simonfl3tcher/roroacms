@@ -27,7 +27,7 @@
       <%= label_tag 'Description' %>
       <%= f.text_area :description, :rows => "3" %>
     </div>
-    <div class="field">
+    <div class="field formSep">
       <% if defined?(edit) && edit %>
         <%= f.submit "Edit Category", :class => 'btn btn-small btn-warning' %>
       <% else %>
@@ -36,3 +36,17 @@
     </div>
   </fieldset>
 <% end %>
+
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+
+      $("#term_name").keyup(function(){
+          $("#term_slug").val($(this).val().toLowerCase().split(' ').join('-'));
+      });
+       $("#term_name").change(function(){
+          $("#term_slug").val($(this).val().toLowerCase().split(' ').join('-'));
+      });
+    })
+  
+</script>

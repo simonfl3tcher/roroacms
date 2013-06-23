@@ -47,9 +47,9 @@
             <%= link_to edit_admin_page_path(page), :class => 'btn btn-small' do %>
               <i class="icon-pencil"></i>
             <% end %>        
-            <%= link_to page_path(page), :class => 'btn btn-small' do %>
+           <%= link_to page_path(page), :class => 'btn btn-small', :target => "_blank" do %>
               <i class="icon-search"></i>
-            <% end %>       
+            <% end %> 
             <%= link_to admin_page_path(page), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-small' do %>
               <i class="icon-trash"></i>
             <% end %>
