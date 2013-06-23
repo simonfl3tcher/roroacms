@@ -1,16 +1,10 @@
 Railsoverview::Application.routes.draw do
 
-
   resources :articles
   
   resources :pages,  only: [:index, :show, :dynamic_page]
   resources :sessions
   resources :comments
-
-  mount Mercury::Engine => '/'
-  namespace :mercury do
-    resources :images
-  end
   
   namespace :admin do
     get '', to: 'dashboard#index'
@@ -19,9 +13,16 @@ Railsoverview::Application.routes.draw do
     get 'logout', to: 'login#destroy', as: 'logout'
     get 'posts/categories', to: 'terms#categories', as: 'post_categories'
     get 'posts/tags', to: 'terms#tags', as: 'post_tags'
-   
     
     resources :login, :users, :administrators
+
+    resources :editor do
+
+      collection do 
+        put 'update_from_air'
+      end
+
+    end
 
     resources :media do
 
@@ -35,6 +36,7 @@ Railsoverview::Application.routes.draw do
     resources :banners do 
       collection do
           get 'categories'
+          post 'bulk_update'
         end
     end
 
@@ -68,14 +70,15 @@ Railsoverview::Application.routes.draw do
         post 'bulk_update'
         post 'autosave_create'
         put 'autosave_update'
-        post 'update_from_air'
       end
+      member{ post 'update_from_air' }
     end
 
     resources :pages do
       collection do
         post 'bulk_update'
       end
+      member{ post 'update_from_air' }
     end
 
     resources :trash do

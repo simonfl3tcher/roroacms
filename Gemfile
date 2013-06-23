@@ -2,13 +2,9 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
 gem 'mysql2'
-gem 'aws-s3'
 gem 'ckeditor_rails'
-gem 'ancestry'
-gem "breadcrumbs_on_rails"
 gem "strong_parameters"
 gem 'kaminari'
-gem 'mercury-rails', git: 'git://github.com/jejacks0n/mercury'
 
 
 group :assets do

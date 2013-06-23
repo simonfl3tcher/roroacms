@@ -30,6 +30,27 @@
 // Example:
 // @linkColor: #ff0000;
 
+	
+	/* CKEditor Styling and hiding options */
+	#cke_32,
+	#cke_26,
+	#cke_27,  
+	#cke_19 {
+		display:none;
+	}
+
+	.cke_chrome {
+		width:99% !important;
+		margin-left:2px !important;
+		border-radius: 4px 4px 4px 4px;
+		overflow:hidden;
+	}
+
+	.cke_toolbar_break {
+	display:none !important;
+	}
+
+
 body {
 	padding:0
 }
@@ -165,6 +186,10 @@ input[type="radio"], input[type="checkbox"] {
 .accordion-inner input[type="password"],
 .accordion-inner select {
 	width:93%;
+}
+
+.accordion-inner select  {
+	width:98%;
 }
 
 	button.btn, input[type="submit"].btn {

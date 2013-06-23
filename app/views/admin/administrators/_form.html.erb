@@ -34,10 +34,16 @@
             <%= f.label :username %>
             <%= f.text_field :username, size: 40 %>
           </div>
-          <div class="field formSep">
-            <%= f.label :access_level %>
-             <%= f.select :access_level, Admin::ACCESS_LEVELS, prompt: 'Select access level' %>
-          </div>
+
+          <% if is_overlord %>
+            
+            <div class="field formSep">
+              <%= f.label :access_level %>
+               <%= f.select :access_level, Admin::ACCESS_LEVELS, prompt: 'Select access level' %>
+            </div>
+
+          <% end %>
+
           <div class="field formSep">
             <%= f.label 'Author Description (this will be displayed against your posts)' %>
             <%= f.text_area :description, :class => 'seo_textarea' %>

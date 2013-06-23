@@ -1,10 +1,9 @@
 class Admin::MediaController < AdminController
 
 	include ControllersHelper
-	include AWS::S3
 
 	def index
-		@files = AWS::S3::Bucket.find(BUCKET).objects
+		@files = Media.setup_and_search_posts params
 	end
 
 	def delete

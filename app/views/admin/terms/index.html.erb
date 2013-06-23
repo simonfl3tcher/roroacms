@@ -52,4 +52,13 @@
 
 <script type='text/javascript'>
     $('#check_all').on("click", function(){ console.log(233); $('td input[type="checkbox"]').click(); });
+	$(document).ready(function(){
+		 $("#term_name").keyup(function(){
+                $("#term_slug").val($(this).val().toLowerCase().split(' ').join('-'));
+            });
+
+		 $("#term_name").change(function(){
+		 	$("#term_slug").val($(this).val().toLowerCase().split(' ').join('-'));
+		 });
+	})
 </script>

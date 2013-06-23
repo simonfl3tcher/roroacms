@@ -182,14 +182,14 @@ label {
 
 .accordion-toggle.collapsed .accordionSign,
 .accordion-toggle .accordionSign {
-  width:20px;
-  height:20px;
-  background-image: url('../../images/admin/glyphicons-halflings.png');
- background-position: -24px -95px;
+  width:15px;
+  height:15px;
+  background-image: url('/assets/admin/glyphicons-halflings.png');
+ background-position: -23px -95px;
 }
 
 .accordion-toggle.collapsed .accordionSign {
-  background-position: 0 -95px;
+  background-position: 1px -95px;
 }
 
 .accordion-group .accordion-heading a {
@@ -215,6 +215,10 @@ height: 25px;
 .tagsAccordion .accordion-group .field {
   height: 100px;
   overflow: auto;
+}
+
+.accordion-group .accordion-inner ul {
+  margin:0 0 10px;
 }
 
 fieldset .formSep {
@@ -263,4 +267,52 @@ fieldset .formSepUpp {
 
 .input-append .btn-small {
   padding:4px 10px;
+}
+
+td.image {
+  text-align: center;
+}
+
+.container.filebrowser .span2 {
+    background: none repeat scroll 0 0 #0E0E0E;
+    border-radius: 6px 6px 6px 6px;
+    float: left;
+    height: 174px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+    width: 219px;
+}
+
+.container.filebrowser .span2 .overlay {
+    background: none repeat scroll 0 0 rgba(0, 222, 255, 0.25);
+    border-radius: 6px 6px 0 0;
+    display: block;
+    height: 140px;
+    overflow: hidden;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 250px;
+    cursor: pointer;
+}
+
+.container.filebrowser .span2 .overlay:hover {
+  opacity: 0.5;
+}
+
+.container.filebrowser .span2 .actions {
+    bottom: 0;
+    height: 25px;
+    padding-right: 10px;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    width: 100%;
+}
+
+.container.filebrowser .span2 .actions a {
+  color:#ffffff;
+  margin:0px 5px;
 }

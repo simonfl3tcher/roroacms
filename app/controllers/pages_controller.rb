@@ -15,6 +15,13 @@ class PagesController < ApplicationController
 
 	def dynamic_page
 
+		if params[:mercury_frame]
+
+			# abort params.inspect
+
+
+		end
+
 		add_breadcrumb "Home", :root_path, :title => "Home"
 		
 		route_dynamic_page params

@@ -69,6 +69,13 @@ class Admin::PagesController < AdminController
 	    end
 	end
 
+
+	def update_from_air
+
+		abort
+
+	end
+
 	private
 
 	def page_params

@@ -3,7 +3,7 @@ class Admin::BannersController < AdminController
 	before_filter :authorize_admin
 
 	def index 
-		@banners = Banner.where('1+1=2').page(params[:page]).per(Setting.get_pagination_limit)
+		@banners = Banner.setup_and_search_posts params
 	end
 
 
@@ -38,7 +38,7 @@ class Admin::BannersController < AdminController
 
 		respond_to do |format|
 		  if @banner.save
-		  	Banner.deal_with_categories @banner, params[:category_id]
+		  	Banner.deal_with_categories(@banner, params[:category_ids])
 		    format.html { redirect_to admin_banners_path, notice: 'Banner was successfully created.' }
 		  else
 		    format.html { render action: "new" }
@@ -59,8 +59,18 @@ class Admin::BannersController < AdminController
 	end
 
 	def categories
-		@categories = Term.where(term_anatomies: {taxonomy: 'banner'}).order('name asc').includes(:term_anatomy)
+		@categories = Term.where(term_anatomies: {taxonomy: 'banner'}).order('name asc').includes(:term_anatomy).page(params[:page]).per(Setting.get_pagination_limit)
 		@category = Term.new
+
+	end
+
+	def bulk_update
+
+		func = Banner.bulk_update params
+
+		respond_to do |format|
+	      format.html { redirect_to admin_banners_path, notice: "Banners were successfully deleted" }
+	    end
 
 	end
 

@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
    
   protect_from_forgery
-  include Mercury::Authentication
   helper ShortcodeHelper 
   helper ViewHelper 
   helper SeoHelper  

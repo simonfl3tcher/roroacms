@@ -3,7 +3,10 @@
 	<div class="btn-group pull-right">
   <%= link_to admin_banners_path, :class => 'btn btn-mini pull-left' do %>
     <i class="icon-arrow-left"></i>
-  <% end %>   
+  <% end %>  
+  <%= link_to admin_banner_path(@banner), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-mini btn-danger pull-left' do %>
+    <i class="icon-trash"></i>
+  <% end %>  
   <%= link_to admin_banners_path, :class => 'btn btn-mini pull-right updatepost' do %>
     <i class="icon-refresh"></i>
   <% end %> 

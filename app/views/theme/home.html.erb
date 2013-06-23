@@ -1,16 +1,10 @@
 <% get_banners(Hash[:key => 'home', :limit => '3']).each do |f| %>
 	
-	<p><img src="<%= f.image %>" /></p>
+	<p><img src="<%= f.image %>" width="960" /></p>
 
 <% end %>
 
+<%= display_content %>
 
-<div class="two_third">
-	<%= display_content %>
-</div>
-
-<div class="one_third last"></div>
 
 <div class="clear"></div>
-
-<%= APP_CONFIG['email_address'].inspect %>
