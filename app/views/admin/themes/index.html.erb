@@ -1,0 +1,59 @@
+<div class="row-fluid">
+	<div class="span12">
+
+		<h2 class="title">Themes</h2>
+
+
+    <%= form_tag(site_url('admin/themes/')) do %>
+	    <table class="table table-bordered table-striped table_vam">
+	    <thead>
+	      <tr>
+	        <th>&nbsp;</th>
+	        <th>Theme Name</th>
+	        <th>Description</th>
+	        <th>Author</th>
+	        <th>Version</th>
+	        <th>Action</th>
+	      </tr>
+	    </thead>
+    <% @themes.each do |theme| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+
+      <td><%= radio_button_tag  'theme', theme['foldername'], theme['foldername'] == @current ? true : false  %></td>
+    	<td><span class="hhfr">Theme Name:-</span>
+    		<%= theme['name'] %>
+    	</td>
+    	<td><span class="hhfr">Description:-</span>
+    		<%= theme['description'] %>
+    	</td>
+    	<td><span class="hhfr">Author:-</span>
+    		<%= theme['author'] %>
+    	</td>
+    	<td><span class="hhfr">Version:-</span>
+    		<%= theme['version'] %>
+    	</td>
+        <td>
+          <div class="btn-group">  
+            <% if theme['foldername'] != @current %> 
+              <%= link_to "/admin/themes/#{theme['foldername']}", method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-small' do %>       
+                <i class="icon-trash"></i>
+              <% end %>
+            <% end %>
+          </div>
+        </td>
+        
+      </tr>
+    <% end %>
+    </table>
+
+    <div class="formSepUpp">
+
+        <div class="field">
+          <%= submit_tag "Update", :class => 'btn btn-small btn-warning' %>
+        </div>
+      </div>
+  <% end %>
+
+        
+    </div>
+</div>

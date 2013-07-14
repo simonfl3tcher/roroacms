@@ -29,35 +29,6 @@
           <%= f.text_area :post_content, :class => 'ckeditor' %>
         </div>
       </fieldset>
-
-
-    <script type="text/javascript">
-        
-        $(document).ready(function(){
-            setInterval(function(){
-              if($('#post_post_title').val() != ""){
-                var form = $('form');
-                var method = form.attr('method').toLowerCase();      // "get" or "post"
-                var action = form.attr('action');  
-                 if($('input[name="_method"]').length > 0){  
-                    $.post('/admin/posts/autosave_update', form.serialize(), function(data){
-                      $('#revisionsContainer').html(data)
-                    });
-                  } else {
-                    // do nothing
-                  }
-                }
-            }, 100000);
-
-            $("#post_post_title").keyup(function(){
-                $("#post_post_slug").val($(this).val().toLowerCase().split(' ').join('-'));
-            });
-             $("#post_post_title").change(function(){
-                $("#post_post_slug").val($(this).val().toLowerCase().split(' ').join('-'));
-            });
-        })
-
-    </script>
     <div class="accordion" id="accordionSeo">
       <div class="accordion-group">
         <div class="accordion-heading">
@@ -114,10 +85,6 @@
               <%= f.label :post_status %>
                <%= f.select :post_status, Post::POST_STATUS, prompt: 'Select a Post Status' %>
             </div>
-            <div class="field">
-              <%= f.label :parent_id %>
-              <%= f.select :parent_id, Post.where(:post_type => 'post', :disabled => 'N').collect {|p| [ p.post_title, p.id ] }, prompt: 'Select a parent post' %>
-            </div>
             <% if !get_template_dropdown(@post.post_template).blank? %>
               <div class="field">
                   <%= f.label 'Template' %>
@@ -125,7 +92,7 @@
               </div>
             <% end %>
             <div class="field">
-              <%= f.label :post_date %>
+              <%= f.label 'Publish Date:-' %>
               <%= f.datetime_select :post_date, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => 'Time:- '}, :class => 'dateselect' %>
             </div>
           </div>

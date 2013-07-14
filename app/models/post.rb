@@ -1,7 +1,10 @@
 class Post < ActiveRecord::Base
-
+  
   Rails.cache.clear 
 
+  has_ancestry
+  
+  
   belongs_to :admin
   has_many :post_abstractions
   has_many :attachments
@@ -24,14 +27,25 @@ class Post < ActiveRecord::Base
 
   scope :from_this_year, where("post_date > ? AND < ?", Time.now.beginning_of_year, Time.now.end_of_year)
 
+
   def self.setup_and_search_posts params, type
       
-      posts = Post.where(:disabled => 'N', :post_type => type, ).order('post_date desc').page(params[:page]).per(Setting.get_pagination_limit)
+      posts = Post.select('*').where("disabled ='N' and post_type = '#{type}'").order("COALESCE(ancestry, id), ancestry IS NOT NULL, id")
+
+      if type == 'post'
+        posts = posts.page(params[:page]).per(Setting.get_pagination_limit)
+      end
       if params.has_key?(:search) && !params[:search].blank?
-        posts = Post.where("(id like ? or post_title like ? or post_slug like ?) and disabled = 'N' and post_type = ? and post_status != 'Autosave'", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", type).page(params[:page]).per(Setting.get_pagination_limit)
+        posts = Post.where("(id like ? or post_title like ? or post_slug like ?) and disabled = 'N' and post_type = ? and post_status != 'Autosave'", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", type)
       end
 
       return posts
+
+  end
+
+  def self.get_records off, type
+    posts = Post.where(:disabled => 'N', :post_type => type).order("COALESCE(ancestry, id), ancestry IS NOT NULL, id").limit(10).offset(off)
+    return posts
 
   end
 
@@ -63,6 +77,22 @@ class Post < ActiveRecord::Base
 
   end
 
+  def self.deal_with_slug_update params, current_url
+
+    if current_url != params[:post][:post_slug]
+
+       p = Post.where("(structured_url like ?)", "%#{current_url}%")
+
+        p.each do |pst|
+          pst.structured_url = pst.structured_url.gsub("/#{current_url}", "/#{params[:post][:post_slug]}")
+          pst.save
+        end      
+    else 
+      # Do nothing then
+    end
+
+  end
+
   def self.disable_post post_id
 
     post = Post.find(post_id)
@@ -81,14 +111,28 @@ class Post < ActiveRecord::Base
       post.post_status = 'Draft'
     end
 
+    post.structured_url = sort_url_structure post
+
     return post
+
+  end
+
+  def self.sort_url_structure post
+
+    if post.parent_id
+      url = "#{post.parent.structured_url}/#{post.post_slug}"
+    else
+      url = "/#{post.post_slug}"
+    end
+
+    return url
 
   end
 
   def self.do_autosave params, post
 
     parent = params[:post][:id]
-    @autosave_records = Post.where("parent_id = ? and post_type = 'autosave'", parent).order("created_at DESC")
+    @autosave_records = Post.where("ancestry = ? and post_type = 'autosave'", parent).order("created_at DESC")
 
     if @autosave_records.length > 9
       Post.destroy(@autosave_records.last[:id])
@@ -104,8 +148,10 @@ class Post < ActiveRecord::Base
       post.post_slug = post.post_title.gsub(' ', '-')
     end
 
-      post.post_status = 'Autosave'
-      post.post_type = 'autosave'
+    post.post_status = 'Autosave'
+    post.post_type = 'autosave'
+
+    post.post_content = params[:ck_content]
 
     if post.save(:validate => false)
       @delcats = TermRelationship.where(:post_id => post.id)
@@ -144,7 +190,7 @@ class Post < ActiveRecord::Base
 
     parent.save
 
-    return parent.id
+    return parent
 
   end
 

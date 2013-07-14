@@ -2,15 +2,65 @@ class Media < ActiveRecord::Base
 
 	include AWS::S3
 
-	def self.setup_and_search_posts params
-	      
-		files = AWS::S3::Bucket.find(BUCKET).objects
-		
-		if params.has_key?(:search) && !params[:search].blank?
-			
+	def self.setup_and_search_posts    
+		files = AWS::S3::Bucket.find("#{BUCKET}").objects
+		return files
+
+	end
+
+	def self.create p 
+
+		begin
+          AWS::S3::S3Object.store("#{p[:create_dir]}/", "#{p[:create_dir]}/", BUCKET, :access => :public_read, :content_type => 'binary/octet-stream')
+          redirect_to admin_media_path, notice: 'Folder was successfully created.' 
+        rescue
+          render :text => "Couldn't create folder"
+        end
+
+	end
+
+	def self.advanced_create p 
+
+		if p[:reference].blank?
+
+			dir = ''
+			where = BUCKET
+		else
+			dir = p[:reference]
+			where = "#{BUCKET}/#{dir}/"
 		end
 
-		return files
+		begin
+	        @file = AWS::S3::S3Object.store(sanitize_filename(p[:file].original_filename), p[:file].read, where, :access => :public_read)
+	        
+	        render :text => "Success!"
+	       
+	      rescue
+	      	render :text => 'Fail!' 
+	      end
+
+
+	end
+
+	def self.get_by_key p
+
+		return AWS::S3::Bucket.objects(Setting.find_by_setting_name('aws_bucket_name')[:setting], :prefix => p[:key])
+
+	end
+
+	def self.get_folder_list p
+
+		files = Media.setup_and_search_posts
+		@f = Array.new
+ 		files.each_with_index {|item, index|
+ 			if item.content_type != 'binary/octet-stream'
+				next
+			end
+
+		   @f.push item
+		}
+
+		return @f
 
 	end
 

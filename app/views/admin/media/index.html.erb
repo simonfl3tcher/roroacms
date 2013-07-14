@@ -1,9 +1,13 @@
 <div class="row-fluid">
   <div class="span12">
           
-    <h2 class="title">Media</h2>
+    <h2 class="title">Media Area</h2>
 
-    <div class="well">
+<!--     <div class="well">
+
+    <%= link_to admin_filebrowser_index_path, :id => 'filebrowser' do %>
+    	<button class="pull-left btn btn-small btn-warning"><span class="icon-plus"></span>&nbsp;Upload Media</button>
+  	<% end %>
 
 
 	<%= link_to 'https://console.aws.amazon.com/s3/', :target => "_blank" do %>
@@ -11,46 +15,53 @@
   	<% end %>
   	
       <div class="clearboth"></div>
-    </div>
+    </div> -->
 
-		<% if @files.blank? %>
-		  <div class="" style="text-align:center;">
-		    <strong style="margin-top:100px; font-size:25px; display:block; ">You currently have no media</strong>
-		  </div>
+    <%= render 'media_area' %>
 
-		<% else %>
-			<%= form_tag "/admin/media/bulk_update" do %>
-			<table class="table table-bordered table-striped table_vam">
-			    <thead>
-			      <tr>
-			        <th><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
-			        <th>File</th>
-			        <th>File Url</th>
-			        <th>Action</th>
-			      </tr>
-			    </thead>
-				<% @files.each do |file| %>  
-					<tr>
-						<td><%= check_box_tag 'media[]', file.key %></td>
-						<td><%= deal_with_filecontents(file.content_type) %></td>
-						<td>
-							<%= link_to download_url_for(file.key), :target => '_blank' do %>
-								<%= download_url_for(file.key) %>
-							<% end %>
-						</td>
-						<td>
-				          <div class="btn-group">          
-				            <%= link_to "media/delete/?file=" + file.key, confirm: 'Are you sure?', :class => 'btn btn-small' do %>
-				              <i class="icon-trash"></i>
-				            <% end %>
-				          </div>
-				        </td>
+    <div class="clearboth"></div>
 
-					</tr>
-				<% end %>
-			</table>
-			<%= bulk_update_dropdown Hash['move_to_trash' => 'Destroy'] %>
-			<% end %>
-		<% end %>
+		
 	</div>
 </div>
+
+<% if params[:manualBrowse] || params[:CKEditor] %>
+	<% if params[:manualBrowse] %>
+
+		<script type="text/javascript">
+			
+			$('.fileMenu').on('dblclick', '.span3', function(){
+				var image = $('img', $(this)).attr('data-image');
+				console.log(image);
+				sendUrl(image);
+			});
+
+			function sendUrl(image){
+				window.opener.returnImageFunction(image)
+				window.close();
+			}
+
+		</script>
+
+	<% else %>
+
+		<script type="text/javascript">
+			
+			$('.fileMenu').on('dblclick', '.span3', function(){
+				var image = $('img', $(this)).attr('data-image');
+				getUrl(1, image);
+			});
+
+			function getUrl(cback, image_file){
+				window.opener.CKEDITOR.tools.callFunction(cback, image_file);
+				window.close();
+			}
+
+		</script>
+
+
+	<% end %>
+<% end %>
+
+
+

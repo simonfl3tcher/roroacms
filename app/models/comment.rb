@@ -1,6 +1,7 @@
 class Comment < ActiveRecord::Base
 
-
+	has_ancestry
+	
 	belongs_to :post
 
 	validates :email, presence: true, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create }

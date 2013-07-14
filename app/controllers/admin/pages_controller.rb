@@ -1,8 +1,8 @@
 class Admin::PagesController < AdminController
 
 	def index
-
 		@pages = Post.setup_and_search_posts params, 'page'
+
 	end
 
 	def new
@@ -23,17 +23,21 @@ class Admin::PagesController < AdminController
 	end
 
 	def edit 
-		@revisions = Post.where(:parent_id => params[:id], :post_type => 'autosave').order('created_at desc')
+		@revisions = Post.where(:ancestry => params[:id], :post_type => 'autosave').order('created_at desc')
 		@page = Post.find(params[:id])
 	end
 
 	def update
 		Rails.cache.clear 
 	    @page = Post.find(params[:id])
+	    cur_url = @page.post_slug
+	    @page = Post.deal_with_abnormalaties @page
 
 	    respond_to do |format|
 	      if @page.update_attributes(page_params)
-
+	      	
+	      	Post.deal_with_slug_update params, cur_url
+	        
 	        format.html { redirect_to edit_admin_page_path(@page), notice: 'Page was successfully updated.' }
 	      else
 	        format.html { render action: "edit" }
@@ -48,32 +52,12 @@ class Admin::PagesController < AdminController
 	    end
 	end
 
-	def autosave_update
-		@post = Post.new(post_params)
-		ret = Post.do_autosave params, @post
-
-		if ret == 'passed'
-			@revisions = Post.where(:parent_id => params[:post][:id], :post_type => 'autosave').order('created_at desc')
-      		render :partial => "autosave_list"
-			return @return = "passed"
-		else
-			return render :text => "failed" 
-		end
-
-	end
 
 	def bulk_update
 		notice = Post.bulk_update params, 'pages'
 		respond_to do |format|
 	      format.html { redirect_to admin_pages_path, notice: notice }
 	    end
-	end
-
-
-	def update_from_air
-
-		abort
-
 	end
 
 	private

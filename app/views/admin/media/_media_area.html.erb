@@ -1,0 +1,86 @@
+    <div id="mediaAreaWrapper">
+    	<div id="bucketReference" data-key="" data-hasfolder=""></div>
+    	<div class="mediaHeader"><small style="margin-left:10px">* For security reasons you are only allowed one subfolder within a top level folder</small></div>
+    	<div class="mediaBody">
+
+			<div class="mediaPanel leftMenu mediaTypes">
+
+				<ul class="t">
+					<li class="folderRow orange">
+						<a class="folderLink " href="" data-rel="#audio">
+							<i class="icon-angle-right"></i>&nbsp;
+							<span><%= Setting.find_by_setting_name('aws_bucket_name')[:setting].capitalize %></span>
+						</a>
+					</li>
+					
+				</ul>
+
+			</div>
+
+			<div class="mediaPanel leftMenu foldersMenu" style="">
+
+				<%= render_folder_loop true %>
+				
+			</div>
+
+			<div class="mediaPanel rightMenu fileMenu" style="">
+
+				<div class="h">
+					
+
+					<div class="input-append pull-right">
+					<%= form_tag admin_media_path, :method => "post", :class => 'addFolder' do %>  
+					    <%= text_field_tag "create_dir", '', :placeholder => 'Create Folder', :class => 'input-medium' %>  
+					    <%= submit_tag "Create", :class => 'btn btn-warning ' %>  
+					<% end %> 
+					</div>
+					
+					<div class="pull-left">
+						<button class="pull-left btn btn-small btn-warning" id="fileUploadActivator"><span class="icon-plus"></span>&nbsp;Upload Media</button>
+					</div>
+					<div class="clearboth"></div>
+				</div>
+
+				
+				<div class="showFiles">
+					<div class="loadingSpinner" style="display: none;"><div class="spinnerPostioner"><i class="icon-spinner icon-spin icon-large"></i></div></div>
+				</div>
+
+			</div>
+
+			<div class="mediaPanel rightMenu imageView" style="">
+
+				<div class="h">
+					<div class="pull-left"><span class="name"></span><br /><small>*If you change the name please make sure you update any current links to this file</small></div>
+					<div class="pull-right"><i class="icon-remove-sign"></i></div>
+					<div class="clearboth"></div>
+				</div>
+				<div class="showMisc">
+					
+				</div>
+
+			</div>
+
+			<div class="mediaPanel rightMenu fileUpload" style="">
+
+				<div class="h">
+					<div class="pull-right"><i class="icon-remove-sign"></i></div>
+					<div class="clearboth"></div>
+				</div>
+				<div class="showFileUpload">
+					<div id="my-awesome-dropzone"></div>
+				</div>
+
+			</div>
+
+    	</div>
+    	<div class="mediaFooter"></div>
+
+    </div>
+
+    <div id="mediaNotAvailable">
+    	<div style="text-align:center;" class="span12">
+				<strong style="margin-top:100px; font-size:25px; display:block; ">Media area not avalible on smaller screens</strong>
+			</div>
+
+    </div>

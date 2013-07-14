@@ -139,13 +139,30 @@ module ViewHelper
 
 			type = Setting.where(:setting_name => 'article_comment_type').first.setting
 
-			render(:template =>"theme/comments_form.html.erb", :layout => nil, :locals => { :type => type }).to_s
+			render(:template =>"theme/#{current_theme}/comments_form.html.erb", :layout => nil, :locals => { :type => type }).to_s
 
 		else
 
 			# do nothing 
 
 		end
+
+	end
+
+	def return_comments id = nil
+				
+
+		if !id.nil?
+
+			@comments = Comment.where(:post_id => id)
+
+		else
+
+			@comments = Comment.where(:post_id => @content.id, :comment_approved => 'Y')
+
+		end
+
+		return @comments
 
 	end
 
@@ -163,43 +180,9 @@ module ViewHelper
 
 		if @comments.count > 0 
 			html = "<h3 id='comments-title'>#{@comments.count} responses to #{display_title}</h3>"
-			html += "<ul class='commentsLoop'>"
-		else 
-			html = "<ul class='commentsLoop'>"
 		end
-		count = 1
 		
-		@comments.each do |comment|
-
-			html += "<li class='comment' id='li-comment-#{count}'>
-			<article id='comment-#{count}' class='comment'>
-				<section class='comment-content comment'>
-					<div class='comment-meta' data-author='#{comment.author}'><a href='http://#{comment.website}' target='_blank'>#{comment.author}</a> says:-</div>
-					<span class='date'>#{comment.submitted_on.strftime("%b %e %Y, %l:%M %p")}</span>
-					<p>#{comment.comment}</p>
-				</section>
-			</article>
-			<div class='divide'></div>"
-			#<a href='#' class='reply' data-parent='#{comment.id}'>Reply</a>"
-		
-	    html += "</li>"
-			count = count + 1
-
-		end
-
-		html += '</ul>
-		<script type="text/javascript">
-			$(document).ready(function(){
-				$(\'.reply\').click(function(){
-					$("#comment_comment_parent").val($(this).attr("data-parent"));
-					$("#replyToTitle").html("Reply To:- " + $(this).parent().find(".comment-meta").attr("data-author"));
-			        $(\'html,body\').animate({
-			            scrollTop: $("fieldset.commentForm").offset().top
-			        }, \'slow\');
-				})
-			});
-
-		</script>'
+		html = nested_comments return_comments.arrange(:order => :created_at)
 
 		render :inline => html.html_safe
 
@@ -229,23 +212,13 @@ module ViewHelper
 
 	def get_search_form
 
-		render :template => "theme/search_form.html.erb" rescue nil
+		render :template => "theme/#{current_theme}/search_form.html.erb" rescue nil
 
 	end
 
 	def excerpt content, length = 255, omission = '...'
 
 		render :inline => truncate(content, :omission => omission, :length => length)
-
-	end
-
-	def nested_messages(messages)
-	  
-	  messages.map do |message, sub_messages|
-
-	    render(message) + content_tag(:div, nested_messages(sub_messages), :class => "nested_messages")
-
-	  end.join.html_safe
 
 	end
 
@@ -339,6 +312,19 @@ module ViewHelper
 
 	end
 
+
+
+	def nested_comments(messages)
+	  
+	  messages.map do |message, sub_messages|
+	  	@comment = message
+	    render('admin/partials/comment') + content_tag(:div, nested_comments(sub_messages), :class => "nested_comments")
+	  end.join.html_safe
+
+	end
+
+
+
 	def the_archive_year
 		segments = params[:slug].split('/')
 		return segments[1]
@@ -356,9 +342,6 @@ module ViewHelper
 
 	end
 
-	def create_link arr
-
-	end
 
 	def getdatenamebynumber s
         case s
@@ -378,7 +361,7 @@ module ViewHelper
 	end
 
 	def view_file_exists f
-		return File.exists?("app/views/theme/template-#{f}.html.erb")
+		return File.exists?("app/views/theme/#{current_theme}/template-#{f}.html.erb")
 	end
 
 	def is_page i
@@ -415,5 +398,13 @@ module ViewHelper
 			return false
 		end
 
+	end
+
+	def current_theme
+		return Setting.find_by_setting_name('theme_folder')[:setting]
+	end
+
+	def theme_url append
+		return "theme/#{current_theme}/#{append}"
 	end
 end

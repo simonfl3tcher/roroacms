@@ -10,15 +10,18 @@ class Admin::RevisionsController < AdminController
 		post = Post.find(params[:id])
 		parent = Post.find(post.parent_id)
 
-		@revisions = Post.where(:parent_id => post.parent_id, :post_type => 'autosave').order('created_at desc')
+		@revisions = Post.where(:ancestry => post.parent_id, :post_type => 'autosave').order('created_at desc')
 		@revision = { 'parent' => parent, 'revision' => post}
 	end
 
 	def restore
 		
 		post = Post.find(params[:id])
-		restore = Post.restore post 
-		redirect_to edit_admin_post_path(restore), notice: 'Post was successfully restored.'
-
+		restore = Post.restore post
+		if restore.post_type == 'page'
+			redirect_to edit_admin_page_path(restore.id), notice: 'Page was successfully restored.'
+		else
+			redirect_to edit_admin_post_path(restore.id), notice: 'Post was successfully restored.'
+		end
 	end
 end

@@ -14,8 +14,16 @@ Railsoverview::Application.routes.draw do
     get 'posts/categories', to: 'terms#categories', as: 'post_categories'
     get 'posts/tags', to: 'terms#tags', as: 'post_tags'
     
-    resources :login, :users, :administrators
+    resources :login, :users, :administrators, :themes
 
+    resources :menus do 
+
+      collection do 
+        post 'save_menu'
+        post 'ajax_dropbox'
+      end
+
+    end 
     resources :editor do
 
       collection do 
@@ -27,8 +35,12 @@ Railsoverview::Application.routes.draw do
     resources :media do
 
       collection do
-        get 'delete'
+        post 'delete_via_ajax'
         post 'bulk_update'
+        post 'get_via_ajax'
+        post 'get_folder_list'
+        post 'multipleupload'
+        post 'rename_media'
       end
 
     end
@@ -44,6 +56,7 @@ Railsoverview::Application.routes.draw do
         member {post 'upload'}
         collection do
           post 'upload'
+          post 'multipleupload'
           get 'delete'
         end
     end
@@ -77,8 +90,8 @@ Railsoverview::Application.routes.draw do
     resources :pages do
       collection do
         post 'bulk_update'
+        post 'infinate_scroll'
       end
-      member{ post 'update_from_air' }
     end
 
     resources :trash do

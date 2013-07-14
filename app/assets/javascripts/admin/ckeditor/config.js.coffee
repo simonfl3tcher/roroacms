@@ -1,5 +1,5 @@
 CKEDITOR.editorConfig = (config) ->
-	config.filebrowserBrowseUrl = '/admin/filebrowser'
-	config.filebrowserImageBrowseUrl = '/admin/filebrowser'
+	config.filebrowserBrowseUrl = '/admin/media'
+	config.filebrowserImageBrowseUrl = '/admin/media'
 	config.toolbar = 'Basic'
 true

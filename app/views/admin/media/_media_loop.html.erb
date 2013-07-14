@@ -1,0 +1,39 @@
+<div class="loadingSpinner"><div class="spinnerPostioner"><i class="icon-spinner icon-spin icon-large"></i></div></div>
+<div class="container-fluid">
+	<div class="row-fluid">
+	<% counter = 1
+	@files.each do |file| %>  
+		<% 
+
+		if file.content_type == 'binary/octet-stream' || file.key.count('/').to_i > @slash_count.to_i
+			if @initial.blank?   
+				next
+			end
+			if file.content_type == 'binary/octet-stream'
+				next
+			end
+		end
+
+		%> 
+		<div class="span3 <%= counter%5 == 0 ? 'first' : '' %>">
+			<div class="overlay">
+				<img src="<%= download_url_for(file.key) %>" data-image="<%= download_url_for(file.key) %>" style="width:100%;float:left">
+			</div>
+			<div class="actions">
+				<%= link_to download_url_for(file.key), :target => "_blank", 'data-key' => file.key do %>
+					<i class="icon-eye-open"></i>
+				<% end %>
+				<%= link_to site_url("admin/filebrowser/delete/?file=" + file.key), 'data-key' => file.key do %>
+					<i class="icon-trash" data-key="<%= file.key %>"></i>
+				<% end %>
+
+			</div>
+		</div>  
+	<% 
+	counter = counter + 1
+	end %>  
+
+					
+	</div>
+	<div class="clearboth"></div>
+</div>
