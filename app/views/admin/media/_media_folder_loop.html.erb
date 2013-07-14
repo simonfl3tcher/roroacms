@@ -1,0 +1,43 @@
+<% if @initial %>
+<ul class="t" id="folderList">
+
+					<li class="folderRow orange initial">
+						<a class="folderLink" href="" data-key="all">
+<i class="icon-angle-right"></i>&nbsp;<span>All</span>
+						</a>
+					</li>
+<% else %>
+	
+	<ul>
+	
+<% end %>
+
+					<% 
+					@f.each_with_index do |file, i| 
+						
+							if file.content_type != 'binary/octet-stream' || file.key.count('/') > 1
+								next
+							end
+
+							hasFolder = false
+
+							if !@f[i+1].blank?
+								if @f[i].key.count('/') < @f[i+1].key.count('/') 
+									hasFolder = true
+								end
+							end
+					%>
+
+					<li class="folderRow">
+						<a class="folderLink" href="" data-key="<%= file.key %>" data-hasfolder="<%= hasFolder %>">
+<i class="icon-folder-close"></i>&nbsp;<span><%= file.key.gsub('/', '') %></span>
+							<i class="icon-remove"></i>
+						</a>
+						<% if !@f[i + 1].nil? && @f[i + 1].key.count('/') > file.key.count('/') %>
+							<%= make_media_folder_subpage @f, @f[i+1], i %>
+						<% end %>
+					</li>
+					
+					<% end %>
+					
+				</ul>

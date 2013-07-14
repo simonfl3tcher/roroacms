@@ -6,11 +6,8 @@
 
 		<div class="well comments">
 
-<!-- 		  <%= link_to new_admin_post_path do %>
-		    <button class="pull-right btn btn-small btn btn-warning"><span class="icon-plus"></span>&nbsp;Add New Comment</button>
-		  <% end %> -->
       <div class="span6">
-		  <%= form_tag admin_comments_path, :method => 'get' do %>
+		  <%= form_tag admin_comments_path, :method => 'get', :class => 'formCont' do %>
 		  <div class="input-append">
 		    <p>
 		      <%= text_field_tag :search, params[:search], :placeholder => "Search..." %>
@@ -19,9 +16,8 @@
 		  </div>
       </div>
        <div class="span6">
-		  <div class="input-append pull-right">
+		  <div class=" pull-right">
 		      <%= select_tag "filter", "<option value='filter'></option><option value='Y'>Approved</option><option value='N'>Unapproved</option><option value='S'>Spam</option>".html_safe %>
-		      <%= submit_tag "Filter", :name => nil, :class => 'btn btn-warning' %>
 		  </div>
     </div>
 		  <% end %>
@@ -34,7 +30,7 @@
 
 <% else %>
 
-  <%= form_tag "/admin/comments/bulk_update" do %>
+  <%= form_tag site_url("admin/comments/bulk_update") do %>
     <table class="table table-bordered table-striped table_vam">
     <thead>
       <tr>
@@ -100,3 +96,12 @@
 
 	</div>
 </div>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $('#filter').bind('change', function(){
+    $('.formCont').submit()
+  });
+});
+</script>

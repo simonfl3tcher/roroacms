@@ -1,0 +1,21 @@
+<div class="row">
+	<div class="span4">
+
+	    <div class="title">Add New Menu Group</div>
+
+		<%= render 'menu_form' %>
+
+	</div>
+
+
+
+	<div class="span8" id="menuGroupDisplay">
+
+		<% @menugroups.each do |m| %>
+
+			<%= get_menu_groups m %>
+
+		<% end %>
+
+	</div>
+</div>

@@ -1,6 +1,6 @@
 class AdminController < ApplicationController  
 
-	helper RoroaHelper
+	helper AdminRoroaHelper
 	helper AdminUiHelper
 
   	before_filter :set_cache_buster

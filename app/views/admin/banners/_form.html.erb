@@ -17,7 +17,7 @@
         <div class="field">
           <%= f.text_field :name, size: 40, :placeholder => 'Banner Name' %>
         </div>
-        <div class="field">
+        <div class="field margin20">
           <div class="input-append">
             <%= f.text_field :image, size: 40, :placeholder => 'Image Url' %>
             <button class="btn" id="filebrowser">Browse Server</button>
@@ -66,7 +66,7 @@
     <h4 class="title">Banner Image</h4>
 
     <div class="imagePlaceholder">
-      <img width="268" src="<%= @banner.image %>" />
+      <img width="100%" src="<%= @banner.image %>" />
     </div>    
 
   </div>
@@ -78,14 +78,14 @@
   function popitup() {
     var left = (screen.width/2)-(1137/2);
     var top = (screen.height/2)-(600/2);
-    newwindow=window.open('/admin/filebrowser/?manualBrowse=true','name','height=600,width=1137,scrollbars=yes,top='+top+',left=' + left);
+    newwindow=window.open("<%= site_url('admin/media/?manualBrowse=true') %>",'name','height=600,width=1137,scrollbars=yes,top='+top+',left=' + left);
     if (window.focus) {newwindow.focus()}
     return false;
   }
 
   function returnImageFunction(image){
     $('#banner_image').val(image);
-    $('.imagePlaceholder').html('<img width="268" src="' + image + '" />');
+    $('.imagePlaceholder').html('<img width="100%" src="' + image + '" />');
   }
   
   $(document).ready(function(){

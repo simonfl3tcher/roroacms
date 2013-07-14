@@ -3174,6 +3174,10 @@ form.bs-docs-example {
   bottom: 270px;
 }
 
+#mediaNotAvailable {
+  display: none;
+}
+
 
 
 
@@ -3394,6 +3398,3 @@ form.bs-docs-example {
     padding-bottom: 20px;
   }
 }
-
-
-

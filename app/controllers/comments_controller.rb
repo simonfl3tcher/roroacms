@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
 		if comments_on
 			
 			session[:return_to] ||= request.referer
-			@comment = Comment.new(params[:comment])
+			@comment = Comment.new(comments_params)
 
 			respond_to do |format|
 			  if @comment.save
@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
 	private
 
 	def comments_params
-		params.require(:comment).permit(:post_id, :author, :email, :website, :comment)
+		params.require(:comment).permit(:post_id, :author, :email, :website, :comment, :parent_id)
 	end
 
 end

@@ -1,5 +1,6 @@
 class Admin::CommentsController < AdminController
 
+
 	before_filter :authorize_admin
 
 	def index 
@@ -62,7 +63,7 @@ class Admin::CommentsController < AdminController
 
 	def comments_params
 		if !session[:admin_id].blank?
-			params.require(:comment).permit(:post_id, :author, :email, :website, :comment, :comment_approved, :parent_id, :is_spam, :submitted_on)
+			params.require(:comment).permit(:post_id, :author, :email, :website, :comment, :comment_approved, :parent_id, :is_spam, :commit, :submitted_on)
 		end
 	end
 

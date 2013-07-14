@@ -6,7 +6,7 @@ module RoutingHelper
 			gloalize Post.where("(post_title LIKE :p or post_slug LIKE :p2 or post_content LIKE :p3) and (post_type != 'autosave')", {:p => "%#{params[:search]}%", :p2 => "%#{params[:search]}%", :p3 => "%#{params[:search]}%"})
 			add_breadcrumb "Home", :root_path, :title => "Home"
 			add_breadcrumb "Search", "/"
-			render :template => "theme/search"
+			render :template => "theme/#{current_theme}/search"
 
 		else
 
@@ -23,19 +23,19 @@ module RoutingHelper
 
 		if !@content.post_template.blank?
 
-			if File.exists?("app/views/theme/template-#{@content.post_template.downcase}.html.erb")
+			if File.exists?("app/views/theme/#{current_theme}/template-#{@content.post_template.downcase}.html.erb")
 
-				render :template => "theme/template-#{@content.post_template.downcase}"
+				render :template => "theme/#{current_theme}/template-#{@content.post_template.downcase}"
 
 			else
 
-				render :template => "theme/#{default}"
+				render :template => "theme/#{current_theme}/#{default}"
 
 			end
 
 		else
 
-			render :template => "theme/#{default}"
+			render :template => "theme/#{current_theme}/#{default}"
 
 		end	
 
@@ -45,14 +45,13 @@ module RoutingHelper
 
 		post = Post.find(params[:id])
  		article_url = Setting.where(:setting_name => 'articles_slug').first.setting
-
  		@url = ''
  		
  		if post.post_type == 'post'
- 			@url = "/#{article_url}"
+ 			@url = "/#{article_url}/#{post.post_slug}"
  		end
 
- 		@url += "/#{post.post_slug}"
+ 		@url += "#{post.structured_url}"
 
  		return @url
 
@@ -62,6 +61,7 @@ module RoutingHelper
 	def route_dynamic_page params
 
 		segments = params[:slug].split('/')
+		url = params[:slug]
 		article_url = Setting.where(:setting_name => 'articles_slug').first.setting
 		category_url = Setting.where(:setting_name => 'category_slug').first.setting
 		tag_url = Setting.where(:setting_name => 'tag_slug').first.setting
@@ -102,27 +102,39 @@ module RoutingHelper
 			end
 
 		else
-			render_page segments, status
+			render_page url, status
 		end
 
 	end
 
 
-	def render_page segments, status
+	def render_page url, status
+
 
 		if !session[:admin_id].blank?
 					
-			@content = Post.where(:post_type => 'page').find_by_post_slug(segments[0])
+			@content = Post.where(:post_type => 'page').find_by_structured_url("/#{url}")
 
 		else
 
-			@content = Post.where(status, :post_type => 'page').find_by_post_slug(segments[0])
+			@content = Post.where(status, :post_type => 'page').find_by_structured_url("/#{url}")
 
 		end
 
+		url = url.split('/')
+
+		url.each do |u|
+			p = Post.where(:post_type => 'page').find_by_post_slug(u)
+			if p
+				add_breadcrumb "#{p.post_title.capitalize}", "#{p.structured_url}", :title => "Back to #{p.post_title.capitalize}"
+			end
+		end
+
 		gloalize @content
-		render_404 and return if @content.nil?
-		add_breadcrumb "#{@content.post_title.capitalize}", "/#{@content.post_slug}", :title => "Back to #{@content.post_title.capitalize}"
+		if @content.nil?
+			add_breadcrumb "404", "#", :title => "Back to 404"
+			render_404 and return 
+		end
 		render_template 'page'
 
 	end
@@ -141,13 +153,13 @@ module RoutingHelper
 				gloalize Post.where(terms: {id: term}, :post_type => 'post', :post_status => 'Published').includes(:terms)
 				add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
 				add_breadcrumb "#{term.name.capitalize}", "/#{term.name}", :title => "Back to #{term.name.capitalize}"
-				render :template => "theme/category"
+				render :template => "theme/#{current_theme}/category"
 			end
 
 		else 
 			add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
 			gloalize Post.where("#{status} and post_type ='post'")
-			render :template => "theme/category"
+			render :template => "theme/#{current_theme}/category"
 		end
 	end
 
@@ -162,6 +174,8 @@ module RoutingHelper
 			@content = Post.where(status, :post_type => 'post').find_by_post_slug(segments[1])
 
 		end
+
+
 
 		gloalize @content
 		render_404 and return if @content.nil?
@@ -182,20 +196,20 @@ module RoutingHelper
 			add_breadcrumb "#{segments[1]}", "/#{article_url}/#{segments[1]}", :title => "Back to #{segments[1]}"
 			add_breadcrumb "#{segments[2]}", "/#{article_url}/#{segments[1]}/#{segments[2]}", :title => "Back to #{segments[2]}"
 			add_breadcrumb "#{segments[3]}", "/#{article_url}/#{segments[1]}/#{segments[2]}/#{segments[3]}", :title => "Back to #{segments[3]}"
-			render :template => "theme/archive"
+			render :template => "theme/#{current_theme}/archive"
 
 		elsif !segments[2].blank?
 
 			gloalize Post.where("post_status = 'Published' AND post_type = 'Post' AND (YEAR(post_date) = ? AND MONTH(post_date) = ?)", segments[1], segments[2])
 			add_breadcrumb "#{segments[1]}", "/#{article_url}/#{segments[1]}", :title => "Back to #{segments[1]}"
 			add_breadcrumb "#{segments[2]}", "/#{article_url}/#{segments[1]}/#{segments[2]}", :title => "Back to #{segments[2]}"
-			render :template => "theme/archive"
+			render :template => "theme/#{current_theme}/archive"
 
 		else
 
 			gloalize Post.where("post_status = 'Published' AND post_type = 'Post' AND (YEAR(post_date) = ?)", segments[1])
 			add_breadcrumb "#{segments[1]}", "/#{article_url}/#{segments[1]}", :title => "Back to #{segments[1]}"
-			render :template => "theme/archive"
+			render :template => "theme/#{current_theme}/archive"
 
 		end
 

@@ -3,18 +3,29 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper ShortcodeHelper 
   helper ViewHelper 
+  helper MenuHelper
   helper SeoHelper  
   helper ThemeHelper 
   helper CommentsHelper
 
+  require 'pp'
   require 'ext/string'
+
 
 
   private
 
   def render_404
-    render :template => 'theme/error_404', :layout => true, :status => :not_found
+    render :template => "theme/#{current_theme}/error_404", :layout => true, :status => :not_found
   end
+
+  def current_theme 
+
+    @theme_folder = Setting.find_by_setting_name('theme_folder')[:setting]
+
+  end
+
+  helper_method :current_theme
 
   
   def current_user

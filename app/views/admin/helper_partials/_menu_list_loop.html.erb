@@ -1,0 +1,42 @@
+<li data-type='<%= @option.data_type %>' data-id='option_<%= @option.option_id %>' data-data='<%= @option.custom_data %>' style='' class=''>
+	
+	<div><%= @name %><i class='icon-plus-sign pull-right handler'></i></div>
+	
+	<div class='itemInformation'>
+
+		<form action='' method='post' data-type='custom'><div class='one_half'><span class='title'>Options</span>
+
+
+			<input type="hidden" name="linkto" value="<%= @existingData['linkto'].to_s %>" />
+			<input type="hidden" name="type" value="<%= @existingData['type'].to_s %>" />
+
+			<% if @existingData['type'].to_s == 'custom' %>
+				<input name='customlink' type='text' placeholder='http://...' value=' <%= @existingData['customlink'] %>'>"
+			<% end %>
+
+	    	<input name='label' type='text' placeholder='Label' value='<%= @existingData['label'].html_safe %>'>
+			<input name='class' type='text' placeholder='Class' value='<%= @existingData['class'].to_s %>'></div>"
+
+
+			<div class='one_half last'><span class='title'>Target</span><input name='target' type='radio' value='sw' <%= check_for_checked("sw", @existingData['target'].to_s) %>><label>Same Window</label>
+				<input name='target' type='radio' value='nt' <%=  check_for_checked("nt", @existingData['target'].to_s) %>><label>New Tab</label></div>
+			<div class='clearboth'></div><div class='formSepUpp'>
+				<div class='btn-group pull-right'>
+					<a class='btn btn-mini submitForm'><i class='icon-refresh'></i></a>
+					<a class='btn btn-danger btn-mini deleteOption'><i class='icon-trash'></i></a>
+				</div>
+			</div>
+	   	</form>
+
+
+	</div>
+
+	<% if descendants_count(@option) > 0 %>
+
+		<ol class='sub'>
+			<%= menu_list_loop @option.id, true %>
+		</ol>
+
+	<% end %>
+
+</li>

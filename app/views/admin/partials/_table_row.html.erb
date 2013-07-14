@@ -1,0 +1,25 @@
+ <tr class="<%= cycle('list_line_odd', 'list_line_even') %> <%= @content.post_status == "Draft" ? 'draft' : '' %>">
+
+  <td><%= check_box_tag 'pages[]', @content.id %></td>
+	<td><%= ancestory_indent @content %> <span class="hhfr">Page Title:-</span><%= @content.post_title %><%= @content.post_status == "Draft" ? ' - draft' : '' %></td>
+	<td><span class="hhfr">Published Date:-</span><%= @content.post_date.strftime "%d-%m-%Y" %></td>
+    <td>
+      <div class="btn-group">
+        <%= link_to edit_admin_page_path(@content), :class => 'btn btn-small' do %>
+          <i class="icon-pencil"></i>
+        <% end %>        
+       <%= link_to page_path(@content), :class => 'btn btn-small', :target => "_blank" do %>
+          <i class="icon-search"></i>
+        <% end %> 
+        <%= link_to admin_page_path(@content), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-small' do %>
+          <i class="icon-trash"></i>
+        <% end %>
+      </div>
+    </td>
+</tr>
+
+<% if !@sub.blank? %>
+
+  <%= nested_table(@sub) %>
+
+<% end %>

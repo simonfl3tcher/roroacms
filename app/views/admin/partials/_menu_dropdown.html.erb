@@ -1,0 +1,32 @@
+<div class='itemInformation'>
+	<form action='' method='post' data-type='custom'>
+		<div class='one_half'>
+
+			<span class='title'>Options</span>
+
+			<input type="hidden" name="linkto" value="<%= params[:linkto] %>" />
+			<input type="hidden" name="type" value="<%= params[:type] %>" />
+
+			<% if params[:customlink] %>
+				<input name='customlink' type='text' placeholder='http://...' value='<%= params[:customlink] %>'>
+			<% end %>
+
+			<input name='label' type='text' placeholder='Label' value='<%= params[:label] %>'>
+			<input name='class' type='text' placeholder='Class' value='<%= params[:class] %>'>
+		</div>
+
+		<div class="one_half last">
+
+			<span class='title'>Target</span>
+			<input name='target' type='radio' value='sw' <%= check_for_checked("sw", params['target'].to_s) %>><label>Same Window</label>
+			<input name='target' type='radio' value='nt' <%= check_for_checked("nt", params['target'].to_s) %>><label>New Tab</label>
+		</div>
+		<div class="clearboth"></div>
+		<div class='formSepUpp'>
+			<div class='btn-group pull-right'>
+				<a class='btn btn-mini submitForm'><i class='icon-refresh'></i></a>
+				<a class='btn btn-danger btn-mini deleteOption'><i class='icon-trash'></i></a>
+			</div>
+		</div>
+	</form>
+</div>
