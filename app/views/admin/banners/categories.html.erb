@@ -17,7 +17,7 @@
 	  </div>
 
 	<% else %>
-		<%= form_tag "/admin/terms/bulk_update" do %>
+		<%= form_tag site_url("admin/terms/bulk_update") do %>
 			<%= hidden_field_tag :type_taxonomy, 'category' %>
 			<div class="title">Banner Categories</div>
 

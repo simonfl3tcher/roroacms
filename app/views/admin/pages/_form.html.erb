@@ -30,36 +30,6 @@
         </div>
       </fieldset>
 
-
-    <script type="text/javascript">
-        
-        $(document).ready(function(){
-            setInterval(function(){
-              if($('#post_post_title').val() != ""){
-                var form = $('form');
-                var method = form.attr('method').toLowerCase();      // "get" or "post"
-                var action = form.attr('action');  
-                 if($('input[name="_method"]').length > 0){  
-                    $.post('/admin/posts/autosave_update', form.serialize(), function(data){
-                      $('#revisionsContainer').html(data)
-                    });
-                  } else {
-                  //   $.post('/admin/posts/autosave_create', form.serialize(), function(data){
-                  //   conosle.log('done that for you bud!')
-                  //   });
-                  }
-                }
-            }, 100000);
-
-            $("#post_post_title").keyup(function(){
-                $("#post_post_slug").val($(this).val().toLowerCase().split(' ').join('-'));
-            });
-            $("#post_post_title").change(function(){
-                $("#post_post_slug").val($(this).val().toLowerCase().split(' ').join('-'));
-            });
-        })
-
-    </script>
     <div class="accordion" id="accordionSeo">
       <div class="accordion-group">
         <div class="accordion-heading">
@@ -127,7 +97,7 @@
               </div>
             <% end %>
             <div class="field">
-              <%= f.label 'Page Date' %>
+              <%= f.label 'Publish Date:-' %>
               <%= f.datetime_select :post_date, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => 'Time:- '}, :class => 'dateselect' %>
             </div>
           </div>

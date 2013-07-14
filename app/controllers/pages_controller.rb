@@ -4,7 +4,6 @@ class PagesController < ApplicationController
 	include RoutingHelper
 
 	def index
-
 		route_index_page params
 
  	end
@@ -14,13 +13,6 @@ class PagesController < ApplicationController
  	end
 
 	def dynamic_page
-
-		if params[:mercury_frame]
-
-			# abort params.inspect
-
-
-		end
 
 		add_breadcrumb "Home", :root_path, :title => "Home"
 		

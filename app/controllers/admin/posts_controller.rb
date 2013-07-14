@@ -25,7 +25,7 @@ class Admin::PostsController < AdminController
 	end
 
 	def edit 
-		@revisions = Post.where(:parent_id => params[:id], :post_type => 'autosave').order('created_at desc')
+		@revisions = Post.where(:ancestry => params[:id], :post_type => 'autosave').order('created_at desc')
 		@post = Post.find(params[:id])
 	end
 
@@ -56,7 +56,7 @@ class Admin::PostsController < AdminController
 		ret = Post.do_autosave params, @post
 
 		if ret == 'passed'
-			@revisions = Post.where(:parent_id => params[:post][:id], :post_type => 'autosave').order('created_at desc')
+			@revisions = Post.where(:ancestry => params[:post][:id], :post_type => 'autosave').order('created_at desc')
       		render :partial => "autosave_list"
 			return @return = "passed"
 		else

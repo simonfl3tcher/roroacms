@@ -4,7 +4,7 @@
     <strong>Well done!</strong> <%= notice %>
   </div>
 <% end %>
-<%= form_tag('/admin/settings/general') do %>
+<%= form_tag(site_url('admin/settings/general')) do %>
 
 	<%= hidden_field_tag 'redirect', 'seo' %>
 

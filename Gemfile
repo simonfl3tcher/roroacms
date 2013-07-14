@@ -5,6 +5,7 @@ gem 'mysql2'
 gem 'ckeditor_rails'
 gem "strong_parameters"
 gem 'kaminari'
+gem 'ancestry'
 
 
 group :assets do

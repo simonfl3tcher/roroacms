@@ -25,7 +25,7 @@
 	        <div class="field">
 	          <%= f.text_field :author, size: 40, :placeholder => 'Author' %>
 	        </div>
-	        <div class="field">
+	        <div class="field margin10 ">
 	          <%= f.text_field :email, size: 40, :placeholder => 'Email' %>
 	        </div>
 	        <div class="field">
@@ -60,7 +60,7 @@
 
           	<div class="field">
               <%= f.label :submitted_on %>
-              <%= f.datetime_select :submitted_on, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true}, :class => 'dateselect' %>
+              <%= f.datetime_select :submitted_on, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => 'Time:- '}, :class => 'dateselect' %>
             </div>
 
           </div>

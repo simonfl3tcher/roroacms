@@ -1,0 +1,52 @@
+<div class="two_third">
+	<ol class="sortable connect" >
+	    <li><div>Some content</div></li>
+	    <li>
+	        <div>Some content</div>
+	        <ol>
+	            <li><div>Some sub-item content</div></li>
+	            <li><div>Some sub-item content</div></li>
+	        </ol>
+	    </li>
+	    <li><div>Some content</div></li>
+	</ol>
+
+	<div id="serialize">ser</div>
+</div>
+
+<div class="one_third last">
+
+	<%= create_accordion 'Pages', Post.where(:post_type => 'page', :disabled => 'N') %>
+	<%= create_accordion 'Posts', Post.where(:post_type => 'post', :disabled => 'N') %>
+	<%= create_accordion 'Categories', Post::POST_CATEGORIES %>
+	<%= create_accordion 'Tags', Post::POST_TAGS %>
+	<%= create_accordion_custom	'Custom', 'textfield', Post::POST_CATEGORIES %>
+
+
+</div>
+
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+	
+        $('.sortable, .sortable2').nestedSortable({
+            handle: 'div',
+            items: 'li',
+            toleranceElement: '> div', 
+            opacity: 0.5,
+            connectWith: '.connect',
+            accept: 'sortable-element-class',
+    		onChange : function(serialized) {
+    			console.log('23123')
+    		}
+
+        });
+
+        $('#serialize').click(function(){
+			serialized = $('ol.sortable').sortable('serialize',{key:'string'});
+			console.log(serialized)
+		})
+	});
+
+
+</script>

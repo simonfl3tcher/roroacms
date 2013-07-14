@@ -31,7 +31,7 @@ module CommentsHelper
 		comments_on = Setting.where(:setting_name => 'article_comments').first.setting
 		comments_type = Setting.where(:setting_name => 'article_comment_type').first.setting
 
-		if comments_on == 'Y' && comments_type = 'R'
+		if comments_on == 'Y' && comments_type == 'R'
 			return true
 		else 
 			return false

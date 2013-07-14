@@ -25,47 +25,14 @@
   </div>
 
 <% else %>
+  
+  <%= render 'admin/partials/pages_table' %>
+ 
+  <div id="loadmoreajaxloader" style="display:none;"><center><i class="icon-spinner icon-spin"></i></center></div>
 
-  <%= form_tag "/admin/pages/bulk_update" do %>
-    <table class="table table-bordered table-striped table_vam">
-    <thead>
-      <tr>
-        <th><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
-        <th>Page Title</th>
-        <th>Published Date</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <% @pages.each do |page| %>
-      <tr class="<%= cycle('list_line_odd', 'list_line_even') %> <%= page.post_status == "Draft" ? 'draft' : '' %>">
-
-      <td><%= check_box_tag 'pages[]', page.id %></td>
-    	<td><span class="hhfr">Page Title:-</span><%= page.post_title %><%= page.post_status == "Draft" ? ' - draft' : '' %></td>
-    	<td><span class="hhfr">Published Date:-</span><%= page.post_date.strftime "%d-%m-%Y" %></td>
-        <td>
-          <div class="btn-group">
-            <%= link_to edit_admin_page_path(page), :class => 'btn btn-small' do %>
-              <i class="icon-pencil"></i>
-            <% end %>        
-           <%= link_to page_path(page), :class => 'btn btn-small', :target => "_blank" do %>
-              <i class="icon-search"></i>
-            <% end %> 
-            <%= link_to admin_page_path(page), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-small' do %>
-              <i class="icon-trash"></i>
-            <% end %>
-          </div>
-        </td>
-      </tr>
-    <% end %>
-    </table>
-  <%= bulk_update_dropdown Hash['publish' => 'Publish', 'draft' => 'Draft', 'move_to_trash' => 'Move To Trash'] %>
-  <% end %>
 <% end %>
 
-<div class="pull-right">
-   <%= paginate @pages %>
-</div>
 
-
+ 
 </div>
 </div>

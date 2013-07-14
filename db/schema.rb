@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130602173439) do
+ActiveRecord::Schema.define(:version => 20130630102335) do
 
   create_table "admins", :force => true do |t|
     t.string   "email"
@@ -54,6 +54,21 @@ ActiveRecord::Schema.define(:version => 20130602173439) do
 
   add_index "comments", ["ancestry"], :name => "index_comments_on_ancestry"
 
+  create_table "menuOptions", :force => true do |t|
+    t.string  "menuid"
+    t.integer "parent_id"
+    t.integer "lft"
+    t.integer "rgt"
+  end
+
+  create_table "menus", :force => true do |t|
+    t.string  "name"
+    t.string  "key"
+    t.integer "parent_id"
+    t.integer "lft"
+    t.integer "rgt"
+  end
+
   create_table "post_abstractions", :force => true do |t|
     t.integer  "posts_id"
     t.string   "abstraction_key"
@@ -82,6 +97,7 @@ ActiveRecord::Schema.define(:version => 20130602173439) do
     t.string   "post_seo_no_index",                          :default => "N"
     t.string   "post_seo_no_follow",                         :default => "N"
     t.string   "ancestry"
+    t.text     "structured_url"
   end
 
   add_index "posts", ["ancestry"], :name => "index_posts_on_ancestry"

@@ -1,0 +1,34 @@
+<%= form_tag(site_url('admin/menu')) do %>
+
+  <fieldset class="categoriesForm">
+
+    <div class="field">
+      <%= label_tag :name %>
+      <%= text_field_tag :name %>
+    </div>
+    <div class="field">
+      <%= label_tag 'Key' %>
+      <%= text_field_tag :key %>
+    </div>
+	<div class="formSepUpp">
+		<div class="field">
+			<%= submit_tag "Add Menu Group", :class => 'btn btn-small btn-warning' %>
+		</div>
+	</div>
+
+  </fieldset>
+<% end %>
+
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+
+      $("#name").keyup(function(){
+          $("#key").val($(this).val().toLowerCase().split(' ').join('-'));
+      });
+       $("#name").change(function(){
+          $("#key").val($(this).val().toLowerCase().split(' ').join('-'));
+      });
+    })
+  
+</script>

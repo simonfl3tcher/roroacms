@@ -1,0 +1,42 @@
+<%= form_for [:admin, @menu] do |f| %>
+  <% if @menu.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@menu.errors.count, "error") %> errors:</h2>
+
+      <ul>
+      <% @menu.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset class="categoriesForm">
+
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name, size: 40 %>
+    </div>
+    <div class="field formSep">
+      <%= f.label :key %>
+      <%= f.text_field :key, size: 40 %>
+    </div>
+    <div class="field ">
+        <%= f.submit "Add menu group", :class => 'btn btn-small btn-warning' %>
+    </div>
+  </fieldset>
+<% end %>
+
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+
+      $("#menu_name").keyup(function(){
+          $("#menu_key").val($(this).val().toLowerCase().split(' ').join('-'));
+      });
+       $("#menu_name").change(function(){
+          $("#menu_key").val($(this).val().toLowerCase().split(' ').join('-'));
+      });
+    })
+  
+</script>

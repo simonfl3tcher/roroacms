@@ -1,0 +1,16 @@
+<%= form_tag site_url("admin/pages/bulk_update") do %>
+
+  <table id="filterableTable" class="table table-bordered table-striped table_vam" data-offset="5">
+    <thead>
+      <tr>
+        <th><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
+        <th>Page Title</th>
+        <th>Published Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <%= nested_table @pages.arrange(:order => "COALESCE(ancestry, id), ancestry IS NOT NULL, id") %>
+  </table>
+  <%= bulk_update_dropdown Hash['publish' => 'Publish', 'draft' => 'Draft', 'move_to_trash' => 'Move To Trash'] %>
+
+<% end %>
