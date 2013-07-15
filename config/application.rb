@@ -9,7 +9,7 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-module Railsoverview
+module Roroacms
   class Application < Rails::Application
     config.encoding = "utf-8"
 
@@ -22,7 +22,7 @@ module Railsoverview
 
     # Enable the asset pipeline
     config.assets.enabled = true
-
+    
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     config.action_controller.include_all_helpers = true
