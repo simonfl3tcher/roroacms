@@ -54,27 +54,20 @@ ActiveRecord::Schema.define(:version => 20130630102335) do
 
   add_index "comments", ["ancestry"], :name => "index_comments_on_ancestry"
 
-  create_table "menuOptions", :force => true do |t|
-    t.string  "menuid"
+  create_table "menu_options", :force => true do |t|
+    t.string  "menu_id"
+    t.integer "option_id"
     t.integer "parent_id"
+    t.string  "data_type"
     t.integer "lft"
     t.integer "rgt"
+    t.string  "label"
+    t.text    "custom_data"
   end
 
   create_table "menus", :force => true do |t|
-    t.string  "name"
-    t.string  "key"
-    t.integer "parent_id"
-    t.integer "lft"
-    t.integer "rgt"
-  end
-
-  create_table "post_abstractions", :force => true do |t|
-    t.integer  "posts_id"
-    t.string   "abstraction_key"
-    t.text     "abstraction_value"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.string "name"
+    t.string "key"
   end
 
   create_table "posts", :force => true do |t|
@@ -113,8 +106,6 @@ ActiveRecord::Schema.define(:version => 20130630102335) do
   create_table "term_anatomies", :force => true do |t|
     t.integer  "term_id"
     t.string   "taxonomy"
-    t.integer  "parent"
-    t.integer  "count"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -141,9 +132,8 @@ ActiveRecord::Schema.define(:version => 20130630102335) do
     t.string   "name"
     t.string   "slug"
     t.text     "description"
-    t.integer  "term_group",  :default => 0
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
 end

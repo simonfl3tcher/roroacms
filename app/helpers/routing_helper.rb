@@ -29,13 +29,28 @@ module RoutingHelper
 
 			else
 
-				render :template => "theme/#{current_theme}/#{default}"
+				if File.exists?("app/views/theme/#{current_theme}/#{default}.html.erb")	
+
+					render :template => "theme/#{current_theme}/#{default}"
+				else 
+
+					render :template => "theme/#{current_theme}/page.html.erb"
+
+				end
 
 			end
 
 		else
 
-			render :template => "theme/#{current_theme}/#{default}"
+			if File.exists?("app/views/theme/#{current_theme}/#{default}.html.erb")
+
+				render :template => "theme/#{current_theme}/#{default}"
+
+			else
+
+				render :template => "theme/#{current_theme}/page.html.erb"
+
+			end
 
 		end	
 
