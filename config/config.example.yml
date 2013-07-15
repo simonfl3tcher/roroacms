@@ -1,12 +1,3 @@
-development:
-email_address: example@example.co.uk
-domain: example.co.uk
-password: password
-test:
-email_address: example@example.co.uk
-domain: example.co.uk
-password: password
-production:
 email_address: example@example.co.uk
 domain: example.co.uk
 password: password
