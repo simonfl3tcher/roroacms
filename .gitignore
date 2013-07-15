@@ -7,7 +7,10 @@ capybara-*.html
 /.bundle
 /vendor/bundle
 /log/*
+/log/development.log
 /tmp/*
 /config/database.yml
 /config/config.yml
+/db/migrate/*
+/public/*
 .project
