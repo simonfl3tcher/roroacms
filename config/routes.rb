@@ -1,4 +1,4 @@
-Railsoverview::Application.routes.draw do
+Roroacms::Application.routes.draw do
 
   resources :articles
   
