@@ -28,8 +28,8 @@ class ApplicationController < ActionController::Base
   helper_method :current_theme
 
   def installation 
-    # path = request.env['PATH_INFO'].include? '/installation'request.env['PATH_INFO'].include? '/installation'.include? '/installation'
-    # redirect_to installation_path, error: "Not Authorized" if Dir.exists?("app/controllers/installation/") && path == false
+    path = request.env['PATH_INFO'].include? '/installation'
+    redirect_to installation_path, error: "Not Authorized" if Dir.exists?("app/controllers/installation/") && path == false
   end
   
   def current_user
