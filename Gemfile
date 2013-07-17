@@ -16,6 +16,19 @@ group :assets do
   gem "less-rails"
 end
 
+group :test, :development do
+
+	gem 'turn'
+	gem 'rspec-rails'
+	gem 'faker'
+	gem 'factory_girl_rails'
+	gem 'capybara'
+	gem 'rb-fsevent'
+	gem 'guard-rspec'
+	gem 'growl_notify'
+	gem 'guard-livereload'
+end
+
 gem 'twitter-bootstrap-rails'
 gem 'aws-s3', :require => 'aws/s3'
 gem 'jquery-rails'

@@ -26,10 +26,4 @@ describe Admin do
 		m = FactoryGirl.build(:admin, password: nil).should_not be_valid
 	end
 
-	describe "class relations" do
-
-		it { should have_many(:posts)}
-
-	end
-
 end
