@@ -14,5 +14,3 @@ FactoryGirl.define do
 	end
 
 end
-
-# :admins_id, :post_content, :post_date, :post_name, :post_parent, :post_slug, :post_status, :post_title, :post_type, :disabled
