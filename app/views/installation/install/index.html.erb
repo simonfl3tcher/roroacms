@@ -1,0 +1,100 @@
+<%= form_tag(site_url('installation')) do %>
+
+<div class="title">Installation</div>
+
+<p>Welcome to Roroacms, first of all we would like to thank you for choosing Roroacms as your CMS platform. To get started we will need a few details from you. Please fill out the details below to get started.</p>
+
+<p><strong>Amazon S3...</strong> what is this? Well its a storage center for all your media images, documents etc. We use this as its a great platform to store all your necessary files. Why have we developed it like this? Well for two reasons... 1. Because it means less strain on the hosted server, in turn meaning cheaper hosting. 2. It has a seperate platform where you can login and keep track of all your files. To get started you will need an amazon S3 Account. Don't worry it is very simple to set up. Just head over to www.amazons3.co.uk to get set up.</p>
+
+<br /><br />
+
+<fieldset>
+	<div class="row">
+		<div class="span6">
+
+			<h4 class="title">General Settings</h4>
+
+			<div class="field formSep">
+				<%= label_tag(:display_url, "Display Url") %>
+				<%= text_field_tag(:display_url) %>
+			</div>
+
+			<div class="field formSep">
+				<%= label_tag(:site_url, "Site Url") %>
+				<%= text_field_tag(:site_url) %>
+			</div>
+
+			<div class="field formSep">
+				<%= label_tag(:site_email, "Site Email Address") %>
+				<%= text_field_tag(:site_email) %>
+			</div>
+
+			<div class="field formSep">
+				<%= label_tag(:articles_slug, "Articles Slug") %>
+				<%= text_field_tag(:articles_slug) %>
+			</div>
+
+			<div class="field formSep">
+				<%= label_tag(:category_slug, "Category Slug") %>
+				<%= text_field_tag(:category_slug) %>
+			</div>
+
+			<div class="field formSep">
+				<%= label_tag(:tag_slug, "Tag Slug") %>
+				<%= text_field_tag(:tag_slug) %>
+			</div>
+
+		</div>
+
+		<div class="span6">
+
+			<h4 class="title">Amazon S3 Settings</h4>
+
+			<div class="field formSep">
+				<%= label_tag(:aws_access_key_id, "Access Key ID") %>
+				<%= text_field_tag(:aws_access_key_id) %>
+			</div>
+			<div class="field">
+				<%= label_tag(:aws_secret_access_key, "Secret Access Key") %>
+				<%= text_field_tag(:aws_secret_access_key) %>
+			</div>
+			<div class="field">
+				<%= label_tag(:aws_bucket_name, "Bucket Name") %>
+				<%= text_field_tag(:aws_bucket_name) %>
+			</div>
+
+
+		</div>
+
+
+		<div class="clearboth"></div>
+
+		<div class="span12">
+
+			<h4 class="title">Admin Login Details</h4>
+
+			<div class="field formSep">
+				<%= label_tag(:profile_email, "Profile Email") %>
+				<%= text_field_tag(:profile_email) %>
+			</div>
+			<div class="field">
+				<%= label_tag(:profile_username, "Profile Username") %>
+				<%= text_field_tag(:profile_username) %>
+			</div>
+			<div class="field">
+				<%= label_tag(:profile_password, "Profile Password") %>
+				<%= text_field_tag(:profile_password) %>
+			</div>
+
+		</div>
+
+	</div>
+			<div class="formSepUpp">
+
+				<div class="field">
+					<%= submit_tag "Update", :class => 'btn btn-small btn-warning' %>
+				</div>
+			</div>
+</fieldset>
+<% end %>
+		

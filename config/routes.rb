@@ -1,10 +1,13 @@
 Roroacms::Application.routes.draw do
-
-  resources :articles
   
   resources :pages,  only: [:index, :show, :dynamic_page]
-  resources :sessions
   resources :comments
+
+  namespace :installation do
+    get '', to: 'install#index'
+    post '', to: 'install#create'
+  end
+
   
   namespace :admin do
     get '', to: 'dashboard#index'
