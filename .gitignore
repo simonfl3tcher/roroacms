@@ -11,6 +11,5 @@ capybara-*.html
 /tmp/*
 /config/database.yml
 /config/config.yml
-/db/migrate/*
 /public/*
 .project
