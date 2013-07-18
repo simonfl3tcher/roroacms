@@ -55,7 +55,7 @@ module ViewHelper
 
 	def get_the_content post
 
-		render :inline => post.post_content.html_safe
+		render :inline => prep_content(post).html_safe
 
 	end
 
@@ -67,7 +67,7 @@ module ViewHelper
 
 	def get_the_excerpt post, length = 300, omission = '...'
 
-		render :inline => truncate(strip_tags(post.post_content), :omission => omission, :length => length)
+		render :inline => truncate(post.post_content.html_safe, :omission => omission, :length => length)
 
 
 	end
