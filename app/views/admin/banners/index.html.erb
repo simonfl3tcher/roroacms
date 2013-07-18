@@ -61,11 +61,11 @@
     </table>
   <%= bulk_update_dropdown Hash['move_to_trash' => 'Move To Trash'] %>
   <% end %>
+  <div class="pull-right">
+     <%= paginate @banners %>
+  </div>
 <% end %>
 
-<div class="pull-right">
-   <%= paginate @banners %>
-</div>
 
 
 </div>

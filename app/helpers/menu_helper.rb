@@ -96,7 +96,7 @@ module MenuHelper
 			t = Term.find(existingData['linkto'])
 			atts += " href='#{site_url(article_url + '/' + tag_url + '/' + t.slug)}'"
 
-		elsif m.data_type == 'news' && m.option_id == 0
+		elsif m.data_type == article_url && m.option_id == 0
 
 			atts += " href='#{site_url(article_url)}'"
 

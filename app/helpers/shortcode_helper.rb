@@ -2,7 +2,12 @@ module ShortcodeHelper
 
 	# prep_content function takes the content and runs it through the standard column shortcodes that are used in roroa.
 
-	def prep_content
+	def prep_content c = ''
+
+		if c != ''
+			@content = c
+		end
+
 		# one half 
 		c = @content.post_content
 		c = c.gsub("<p>{one_half}", '<div class="one_half">')

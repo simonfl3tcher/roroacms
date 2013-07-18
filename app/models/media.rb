@@ -1,5 +1,5 @@
 class Media < ActiveRecord::Base
-
+	BUCKET = Setting.find_by_setting_name('aws_bucket_name')[:setting]
 	include AWS::S3
 
 	def self.setup_and_search_posts    
