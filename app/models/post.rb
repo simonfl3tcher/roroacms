@@ -1,7 +1,5 @@
 class Post < ActiveRecord::Base
   
-  Rails.cache.clear 
-
   has_ancestry
   
   
