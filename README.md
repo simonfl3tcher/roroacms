@@ -42,20 +42,35 @@ The database.yml file is just the general database configuration file. We sugges
 All of the following settings have to be included in the config.yml file.
 
 > email_address: email address used to send out notifications
+
 > domain: Website domain
+
 > password: email address password
+
 > articles_slug: example (blog, news)
+
 > category_slug: example (category, cat)
+
 > site_url: actual website domain (http://www.example.co.uk/)
+
 > site_title: website page title (this is the title)
+
 > display_url: visual website domain (http://www.example.co.uk/)
+
 > tag_slug: example (category, cat)
+
 > admin_email: primary address for the software to send you notifcations(example@example.com)
+
 > admin_password: primary admin password
+
 > admin_username: primary admin username
+
 > aws_access_key_id: example(AKIAI4VD2NT6NMGJLCOQ)
+
 > aws_secret_access_key: example(j7b4LQuOW3s5BEUUR4yCujWyENYteiLsKL++x+h4)
+
 > aws_bucket_name: example(roroa)
+
 > theme_folder: example(roroa1)
 
 ## Theming
@@ -65,9 +80,13 @@ Theming in Roroacms is very simple simply create a theme folder in app > views >
 In order for your theme to be recognised by Roroa you need to include a theme.yml file in the root of your theme, the file needs to contain the following details:-
 
 > name: The name of the theme
+
 > author: Author of the theme
+
 > description: The description of the theme
+
 > version: Version no.
+
 > foldername: The name of the folder on the server that the theme is contained in for example(roroa1)
 
 * Please note that all these options are required even if you leave them blank. You need to make sure that you contain the name and foldername in order for the theme to work.
@@ -79,9 +98,11 @@ To get started on theming I would take the file structure of a current roroa the
 
 In order to add assets like css, images, javascript files. You will need to navigate to app > assets, this will then display 
 
-> images
-> javascripts
-> stylesheets
+> app > assets > images
+
+> app > assets > javascripts
+
+> app > assets >stylesheets
 
 From there you simply need to navigate into the public folder and start creating the files that you will need to be included with your theme.
 
