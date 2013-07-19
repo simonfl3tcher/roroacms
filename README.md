@@ -41,7 +41,7 @@ The database.yml file is just the general database configuration file. We sugges
 
 All of the following settings have to be included in the config.yml file.
 
-> email_address: email address used to send out notifications
+> **email_address**: email address used to send out notifications
 
 > domain: Website domain
 
