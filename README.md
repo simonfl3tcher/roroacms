@@ -11,7 +11,9 @@ For a demo of Roroacms head over to demo.roroacms.com
 To get into the admin panel use the details below:-
 
 >Url:- demo.roroacms.com/admin
+
 >Username:- demo
+
 >Password:- demo
 
 
