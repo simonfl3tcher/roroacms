@@ -43,41 +43,43 @@ All of the following settings have to be included in the config.yml file.
 
 > **email_address**: email address used to send out notifications
 
-> domain: Website domain
+> **domain**: Website domain
 
-> password: email address password
+> **password**: email address password
 
-> articles_slug: example (blog, news)
+> **articles_slug**: example (blog, news)
 
-> category_slug: example (category, cat)
+> **category_slug**: example (category, cat)
 
-> site_url: actual website domain (http://www.example.co.uk/)
+> **site_url**: actual website domain (http://www.example.co.uk/)
 
-> site_title: website page title (this is the title)
+> **site_title**: website page title (this is the title)
 
-> display_url: visual website domain (http://www.example.co.uk/)
+> **display_url**: visual website domain (http://www.example.co.uk/)
 
-> tag_slug: example (category, cat)
+> **tag_slug**: example (category, cat)
 
-> admin_email: primary address for the software to send you notifcations(example@example.com)
+> **admin_email**: primary address for the software to send you notifcations(example@example.com)
 
-> admin_password: primary admin password
+> **admin_password**: primary admin password
 
-> admin_username: primary admin username
+> **admin_username**: primary admin username
 
-> aws_access_key_id: example(AKIAI4VD2NT6NMGJLCOQ)
+> **aws_access_key_id**: example(AKIAI4VD2NT6NMGJLCOQ)
 
-> aws_secret_access_key: example(j7b4LQuOW3s5BEUUR4yCujWyENYteiLsKL++x+h4)
+> **aws_secret_access_key**: example(j7b4LQuOW3s5BEUUR4yCujWyENYteiLsKL++x+h4)
 
-> aws_bucket_name: example(roroa)
+> **aws_bucket_name**: example(roroa)
 
-> theme_folder: example(roroa1)
+> **theme_folder**: example(roroa1)
 
 ## Theming
 
+*Setting up a theme*
+
 Theming in Roroacms is very simple simply create a theme folder in app > views > theme and away you go. You are able to have mulitple themes stored at any one time so you can update or completely redesign a theme you can keep the old one on the server. 
 
-In order for your theme to be recognised by Roroa you need to include a theme.yml file in the root of your theme, the file needs to contain the following details:-
+In order for your theme to be recognised by Roroa you need to include a theme.yml file in the root of your theme, the file needs to contain the following details**:-
 
 > name: The name of the theme
 
@@ -89,7 +91,11 @@ In order for your theme to be recognised by Roroa you need to include a theme.ym
 
 > foldername: The name of the folder on the server that the theme is contained in for example(roroa1)
 
-* Please note that all these options are required even if you leave them blank. You need to make sure that you contain the name and foldername in order for the theme to work.
+Please note that all these options are required even if you leave them blank. You need to make sure that you contain the name and foldername in order for the theme to work.
+
+------------------
+
+*File Structure*
 
 To get started on theming I would take the file structure of a current roroa theme(roroa1). This contains all the files that you can use in your theme. All of the files are required except:-
 
