@@ -16,7 +16,7 @@
 	        
 	        	<div class="one_third">
 	                        	
-	                <a href="#" class="logo"><strong></strong></a>
+	                <a href="<%= site_url %>" class="logo"><strong></strong></a>
 	            
 	            </div>
 	            <div class="one_third">
@@ -79,23 +79,9 @@
             </div>
             
             <div class="one_half last">
-            
-            	<div class="social">
-                
-                	<a href="<%= site_url %>" target="_blank" class="linkdIn"></a>
-                    <a href="<%= site_url %>" target="_blank" class="twitter"></a> 
-                    <a href="<%= site_url %>" target="_blank" class="facebook"></a>                   
-                    
-                </div>
 
                 <div class="menu-footer-container">
-                	<ul class="menu" id="menu-footer">
-                		<li><a href="<%= site_url %>">Home</a></li>
-                		<li><a href="<%= site_url 'privacy-policy' %>">Privacy Policy</a></li>
-                		<li><a href="<%= site_url 'terms-and-conditions' %>">Terms and Conditions</a></li>
-                		<li><a href="<%= site_url 'cookies' %>">Cookies</a></li>
-                		<li><a href="<%= site_url 'contact' %>">Contact</a></li>
-					</ul>
+                	<%= get_menu 'footer' %>
                 </div>
             	
                 

@@ -1,5 +1,7 @@
 class Admin::MediaController < AdminController
 
+	include MediaHelper
+
 	def index
 		@initial = true
 	end
@@ -8,7 +10,7 @@ class Admin::MediaController < AdminController
 
 		if !params[:create_dir].blank?
 
-			Media.create params
+			media_create params
 	       	
 	    end
 
@@ -18,7 +20,7 @@ class Admin::MediaController < AdminController
 
 		if !params[:file].blank?
 
-			Media.advanced_create params
+			media_advanced_create params
 			
 		else
 			render :text => "No Files!"
@@ -30,10 +32,10 @@ class Admin::MediaController < AdminController
 		@slash_count = params[:key].count('/').to_i
 
 		if params[:key] == 'all'
-			@files = Media.setup_and_search_posts
+			@files = media_setup_and_search_posts
 			@initial = true
 		else 
-			@files = Media.get_by_key params
+			@files = media_get_by_key params
 		end
 		print render :partial => 'admin/media/media_loop'
 
@@ -51,7 +53,7 @@ class Admin::MediaController < AdminController
 	def get_folder_list
 		
 		@initial = true
-		@r = Media.get_folder_list params
+		@r = media_get_folder_list params
 		print render :partial => 'admin/media/media_folder_loop'
 	end
 
