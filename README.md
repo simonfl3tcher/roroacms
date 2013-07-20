@@ -79,17 +79,17 @@ All of the following settings have to be included in the config.yml file.
 
 Theming in Roroacms is very simple simply create a theme folder in app > views > theme and away you go. You are able to have mulitple themes stored at any one time so you can update or completely redesign a theme you can keep the old one on the server. 
 
-In order for your theme to be recognised by Roroa you need to include a theme.yml file in the root of your theme, the file needs to contain the following details**:-
+In order for your theme to be recognised by Roroa you need to include a theme.yml file in the root of your theme, the file needs to contain the following details:-
 
-> name: The name of the theme
+> **name**: The name of the theme
 
-> author: Author of the theme
+> **author**: Author of the theme
 
-> description: The description of the theme
+> **description**: The description of the theme
 
-> version: Version no.
+> **version**: Version no.
 
-> foldername: The name of the folder on the server that the theme is contained in for example(roroa1)
+> **foldername**: The name of the folder on the server that the theme is contained in for example(roroa1)
 
 Please note that all these options are required even if you leave them blank. You need to make sure that you contain the name and foldername in order for the theme to work.
 
