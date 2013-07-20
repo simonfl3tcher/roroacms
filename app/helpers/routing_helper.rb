@@ -21,6 +21,8 @@ module RoutingHelper
 
 	def render_template default
 
+
+
 		if !@content.post_template.blank?
 
 			if File.exists?("app/views/theme/#{current_theme}/template-#{@content.post_template.downcase}.html.erb")
@@ -125,7 +127,7 @@ module RoutingHelper
 
 	def render_page url, status
 
-
+		home_id = Setting.where(:setting_name => 'home_page').first.setting
 		if !session[:admin_id].blank?
 					
 			@content = Post.where(:post_type => 'page').find_by_structured_url("/#{url}")
@@ -150,7 +152,13 @@ module RoutingHelper
 			add_breadcrumb "404", "#", :title => "Back to 404"
 			render_404 and return 
 		end
-		render_template 'page'
+
+
+		if home_id.to_i == @content.id.to_i
+			render_template 'home'
+		else 
+			render_template 'page'
+		end
 
 	end
 

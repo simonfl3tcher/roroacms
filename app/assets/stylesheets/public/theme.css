@@ -121,7 +121,7 @@ h2, h3, .h1, .h2, .h3 {
 }
 
 a {
-  color:#e74935
+  color:#6C6C6C
 }
 
 a img {
@@ -164,7 +164,7 @@ h4, .h4 {
   line-height: 22px;
   padding:0 0 10px 0;
   text-transform: none;
-  color: #E74935;
+  color: #6C6C6C;
 }
 
 h1, .h1 {
@@ -228,7 +228,7 @@ h1, .h1 {
   float:left;
 }
 #nav > .menu-main-container > ul > li:hover > a, #nav > .menu-main-container > ul > li.current-menu-item > a {
-  color: #E74935;
+  color: #6C6C6C;
   
   transition: color 500ms;
   -moz-transition: color 500ms;
@@ -237,7 +237,7 @@ h1, .h1 {
 
 }
 #nav > .menu-main-container > ul > li:hover > ul > li:hover > a {
-  color: #E74935;
+  color: #6C6C6C;
   opacity:0.9;
   
   transition: color, opacity 200ms;
@@ -308,9 +308,10 @@ h1, .h1 {
 #header .logo {
   display:block;
   float:left;
-  background-image: url(/assets/theme/frontend-logo-2.png);
+  /*background-image: url(/assets/theme/frontend-logo-2.png);*/
+  background-image: url(/assets/theme/companylogo.jpg );
   background-repeat: no-repeat;
-  background-position: -10px 12px;
+  background-position: 0 36px;
   height: 135px;
   width: 400px;
   
@@ -364,7 +365,7 @@ h1, .h1 {
   letter-spacing:-1px;
   font-size: 32px;
   font-weight: bold;
-  color: #E74935;
+  color: #6C6C6C;
   padding-bottom: 2px;  
 }
 #header .one_third.last span.email a {
@@ -448,10 +449,10 @@ background-color: #FFFFFF;
 }
 #footer .footer_logo {
   display:block;
-  background-image: url(/assets/theme/frontend-logo-footer-2.png);
+  background-image: url(/assets/theme/footer-poweredby2.jpg);
   background-repeat: no-repeat;
   background-position: 0 top;
-  height: 75px;
+  height: 43px;
   width: 326px;
 }
 #footer .social {
@@ -511,7 +512,7 @@ background-color: #FFFFFF;
 }
 .sub_nav > ul > li > a:hover {  
   color: #333;
-  border-bottom-color: #E74935;
+  border-bottom-color: #6C6C6C;
   
   transition: all 500ms;
   -moz-transition: all 500ms;
@@ -799,7 +800,7 @@ fieldset.commentForm .orangeBtn {
 
 .notice ul li {
   list-style: disc;
-  color:#E74935;
+  color:#6C6C6C;
 }
 
 .notice .success {

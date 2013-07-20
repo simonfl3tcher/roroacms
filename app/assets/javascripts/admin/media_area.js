@@ -142,7 +142,7 @@ $(document).ready(function(){
 			thumbnailWidth: 219, 
 			thumbnailHeight:140,
 			params: {reference: getRef()}, 
-			url: '/admin/filebrowser/multipleupload'
+			url: '/admin/media/multipleupload'
 		});
 	}
 
