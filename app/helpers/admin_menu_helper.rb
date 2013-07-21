@@ -1,7 +1,7 @@
 module AdminMenuHelper
 
 
-	def make_hash str
+	def make_hash(str)
 
 		str = str.split('&')
 
@@ -19,7 +19,7 @@ module AdminMenuHelper
 
 	end
 
-	def check_for_checked one, two 
+	def check_for_checked(one, two)
 		if one.to_s == two.to_s
 			return "checked='checked'"
 		else
@@ -27,7 +27,7 @@ module AdminMenuHelper
 		end
 	end
 
-	def menu_list_loop menuid, sub = false
+	def menu_list_loop(menuid, sub = false)
 		if sub 
 			data = MenuOption.find(menuid)
 			data = MenuOption.where(:parent_id => data.option_id)
@@ -70,11 +70,11 @@ module AdminMenuHelper
 	end
 
 	
-	def descendants_count m
+	def descendants_count(m)
       return (m.rgt - m.lft - 1)/2
     end
 	
-	def get_menu_groups menu
+	def get_menu_groups(menu)
 
 		@id = menu.name.gsub(' ', '');
 		@menu = menu

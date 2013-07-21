@@ -2,7 +2,7 @@ class Menu < ActiveRecord::Base
 	validates :name, :key, :presence => true
 	has_many :menu_options, :dependent => :destroy
 
-	def self.save_menu_on_fly p
+	def self.save_menu_on_fly(p)
 
 		f = ActiveSupport::JSON.decode p[:data]
 

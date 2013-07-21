@@ -31,7 +31,7 @@ class Trash < ActiveRecord::Base
 
 	end
 
-	def self.reinstate_post val
+	def self.reinstate_post(val)
 
 		post = Post.find(val)
 		post.disabled = "N"
@@ -41,7 +41,7 @@ class Trash < ActiveRecord::Base
 
 	private
 
-	def self.reinstate_posts posts
+	def self.reinstate_posts(posts)
 		posts.each do |val|
 			post = Post.find(val)
 			post.disabled = "N"
@@ -49,7 +49,7 @@ class Trash < ActiveRecord::Base
 		end
 	end
 
-	def self.delete_posts posts 
+	def self.delete_posts(posts)
 		posts.each do |val|
 			post = Post.find(val)
 			post.destroy

@@ -22,6 +22,29 @@ class CommentsController < ApplicationController
 		end
 	end
 
+	def update 
+
+		if comments_on
+			
+			session[:return_to] ||= request.referer
+			@comment = Comment.new(comments_params)
+
+			respond_to do |format|
+			  if @comment.save
+			  	Notifier.comment(@comment).deliver
+			    format.html { redirect_to "#{session[:return_to]}#commentsArea", notice: comments_success_message }
+			  else
+
+			    format.html { redirect_to "#{session[:return_to]}#commentsArea", notice: comments_error_display(@comment).html_safe}
+
+			  end
+			end
+		else 
+			abort '123123'
+		end
+
+	end
+
 	private
 
 	def comments_params

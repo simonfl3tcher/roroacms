@@ -7,7 +7,7 @@ module SeoHelper
 
 			if !(@content.respond_to? :length)
 
-				home_id = Setting.where(:setting_name => 'home_page').first.setting	
+				home_id = Setting.get('home_page')		
 
 				if @content.id == home_id.to_f
 					headtags = get_manual_metadata 'home'
@@ -28,8 +28,8 @@ module SeoHelper
 					url_arr = params[:slug].split('/')
 				end
 				last_url = url_arr.last
-				article_url = Setting.where(:setting_name => 'articles_slug').first.setting
-				category_url = Setting.where(:setting_name => 'category_slug').first.setting
+				article_url = Setting.get('articles_slug')	
+				category_url = Setting.get('category_slug')	
 
 				if (last_url == article_url || last_url.nonnegative_float? || url_arr[1] == category_url)
 
@@ -78,7 +78,7 @@ module SeoHelper
 
 	private
 
-	def get_meta_description overide = nil
+	def get_meta_description(overide = nil)
 
 		if overide.nil?
 
@@ -104,12 +104,12 @@ module SeoHelper
 	end
 
 
-	def get_page_title overide = nil
+	def get_page_title(overide = nil)
 
 
 		if !overide.nil?
 
-			websiteTitle = Setting.where(:setting_name => "seo_site_title").first.setting
+			websiteTitle = Setting.get('seo_site_title')	
 			title = "#{overide} | #{websiteTitle}"
 			return "<title>#{title}</title>"
 
@@ -122,7 +122,7 @@ module SeoHelper
 
 			else
 
-				websiteTitle = Setting.where(:setting_name => "seo_site_title").first.setting
+				websiteTitle = Setting.get('seo_site_title')	
 				title = "#{@content.post_title} | #{websiteTitle}"
 
 				return "<title>#{title}</title>"
@@ -133,12 +133,12 @@ module SeoHelper
 
 	end
 
-	def get_robots_tag overide = nil
+	def get_robots_tag(overide = nil)
 
 		if !overide.nil?
-			if overide == 'archive' && Setting.where(:setting_name => "seo_no_index_archives").first.setting == 'Y'
+			if overide == 'archive' && Setting.get('seo_no_index_archives')	== 'Y'
 				return "<meta name=\"robots\" content=\"noindex, follow\" />"
-			elsif overide == 'category' && Setting.where(:setting_name => "seo_no_index_categories").first.setting == 'Y'
+			elsif overide == 'category' && Setting.get('seo_no_index_categories') == 'Y'
 				return "<meta name=\"robots\" content=\"noindex, follow\" />"
 			end
 		else
@@ -160,7 +160,7 @@ module SeoHelper
 		end
 	end
 
-	def get_manual_metadata type
+	def get_manual_metadata(type)
 
 		title = "seo_#{type}_title"
 		description = "seo_#{type}_description"
@@ -176,7 +176,7 @@ module SeoHelper
 
 	def get_additional_headers
 
-		additionalHeaders = Setting.where(:setting_name => "seo_additional_headers").first.setting
+		additionalHeaders = Setting.get('seo_additional_headers')
 
 		if !additionalHeaders.blank?
 
@@ -187,7 +187,7 @@ module SeoHelper
 
 	def get_google_analytics
 
-		analyticsID = Setting.where(:setting_name => "seo_google_analytics_code").first.setting
+		analyticsID = Setting.get('seo_google_analytics_code')
 
 		if !analyticsID.blank?
 
@@ -210,7 +210,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 
 	def canonical_urls
 
-		canonical = Setting.where(:setting_name => "seo_canonical_urls").first.setting
+		canonical = Setting.get('seo_canonical_urls')
 
 		if canonical.to_s == 'Y'
 

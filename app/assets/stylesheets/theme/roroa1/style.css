@@ -654,7 +654,7 @@ textarea:focus {
   text-transform: uppercase;
   color: #FFF;
   text-decoration: none;
-  background-color: #E84736;
+  background-color: #6C6C6C;
   margin: 0px;
   padding-top: 8px;
   padding-right: 12px;
@@ -759,7 +759,7 @@ article.comment p {
 }
 
 #author-info {
-    border-top: 4px solid #FF4533;
+    border-top: 4px solid #E8E8E8;
     clear: both;
     font-size: 14px;
     line-height: 20px;

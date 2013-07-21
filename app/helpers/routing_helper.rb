@@ -1,6 +1,6 @@
 module RoutingHelper
 
-	def route_index_page params
+	def route_index_page(params)
 
 		if !params[:search].blank?
 			gloalize Post.where("(post_title LIKE :p or post_slug LIKE :p2 or post_content LIKE :p3) and (post_type != 'autosave')", {:p => "%#{params[:search]}%", :p2 => "%#{params[:search]}%", :p3 => "%#{params[:search]}%"})
@@ -10,7 +10,7 @@ module RoutingHelper
 
 		else
 
-			home_id = Setting.where(:setting_name => 'home_page').first.setting
+			home_id = Setting.get('home_page')	
 			@content = Post.find(home_id)
 			gloalize @content
 			render_template 'home'
@@ -19,7 +19,7 @@ module RoutingHelper
 
 	end
 
-	def render_template default
+	def render_template(default)
 
 
 
@@ -58,10 +58,10 @@ module RoutingHelper
 
 	end
 
-	def show_url params
+	def show_url(params)
 
 		post = Post.find(params[:id])
- 		article_url = Setting.where(:setting_name => 'articles_slug').first.setting
+ 		article_url = Setting.get('articles_slug')
  		@url = ''
  		
  		if post.post_type == 'post'
@@ -75,13 +75,13 @@ module RoutingHelper
 	end
 
 
-	def route_dynamic_page params
+	def route_dynamic_page(params)
 
 		segments = params[:slug].split('/')
 		url = params[:slug]
-		article_url = Setting.where(:setting_name => 'articles_slug').first.setting
-		category_url = Setting.where(:setting_name => 'category_slug').first.setting
-		tag_url = Setting.where(:setting_name => 'tag_slug').first.setting
+		article_url = Setting.get('articles_slug')
+		category_url = Setting.get('category_slug')	
+		tag_url = Setting.get('tag_slug')
 
 		if !session[:admin_id].blank?
 
@@ -125,9 +125,9 @@ module RoutingHelper
 	end
 
 
-	def render_page url, status
+	def render_page(url, status)
 
-		home_id = Setting.where(:setting_name => 'home_page').first.setting
+		home_id = Setting.get('home_page')	
 		if !session[:admin_id].blank?
 					
 			@content = Post.where(:post_type => 'page').find_by_structured_url("/#{url}")
@@ -162,7 +162,7 @@ module RoutingHelper
 
 	end
 
-	def render_category segments, article_url = nil, term = false, status
+	def render_category(segments, article_url = nil, term = false, status)
 
 		if term
 
@@ -186,7 +186,7 @@ module RoutingHelper
 		end
 	end
 
-	def render_single segments, article_url, status
+	def render_single(segments, article_url, status)
 
 		if !session[:admin_id].blank?
 							
@@ -209,7 +209,7 @@ module RoutingHelper
 
 	end
 
-	def render_archive segments, article_url
+	def render_archive(segments, article_url)
 
 		add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
 
