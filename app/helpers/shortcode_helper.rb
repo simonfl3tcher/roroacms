@@ -2,7 +2,7 @@ module ShortcodeHelper
 
 	# prep_content function takes the content and runs it through the standard column shortcodes that are used in roroa.
 
-	def prep_content c = ''
+	def prep_content(c = '')
 
 		if c != ''
 			@content = c

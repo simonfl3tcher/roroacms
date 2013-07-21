@@ -10,7 +10,7 @@ module ViewHelper
 
 	end
 
-	def display_date format = nil
+	def display_date(format = nil)
 
 		if format
 
@@ -53,26 +53,26 @@ module ViewHelper
 		end
 	end
 
-	def get_the_content post
+	def get_the_content(post)
 
 		render :inline => prep_content(post).html_safe
 
 	end
 
-	def get_the_title post
+	def get_the_title(post)
 
 		render :inline => post.post_title
 
 	end
 
-	def get_the_excerpt post, length = 300, omission = '...'
+	def get_the_excerpt(post, length = 300, omission = '...')
 
 		render :inline => truncate(post.post_content.html_safe, :omission => omission, :length => length)
 
 
 	end
 
-	def get_the_date post, format = nil
+	def get_the_date(post, format = nil)
 
 		if format
 
@@ -98,9 +98,9 @@ module ViewHelper
 
 	end
 
-	def get_the_permalink post
+	def get_the_permalink(post)
 
-		article_url = Setting.where(:setting_name => 'articles_slug').first.setting
+		article_url = Setting.get('articles_slug')
 
 		if post.post_type == 'post'
 
@@ -133,11 +133,11 @@ module ViewHelper
 
 	def display_comments_form
 
-		comments_on = Setting.where(:setting_name => 'article_comments').first.setting
+		comments_on = Setting.get('article_comments') 
 
 		if comments_on == 'Y'
 
-			type = Setting.where(:setting_name => 'article_comment_type').first.setting
+			type = Setting.get('article_comment_type')
 
 			render(:template =>"theme/#{current_theme}/comments_form.html.erb", :layout => nil, :locals => { :type => type }).to_s
 
@@ -149,7 +149,7 @@ module ViewHelper
 
 	end
 
-	def return_comments id = nil
+	def return_comments(id = nil)
 				
 
 		if !id.nil?
@@ -166,7 +166,7 @@ module ViewHelper
 
 	end
 
-	def display_comments_loop id = nil
+	def display_comments_loop(id = nil)
 
 		if !id.nil?
 
@@ -190,22 +190,23 @@ module ViewHelper
 
 	def display_author_information
 
-		@admin = Admin.find(@content.admin_id)
+		@admin = Admin.find_by_id(@content.admin_id)
+		unless @admin.blank?
+				html = "<div id='author-info'>
+				<div id='author-description'>
+					<h2>About #{@admin.first_name} #{@admin.last_name}</h2>
+					<p>#{@admin.description}</p>						
+				</div>
+			</div>"
 
-		html = "<div id='author-info'>
-		<div id='author-description'>
-			<h2>About #{@admin.first_name} #{@admin.last_name}</h2>
-			<p>#{@admin.description}</p>						
-		</div>
-	</div>"
-
-	render :inline => html.html_safe
+			render :inline => html.html_safe
+		end
 
 	end
 
-	def site_url str = nil
+	def site_url(str = nil)
 
-		url = Setting.where(:setting_name => 'site_url').first.setting
+		url = Setting.get('site_url')
 
 		return "#{url}#{str}"
 	end
@@ -216,25 +217,25 @@ module ViewHelper
 
 	end
 
-	def excerpt content, length = 255, omission = '...'
+	def excerpt(content, length = 255, omission = '...')
 
 		render :inline => truncate(content, :omission => omission, :length => length)
 
 	end
 
-	def get_banners hash
+	def get_banners(hash)
 
 		return Banner.where(terms: {slug: hash[:key]}).includes(:terms).limit(hash[:limit]).order('sort_order')
 
 	end
 
-	def get_archives type, blockbydate = nil
+	def get_archives(type, blockbydate = nil)
 
 		if type == 'Y'
 
 			@posts = Post.where(:post_type => 'post').uniq.pluck("EXTRACT(YEAR FROM post_date)")
-			article_url = Setting.where(:setting_name => 'articles_slug').first.setting
-			category_url = Setting.where(:setting_name => 'category_slug').first.setting
+			article_url = Setting.get('articles_slug') 
+			category_url = Setting.get('category_slug')
 				
 			h = {}
 			
@@ -245,8 +246,8 @@ module ViewHelper
 		elsif type == 'M'
 			
 			@posts = Post.where(:post_type => 'post').uniq.pluck("EXTRACT(YEAR FROM post_date)")
-			article_url = Setting.where(:setting_name => 'articles_slug').first.setting
-			category_url = Setting.where(:setting_name => 'category_slug').first.setting
+			article_url = Setting.get('articles_slug')
+			category_url = Setting.get('category_slug')
 
 			h = {}
 			lp = {}
@@ -273,12 +274,12 @@ module ViewHelper
 
 	end
 	
-	def get_categories arr = nil
+	def get_categories(arr = nil)
 
 		@terms = Term.where(term_anatomies: {taxonomy: 'category'}).includes(:term_anatomy)
 
-			article_url = Setting.where(:setting_name => 'articles_slug').first.setting
-			tag_url = Setting.where(:setting_name => 'category_slug').first.setting
+			article_url = Setting.get('articles_slug')
+			tag_url = Setting.get('category_slug')
 			
 			h = {}
 			
@@ -290,7 +291,7 @@ module ViewHelper
 
 	end
 	
-	def get_tag_cloud type, arr = nil
+	def get_tag_cloud(type, arr = nil)
 
 		@terms = Term.where(term_anatomies: {taxonomy: 'tag'}).includes(:term_anatomy)
 
@@ -298,8 +299,8 @@ module ViewHelper
 			return @terms.all.collect {|u| u.name}.join ', '
 		elsif type == 'list'
 
-			article_url = Setting.where(:setting_name => 'articles_slug').first.setting
-			tag_url = Setting.where(:setting_name => 'tag_slug').first.setting
+			article_url = Setting.get('articles_slug')
+			tag_url = Setting.get('tag_slug')
 			
 			h = {}
 			
@@ -343,7 +344,7 @@ module ViewHelper
 	end
 
 
-	def getdatenamebynumber s
+	def getdatenamebynumber(s)
         case s
             when  1 then "Jan"
             when  2 then "Feb"
@@ -360,11 +361,11 @@ module ViewHelper
         end
 	end
 
-	def view_file_exists f
+	def view_file_exists(f)
 		return File.exists?("app/views/theme/#{current_theme}/template-#{f}.html.erb")
 	end
 
-	def is_page i
+	def is_page(i)
 
 		@p = @content
 
@@ -404,7 +405,7 @@ module ViewHelper
 		return Setting.find_by_setting_name('theme_folder')[:setting]
 	end
 
-	def theme_url append
+	def theme_url(append)
 		return "theme/#{current_theme}/#{append}"
 	end
 end

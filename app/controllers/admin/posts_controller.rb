@@ -12,7 +12,8 @@ class Admin::PostsController < AdminController
 	def create
 		Rails.cache.clear 
 		@post = Post.new(post_params)
-		@post = Post.deal_with_abnormalaties @post
+
+		@post.deal_with_abnormalaties
 
 		respond_to do |format|
 		  if @post.save

@@ -11,7 +11,8 @@ class Admin::PagesController < AdminController
 
 	def create
 		@page = Post.new(page_params)
-		@page = Post.deal_with_abnormalaties @page
+
+		@page.deal_with_abnormalaties
 
 		respond_to do |format|
 		  if @page.save
@@ -31,7 +32,8 @@ class Admin::PagesController < AdminController
 		Rails.cache.clear 
 	    @page = Post.find(params[:id])
 	    cur_url = @page.post_slug
-	    @page = Post.deal_with_abnormalaties @page
+	    
+	    @page.deal_with_abnormalaties
 
 	    respond_to do |format|
 	      if @page.update_attributes(page_params)

@@ -9,7 +9,7 @@ class Banner < ActiveRecord::Base
 
 	BANNER_CATEGORIES = Term.where(term_anatomies: {taxonomy: 'banner'}).order('name asc').includes(:term_anatomy)
 
-	def self.deal_with_categories banner, cats, del = false 
+	def self.deal_with_categories(banner, cats, del = false)
 
 			if del 
 
@@ -33,7 +33,7 @@ class Banner < ActiveRecord::Base
 
 	end
 
-	def self.setup_and_search_posts params
+	def self.setup_and_search_posts(params)
 
 		banners = Banner.page(params[:page]).per(Setting.get_pagination_limit)
 		if params.has_key?(:search) && !params[:search].blank?
@@ -44,7 +44,7 @@ class Banner < ActiveRecord::Base
 
 	end  
 
-	def self.bulk_update params
+	def self.bulk_update(params)
 
 		action = params[:to_do]
 		action = action.gsub(' ', '_')
@@ -55,7 +55,7 @@ class Banner < ActiveRecord::Base
 		end
 
 	end
-	def self.bulk_update_destroy banners
+	def self.bulk_update_destroy(banners)
 		banners.each do |val|
 			banner = Banner.find(val)
 			banner.destroy

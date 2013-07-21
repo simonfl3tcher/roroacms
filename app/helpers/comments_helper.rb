@@ -1,6 +1,6 @@
 module CommentsHelper
 
-	def comments_error_display content = nil
+	def comments_error_display(content = nil)
 
 		html = ''
 
@@ -28,14 +28,8 @@ module CommentsHelper
 	end
 
 	def comments_on
-		comments_on = Setting.where(:setting_name => 'article_comments').first.setting
-		comments_type = Setting.where(:setting_name => 'article_comment_type').first.setting
 
-		if comments_on == 'Y' && comments_type == 'R'
-			return true
-		else 
-			return false
-		end
+		Setting.get('article_comments') == 'Y' && Setting.get('article_comment_type') == 'R' 
 
 	end
 

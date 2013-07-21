@@ -1,6 +1,6 @@
 module MenuHelper
 
-		def make_hash str
+		def make_hash(str)
 
 		str = str.split('&')
 
@@ -18,11 +18,11 @@ module MenuHelper
 
 	end
 
-	def descendants_count m
+	def descendants_count(m)
       return (m.rgt - m.lft - 1)/2
     end
 
-	def get_menu menu,  sub = false
+	def get_menu(menu,  sub = false)
 		if menu.is_a? Integer
 			if sub 
 				data = MenuOption.find(menu)
@@ -68,12 +68,12 @@ module MenuHelper
 
 	end
 
-	def menu_routing m 
+	def menu_routing(m) 
 
 		existingData = make_hash m.custom_data
-		article_url = Setting.where(:setting_name => 'articles_slug').first.setting
-		category_url = Setting.where(:setting_name => 'category_slug').first.setting
-		tag_url = Setting.where(:setting_name => 'tag_slug').first.setting
+		article_url = Setting.get('articles_slug')	
+		category_url = Setting.get('category_slug')	
+		tag_url = Setting.get('tag_slug')	
 		
 		target = get_target existingData['target']
 		atts = target
@@ -110,7 +110,7 @@ module MenuHelper
 
 	end
 
-	def get_target target 
+	def get_target(target) 
 
 		ret = ''
 

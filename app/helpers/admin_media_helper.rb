@@ -27,7 +27,7 @@ module AdminMediaHelper
 
 	end
 
-	def render_folder_loop initial = false
+	def render_folder_loop(initial = false)
 
 		files = Media.setup_and_search_posts
 
@@ -45,7 +45,7 @@ module AdminMediaHelper
 
 	end
 
-	def make_media_folder_subpage fulldata, nextalong, i, y = false
+	def make_media_folder_subpage(fulldata, nextalong, i, y = false)
 
 		hasFolder = false
 		if !fulldata[i+2].blank?

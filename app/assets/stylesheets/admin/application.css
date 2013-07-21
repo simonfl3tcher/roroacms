@@ -667,7 +667,7 @@ ol > ol {
      #mediaAreaWrapper .mediaPanel.rightMenu.imageView {
       background-color: #FFFFFF;
       height: 100%;
-      left: 1172px;
+      left: 100%;
       position: absolute;
       width: 62.3%;
       z-index: 2;
@@ -813,6 +813,11 @@ ol > ol {
 .select2-container {
   width:99%;
 }
+
+.commentsSelector .select2-container {
+  width:250px;
+}
+
 
 #scrollUp {
 bottom: 20px;

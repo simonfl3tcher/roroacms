@@ -8,7 +8,7 @@ class Media < ActiveRecord::Base
 
 	end
 
-	def self.create p 
+	def self.create(p) 
 
 		begin
           AWS::S3::S3Object.store("#{p[:create_dir]}/", "#{p[:create_dir]}/", BUCKET, :access => :public_read, :content_type => 'binary/octet-stream')
@@ -19,7 +19,7 @@ class Media < ActiveRecord::Base
 
 	end
 
-	def self.advanced_create p 
+	def self.advanced_create(p) 
 
 		if p[:reference].blank?
 
@@ -42,13 +42,13 @@ class Media < ActiveRecord::Base
 
 	end
 
-	def self.get_by_key p
+	def self.get_by_key(p)
 
 		return AWS::S3::Bucket.objects(Setting.find_by_setting_name('aws_bucket_name')[:setting], :prefix => p[:key])
 
 	end
 
-	def self.get_folder_list p
+	def self.get_folder_list(p)
 
 		files = Media.setup_and_search_posts
 		@f = Array.new
