@@ -1,6 +1,6 @@
 class Setting < ActiveRecord::Base
 
-	def self.get setting_name
+	def self.get(setting_name)
 		return Setting.find_by_setting_name(setting_name)[:setting]
 	end
 

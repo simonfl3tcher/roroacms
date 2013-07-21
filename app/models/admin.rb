@@ -14,7 +14,7 @@ class Admin < ActiveRecord::Base
 
 	validates_presence_of :password, :on => :create
 
-	def self.setup_and_search params
+	def self.setup_and_search(params)
 
 		admins = Admin.where('1+1=2').page(params[:page]).per(Setting.get_pagination_limit)
 		if params.has_key?(:search)
@@ -25,21 +25,21 @@ class Admin < ActiveRecord::Base
 
 	end
 
-	def self.set_sessions session, admin
+	def self.set_sessions(session, admin)
 
 		session[:admin_id] = admin.id
 		session[:username] = admin.username
 
 	end
 
-	def self.destroy_session session
+	def self.destroy_session(session)
 
 		session[:admin_id] = nil
 		session[:username] = nil
 
 	end
 
-	def self.post_status_sql session
+	def self.post_status_sql(session)
 
 		if !session[:admin_id].blank?
 

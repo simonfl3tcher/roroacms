@@ -13,13 +13,13 @@ class Term < ActiveRecord::Base
   	validates_uniqueness_of :slug
   	validates_format_of :slug, :with => /^[A-Za-z0-9-]*$/
 
-  	def self.create params
+  	def self.create(params)
 
 		taxonomy = params[:type_taxonomy]
 
   	end
 
-  	def self.get_redirect_url params
+  	def self.get_redirect_url(params)
 
   		taxonomy = params[:type_taxonomy]
 		if taxonomy == 'category'
@@ -42,7 +42,7 @@ class Term < ActiveRecord::Base
 		return redirect_url
   	end
 
-  	def self.get_type_of_term params
+  	def self.get_type_of_term(params)
 
 	    taxonomy = params[:type_taxonomy]
 		
@@ -58,7 +58,7 @@ class Term < ActiveRecord::Base
 
   	end
 
-  	def self.bulk_update params
+  	def self.bulk_update(params)
 
   		if !params[:to_do].blank?
 	  		action = params[:to_do]
@@ -91,22 +91,20 @@ class Term < ActiveRecord::Base
 
   	end
 
-  	def self.deal_with_abnormalaties category
+  	def deal_with_abnormalaties
 
-  		if category.slug.blank?
-			category.slug = category.name.gsub(' ', '-').downcase
+  		if self.slug.blank?
+			self.slug = self.name.gsub(' ', '-').downcase
 		else
-			category.slug = category.slug.gsub(' ', '-').downcase
+			self.slug = self.slug.gsub(' ', '-').downcase
 		end
-
-		return category
 
   	end
 
 
 	private 
 
-	def self.bulk_update_move_to_trash params
+	def self.bulk_update_move_to_trash(params)
 		params.each do |val|
 			@category = Term.find(val)
 			@category.destroy

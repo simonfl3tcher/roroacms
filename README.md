@@ -104,11 +104,17 @@ To get started on theming I would take the file structure of a current roroa the
 
 In order to add assets like css, images, javascript files. You will need to navigate to app > assets, this will then display 
 
-> app > assets > images
+> app > assets > images > theme
 
-> app > assets > javascripts
+> app > assets > javascripts > theme
 
-> app > assets >stylesheets
+> app > assets >stylesheets > theme 
+
+You will then need to include a folder specific for the theme and include application.js which includes all the files within the directory. Once you have done this you will need to reference it correctly in the header of the layout for the css and javascript files:- 
+
+> <%= stylesheet_link_tag "theme/**roroa1**/application", :media => "all" %>
+
+> <%= javascript_include_tag 'theme/**roroa1**/application' %>
 
 From there you simply need to navigate into the public folder and start creating the files that you will need to be included with your theme.
 

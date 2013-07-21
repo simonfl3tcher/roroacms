@@ -15,9 +15,9 @@ class Admin::TermsController < AdminController
 	def create
 
 		@category = Term.new(term_params)
-		@category = Term.deal_with_abnormalaties @category
-
 		
+		@category.deal_with_abnormalaties
+
 		redirect_url = Term.get_redirect_url params
 		type = Term.get_type_of_term params
 

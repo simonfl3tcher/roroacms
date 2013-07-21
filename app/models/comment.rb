@@ -10,7 +10,7 @@ class Comment < ActiveRecord::Base
 
 	before_create :set_defaults
 
-	def self.setup_and_search params
+	def self.setup_and_search(params)
 
 		@comments = Comment.where("comment_approved != 'S'").order('submitted_on desc').page(params[:page]).per(Setting.get_pagination_limit)
 		
@@ -26,10 +26,11 @@ class Comment < ActiveRecord::Base
 
 	end
 
-	def self.bulk_update params
+	def self.bulk_update(params)
 
 		action = params[:to_do]
 		action = action.gsub(' ', '_')
+
 
 		case action.downcase 
 			when "unapprove"
@@ -59,15 +60,16 @@ class Comment < ActiveRecord::Base
 	end
 
 
-	def self.bulk_update_unapprove comments
-		comments.each do |val|
-			comment = Comment.find(val)
-			comment.comment_approved = "N"
-			comment.save
-		end
+	def self.bulk_update_unapprove(comments)
+		Comment.update(comments, comment_approved: 'N')
+		# comments.each do |val|
+		# 	comment = Comment.find(val)
+		# 	comment.comment_approved = "N"
+		# 	comment.save
+		# end
 	end
 	
-	def self.bulk_update_approve comments
+	def self.bulk_update_approve(comments)
 		comments.each do |val|
 			comment = Comment.find(val)
 			comment.comment_approved = "Y"
@@ -76,7 +78,7 @@ class Comment < ActiveRecord::Base
 
 	end
 	
-	def self.bulk_update_mark_as_spam comments
+	def self.bulk_update_mark_as_spam(comments)
 		comments.each do |val|
 			comment = Comment.find(val)
 			comment.comment_approved = "S"
@@ -85,12 +87,20 @@ class Comment < ActiveRecord::Base
 
 	end
 	
-	def self.bulk_update_destroy comments
+	def self.bulk_update_destroy(comments)
 		comments.each do |val|
 			comment = Comment.find(val)
 			comment.destroy
 		end
 	end
 
+
+	def self.multiple_update ids, attribute
+
+		abort ids.to_i.inspect
+
+  		Comment.update(ids, attribute)
+		
+	end
   
 end

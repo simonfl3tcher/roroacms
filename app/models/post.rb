@@ -26,7 +26,7 @@ class Post < ActiveRecord::Base
   scope :from_this_year, where("post_date > ? AND < ?", Time.now.beginning_of_year, Time.now.end_of_year)
 
 
-  def self.setup_and_search_posts params, type
+  def self.setup_and_search_posts(params, type)
       
       posts = Post.select('*').where("disabled ='N' and post_type = '#{type}'").order("COALESCE(ancestry, id), ancestry IS NOT NULL, id")
 
@@ -41,13 +41,13 @@ class Post < ActiveRecord::Base
 
   end
 
-  def self.get_records off, type
+  def self.get_records(off, type)
     posts = Post.where(:disabled => 'N', :post_type => type).order("COALESCE(ancestry, id), ancestry IS NOT NULL, id").limit(10).offset(off)
     return posts
 
   end
 
-  def self.deal_with_categories post, cats, tags, del = false 
+  def self.deal_with_categories(post, cats, tags, del = false) 
 
       @delcats = TermRelationship.where(:post_id => post.id)
 
@@ -75,7 +75,7 @@ class Post < ActiveRecord::Base
 
   end
 
-  def self.deal_with_slug_update params, current_url
+  def self.deal_with_slug_update(params, current_url)
 
     if current_url != params[:post][:post_slug]
 
@@ -91,7 +91,7 @@ class Post < ActiveRecord::Base
 
   end
 
-  def self.disable_post post_id
+  def self.disable_post(post_id)
 
     post = Post.find(post_id)
     post.disabled = "Y"
@@ -99,23 +99,26 @@ class Post < ActiveRecord::Base
 
   end
 
-  def self.deal_with_abnormalaties post 
 
-    if post.post_slug.empty?
-      post.post_slug = post.post_title.gsub(' ', '-').downcase
+  def deal_with_abnormalaties
+
+   if self.post_slug.empty?
+      self.post_slug = self.post_title.gsub(' ', '-').downcase
     end
 
-    if post.post_status.blank?
-      post.post_status = 'Draft'
+    if self.post_status.blank?
+      self.post_status = 'Draft'
     end
 
-    post.structured_url = sort_url_structure post
-
-    return post
+    if self.parent_id
+      self.structured_url = "#{self.parent.structured_url}/#{self.post_slug}"
+    else
+      self.structured_url = "/#{self.post_slug}"
+    end
 
   end
 
-  def self.sort_url_structure post
+  def self.sort_url_structure(post)
 
     if post.parent_id
       url = "#{post.parent.structured_url}/#{post.post_slug}"
@@ -127,7 +130,7 @@ class Post < ActiveRecord::Base
 
   end
 
-  def self.do_autosave params, post
+  def self.do_autosave(params, post)
 
     parent = params[:post][:id]
     @autosave_records = Post.where("ancestry = ? and post_type = 'autosave'", parent).order("created_at DESC")
@@ -175,7 +178,7 @@ class Post < ActiveRecord::Base
     end
   end
 
-  def self.restore post 
+  def self.restore(post) 
 
     parent = Post.find(post.parent_id)
 
@@ -192,7 +195,7 @@ class Post < ActiveRecord::Base
 
   end
 
-  def self.bulk_update params, type
+  def self.bulk_update(params, type)
 
     action = params[:to_do]
     action = action.gsub(' ', '_')
@@ -229,7 +232,7 @@ class Post < ActiveRecord::Base
 
   private 
 
-  def self.bulk_update_publish params
+  def self.bulk_update_publish(params)
     params.each do |val|
       post = Post.find(val)
       post.post_status = "Published"
@@ -238,7 +241,7 @@ class Post < ActiveRecord::Base
     end
   end
 
-  def self.bulk_update_draft params
+  def self.bulk_update_draft(params)
     params.each do |val|
       post = Post.find(val)
       post.post_status = "Draft"
@@ -246,7 +249,7 @@ class Post < ActiveRecord::Base
     end 
   end
 
-  def self.bulk_update_move_to_trash params
+  def self.bulk_update_move_to_trash(params)
     params.each do |val|
       post = Post.find(val)
       post.disabled ="Y"

@@ -14,7 +14,7 @@ module AdminRoroaHelper
 		return hash
 	end
 
-	def destory_theme id
+	def destory_theme(id)
 		require 'fileutils'
 		FileUtils.rm_rf("app/views/theme/#{id}")
 	end
@@ -34,7 +34,7 @@ module AdminRoroaHelper
 		return hash
 	end
 
-	def get_template_dropdown cur
+	def get_template_dropdown(cur)
 
 		templates = get_templates
 		str =''
@@ -51,7 +51,7 @@ module AdminRoroaHelper
 
 	end
 
-	def upload_file file
+	def upload_file(file)
 
 		File.open(Rails.root.join('public', 'uploads', file.original_filename), 'w') do |file|
 			file.write(file.read)
@@ -86,7 +86,7 @@ module AdminRoroaHelper
 
 	end
 
-	def ancestory_indent cont
+	def ancestory_indent(cont)
 
 		cont.ancestor_ids.length
 
@@ -102,17 +102,17 @@ module AdminRoroaHelper
 
 	end
 
-	def site_url url 
+	def site_url(url )
 
 		if url 
 
-			base_url = Setting.where(:setting_name => 'site_url').first.setting	
+			base_url = Setting.get('site_url')	
 
 			return "#{base_url}#{url}"
 
 		else 
 
-			return Setting.where(:setting_name => 'site_url').first.setting	
+			return Setting.get('site_url')		
 
 		end 
 

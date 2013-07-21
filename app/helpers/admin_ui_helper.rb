@@ -1,6 +1,6 @@
 module AdminUiHelper
 
-	def bulk_update_dropdown options
+	def bulk_update_dropdown(options)
 
 		@options = options
 		render :partial => "admin/partials/bulk_update_dropdown" 
@@ -21,7 +21,7 @@ module AdminUiHelper
 
 	end
 
-	def deal_with_filecontents filetype
+	def deal_with_filecontents(filetype)
 
 		if filetype[0,5] == 'image'
 
