@@ -1,6 +1,11 @@
 require "spec_helper"
 
-describe Admin::PostsController do 
+describe Admin::PostsController do
+
+	before(:all) do 
+		login_admin
+	end
+
 
 	describe "GET #index" do
 		it "populates an array of posts" do
