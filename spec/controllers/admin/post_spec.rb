@@ -94,7 +94,7 @@ describe Admin::PostsController do
 
 	end
 
-	describe "delete destroy" do
+	describe "DELETE destroy" do
 
 		before :each do 
 			@post = FactoryGirl.create(:post)
