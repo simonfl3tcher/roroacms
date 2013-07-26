@@ -50,11 +50,7 @@ class Admin::AdministratorsController < AdminController
 		  end
 		end
 	end
-
-	def upload
-		upload_file params[:admin][:avatar]
-	end
-
+	
 	private
 
 	def administrator_params

@@ -26,4 +26,6 @@ describe Admin do
 		m = FactoryGirl.build(:admin, password: nil).should_not be_valid
 	end
 
+	it "should should delete the contact"
+
 end
