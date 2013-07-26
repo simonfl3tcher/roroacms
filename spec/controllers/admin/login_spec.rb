@@ -10,10 +10,5 @@ describe Admin::LoginController do
 		end
 
 	end
-
-	describe "GET #create" do
-
-	end
-
-
+	
 end
