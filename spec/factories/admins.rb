@@ -13,15 +13,4 @@ FactoryGirl.define do
 
 	end
 
-	factory :access_admin do |f|
-
-		f.first_name { 'Simon'}
-		f.last_name { 'Fletcher'}
-		f.username { 'simonfletcher'}
-		f.access_level { 'admin' }
-		f.password { '123123' }
-		f.email { 'simonfletcher0@gmail.com' }
-
-	end
-
 end
