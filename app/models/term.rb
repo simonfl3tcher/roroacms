@@ -11,6 +11,7 @@ class Term < ActiveRecord::Base
   	validates :name, :presence => true
 
   	validates_uniqueness_of :slug
+  	
   	validates_format_of :slug, :with => /^[A-Za-z0-9-]*$/
 
   	def self.create(params)

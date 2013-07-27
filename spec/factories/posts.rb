@@ -4,8 +4,8 @@ FactoryGirl.define do
 		
 	factory :post do |f|
 
-		f.post_name { Faker::Name.name}
-		f.post_title { Faker::Name.name}
+		f.post_name { '123123'}
+		f.post_title { '123123123123'}
 
 	end
 

@@ -2,15 +2,22 @@ require "spec_helper"
 
 describe Admin::PostsController do
 
-	before(:all) do 
-		login_admin
-	end
+	before(:each) do 
 
+		visit admin_path 
+		current_path.should == admin_login_path
+	  	fill_in 'username', with: 'admin'
+	  	fill_in 'password', with: '123123' 
+	  	click_button 'Sign In' 
+
+	  	current_path.should == admin_path
+	  	
+	end
 
 	describe "GET #index" do
 		it "populates an array of posts" do
-			get :index
-      		assigns(:post).should_not be_nil
+			response.should be_success
+      		assigns(:posts).should_not be_nil
 		end
 
 		it "renders the :index view" do
@@ -61,8 +68,8 @@ describe Admin::PostsController do
 			end
 
 			it "re-renders the :new method" do 
-				post :create, post: FactoryGirl.build(:post, post_title: nil)
-				response.should render_template :create
+				post :create, post: FactoryGirl.build(:post, post_title: nil, post_slug: '')
+				response.should render_template(:new)
 			end
 
 		end
@@ -72,13 +79,13 @@ describe Admin::PostsController do
 	describe "PUT update" do
 
 		before :each do 
-			@post = Post.new
+			@post = FactoryGirl.create(:post)
 		end
 
 		context "valid attributes" do
 			
 			it "located the request @contact" do 
-				put :edit, id: @post, post: FactoryGirl.create(:post)
+				put :edit, id: @post, post: @post
 				assigns(:post).should eq([@post])
 			end
 

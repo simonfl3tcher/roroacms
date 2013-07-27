@@ -32,6 +32,11 @@ class Admin < ActiveRecord::Base
 
 	end
 
+	def self.set_sessions_manually(session, i, name)
+		session[:admin_id] = i
+		session[:username] = name
+	end
+
 	def self.destroy_session(session)
 
 		session[:admin_id] = nil

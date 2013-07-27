@@ -62,11 +62,6 @@ class Comment < ActiveRecord::Base
 
 	def self.bulk_update_unapprove(comments)
 		Comment.update(comments, comment_approved: 'N')
-		# comments.each do |val|
-		# 	comment = Comment.find(val)
-		# 	comment.comment_approved = "N"
-		# 	comment.save
-		# end
 	end
 	
 	def self.bulk_update_approve(comments)
