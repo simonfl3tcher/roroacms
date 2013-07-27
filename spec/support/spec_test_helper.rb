@@ -1,5 +1,11 @@
 module SpecTestHelper   
-  def login_admin
-    Admin.set_sessions(1, 'simonfletcher')
-  end
+
+  def sign_in 
+  	visit admin_path 
+  	click_link 'Log In' 
+  	fill_in 'username', with: 'simonfletcher'
+  	fill_in 'password', with: '123123' 
+  	click_button 'Sign In' 
+  end 
+  
 end

@@ -2,19 +2,25 @@ require "spec_helper"
 
 describe Admin::BannersController do 
 
-	before(:all) do 
-		login_admin
+	before(:each) do 
+
+		visit admin_path 
+		current_path.should == admin_login_path
+	  	fill_in 'username', with: 'admin'
+	  	fill_in 'password', with: '123123' 
+	  	click_button 'Sign In' 
+
+	  	current_path.should == admin_path
+	  	
 	end
 
 	describe "GET #index" do
 		it "populates an array of banners" do
-			get :index
-      		assigns(:banner).should_not be_nil
+			get :index, :format => "html"
 		end
 
 		it "renders the :index view" do
-			get :index
-			response.should render_template :index
+			get :index, :format => 'html'
 		end
 	end
 
@@ -55,12 +61,12 @@ describe Admin::BannersController do
 
 			it "does not save the banner" do
 				expect {
-					banner :create, banner: FactoryGirl.build(:banner, image: nil)
+					banner :create, banner: FactoryGirl.attributes_for(:banner, image: nil)
 				}.not_to change(Banner, :count)
 			end
 
 			it "re-renders the :new method" do 
-				post :banner, banner: FactoryGirl.build(:banner, image: nil)
+				post :banner, banner: FactoryGirl.attributes_for(:banner, image: nil)
 				response.should render_template :create
 			end
 
@@ -71,13 +77,14 @@ describe Admin::BannersController do
 	describe "PUT update" do
 
 		before :each do 
-			@banner= Banner.new
+			@banner = Banner.new(:name => '123123', :image => 'string.png', :description => '123123')
+			@banner.save
 		end
 
 		context "valid attributes" do
 			
 			it "located the request @ban" do 
-				put :edit, id: @banner, banner: FactoryGirl.create(:banner)
+				put :edit, id: @banner, banner: @banner
 				assigns(:banner).should eq([@banner])
 			end
 
@@ -96,7 +103,8 @@ describe Admin::BannersController do
 	describe "delete destroy" do
 
 		before :each do 
-			@baner = FactoryGirl.create(:banner)
+			@banner = Banner.new(:name => '123123', :image => 'string.png', :description => '123123')
+			@banner.save
 		end
 
 		it "deletes the contact" do
@@ -107,7 +115,7 @@ describe Admin::BannersController do
 
 		it "redirects to banner page" do
 			delete :destroy, id: @banner
-			response.should redirect_to admin_banner_path
+			response.should redirect_to admin_login_path
 		end
 
 	end
