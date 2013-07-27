@@ -1,0 +1,31 @@
+
+<div class="searchBar">
+
+    <h1>Search For "<%= !params[:search].nil? ? params[:search] : '' %>"</h1>  
+                
+    <div class="divide"></div>
+
+</div>
+
+<div class="clear"></div>
+
+<% if !get_category_data.blank?
+
+    get_category_data.each do |p| %>
+
+       
+	 		<div class="blog_article">
+				<h2><a href="<%= get_the_permalink p %>"><%= get_the_title p %></a></h2>
+	 			<span class="date"><%= get_the_date p %></span>
+				<p><%= get_the_excerpt p %></p>
+				<div class="clear"></div>
+				<div class="divide"></div> 
+			</div>
+
+    <% end %>
+
+<% else %>
+    
+    <p>No data match the criteria.</p>
+
+<% end %>

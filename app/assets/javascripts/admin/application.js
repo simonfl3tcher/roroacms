@@ -12,6 +12,11 @@
 //= require ckeditor-jquery
 //= require jquery
 //= require jquery_ujs
+//= require jquery_ui.js
+//= require dropzone.js
+//= require scrolltop.js
+//= require select.js
+//= require sortable.js
 //= require_tree .
 //= require_directory .
 //= require_self
@@ -21,7 +26,7 @@ $('.checkall').change(function() {
   var checkboxes = $(this).closest('form').find(':checkbox');
   checkboxes.attr('checked', $(this).is(':checked'));
 });
-3
+
 $('#editButton').click(function(){
 	clickToEdit();
 });
