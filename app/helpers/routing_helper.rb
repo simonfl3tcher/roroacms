@@ -89,7 +89,7 @@ module RoutingHelper
 
 		else
 
-			status = "(post_status = 'Published' AND post_date <= DATE(NOW()))"
+			status = "(post_status = 'Published' AND post_date <= CURRENT_TIMESTAMP()"
 
 		end
 
