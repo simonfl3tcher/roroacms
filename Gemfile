@@ -28,7 +28,7 @@ group :test, :development do
 	gem 'guard-rspec'
 	gem 'guard-livereload'
 end
-gem 'activerecord-mysql-adapter'
+gem 'activerecord-postgresql-adapter'
 gem 'twitter-bootstrap-rails'
 gem 'aws-s3', :require => 'aws/s3'
 gem 'jquery-rails'
