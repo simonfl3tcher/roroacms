@@ -101,14 +101,15 @@ module ViewHelper
 	def get_the_permalink(post)
 
 		article_url = Setting.get('articles_slug')
+		site_url = Setting.get('site_url')
 
 		if post.post_type == 'post'
 
-			render :inline => "http://localhost:3000/#{article_url}/#{post.post_slug}"
+			render :inline => "#{site_url}#{article_url}/#{post.post_slug}"
 		
 		else 
 
-			render :inline => "http://localhost:3000/#{post.post_slug}"
+			render :inline => "#{site_url}#{post.post_slug}"
 
 		end
 
