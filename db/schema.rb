@@ -126,14 +126,4 @@ ActiveRecord::Schema.define(:version => 0) do
     t.datetime "updated_at", :null => false
   end
 
-  add_index "term_relationships_banners", ["banner_id"], :name => "post_id"
-
-  create_table "terms", :force => true do |t|
-    t.string   "name"
-    t.string   "slug"
-    t.text     "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
 end
