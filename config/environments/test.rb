@@ -15,6 +15,20 @@ ENV = YAML.load_file("#{Rails.root}/config/config.yml")
     config.action_mailer.raise_delivery_errors = true
 end
 
+  
+  Roroacms::Application.configure do 
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+        :address        => 'smtp.gmail.com',
+        :domain         => ENV['domain'],
+        :port           => 587,
+        :user_name      => ENV['email_address'],
+        :password       => ENV['password'],
+        :authentication => :plain
+    }
+    config.action_mailer.raise_delivery_errors = true
+end
+
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped
