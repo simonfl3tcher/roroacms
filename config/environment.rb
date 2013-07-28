@@ -10,4 +10,5 @@ Rails::Initializer.run do |config|
   CONFIG = (YAML.load_file('config/config.yml')[RAILS_ENV] rescue {}).merge(ENV)
   
 end
+
 Roroacms::Application.initialize!
