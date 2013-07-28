@@ -5,6 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+APP_CONFIG = '123123'
+
+
+
 
 Setting.create :setting_name => 'articles_slug', :type_of_setting => 'G', :setting => ENV['articles_slug']
 Setting.create :setting_name => 'home_page', :type_of_setting => 'G', :setting => '1'
