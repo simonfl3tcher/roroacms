@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "comments", ["ancestry"], :name => "index_comments_on_ancestry"
 
   create_table "menu_options", :force => true do |t|
-    t.string  "menu_id"
+    t.integer  "menu_id"
     t.integer "option_id"
     t.integer "parent_id"
     t.string  "data_type"
