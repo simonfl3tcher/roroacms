@@ -327,7 +327,7 @@ select {
   background-repeat: repeat-x !important;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffa31a', endColorstr='#ffffa31a', GradientType=0) !important;
   background: #ffa31a !important;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); !important
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25) !important; 
 }
 .dropdown-menu .active > a,
 .dropdown-menu .active > a:hover {
