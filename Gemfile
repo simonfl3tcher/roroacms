@@ -29,7 +29,6 @@ group :test, :development do
 	gem 'guard-livereload'
 	
 end
-
 gem 'activerecord-mysql-adapter'
 gem 'twitter-bootstrap-rails'
 gem 'aws-s3', :require => 'aws/s3'
