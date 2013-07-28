@@ -24,7 +24,8 @@ Installation is really simple just follow the steps below to get started. Please
 
 * Please note these are steps to get you set up on localhost. We suggest using Heroku for your live hosting platform. Although it can be confusing at first, they have done half the work for you already, and best of all it is free for small applications
 
-1.  Download the roroacms-master.zip file
+
+1.  Download the zip file / GIT clone the project
 2.  Upload the application to the server.
 3.  Navigate to the project via the console.
 4.  Run 'bundle install'
