@@ -9,7 +9,5 @@ capybara-*.html
 /log/*
 /log/development.log
 /tmp/*
-/config/database.yml
-/config/config.yml
 /public/*
 .project
