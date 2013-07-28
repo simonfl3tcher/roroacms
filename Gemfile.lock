@@ -22,8 +22,10 @@ GEM
       activesupport (= 3.2.11)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activerecord-postgresql-adapter (0.0.1)
-      pg
+    activerecord-mysql-adapter (0.0.1)
+      activerecord (>= 3.2.9)
+      activesupport (>= 3.2.9)
+      mysql (>= 2.9.0)
     activeresource (3.2.11)
       activemodel (= 3.2.11)
       activesupport (= 3.2.11)
@@ -117,6 +119,7 @@ GEM
     mime-types (1.21)
     mini_portile (0.5.1)
     multi_json (1.7.7)
+    mysql (2.9.1)
     mysql2 (0.3.11)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
@@ -213,7 +216,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord-postgresql-adapter
+  activerecord-mysql-adapter
   ancestry
   aws-s3
   bcrypt-ruby (~> 3.0.0)
