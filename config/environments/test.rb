@@ -1,7 +1,7 @@
 Roroacms::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 ENV = YAML.load_file("#{Rails.root}/config/config.yml")
- 
+
   Roroacms::Application.configure do 
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
@@ -13,7 +13,8 @@ ENV = YAML.load_file("#{Rails.root}/config/config.yml")
         :authentication => :plain
     }
     config.action_mailer.raise_delivery_errors = true
-  end
+end
+
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped
