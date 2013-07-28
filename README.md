@@ -12,7 +12,7 @@ For a demo of Roroacms head over to demo.roroacms.com
 
 To get into the admin panel use the details below:-
 
-> Url:- demo.roroacms.com/admin
+> Url:- demo.roroacms.co.uk/admin
 
 > Username:- demo
 
@@ -31,6 +31,8 @@ Installation is really simple just follow the steps below to get started. Please
 7.	YOUR DONE! All you need to do is navigate to /admin to get to the admin panel.
 
 Please see below the settings for the individual configuration files.
+
+* We suggest using heroku for your hosting platform. Although it can be confusing to start with they make it very simple to get up and running. Best of all its free for small usage!
 
 
 ## Config settings
