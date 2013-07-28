@@ -34,6 +34,8 @@ Installation is really simple just follow the steps below to get started. Please
 
 Please see below the settings for the individual configuration files.
 
+* We suggest using heroku for your hosting platform. Although it can be confusing to start with they make it very simple to get up and running. Best of all its free for small usage!
+
 ## Config settings
 
 The database.yml file is just the general database configuration file. You will need to run MySQL as your chosen database adapter, as alot of the quries within the system are set up using MySQL. You can however go through roroacms and update the queries to run on postgresql this is not a long process. I will be working on making a postgresql branch for people that want to use this database adapter. 
