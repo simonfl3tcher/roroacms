@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(:version => 0) do
   create_table "posts", :force => true do |t|
     t.integer  "admin_id"
     t.datetime "post_date"
-    t.text     "post_content",         :limit => 2147483647
+    t.text     "post_content",
     t.text     "post_title"
     t.string   "post_status"
     t.string   "post_template"
