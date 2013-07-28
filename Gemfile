@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby "1.9.3"
 
 gem 'rails', '3.2.11'
 gem 'mysql2'
@@ -27,7 +28,7 @@ group :test, :development do
 	gem 'guard-rspec'
 	gem 'guard-livereload'
 end
-
+gem 'activerecord-mysql-adapter'
 gem 'twitter-bootstrap-rails'
 gem 'aws-s3', :require => 'aws/s3'
 gem 'jquery-rails'
