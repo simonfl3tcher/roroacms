@@ -31,7 +31,6 @@ module MediaHelper
 			where = "#{BUCKET}/#{dir}/"
 		end
 
-		abort where.inspect
 		begin
 	        @file = AWS::S3::S3Object.store(sanitize_filename(p[:file].original_filename), p[:file].read, where, :access => :public_read)
 	        
