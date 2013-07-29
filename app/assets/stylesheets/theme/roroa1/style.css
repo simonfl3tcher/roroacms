@@ -838,3 +838,7 @@ fieldset.commentForm .orangeBtn {
 .nested_comments .nested_comments .nested_comments .nested_comments {
   margin-left: 0;
 }
+
+#contact_form.notice {
+  color: green;
+}

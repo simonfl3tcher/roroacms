@@ -34,8 +34,7 @@
             <%= f.label :username %>
             <%= f.text_field :username, size: 40 %>
           </div>
-
-          <% if is_overlord %>
+          <% if is_overlord || @admin.id == nil %>
             
             <div class="field formSep">
               <%= f.label :access_level %>

@@ -21,4 +21,10 @@ class Notifier < ActionMailer::Base
 
     mail to: Setting.find_by_setting_name('site_email')[:setting]
   end
+
+  def contact_form params
+    @params = params
+    mail to: Setting.find_by_setting_name('site_email')[:setting]
+  end
+  
 end

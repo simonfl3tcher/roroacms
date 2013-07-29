@@ -44,9 +44,9 @@
         <div id="collapseTags" class="accordion-body collapse in">
            <div class="accordion-inner">
               <div class="field">
-              <% if !Banner::BANNER_CATEGORIES.blank? %>
+              <% if !@banner_categories.blank? %>
                 <ul>
-                  <% Banner::BANNER_CATEGORIES.each do |tag| %>
+                  <% @banner_categories.each do |tag| %>
                       <li>
                         <%= check_box_tag 'category_ids[]', tag.id, @banner.terms.find_by_id(tag.id) ? true : false %><%= label_tag tag.name %>
                       </li>

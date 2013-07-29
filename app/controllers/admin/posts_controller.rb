@@ -6,11 +6,16 @@ class Admin::PostsController < AdminController
 	end
 
 	def new
+		
+		@categories = Post.get_cats
+		@tags = Post.get_tags
+
 	    @post = Post.new
+	
 	end
 
 	def create
-		Rails.cache.clear 
+		 
 		@post = Post.new(post_params)
 
 		@post.deal_with_abnormalaties
@@ -26,6 +31,9 @@ class Admin::PostsController < AdminController
 	end
 
 	def edit 
+		@categories = Post.get_cats
+		@tags = Post.get_tags
+		
 		@revisions = Post.where(:ancestry => params[:id], :post_type => 'autosave').order('created_at desc')
 		@post = Post.find(params[:id])
 	end
