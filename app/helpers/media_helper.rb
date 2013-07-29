@@ -28,7 +28,7 @@ module MediaHelper
 			where = BUCKET
 		else
 			dir = p[:reference]
-			where = "#{BUCKET}/#{dir}/"
+			where = "#{BUCKET}/#{dir}"
 		end
 
 		begin
@@ -65,12 +65,12 @@ module MediaHelper
 
 	end
 
-	def sanitize_filename(filename)
-	  returning filename.strip do |name|
-	   name.gsub!(/^.*(\\|\/)/, '')
-	   name.gsub!(/[^0-9A-Za-z.\-]/, '_')
+	private
+
+	  def sanitize_filename(file_name)
+	    just_filename = File.basename(file_name)
+	    just_filename.sub(/[^\w\.\-]/,'_')
 	  end
-	end
 
 
 end
