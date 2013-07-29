@@ -131,13 +131,18 @@ $(document).ready(function(){
 		      data: 'create_dir=' + dir,
 		      dataType: "html",
 		      success:function(e){
-		      	add_folder_into_tree(select, name, getRef());
+		      	if(!select.length == 0){
+		      		add_folder_into_tree(select, name, getRef());
+		      	} else {
+		      		add_folder_into_top_tree($('#folderList'), name, getRef());
+		      	}
 		      }
 		  });
 
 	});
 
 	if($('#my-awesome-dropzone').length > 0){
+		console.log(getRef())
 		var myDropzone = new Dropzone("#my-awesome-dropzone", {
 			thumbnailWidth: 219, 
 			thumbnailHeight:140,
@@ -249,6 +254,13 @@ $(document).ready(function(){
 			$('#create_dir').closest('form').css({display: 'block'});
 		}
 	}
+
+	function add_folder_into_top_tree(selector, name, ref){
+		selector.append('<li class="folderRow"><a data-hasfolder="false" data-key="' + ref + name + '/" href="" class="folderLink"><i class="icon-folder-close"></i>&nbsp;<span>' + name + '</span><i class="icon-remove"></i></a></li>');
+		spinner(true);
+
+	}
+
 
 	function add_folder_into_tree(selector, name, ref){
 		selector.parent().append('<ul><li class="folderRow"><a data-hasfolder="false" data-key="' + ref + name + '/" href="" class="folderLink"><i class="icon-folder-close"></i>&nbsp;<span>' + name + '</span><i class="icon-remove"></i></a></li></ul>');
