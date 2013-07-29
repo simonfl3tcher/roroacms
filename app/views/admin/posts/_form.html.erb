@@ -109,9 +109,9 @@
           <div class="accordion-inner">
               <div class="field">
 
-              <% if !Post::POST_CATEGORIES.blank? %>
+              <% if !@categories.blank? %>
               <ul>
-                <% Post::POST_CATEGORIES.each do |category| %>
+                <% @categories.each do |category| %>
                   
                     <li>
                       <%= check_box_tag 'category_ids[]', category.id, @post.terms.find_by_id(category.id) ? true : false %><%= label_tag category.name %>
@@ -136,9 +136,9 @@
         <div id="collapseTags" class="accordion-body collapse">
            <div class="accordion-inner">
               <div class="field">
-              <% if !Post::POST_TAGS.blank? %>
+              <% if !@tags.blank? %>
                 <ul>
-                  <% Post::POST_TAGS.each do |tag| %>
+                  <% @tags.each do |tag| %>
                       <li>
                         <%= check_box_tag 'tag_ids[]', tag.id, @post.terms.find_by_id(tag.id) ? true : false %><%= label_tag tag.name %>
                       </li>

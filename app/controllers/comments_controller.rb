@@ -39,8 +39,6 @@ class CommentsController < ApplicationController
 
 			  end
 			end
-		else 
-			abort '123123'
 		end
 
 	end

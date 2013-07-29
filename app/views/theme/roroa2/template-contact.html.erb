@@ -73,8 +73,12 @@
 <%= display_content %>
 </div>
 <div class="one_half last">
+ <% if flash[:notice] %>
+      
+      <div class="notice" id="contact_form"><%= flash[:notice] %></div>
 
-<form action="<%= site_url %>send_email" class="contact_form" method="post">
+<% end %>
+<form action="<%= site_url %>email" class="contact_form" method="post">
             
               <label>
                   

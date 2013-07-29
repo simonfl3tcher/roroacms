@@ -9,6 +9,13 @@ class Admin::AdministratorsController < AdminController
 	def edit
 		@admin = Admin.find(params[:id])
 		@action = 'update'
+
+		if @admin.overlord == 'Y' && @admin.id != session[:admin_id]
+			respond_to do |format|
+				flash[:error] = "You are unable to editing the superuser administrator"
+			 	 format.html { redirect_to admin_administrators_path }
+		    end
+		end
 	end
 
 	def update

@@ -36,10 +36,10 @@
       	<td><span class="hhfr">Email Address:-</span><%= admin.email %></td>
           <td>
             <div class="btn-group">
+              <% if admin.overlord != 'Y' || (admin.id.to_i == session[:admin_id].to_i) %>       
               <%= link_to edit_admin_administrator_path(admin), :class => 'btn btn-small edit' do %>
                 <i class="icon-pencil"></i>
               <% end %> 
-              <% if admin.overlord != 'Y' %>       
                 <%= link_to admin_administrator_path(admin), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-small delete' do %>
                   <i class="icon-trash"></i>
                 <% end %>
