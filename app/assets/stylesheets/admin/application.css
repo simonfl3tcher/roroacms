@@ -827,3 +827,7 @@ width: 38px; /* Width of image */
 background: url(/assets/admin//top.png) no-repeat;
 text-indent: -999999px;
 }
+
+.cke_contents {
+  overflow-y:auto; -webkit-overflow-scrolling:touch;
+}
