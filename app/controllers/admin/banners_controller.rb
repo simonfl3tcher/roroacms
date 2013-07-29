@@ -8,6 +8,7 @@ class Admin::BannersController < AdminController
 
 
 	def edit 
+		@banner_categories = Banner.get_banner_categories
 		@banner = Banner.find(params[:id])
 	end
 
@@ -30,10 +31,12 @@ class Admin::BannersController < AdminController
 	end
 
 	def new
+		@banner_categories = Banner.get_banner_categories
 	    @banner = Banner.new
 	end
 
 	def create
+		@banner_categories = Banner.get_banner_categories
 		@banner = Banner.new(banner_params)
 
 		respond_to do |format|

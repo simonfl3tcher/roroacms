@@ -41,6 +41,18 @@ class Post < ActiveRecord::Base
 
   end
 
+  def self.get_tags
+    terms = Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy)
+    return terms
+
+  end
+
+  def self.get_cats
+    cats = Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
+    return cats
+
+  end
+
   def self.get_records(off, type)
     posts = Post.where(:disabled => 'N', :post_type => type).order("COALESCE(ancestry, id), ancestry IS NOT NULL, id").limit(10).offset(off)
     return posts

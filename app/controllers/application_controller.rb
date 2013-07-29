@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
     @theme_folder = Setting.find_by_setting_name('theme_folder')[:setting]
 
-  end
+  end 
 
   helper_method :current_theme
 

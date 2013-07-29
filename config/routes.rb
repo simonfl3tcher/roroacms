@@ -1,12 +1,14 @@
 Roroacms::Application.routes.draw do
   
-  resources :pages,  only: [:index, :show, :dynamic_page]
+  resources :pages,  only: [:index, :show, :dynamic_page, :contact_form]
   resources :comments
 
   namespace :installation do
     get '', to: 'install#index'
     post '', to: 'install#create'
   end
+
+  post 'email', to: 'pages#contact_form'
 
   
   namespace :admin do
