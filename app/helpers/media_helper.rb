@@ -36,9 +36,9 @@ module MediaHelper
 	        
 	        render :text => "Success!"
 	       
-	      rescue
-	      	render :text => 'Fail!' 
-	      end
+	     rescue ResponseError => error
+		    render :text => error.message
+		  end
 
 
 	end
@@ -63,6 +63,13 @@ module MediaHelper
 
 		return @f
 
+	end
+
+	def sanitize_filename(filename)
+	  returning filename.strip do |name|
+	   name.gsub!(/^.*(\\|\/)/, '')
+	   name.gsub!(/[^0-9A-Za-z.\-]/, '_')
+	  end
 	end
 
 
