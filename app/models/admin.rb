@@ -14,6 +14,8 @@ class Admin < ActiveRecord::Base
 
 	validates_presence_of :password, :on => :create
 
+	GET_ADMINS = Admin.where('1=1').order('name asc')
+
 	def self.setup_and_search(params)
 
 		admins = Admin.where('1+1=2').page(params[:page]).per(Setting.get_pagination_limit)

@@ -31,7 +31,6 @@
 				      <th><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
 				      <th>Name</th>
 				      <th>Published Date</th>
-				      <th>&nbsp;</th>
 				    </tr>
 				  </thead>
 				  <% @posts.each do |post| %>
@@ -40,16 +39,7 @@
 					    <td><span class="hhfr inline">Check:-</span><%= check_box_tag 'posts[]', post.id %></td>
 					  	<td><span class="hhfr">Title:-</span><%= post.post_title %><%= post.post_status == "Draft" ? ' - draft' : '' %></td>
 					  	<td><span class="hhfr">Publish Date:-</span><%= post.post_date.strftime "%d-%m-%Y" %>&nbsp;</td>
-					      <td>
-					        <div class="btn-group">
-					          <%= link_to edit_admin_trash_path(post, :type => 'post'), :class => 'btn btn-small btn-warning' do %>
-					            <i class="icon-reply"></i>
-					          <% end %>  
-					            <%= link_to admin_post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-small' do %>
-						            <i class="icon-trash"></i>
-						          <% end %>  
-					        </div>
-					      </td>
+					      
 					    </tr>
 				  <% end %>
 				  </table>
@@ -84,7 +74,6 @@
 				      <th><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
 				      <th>Name</th>
 				      <th>Published Date</th>
-				      <th>&nbsp;</th>
 				    </tr>
 				  </thead>
 				  <% @pages.each do |page| %>
@@ -93,13 +82,7 @@
 				    <td><span class="hhfr inline">Check:-</span><%= check_box_tag 'pages[]', page.id %></td>
 				  	<td><span class="hhfr">Title:-</span><%= page.post_title %><%= page.post_status == "Draft" ? ' - draft' : '' %></td>
 				  	<td><span class="hhfr">Publish Date:-</span><%= page.post_date.strftime "%d-%m-%Y" %></td>
-				      <td>
-				        <div class="btn-group">
-				          <%= link_to edit_admin_trash_path(page, :type => 'page'), :class => 'btn btn-mini btn-warning' do %>
-				            <i class="icon-reply"></i>
-				          <% end %>    
-				        </div>
-				      </td>
+				    
 				    </tr>
 				  <% end %>
 				</table>

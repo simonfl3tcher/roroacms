@@ -24,6 +24,7 @@ class Admin::PagesController < AdminController
 	end
 
 	def edit 
+		@edit = true
 		@revisions = Post.where(:ancestry => params[:id], :post_type => 'autosave').order('created_at desc')
 		@page = Post.find(params[:id])
 	end

@@ -25,7 +25,8 @@
 
     <% end %>
 
-    <%= form_for [@comment] do |f| %>
+
+    <%= form_for [@new_comment] do |f| %>
 
       <fieldset class="commentForm">
 
@@ -36,19 +37,19 @@
 
         <div class="field">
           <%= f.label :author %>
-          <%= f.text_field :author, size: 40 %>
+          <%= f.text_field :author, :value => "", size: 40 %>
         </div>
         <div class="field">
           <%= f.label :email %>
-          <%= f.text_field :email, size: 40 %>
+          <%= f.text_field :email, :value => "", size: 40 %>
         </div>
         <div class="field">
           <%= f.label :website %>
-          <%= f.text_field :website %>
+          <%= f.text_field :website, :value => ""  %>
         </div>
          <div class="field">
           <%= f.label :comment %>
-          <%= f.text_area :comment %>
+          <%= f.text_area :comment, :value => "" %>
         </div>
         <div class="field">
             <%= f.submit "Submit Comment", :class => 'btn orangeBtn' %>

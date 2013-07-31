@@ -16,9 +16,15 @@
 
 		%> 
 		<div class="span3 <%= counter%5 == 0 ? 'first' : '' %>">
-			<div class="overlay">
-				<img src="<%= download_url_for(file.key) %>" data-image="<%= download_url_for(file.key) %>" style="width:100%;float:left">
-			</div>
+			<% if params[:manualBrowse] || params[:CKEditor] %>
+				<div class="overlay">
+					<img src="<%= download_url_for(file.key) %>" data-image="<%= download_url_for(file.key) %>" style="width:100%;float:left">
+				</div>
+			<% else %>
+				<div class="overlay general">
+					<img src="<%= download_url_for(file.key) %>" data-image="<%= download_url_for(file.key) %>" style="width:100%;float:left">
+				</div>
+			<% end %>
 			<div class="actions">
 				<%= link_to download_url_for(file.key), :target => "_blank", 'data-key' => file.key do %>
 					<i class="icon-eye-open"></i>
