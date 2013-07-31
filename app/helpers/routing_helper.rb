@@ -85,11 +85,11 @@ module RoutingHelper
 
 		if !session[:admin_id].blank?
 
-			status = "(post_status = 'Published')"
+			status = "(post_status = 'Published' AND post_date <= NOW() AND disabled = 'N')"
 
 		else
 
-			status = "(post_status = 'Published' AND post_date <= NOW())"
+			status = "(post_status = 'Published' AND post_date <= NOW() AND disabled = 'N')"
 
 		end
 
@@ -164,6 +164,7 @@ module RoutingHelper
 
 	def render_category(segments, article_url = nil, term = false, status)
 
+
 		if term
 
 			if segments[2].blank?
@@ -173,7 +174,7 @@ module RoutingHelper
 			else
 
 				term = Term.where(:slug => segments[2]).first
-				gloalize Post.where(terms: {id: term}, :post_type => 'post', :post_status => 'Published').includes(:terms)
+				gloalize Post.where(terms: {id: term}, :post_type => 'post', :post_status => 'Published', :disabled => 'N', :post_date => 'CURDATE()').includes(:terms)
 				add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
 				add_breadcrumb "#{term.name.capitalize}", "/#{term.name}", :title => "Back to #{term.name.capitalize}"
 				render :template => "theme/#{current_theme}/category"
@@ -181,7 +182,7 @@ module RoutingHelper
 
 		else 
 			add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
-			gloalize Post.where("#{status} and post_type ='post'")
+			gloalize Post.where("#{status} and post_type ='post' and disabled = 'N'")
 			render :template => "theme/#{current_theme}/category"
 		end
 	end
@@ -190,11 +191,11 @@ module RoutingHelper
 
 		if !session[:admin_id].blank?
 							
-			@content = Post.where(:post_type => 'post').find_by_post_slug(segments[1])
+			@content = Post.where(:post_type => 'post', ).find_by_post_slug(segments[1])
 
 		else
 
-			@content = Post.where(status, :post_type => 'post').find_by_post_slug(segments[1])
+			@content = Post.where(status, :post_type => 'post', :disabled => 'N').find_by_post_slug(segments[1])
 
 		end
 
@@ -202,7 +203,7 @@ module RoutingHelper
 
 		gloalize @content
 		render_404 and return if @content.nil?
-		@comment = Comment.new
+		@new_comment = Comment.new
 		add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
 		add_breadcrumb "#{@content.post_title}", "/#{@content.post_name}", :title => "Back to #{@content.post_title}"
 		render_template 'single'
@@ -215,7 +216,7 @@ module RoutingHelper
 
 		if !segments[3].blank?
 
-			gloalize Post.where("post_status = 'Published' AND post_type = 'Post' AND (YEAR(post_date) = ? AND MONTH(post_date) = ? AND DAY(post_date) = ?)", segments[1], segments[2], segments[3])
+			gloalize Post.where("(disabled = 'N' AND post_status = 'Published') AND post_type = 'Post' AND (YEAR(post_date) = ? AND MONTH(post_date) = ? AND DAY(post_date) = ? AND post_date <= CURDATE())", segments[1], segments[2], segments[3])
 			add_breadcrumb "#{segments[1]}", "/#{article_url}/#{segments[1]}", :title => "Back to #{segments[1]}"
 			add_breadcrumb "#{segments[2]}", "/#{article_url}/#{segments[1]}/#{segments[2]}", :title => "Back to #{segments[2]}"
 			add_breadcrumb "#{segments[3]}", "/#{article_url}/#{segments[1]}/#{segments[2]}/#{segments[3]}", :title => "Back to #{segments[3]}"
@@ -223,14 +224,14 @@ module RoutingHelper
 
 		elsif !segments[2].blank?
 
-			gloalize Post.where("post_status = 'Published' AND post_type = 'Post' AND (YEAR(post_date) = ? AND MONTH(post_date) = ?)", segments[1], segments[2])
+			gloalize Post.where("(disabled = 'N' AND post_status = 'Published') AND post_type = 'Post' AND (YEAR(post_date) = ? AND MONTH(post_date) = ? AND post_date <= CURDATE())", segments[1], segments[2])
 			add_breadcrumb "#{segments[1]}", "/#{article_url}/#{segments[1]}", :title => "Back to #{segments[1]}"
 			add_breadcrumb "#{segments[2]}", "/#{article_url}/#{segments[1]}/#{segments[2]}", :title => "Back to #{segments[2]}"
 			render :template => "theme/#{current_theme}/archive"
 
 		else
 
-			gloalize Post.where("post_status = 'Published' AND post_type = 'Post' AND (YEAR(post_date) = ?)", segments[1])
+			gloalize Post.where("(disabled = 'N' AND post_status = 'Published') AND post_type = 'Post' AND (YEAR(post_date) = ? AND post_date <= CURDATE())", segments[1])
 			add_breadcrumb "#{segments[1]}", "/#{article_url}/#{segments[1]}", :title => "Back to #{segments[1]}"
 			render :template => "theme/#{current_theme}/archive"
 

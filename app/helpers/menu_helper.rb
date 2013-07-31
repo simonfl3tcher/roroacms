@@ -33,7 +33,6 @@ module MenuHelper
 		else
 			m = Menu.find_by_key(menu)
 			if sub 
-				abort .inspect
 				data = MenuOption.find(m[:id])
 				data = MenuOption.where(:parent_id => data.option_id)
 			else 
@@ -42,7 +41,7 @@ module MenuHelper
 		end
 
 		html = "<ul class='menu_#{menu}'>"
-
+		
 		data.each do |m|
 			if m.parent_id != 0
 				existingData = make_hash m.custom_data

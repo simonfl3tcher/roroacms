@@ -80,16 +80,18 @@ $(document).ready(function(){
 
 		var randomnumber = Math.floor(Math.random()*11)
 		if(type == 'custom'){
-			html = '<li class="" style="" data-id="option_' + data[1]['value'] + '" id="custom_' + randomnumber + '" data-type="custom" data-data="' + dataString + '"><div>' + label + '<i class="icon-plus-sign pull-right handler"></i></div>'
-			$('ol.sortable').append(html);
-			build_under_form(data, '#custom_' + randomnumber)
-
-
+			if(($('input[name=customlink]', $(this)).val() != '') && ($('input[name=label]', $(this)).val() != '')){
+				html = '<li class="" style="" data-id="option_' + data[1]['value'] + '" id="custom_' + randomnumber + '" data-type="custom" data-data="' + dataString + '"><div>' + label + '<i class="icon-plus-sign pull-right handler"></i></div>'
+				$('ol.sortable').append(html);
+				build_under_form(data, '#custom_' + randomnumber)
+			}
 		} else {
-			formData = $(this).serialize();
-			html = '<li class="" style="" data-id="option_' + data[1]['value'] + '" id="' + data[0]['value'] + '_' + randomnumber +'" data-type="' + data[0]['value']  + '" data-data="' + dataString + '"><div>' + label + '<i class="icon-plus-sign pull-right handler"></i></div>'
-			$('ol.sortable').append(html);
-			build_under_form(data,  '#' +  data[0]['value'] + '_' + randomnumber)
+			if(($('select[name=linkto]', $(this)).val() != '') && ($('input[name=label]', $(this)).val() != '')){
+				formData = $(this).serialize();
+				html = '<li class="" style="" data-id="option_' + data[1]['value'] + '" id="' + data[0]['value'] + '_' + randomnumber +'" data-type="' + data[0]['value']  + '" data-data="' + dataString + '"><div>' + label + '<i class="icon-plus-sign pull-right handler"></i></div>'
+				$('ol.sortable').append(html);
+				build_under_form(data,  '#' +  data[0]['value'] + '_' + randomnumber)
+			}
 		}
 
 	});

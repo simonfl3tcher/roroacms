@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
 
 		if comments_on
 			
-			session[:return_to] ||= request.referer
+			session[:return_to] = request.referer
 			@comment = Comment.new(comments_params)
 
 			respond_to do |format|
@@ -26,7 +26,7 @@ class CommentsController < ApplicationController
 
 		if comments_on
 			
-			session[:return_to] ||= request.referer
+			session[:return_to] = request.referer
 			@comment = Comment.new(comments_params)
 
 			respond_to do |format|

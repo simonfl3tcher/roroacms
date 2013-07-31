@@ -26,7 +26,8 @@ class Admin::TermsController < AdminController
 		  	@term_anatomy = @category.create_term_anatomy(:taxonomy => params[:type_taxonomy])
 		    format.html { redirect_to send(redirect_url), notice: "#{type} was successfully created." }
 		  else
-		    format.html { render action: "new" }
+		  	flash[:error] = 'Please make sure the slug is unique.'
+		    format.html { redirect_to send(redirect_url) }
 		  end
 		end
 
@@ -52,14 +53,17 @@ class Admin::TermsController < AdminController
 	end
 
 	def destroy
+	    session[:return_to] = request.referer
+
 	    @term = Term.find(params[:id])
 	    @term.destroy
 	    
 	    redirect_url = Term.get_redirect_url params
 	    type = Term.get_type_of_term params
 
+
 	    respond_to do |format|
-	      format.html { redirect_to send(redirect_url), notice: "#{type} successfully deleted" }
+	      format.html { redirect_to "#{session[:return_to]}", notice: "Successfully deleted" }
 	    end
 
 	end

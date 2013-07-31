@@ -9,8 +9,6 @@ class Term < ActiveRecord::Base
 	has_one :term_anatomy, :dependent => :destroy
 
   	validates :name, :presence => true
-
-  	validates_uniqueness_of :slug
   	
   	validates_format_of :slug, :with => /^[A-Za-z0-9-]*$/
 

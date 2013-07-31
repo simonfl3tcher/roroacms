@@ -15,7 +15,7 @@
 			<% end %>
 
 	    	<input name='label' type='text' placeholder='Label' value='<%= @existingData['label'].html_safe %>'>
-			<input name='class' type='text' placeholder='Class' value='<%= @existingData['class'].to_s %>'></div>"
+			<input name='class' type='text' placeholder='Class' value='<%= @existingData['class'].to_s %>'></div>
 
 
 			<div class='one_half last'><span class='title'>Target</span><input name='target' type='radio' value='sw' <%= check_for_checked("sw", @existingData['target'].to_s) %>><label>Same Window</label>

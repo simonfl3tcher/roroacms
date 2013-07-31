@@ -85,6 +85,10 @@
               <%= f.text_field :post_slug, size: 40 %>
             </div>
             <div class="field">
+              <%= f.label 'Page Author' %>
+              <%= f.select :admin_id, Admin.where('1=1').collect {|p| [ p.username, p.id ] }, prompt: 'Select a Author' %>
+            </div>
+            <div class="field">
               <%= f.label 'Page Status' %>
                <%= f.select :post_status, Post::POST_STATUS, prompt: 'Select a Post Status' %>
             </div>

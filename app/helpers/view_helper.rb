@@ -67,7 +67,7 @@ module ViewHelper
 
 	def get_the_excerpt(post, length = 300, omission = '...')
 
-		render :inline => truncate(post.post_content.html_safe, :omission => omission, :length => length)
+		render :inline => truncate(post.post_content.gsub(/<[^>]*>/ui,'').html_safe, :omission => omission, :length => length)
 
 
 	end
@@ -175,7 +175,7 @@ module ViewHelper
 
 		else
 
-			@comments = Comment.where(:post_id => @content.id, :comment_approved => 'Y')
+			@comments = Comment.where(:post_id => @content.id, :comment_approved => 'Y', :is_spam => 'N')
 
 		end
 
@@ -234,7 +234,7 @@ module ViewHelper
 
 		if type == 'Y'
 
-			@posts = Post.where(:post_type => 'post').uniq.pluck("EXTRACT(YEAR FROM post_date)")
+			@posts = Post.where(:post_type => 'post', :post_status => 'Published', :disabled => 'N').uniq.pluck("EXTRACT(YEAR FROM post_date)")
 			article_url = Setting.get('articles_slug') 
 			category_url = Setting.get('category_slug')
 				
@@ -246,7 +246,7 @@ module ViewHelper
 
 		elsif type == 'M'
 			
-			@posts = Post.where(:post_type => 'post').uniq.pluck("EXTRACT(YEAR FROM post_date)")
+			@posts = Post.where("(post_type = 'post' && post_status = 'Published' && disabled = 'N') && post_date <= CURDATE()").uniq.pluck("EXTRACT(YEAR FROM post_date)")
 			article_url = Setting.get('articles_slug')
 			category_url = Setting.get('category_slug')
 
@@ -254,7 +254,7 @@ module ViewHelper
 			lp = {}
 			mon = {}		
 			@posts.each do |f|
-				lp["#{f}"] = Post.where("YEAR(post_date) = #{f} && post_type = 'post'").uniq.pluck("EXTRACT(MONTH FROM post_date)")
+				lp["#{f}"] = Post.where("YEAR(post_date) = #{f}  AND (post_type = 'post' && disabled = 'N' && post_status = 'Published' && post_date <= CURDATE())").uniq.pluck("EXTRACT(MONTH FROM post_date)")
 			end
 
 			lp.each do |k, i|
@@ -356,7 +356,7 @@ module ViewHelper
             when  7 then "Jul"
             when  8 then "Aug"
             when  9 then "Sep"
-            when 10 then "Okt"
+            when 10 then "Oct"
             when 11 then "Nov" 
             when 12 then "Dec"
         end
