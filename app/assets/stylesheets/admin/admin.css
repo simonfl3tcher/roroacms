@@ -1828,10 +1828,17 @@ Layout: Header
   position: relative;
   z-index: 91;
   height: 80px;
+  height: 80px;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 91;
   background: #333333;
-  -webkit-box-shadow: inset 0 1px 0 #474747;
-  -moz-box-shadow: inset 0 1px 0 #474747;
-  box-shadow: inset 0 1px 0 #474747;
+/*  -webkit-box-shadow: inset 0 1px 0 #474747;
+  -moz-box-shadow: inset 0 1px 0 #474747;*/
+  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+
 }
 #header .container {
   position: relative;
@@ -2064,7 +2071,7 @@ Layout: Content
 
 ------------------------------------------------------------------- */
 #content {
-  margin-top: 3em;
+  margin-top: 122px;
   margin-bottom: 8em;
   padding:0 15px;
 }
