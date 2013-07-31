@@ -12,24 +12,23 @@
           </ul>
         </div>
       <% end %>
+    </div>
 
-      <fieldset>
-        <div class="field">
+ <div class="span9">
+        <div>
           <%= f.hidden_field :admin_id, :value => session[:admin_id], size: 40 %>
           <%= f.hidden_field :id %>
         </div>
-        <div class="field">
+        <div>
           <%= f.hidden_field :post_type, :value => "page" %>
         </div>
-        <div class="field">
+        <div>
           <%= f.text_field :post_title, size: 40, :placeholder => 'Page Title' %>
         </div>
  
-        <div class="field">
+        <div>
           <%= f.text_area :post_content, :class => 'ckeditor' %>
         </div>
-      </fieldset>
-
     <div class="accordion" id="accordionSeo">
       <div class="accordion-group">
         <div class="accordion-heading">
