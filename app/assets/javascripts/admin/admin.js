@@ -1,11 +1,11 @@
 $(document).ready(function(){
 	
 	$("#term_name").keyup(function(){
-	    $("#term_slug").val($(this).val().replace(/\W/g, '').toLowerCase().split(' ').join('-'));
+	    $("#term_slug").val($(this).val().replace(/[^0-9$.,]/g, '').toLowerCase().split(' ').join('-'));
 	});
 
 	$("#term_name").change(function(){
-		$("#term_slug").val($(this).val().replace(/\W/g, '').toLowerCase().split(' ').join('-'));
+		$("#term_slug").val($(this).val().replace(/[^0-9$.,]/g, '').toLowerCase().split(' ').join('-'));
 	});
 
 	$('.updatepost').bind('click', function(e){
@@ -37,11 +37,11 @@ $(document).ready(function(){
     /* URL writer when writing the title of the page */
 
     $("#post_post_title").keyup(function(){
-        $("#post_post_slug").val($(this).val().replace(/\W/g, '').toLowerCase().split(' ').join('-'));
+        $("#post_post_slug").val($(this).val().replace(/[^0-9$.,]/g, '').toLowerCase().split(' ').join('-'));
     });
 
     $("#post_post_title").change(function(){
-        $("#post_post_slug").val($(this).val().replace(/\W/g, '').toLowerCase().split(' ').join('-'));
+        $("#post_post_slug").val($(this).val().replace(/[^0-9$.,]/g, '').toLowerCase().split(' ').join('-'));
     });
 
 	$("select").select2({ placeholder: "Please select"	, allowClear: true});
