@@ -3,18 +3,21 @@ $(document).ready(function(){
 	/* This is to change the data that is displayed when clicking on different directories */
 	$('.leftMenu.mediaTypes').on('click', 'a', function(e){
 		e.preventDefault();
-		if(!$(this).is('.leftMenu li.active a')){
-			// $('.leftMenu.mediaTypes li').removeClass('active');
-		}
-		$(this).parent().addClass('active')
-		var rel = $(this).attr('data-rel');
-		$('.leftMenu.foldersMenu ul').hide();
-		$(rel).show();
+	});
+
+	$('body').on('click', '.overlay.general', function(e){
+		var wrap = $(this).parent();
+		$('.actions a:first .icon-eye-open', wrap).trigger('click');
 	});
 
 	$('.leftMenu.foldersMenu').on('click', 'a', function(e){
 		e.preventDefault();		
 		$('li.folderRow').removeClass('current')
+		
+		if($('.rightMenu.active').length > 0) {
+			$('.rightMenu.active .icon-remove-sign').trigger('click');
+		}
+		
 		updateFolderDisable($(this).attr('data-hasfolder'))
 		if($(this).parent('li').hasClass('active')){
 			removeActive($(this))
@@ -54,7 +57,7 @@ $(document).ready(function(){
 
 	$('.showFiles').on('click', '.icon-eye-open', function(e){
 		e.preventDefault();
-		$('.imageView').animate({left: '-=62.3%'}, 458, 'swing')
+		$('.imageView').animate({left: '-=62.3%'}, 458, 'swing').addClass('active')
 		$('.imageView .name').html(ammend_for_editing($(this).parent().attr('data-key')))
 		$('.showMisc').html('<img src="' + $(this).parent().attr('href') + '" />');
 	});
@@ -62,7 +65,7 @@ $(document).ready(function(){
 	$('.imageView').on('click', '.icon-remove-sign', function(e){
 		e.preventDefault();
 		reload_data('.leftMenu.foldersMenu .folderRow.current a')
-		$('.imageView').animate({left: '+=62.3%'}, 458, 'swing')
+		$('.imageView').animate({left: '+=62.3%'}, 458, 'swing').removeClass('active')
 		setTimeout(function(){
 			$('.showMisc').html(' ');
 		}, 500);
@@ -72,13 +75,13 @@ $(document).ready(function(){
 
 	$('.rightMenu').on('click', '#fileUploadActivator', function(e){
 		e.preventDefault();
-		$('.fileUpload').animate({left: '-=62.3%'}, 458, 'swing')
+		$('.fileUpload').animate({left: '-=62.3%'}, 458, 'swing').addClass('active')
 	});
 	
 	$('.fileUpload').on('click', '.icon-remove-sign', function(e){
 		e.preventDefault();
 		reload_data('.leftMenu.foldersMenu .folderRow.current a')
-		$('.fileUpload').animate({left: '+=62.3%'}, 458, 'swing')
+		$('.fileUpload').animate({left: '+=62.3%'}, 458, 'swing').removeClass('active')
 		setTimeout(function(){
 			$('.showFileUpload #my-awesome-dropzone').html(' ');
 		}, 500);

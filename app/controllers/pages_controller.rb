@@ -21,7 +21,7 @@ class PagesController < ApplicationController
 	end
 
 	def contact_form
-		session[:return_to] ||= request.referer
+		session[:return_to] = request.referer
 		Notifier.contact_form(params).deliver
 
 		respond_to do |format|

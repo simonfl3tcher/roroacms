@@ -31,6 +31,7 @@ class Admin::PostsController < AdminController
 	end
 
 	def edit 
+		@edit = true
 		@categories = Post.get_cats
 		@tags = Post.get_tags
 		
