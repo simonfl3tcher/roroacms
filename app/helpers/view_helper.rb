@@ -67,7 +67,7 @@ module ViewHelper
 
 	def get_the_excerpt(post, length = 300, omission = '...')
 
-		render :inline => truncate(post.post_content.gsub(/<[^>]*>/ui,'').html_safe, :omission => omission, :length => length)
+		render :inline => truncate(prep_content(post).gsub(/<[^>]*>/ui,'').html_safe, :omission => omission, :length => length)
 
 
 	end
@@ -183,7 +183,7 @@ module ViewHelper
 			html = "<h3 id='comments-title'>#{@comments.count} responses to #{display_title}</h3>"
 		end
 		
-		html = nested_comments return_comments.arrange(:order => :created_at)
+		html = nested_comments return_comments.arrange(:order => 'created_at ASC')
 
 		render :inline => html.html_safe
 
@@ -399,6 +399,12 @@ module ViewHelper
 
 			return false
 		end
+
+	end
+
+	def get_latest_article howmany = 1
+
+		Post.where("post_type ='post' AND disabled = 'N' AND post_status = 'Published' AND post_date AND post_date <= CURDATE()").order('post_date DESC').limit(howmany)
 
 	end
 
