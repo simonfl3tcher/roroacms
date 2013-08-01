@@ -174,7 +174,9 @@ module RoutingHelper
 
 			else
 				term = Term.where(:slug => segments[2]).first
-				gloalize Post.where(terms: {id: term}, :post_type => 'post', :post_status => 'Published', :disabled => 'N').order('post_date DESC').includes(:terms)
+				# gloalize Post.where(terms: {id: term}, :post_type => 'post', :post_status => 'Published', :disabled => 'N').order('post_date DESC').includes(:terms)
+
+				gloalize Post.joins('LEFT JOIN term_relationships ON term_relationships.post_id = posts.id').where("(post_status = 'Published' AND post_date <= NOW() AND disabled = 'N') and term_relationships.term_id = ?", term).order('post_date DESC')
 				add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
 				add_breadcrumb "#{term.name.capitalize}", "/#{term.name}", :title => "Back to #{term.name.capitalize}"
 				render :template => "theme/#{current_theme}/category"
