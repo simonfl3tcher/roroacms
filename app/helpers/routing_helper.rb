@@ -130,11 +130,11 @@ module RoutingHelper
 		home_id = Setting.get('home_page')	
 		if !session[:admin_id].blank?
 					
-			@content = Post.where(:post_type => 'page').find_by_structured_url("/#{url}")
+			@content = Post.where(:post_type => 'page', :post_status => 'Published').find_by_structured_url("/#{url}")
 
 		else
 
-			@content = Post.where(status, :post_type => 'page').find_by_structured_url("/#{url}")
+			@content = Post.where(status, :post_type => 'page', :post_status => 'Published').find_by_structured_url("/#{url}")
 
 		end
 
@@ -154,7 +154,6 @@ module RoutingHelper
 			add_breadcrumb "404", "#", :title => "Back to 404"
 			render_404 and return 
 		end
-
 
 		if home_id.to_i == @content.id.to_i
 			redirect_to site_url

@@ -105,8 +105,8 @@ module SeoHelper
 
 
 	def get_page_title(overide = nil)
-
-
+		
+		
 		if !overide.nil?
 
 			websiteTitle = Setting.get('seo_site_title')	
