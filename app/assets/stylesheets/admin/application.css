@@ -9,6 +9,10 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_directory .
+ *= require dropzone.css
+ *= require adminpanel.css
+ *= require font-awesome.scss
+ *= require select2.css
  */
 label {
  	display: block;
