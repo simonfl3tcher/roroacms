@@ -67,7 +67,7 @@ module ViewHelper
 
 	def get_the_excerpt(post, length = 300, omission = '...')
 
-		render :inline => truncate(prep_content(post).gsub(/<[^>]*>/ui,'').html_safe, :omission => omission, :length => length)
+		render :inline => truncate(post.post_content.to_s.gsub(/<[^>]*>/ui,'').html_safe, :omission => omission, :length => length)
 
 
 	end
