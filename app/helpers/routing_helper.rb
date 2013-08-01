@@ -3,7 +3,7 @@ module RoutingHelper
 	def route_index_page(params)
 
 		if !params[:search].blank?
-			gloalize Post.where("(post_title LIKE :p or post_slug LIKE :p2 or post_content LIKE :p3) and (post_type != 'autosave')", {:p => "%#{params[:search]}%", :p2 => "%#{params[:search]}%", :p3 => "%#{params[:search]}%"})
+			gloalize Post.where("(post_title LIKE :p or post_slug LIKE :p2 or post_content LIKE :p3) and (post_type != 'autosave') AND (post_date <= NOW())", {:p => "%#{params[:search]}%", :p2 => "%#{params[:search]}%", :p3 => "%#{params[:search]}%"})
 			add_breadcrumb "Home", :root_path, :title => "Home"
 			add_breadcrumb "Search", "/"
 			render :template => "theme/#{current_theme}/search"

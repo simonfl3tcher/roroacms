@@ -1,8 +1,8 @@
-# ROROA CMS
+# ROROACMS
 
-Put simply Roroacms is a content management system built on Ruby on Rails. Roroacms started out as a project to learn more about the ins & outs of Ruby on Rails and seemlessly evolved to grow into a fully grown CMS, its a simple application that is fully extendible.
+Put simply Roroacms is a content management system built on Ruby on Rails. Roroacms started out as a project to learn more about the ins & outs of Ruby on Rails and seemlessly evolved to grow into a fully grown CMS, its a simple application that is fully extendible and RESTful.
 
-One thing to note about Roroacms is that it's media area is fully integrated with Amazon S3 at the moment so before you start head over to [http://aws.amazon.com/s3/](http://aws.amazon.com/s3/ "Amazon S3") and create a Amazon s3 account. The good thing about this is that it is FREE.
+One thing to note about Roroacms is that it's media area is fully integrated with Amazon S3 at the moment so before you start head over to [http://aws.amazon.com/s3/](http://aws.amazon.com/s3/ "Amazon S3") and create a Amazon s3 account (Please make sure that the folder is open to the public).
 
 This documentation is a quick skim of what can be done with Roroa I will be working on the documentation over the next few months. But in the meantime if you have any problems please email me.
 
@@ -24,7 +24,7 @@ Installation is really simple just follow the steps below to get started. Please
 
 * Please note these are steps to get you set up on localhost. We suggest using Heroku for your live hosting platform. Although it can be confusing at first, they have done half the work for you already, and best of all it is free for small applications
 
-1.  Download the zip file
+1.  Download the roroacms-master.zip file
 2.  Upload the application to the server.
 3.  Navigate to the project via the console.
 4.  Run 'bundle install'
@@ -36,7 +36,7 @@ Please see below the settings for the individual configuration files.
 
 ## Config settings
 
-The database.yml file is just the general database configuration file. We suggest that you use MYSQL as your choosen database adapter, however as it is all run with rails it should be fully extendible to all types of adapter.
+The database.yml file is just the general database configuration file. You will need to run MySQL as your chosen database adapter, as alot of the quries within the system are set up using MySQL. You can however go through roroacms and update the queries to run on postgresql this is not a long process. I will be working on making a postgresql branch for people that want to use this database adapter. 
 
 ##### config.yml settings 
 
@@ -111,13 +111,13 @@ In order to add assets like css, images, javascript files. You will need to navi
 
 > app > assets >stylesheets > theme 
 
-You will then need to include a folder specific for the theme and include application.js which includes all the files within the directory. Once you have done this you will need to reference it correctly in the header of the layout for the css and javascript files:- 
+You will then need to include a folder specific for the theme and include application.js/application.css which includes all the files within the directory. Once you have done this you will need to reference it correctly in the header of the layout for the css and javascript files:- 
 
 > <%= stylesheet_link_tag "theme/**roroa1**/application", :media => "all" %>
 
 > <%= javascript_include_tag 'theme/**roroa1**/application' %>
 
-From there you simply need to navigate into the public folder and start creating the files that you will need to be included with your theme.
+From there you simply need to navigate into the theme folder and start creating the files that you will need to be included with your theme.
 
 ## License
 
