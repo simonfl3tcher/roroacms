@@ -2,6 +2,7 @@
 require File.expand_path('../application', __FILE__)
 # Initialize the rails application
 # config/environment.rb
+
  
 Rails::Initializer.run do |config|  
   require 'yaml'
