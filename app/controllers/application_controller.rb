@@ -11,8 +11,7 @@ class ApplicationController < ActionController::Base
   before_filter :installation
 
   require 'ext/string'
-
-
+ 
   private
 
   def render_404
