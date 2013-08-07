@@ -140,16 +140,16 @@
 				<%= label_tag "No index archives" %>
 			</div>
 
-			<div class="field formSep">
+			<div class="field">
 				<%= hidden_field_tag :seo_autogenerate_descriptions, 'N' %>
 			    <%= check_box_tag :seo_autogenerate_descriptions, 'Y', Setting.find_by_setting_name('seo_autogenerate_descriptions')[:setting] == 'Y' ? true : false %>
 				<%= label_tag "Autogenerate Decriptions" %>
 			</div>
 
-			<div class="field">
+			<!-- <div class="field">
 				<%= label_tag(:seo_additional_headers, "Additional Headers") %>
 				<%= text_area_tag(:seo_additional_headers, Setting.find_by_setting_name('seo_additional_headers')[:setting], :class => 'seo_textarea') %>
-			</div>
+			</div> -->
 		</div>
 	</div>
 
