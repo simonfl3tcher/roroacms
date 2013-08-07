@@ -27,8 +27,10 @@ class Admin::CommentsController < AdminController
 
 	def update
 	    @comment = Comment.find(params[:id])
+	    atts = comments_params
+	    atts[:comment] = atts[:comment].to_s.gsub(%r{</?[^>]+?>}, '')
 	    respond_to do |format|
-	      if @comment.update_attributes(comments_params)
+	      if @comment.update_attributes(atts)
 	     	format.html { redirect_to edit_admin_comment_path(@comment), notice: 'Comment was successfully updated.' }
 	      else
 	        format.html { render action: "edit" }

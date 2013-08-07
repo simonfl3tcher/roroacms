@@ -8,6 +8,7 @@ class CommentsController < ApplicationController
 			
 			session[:return_to] = request.referer
 			@comment = Comment.new(comments_params)
+			@comment.comment = @comment.comment.to_s.gsub(%r{</?[^>]+?>}, '').gsub(/<script.*?>[\s\S]*<\/script>/i, "")
 
 			respond_to do |format|
 			  if @comment.save
