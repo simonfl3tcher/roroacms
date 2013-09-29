@@ -8,8 +8,6 @@ class ApplicationController < ActionController::Base
   helper ThemeHelper 
   helper CommentsHelper
 
-  before_filter :installation
-
   require 'ext/string'
  
   private
@@ -25,12 +23,6 @@ class ApplicationController < ActionController::Base
   end 
 
   helper_method :current_theme
-
-  def installation 
-    # path = request.env['PATH_INFO'].include? '/installation'request.env['PATH_INFO'].include? '/installation'.include? '/installation'
-    # redirect_to installation_path, error: "Not Authorized" if Dir.exists?("app/controllers/installation/") && path == false
-  end
-  
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
