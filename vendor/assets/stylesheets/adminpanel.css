@@ -497,7 +497,7 @@ body:not(:-moz-handler-blocked) .dropdown-submenu > a:after {
 /* Pagination */
 .pagination ul li a {
   padding: 0 10px;
-  margin-right: .5em;
+  /*margin-right: .5em;*/
   line-height: 32px;
   color: #444444;
   text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.25);
