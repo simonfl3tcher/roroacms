@@ -1,21 +1,8 @@
-    <div id="mediaAreaWrapper">
-    	<div id="bucketReference" data-key="" data-hasfolder=""></div>
-    	<div class="mediaHeader"><small style="margin-left:10px">* For security reasons you are only allowed one subfolder within a top level folder</small></div>
+	<div id="mediaAreaWrapper">
+    	<div id="bucketReference" data-ref="<%= @url %>" data-key="" data-hasfolder="" data-limit-reached="<%= @limit_reached.to_s %>"></div>
+    	<div class="mediaHeader"><small style="margin-left:10px">* Please be patient when uploading files espeically PDF's. Don't worry it is uploading!</small></div>
     	<div class="mediaBody">
 
-			<div class="mediaPanel leftMenu mediaTypes">
-
-				<ul class="t">
-					<li class="folderRow orange">
-						<a class="folderLink " href="" data-rel="#audio">
-							<i class="icon-angle-right"></i>&nbsp;
-							<span><%= Setting.find_by_setting_name('aws_bucket_name')[:setting].capitalize %></span>
-						</a>
-					</li>
-					
-				</ul>
-
-			</div>
 
 			<div class="mediaPanel leftMenu foldersMenu" style="">
 
@@ -28,22 +15,26 @@
 				<div class="h">
 					
 
-					<div class="input-append pull-right">
-					<%= form_tag admin_media_path, :method => "post", :class => 'addFolder' do %>  
-					    <%= text_field_tag "create_dir", '', :placeholder => 'Create Folder', :class => 'input-medium' %>  
-					    <%= submit_tag "Create", :class => 'btn btn-warning ' %>  
-					<% end %> 
+					<div class="input-append span6 pull-right">
+						<% if !@limit_reached %>
+							<%= form_tag admin_media_path, :method => "post", :class => 'addFolder pull-right' do %>  
+							    <%= text_field_tag "create_dir", '', :placeholder => 'Create Folder', :class => 'input-medium' %>  
+							    <%= submit_tag "Create", :class => 'btn btn-warning ' %>  
+							<% end %> 
+						<% end %>
 					</div>
 					
 					<div class="pull-left">
-						<button class="pull-left btn btn-small btn-warning" id="fileUploadActivator"><span class="icon-plus"></span>&nbsp;Upload Media</button>
+						<% if !@limit_reached %>
+							<button class="pull-left btn btn-small btn-warning" id="fileUploadActivator"><span class="fa fa-plus"></span>&nbsp;Upload Media</button>
+						<% end %>
 					</div>
 					<div class="clearboth"></div>
 				</div>
 
 				
 				<div class="showFiles">
-					<div class="loadingSpinner" style="display: none;"><div class="spinnerPostioner"><i class="icon-spinner icon-spin icon-large"></i></div></div>
+					<div class="loadingSpinner" style="display: none;"><div class="spinnerPostioner"><i class="fa fa-spinner fa-3x fa-spin"></i></div></div>
 				</div>
 
 			</div>
@@ -52,7 +43,7 @@
 
 				<div class="h">
 					<div class="pull-left"><span class="name"></span><br /><small>*If you change the name please make sure you update any current links to this file</small></div>
-					<div class="pull-right"><i class="icon-remove-sign"></i></div>
+					<div class="pull-right"><i class="fa fa-times-circle"></i></div>
 					<div class="clearboth"></div>
 				</div>
 				<div class="showMisc">
@@ -64,23 +55,26 @@
 			<div class="mediaPanel rightMenu fileUpload" style="">
 
 				<div class="h">
-					<div class="pull-right"><i class="icon-remove-sign"></i></div>
+					<div class="pull-right"><i class="fa fa-times-circle"></i></div>
 					<div class="clearboth"></div>
 				</div>
-				<div class="showFileUpload">
-					<div id="my-awesome-dropzone"></div>
+				<div class="showFileUpload" id="my-awesome-dropzone">
+					<div class="uploadInfo">
+						<i class="fa fa-cloud-upload fa-5x"></i>&nbsp;<span>Drop files here </span><br /><small class="tabletClick">(Click if on a tablet)</small>
+					</div>
 				</div>
 
 			</div>
 
     	</div>
-    	<div class="mediaFooter"></div>
+    	<!-- <div class="mediaFooter"></div> -->
 
     </div>
 
     <div id="mediaNotAvailable">
-    	<div style="text-align:center;" class="span12">
-				<strong style="margin-top:100px; font-size:25px; display:block; ">Media area not avalible on smaller screens</strong>
+    	<div class="row-fluid">
+			<div class="span12 marginTop50">
+				<h5 class="align-center thin">Media area is not avalible on smaller screens</h5>
 			</div>
-
+		</div>
     </div>

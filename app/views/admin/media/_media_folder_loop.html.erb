@@ -3,7 +3,7 @@
 
 					<li class="folderRow orange initial">
 						<a class="folderLink" href="" data-key="all">
-<i class="icon-angle-right"></i>&nbsp;<span>All</span>
+<i class="fa fa-chevron-right"></i>&nbsp;<span> All</span>
 						</a>
 					</li>
 <% else %>
@@ -11,11 +11,9 @@
 	<ul>
 	
 <% end %>
-
 					<% 
 					@f.each_with_index do |file, i| 
-						
-							if file.content_type != 'binary/octet-stream' || file.key.count('/') > 1
+							if file.key.count('/') > 4 || file.key.split('/').last == 'trainers_files'
 								next
 							end
 
@@ -28,16 +26,15 @@
 							end
 					%>
 
-					<li class="folderRow">
-						<a class="folderLink" href="" data-key="<%= file.key %>" data-hasfolder="<%= hasFolder %>">
-<i class="icon-folder-close"></i>&nbsp;<span><%= file.key.gsub('/', '') %></span>
-							<i class="icon-remove"></i>
-						</a>
-						<% if !@f[i + 1].nil? && @f[i + 1].key.count('/') > file.key.count('/') %>
-							<%= make_media_folder_subpage @f, @f[i+1], i %>
-						<% end %>
-					</li>
-					
+						<li class="folderRow">
+							<a class="folderLink" href="" data-key="<%= file.key %>" data-hasfolder="<%= hasFolder %>">
+								<i class="fa fa-folder"></i>&nbsp;<span><%= file.key.split('/').last.gsub('/', '') %></span>
+								<i class="fa fa-times"></i>
+							</a>
+							<% if !@f[i + 1].nil? && @f[i + 1].key.count('/') > file.key.count('/') %>
+								<%= make_media_folder_subpage @f, @f[i+1], i %>
+							<% end %>
+						</li>
 					<% end %>
 					
 				</ul>
