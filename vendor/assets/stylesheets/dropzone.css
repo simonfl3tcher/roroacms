@@ -128,7 +128,7 @@
   border-radius: 3px;
   background: rgba(0,0,0,0.03);
   padding: 0px !important;
-  background-image: url("/assets/admin/draganddrop2.jpg");
+  /*background-image: url("/assets/admin/draganddrop2.jpg");*/
   background-position: -55px 0;
 
 }

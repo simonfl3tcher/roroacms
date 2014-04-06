@@ -1,0 +1,461 @@
+
+    #menuGroupDisplay ol.sortable li i {
+      display: none;
+    }
+
+    #mediaAreaWrapper {
+      min-height: 500px;
+      background-color: #ffffff;
+      border-radius: 5px 5px 5px 5px;
+    }
+
+    .mediaHeader {
+      background-color: #F4F4F4;
+      border: 1px solid #F4F4F4;
+      display: block;
+      margin-bottom: 0;
+      margin-top: 0;
+      min-height: 25px;
+      padding: 13px 0 8px;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+    }
+
+    .mediaBody {
+      background: none repeat scroll 0 0 #FFFFFF;
+	    border: 1px solid #F4F4F4;
+      float: left;
+      margin: 0;
+      min-height: 700px;
+      padding: 0;
+      position: relative;
+      width: 100%;
+      overflow:hidden;
+    }
+
+    .mediaFooter{
+      background: linear-gradient(#F4F4F4, #F3F3F3) repeat-x scroll 0 0 #F4F4F4;
+      border-bottom: 1px solid #F4F4F4;
+      border-top: 1px solid #D8D8D8;
+      display: block;
+      float: left;
+      margin-bottom: 0;
+      margin-top: 0;
+      min-height: 27px;
+      padding: 12px 0 2px;
+      position: relative;
+      width: 100%;
+      z-index: 10;
+    }
+
+    #mediaAreaWrapper .leftMenu {
+      width: 19%;
+      height:100%;
+      position: relative;
+      z-index: 3;
+      border-right: 1px solid #F4F4F4;
+    }
+
+    #mediaAreaWrapper .leftMenu.mediaTypes {
+       background: linear-gradient(#F4F4F4, #F3F3F3) repeat-x scroll 0 0 #F4F4F4;
+       overflow: hidden;
+    }
+
+     #mediaAreaWrapper .leftMenu li {
+       
+      line-height: 26px;
+      list-style: none outside none;
+      white-space: nowrap;
+      position:relative;
+     }
+
+      #mediaAreaWrapper .leftMenu ul > li > a {
+       width:100%;
+      }
+
+     #mediaAreaWrapper .leftMenu > ul > li > ul {
+      display: none;
+     }
+
+     #mediaAreaWrapper .leftMenu > ul > li ul {
+        margin-left:15px;
+     }
+
+     #mediaAreaWrapper .leftMenu > ul > li.active > ul > li ul {
+      display:none;
+     }
+
+     #mediaAreaWrapper .leftMenu > ul > li.active > ul > li.active ul {
+      display:block;
+      
+     }
+
+    #mediaAreaWrapper .leftMenu > ul > li.active > ul > li.active ul > li > ul {
+      margin-left:0;
+    }
+
+     #mediaAreaWrapper .leftMenu li.active > ul {
+      display: block;
+     }
+
+     #mediaAreaWrapper .leftMenu > li > a {
+      border-bottom: 1px solid #F4F4F4;
+     }
+
+       #mediaAreaWrapper .leftMenu li.folderRow.orange > a {
+      	background: #FBB450;
+        color: #FFFFFF;
+        width:100%;
+       }
+
+       #mediaAreaWrapper .leftMenu li a:hover {
+        background-color: #FBFBFC;
+       }
+
+      #mediaAreaWrapper .leftMenu li a {
+        width:92%;
+        height:100%;
+        display: block;
+        color: #000000;
+        text-decoration:none;
+        font-size: 12px;
+        display:-moz-inline-stack;
+        display:inline-block;
+        zoom:1;
+        *display:inline;
+        padding:10px 10px 10px 5px;
+      }
+
+      #mediaAreaWrapper .leftMenu li i.fa-times {
+        opacity: 0.7;
+        display: none;
+        cursor: pointer;
+        position: absolute;
+        right: 10px;
+	    top: 16px;
+      }
+
+     #mediaAreaWrapper .leftMenu ul {
+        margin:0;
+     }
+
+    #mediaAreaWrapper .mediaPanel {
+      overflow-y: auto;
+      position: absolute;
+      top: 0;
+    }
+
+    i.fa-times.active {
+      display: block;
+    }
+
+    #mediaAreaWrapper .mediaPanel.leftMenu.foldersMenu {
+      position: absolute;
+      z-index: 2;
+      background-color: #ffffff;
+      height:100%;
+      overflow: hidden;
+    }
+
+    #mediaAreaWrapper .mediaPanel.leftMenu.foldersMenu ul.hide {
+      display:none;
+    }
+
+    #mediaAreaWrapper .mediaPanel.rightMenu.fileMenu {
+      background-color: #FFFFFF;
+      height: 100%;
+      left: 18.8%;
+      position: absolute;
+      width: 81.3%;
+      z-index: 1;
+      box-shadow: none !important;
+      overflow-x:hidden;
+    }
+
+     #mediaAreaWrapper .mediaPanel.rightMenu.fileUpload, 
+     #mediaAreaWrapper .mediaPanel.rightMenu.imageView {
+      background-color: #F4F4F4;
+      height: 100%;
+      left: 100%;
+      position: absolute;
+      width: 81.5%;
+      overflow:hidden;
+      z-index: 1;
+      box-shadow: none !important;
+    }
+
+    #mediaAreaWrapper .mediaPanel.fileUpload .h,
+    #mediaAreaWrapper .mediaPanel.imageView .h, 
+    #mediaAreaWrapper .mediaPanel.rightMenu.fileMenu .h {
+      background-color: #ffffff;
+      border-bottom: 1px solid #F4F4F4;
+      display: block;
+      margin-bottom: 0;
+      margin-top: 0;
+      /*min-height: 42px;*/
+      padding: 20px;
+      width: 96%;
+      position: relative;
+      z-index: 10;
+    }
+
+
+   #mediaAreaWrapper .mediaPanel.imageView .showMisc {
+    text-align: center;
+   }
+   #mediaAreaWrapper .mediaPanel.rightMenu.fileUpload .h i.fa-times-circle,
+    #mediaAreaWrapper .mediaPanel.imageView .h i.fa-times-circle {
+      margin-right:10px;
+      cursor: pointer;
+      margin-top:10px;
+    }
+    
+    .mediaBody .showFiles {
+      padding:20px 0px;
+      position:relative;
+      min-height: 306px;
+    }
+
+    .mediaBody .mediaPanel .h form {
+      margin-bottom:0;
+      padding:0;
+    }
+
+    .mediaBody .mediaPanel .h .input-append {
+      /*margin-right: 20px;*/
+      text-align: right;
+      margin-bottom:0px;
+    }
+
+     .mediaBody .mediaPanel .h .input-append input[type=text] {
+     	width:65%;
+     	height:15px;
+     }
+
+    .mediaBody .mediaPanel .h .pull-left {
+      margin-left:5px;
+    }
+ 
+    .mediaBody .container {
+      width:694px;
+    }
+
+     .mediaBody .container-fluid  .span3 {
+    background: none repeat scroll 0 0 #F4F4F4;
+    float: left;
+    height: 144px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+ .mediaBody .container-fluid  .span3 .overlay {
+    background: #e5e5e5;
+    display: block;
+    height: 80%;
+    width:100%;
+    overflow: hidden;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    cursor: pointer;
+}
+
+ .mediaBody .container-fluid  .span3 .overlay:hover {
+  opacity: 0.5;
+}
+
+ .mediaBody .container-fluid  .span3 .actions {
+    bottom: 0;
+    height: 25px;
+    padding-right: 10px;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    width: 92%;
+}
+
+.mediaBody .container-fluid  .span3 .actions .pull-left {
+
+}
+
+ .mediaBody .container-fluid  .span3 .actions a {
+  color:#ffffff;
+  margin:0px 5px;
+}
+
+.loadingSpinner {
+  width:100%;
+  height:100%;
+  position: absolute;
+  display: none;
+  background-color: #F4F4F4;
+  opacity: 0.5;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index: 1000;
+  min-height:617px !important;
+}
+
+.loadingSpinner .spinnerPostioner {
+  width:40px;
+  height:40px;
+  margin:0 auto;
+  margin-top:350px;
+}
+
+.showFiles .row-fluid .span3 {
+  width:22.077%;
+}
+
+.showFiles .row-fluid [class*="span"]:first-child {
+  margin-left:2%;
+}
+
+.showFileUpload span {
+	color:#909090;
+}
+
+.editableArea.active input {
+  padding:0;
+}
+
+.editableArea.active input.error{
+  border-color: #B94A48;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+
+.select2-container {
+  width:99%;
+}
+
+.commentsSelector .select2-container {
+  width:250px;
+}
+
+#scrollUp {
+  bottom: 20px;
+  right: 20px;
+  height: 38px; /* Height of image */
+  width: 38px; /* Width of image */
+  background: url(/assets/admin//top.png) no-repeat;
+  text-indent: -999999px;
+}
+
+.cke_contents {
+  overflow-y:auto; -webkit-overflow-scrolling:touch;
+}
+
+.leftMenu.mediaTypes a {
+  cursor: default;
+}
+
+
+#mediaNotAvailable {
+  display: none;
+}
+
+.folderRow.active.current > a {
+  font-weight: bold;
+}
+
+.folderRow.orange > a:hover {
+  opacity: 0.7;
+}
+
+.input-append .add-on, .input-append .btn, .input-append .btn-group {
+  /*padding:6.5px !important;*/
+}
+
+input[type="text"], input[type="password"], input[type="email"], textarea {
+  padding:5px !important;
+  /*border-radius:0px;*/
+}
+
+.redBtn {
+	padding:7px 10px;
+}
+
+.mediaBody .redBtn {
+	padding:11px 20px !important;
+}
+
+.mediaBody .input-append .redBtn {
+	padding:12px 20px;
+}
+
+#my-awesome-dropzone .dz-preview, .dropzone-previews .dz-preview {
+	/*border-radius:0px !important;*/
+}
+
+#my-awesome-dropzone .dz-preview .dz-details, .dropzone-previews .dz-preview .dz-details {
+	background-color: #F4F4F4;
+}
+
+#my-awesome-dropzone .dz-preview, .dropzone-previews .dz-preview {
+	background-color: #F4F4F4;
+}
+
+.showFileUpload {
+  /*text-align: center;*/
+}
+
+.showFileUpload i.fa {
+  /*margin-top:300px;*/
+}
+
+.showFileUpload span {
+  /*font-size: 12px;*/
+  display: inline-block;
+  font-size: 38px;
+  margin-left: 15px;
+  vertical-align: super;
+}
+
+.showFileUpload .dz-filename span {
+  font-size: 12px;
+}
+
+.dz-error-message {
+  display: none !important;
+}
+
+.showFileUpload .uploadInfo {
+  left: 31%;
+  position: absolute;
+  top: 350px;
+  color:#909090;
+}
+
+#my-awesome-dropzone {
+  background-image: none;
+  height:85%;
+  padding:0;
+  border:none;
+  background-color: #F4F4F4;
+}
+
+#my-awesome-dropzone .dz-preview .dz-error-message, .dropzone-previews .dz-preview .dz-error-message {
+  left:0px !important;
+  margin-top:71px !important;
+  color:#ee162d !important;
+  background:none !important;
+}
+
+#mediaAreaWrapper .input-append input[type=text], #mediaAreaWrapper .input-append input[type=email], #mediaAreaWrapper .input-append input[type=password] {
+  /*height:28px !important;*/
+}
+
+.tabletClick {
+  display: block;
+  margin-left: 45%;
+  margin-top: 5%;
+}
+
+.fa.fa-eye, .fa.fa-trash-o {
+  color:#000000;
+}
