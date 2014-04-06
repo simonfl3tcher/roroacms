@@ -2,10 +2,14 @@ class Media < ActiveRecord::Base
 	BUCKET = Setting.find_by_setting_name('aws_bucket_name')[:setting]
 	include AWS::S3
 
-	def self.setup_and_search_posts    
-		files = AWS::S3::Bucket.find("#{BUCKET}").objects
-		return files
-
+	def self.setup_and_search_posts url = nil
+		if url.nil?    
+			files = AWS::S3::Bucket.find("#{BUCKET}").objects
+		else 
+			files = AWS::S3::Bucket.objects(Setting.find_by_setting_name('aws_bucket_name')[:setting], :prefix => url)
+		end
+		
+		files
 	end
 
 	def self.create(p) 
@@ -49,7 +53,6 @@ class Media < ActiveRecord::Base
 	end
 
 	def self.get_folder_list(p)
-
 		files = Media.setup_and_search_posts
 		@f = Array.new
  		files.each_with_index {|item, index|
