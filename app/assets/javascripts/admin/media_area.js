@@ -7,15 +7,16 @@ $(document).ready(function(){
 
 	$('body').on('click', '.overlay.general', function(e){
 		var wrap = $(this).parent();
-		$('.actions a:first .icon-eye-open', wrap).trigger('click');
+		$('.actions a:first .fa-eye', wrap).trigger('click');
 	});
 
 	$('.leftMenu.foldersMenu').on('click', 'a', function(e){
-		e.preventDefault();		
+		e.preventDefault();
+		$('li.folderRow.orange').removeClass('active')		
 		$('li.folderRow').removeClass('current')
 		
 		if($('.rightMenu.active').length > 0) {
-			$('.rightMenu.active .icon-remove-sign').trigger('click');
+			$('.rightMenu.active .fa-times-circle').trigger('click');
 		}
 		
 		updateFolderDisable($(this).attr('data-hasfolder'))
@@ -39,7 +40,7 @@ $(document).ready(function(){
 
 	});
 
-	$('.showFiles').on('click', '.icon-trash', function(e){
+	$('.showFiles').on('click', '.fa-trash-o', function(e){
 		e.preventDefault();
 		if(confirm('Are you sure?')){
 			$(this).closest('.span3').children().fadeOut('slow')
@@ -55,17 +56,21 @@ $(document).ready(function(){
 
 	/* show file in full size */
 
-	$('.showFiles').on('click', '.icon-eye-open', function(e){
+	$('.showFiles').on('click', '.fa-eye', function(e){
 		e.preventDefault();
-		$('.imageView').animate({left: '-=62.3%'}, 458, 'swing').addClass('active')
-		$('.imageView .name').html(ammend_for_editing($(this).parent().attr('data-key')))
-		$('.showMisc').html('<img src="' + $(this).parent().attr('href') + '" />');
+		$('.imageView').animate({left: '-=81.3%'}, 458, 'swing').addClass('active')
+		$('.imageView .name').html(ammend_for_editing($(this).parent().attr('data-key')));
+		if($(this).attr('data-type-ref').indexOf('image/') !== -1){
+			$('.showMisc').html('<img src="' + $(this).parent().attr('href') + '" />');
+		} else {
+			$('.showMisc').html('<iframe style="width:100%; height:605px;" src="' + $(this).parent().attr('href') + '"></iframe>');
+		}
 	});
 	
-	$('.imageView').on('click', '.icon-remove-sign', function(e){
+	$('.imageView').on('click', '.fa-times-circle', function(e){
 		e.preventDefault();
 		reload_data('.leftMenu.foldersMenu .folderRow.current a')
-		$('.imageView').animate({left: '+=62.3%'}, 458, 'swing').removeClass('active')
+		$('.imageView').animate({left: '+=81.3%'}, 458, 'swing').removeClass('active')
 		setTimeout(function(){
 			$('.showMisc').html(' ');
 		}, 500);
@@ -75,13 +80,13 @@ $(document).ready(function(){
 
 	$('.rightMenu').on('click', '#fileUploadActivator', function(e){
 		e.preventDefault();
-		$('.fileUpload').animate({left: '-=62.3%'}, 458, 'swing').addClass('active')
+		$('.fileUpload').animate({left: '-=81.3%'}, 458, 'swing').addClass('active')
 	});
 	
-	$('.fileUpload').on('click', '.icon-remove-sign', function(e){
+	$('.fileUpload').on('click', '.fa-times-circle', function(e){
 		e.preventDefault();
 		reload_data('.leftMenu.foldersMenu .folderRow.current a')
-		$('.fileUpload').animate({left: '+=62.3%'}, 458, 'swing').removeClass('active')
+		$('.fileUpload').animate({left: '+=81.3%'}, 458, 'swing').removeClass('active')
 		setTimeout(function(){
 			$('.showFileUpload #my-awesome-dropzone').html(' ');
 		}, 500);
@@ -91,25 +96,27 @@ $(document).ready(function(){
 
 	$('.leftMenu.foldersMenu').on({
 	  mouseenter: function(e) {
-	   $('i.icon-remove', $(this)).stop(true, true).fadeIn().addClass('active');
+	   $('i.fa-times', $(this)).stop(true, true).fadeIn().addClass('active');
 	  },
 	  mouseleave: function(e) {
-	   $('i.icon-remove', $(this)).stop(true, true).fadeOut().removeClass('active')
+	   $('i.fa-times', $(this)).stop(true, true).fadeOut().removeClass('active')
 	  }
 	}, 'a');
 
 
 	/* remove option from media area and s3 */
 
-	$('.leftMenu.foldersMenu').on('click', 'i.icon-remove', function(e){
+	$('.leftMenu.foldersMenu').on('click', 'i.fa-times', function(e){
 		e.preventDefault();
 		 var li = $(this).closest('li');
 		 var key = $('a', li).attr('data-key');
 		 var selector = $('a', li.parent().parent())
+		 selector.attr('data-hasfolder', 'false');
 		 li.slideUp();
-		 reload_data(selector)
+		 reload_data(selector);
 		 setTimeout(function(){
 		 	li.remove();
+		 	selector.closest('li').addClass('current');
 		 	$.ajax({
 		       type: "POST",
 		       data: 'file=' + key,
@@ -136,21 +143,38 @@ $(document).ready(function(){
 		      success:function(e){
 		      	if(!select.length == 0){
 		      		add_folder_into_tree(select, name, getRef());
+		      		$('#justAdded a').trigger('click').parent().removeAttr('id')
 		      	} else {
 		      		add_folder_into_top_tree($('#folderList'), name, getRef());
 		      	}
+		      	$('#create_dir').val('')
 		      }
 		  });
 
 	});
 
 	if($('#my-awesome-dropzone').length > 0){
-		console.log(getRef())
 		var myDropzone = new Dropzone("#my-awesome-dropzone", {
 			thumbnailWidth: 219, 
 			thumbnailHeight:140,
 			params: {reference: getRef()}, 
-			url: '/admin/media/multipleupload'
+			url:  '/admin/media/multipleupload',
+			success: function(file, response){
+				if(response.code == 501){ // succeeded
+    				return file.previewElement.classList.add("dz-success"); // from source
+				} else if(response.code == 403){
+					var node, _i, _len, _ref, _results;
+					var message = response.msg // modify it to your error message
+					file.previewElement.classList.add("dz-error");
+					_ref = file.previewElement.querySelectorAll("[data-dz-errormessage]");
+					_results = [];
+					for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+					node = _ref[_i];
+					_results.push(node.textContent = message);
+					}
+					return _results;
+				}
+			}
 		});
 	}
 
@@ -184,19 +208,19 @@ $(document).ready(function(){
 
 	function addActive(opt){
 		opt.parent('li').addClass('active').addClass('current')
-		$('.icon-folder-close', opt).addClass('icon-folder-open')
-		$('.icon-folder-close', opt).removeClass('icon-folder-close')
+		$('.fa-folder', opt).addClass('fa-folder-open')
+		$('.fa-folder', opt).removeClass('fa-folder')
 	}
 
 	function removeActive(opt){
 		opt.parent('li').removeClass('active')
 		opt.parent('li').find('li.folderRow.active').each(function(){
 			$(this).removeClass('active')
-			$('.icon-folder-open', $(this)).addClass('icon-folder-close')
-			$('.icon-folder-open', $(this)).removeClass('icon-folder-open')
+			$('.fa-folder-open', $(this)).addClass('fa-folder')
+			$('.fa-folder-open', $(this)).removeClass('fa-folder-open')
 		})
-		$('.icon-folder-open', opt).addClass('icon-folder-close')
-		$('.icon-folder-open', opt).removeClass('icon-folder-open')
+		$('.fa-folder-open', opt).addClass('fa-folder')
+		$('.fa-folder-open', opt).removeClass('fa-folder-open')
 	}
 
 	function spinner(turnOff){
@@ -216,7 +240,7 @@ $(document).ready(function(){
 		      url: '/admin/media/get_via_ajax/',
 		      dataType: "html",
 		      data: 'key=' + $(opt).attr('data-key'),
-		      success:function(data){2
+		      success:function(data){
 		      	$('.showFiles').html(data);
 		      	spinner(true);
 		      }
@@ -244,6 +268,10 @@ $(document).ready(function(){
 		return $('#bucketReference').attr('data-key')
 	}
 
+	function getRefOrig(){
+		return $('#bucketReference').attr('data-ref')
+	}
+
 	function reset_drop(){
 		myDropzone.options.params.reference = getRef()
 	}
@@ -259,14 +287,16 @@ $(document).ready(function(){
 	}
 
 	function add_folder_into_top_tree(selector, name, ref){
-		selector.append('<li class="folderRow"><a data-hasfolder="false" data-key="' + ref + name + '/" href="" class="folderLink"><i class="icon-folder-close"></i>&nbsp;<span>' + name + '</span><i class="icon-remove"></i></a></li>');
+		selector.append('<li class="folderRow"><a data-hasfolder="false" data-key="' + getRefOrig() + name + '/" href="" class="folderLink"><i class="fa fa-folder"></i>&nbsp;<span>' + name + '</span><i class="fa fa-times"></i></a></li>');
 		spinner(true);
 
 	}
 
 
 	function add_folder_into_tree(selector, name, ref){
-		selector.parent().append('<ul><li class="folderRow"><a data-hasfolder="false" data-key="' + ref + name + '/" href="" class="folderLink"><i class="icon-folder-close"></i>&nbsp;<span>' + name + '</span><i class="icon-remove"></i></a></li></ul>');
+		selector.attr('data-hasfolder', true)
+		updateFolderDisable('true')
+		selector.parent().append('<ul><li id="justAdded" class="folderRow"><a data-hasfolder="false" data-key="' + ref + name + '/" href="" class="folderLink"><i class="fa fa-folder"></i>&nbsp;<span>' + name + '</span><i class="fa fa-times"></i></a></li></ul>');
 		spinner(true);
 
 	}

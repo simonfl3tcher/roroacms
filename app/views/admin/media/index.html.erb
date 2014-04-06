@@ -1,68 +1,30 @@
-<div class="row-fluid">
-  <div class="span12">
-          
-    <h2 class="title">Media Area</h2>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="row-fluid">
+            <% if params[:manualBrowse].blank? %>
+            	<h2 class="title">Media Area
+                </h2>
+                <h6 class="pull-right">Current Storage Size: <strong><%= get_folder_size(@path) %></strong></h6>
+            <% end %>
 
-<!--     <div class="well">
-
-    <%= link_to admin_filebrowser_index_path, :id => 'filebrowser' do %>
-    	<button class="pull-left btn btn-small btn-warning"><span class="icon-plus"></span>&nbsp;Upload Media</button>
-  	<% end %>
-
-
-	<%= link_to 'https://console.aws.amazon.com/s3/', :target => "_blank" do %>
-    	<button class="pull-right btn btn-small btn-warning"><span class="icon-plus"></span>&nbsp;Launch S3 Console</button>
-  	<% end %>
-  	
-      <div class="clearboth"></div>
-    </div> -->
-
-    <%= render 'media_area' %>
-
-    <div class="clearboth"></div>
-    <div class="clearboth"></div>
-
-		
-	</div>
-</div>
-
-<% if params[:manualBrowse] || params[:CKEditor] %>
-	<% if params[:manualBrowse] %>
-
-		<script type="text/javascript">
-			
-			$('.fileMenu').on('dblclick', '.span3', function(){
-				var image = $('img', $(this)).attr('data-image');
-				console.log(image);
-				sendUrl(image);
-			});
-
-			function sendUrl(image){
-				window.opener.returnImageFunction(image)
-				window.close();
-			}
-
-		</script>
-
-	<% else %>
-
-		<script type="text/javascript">
-			
-			$('.fileMenu').on('dblclick', '.span3', function(){
-				var image = $('img', $(this)).attr('data-image');
-				getUrl(1, image);
-			});
-
-			function getUrl(cback, image_file){
-				window.opener.CKEDITOR.tools.callFunction(cback, image_file);
-				window.close();
-			}
-
-		</script>
+        </div>
 
 
-	<% end %>
-<% end %>
+        <br>
 
+        <% if params[:manualBrowse].blank? %>
 
+        	<%= render 'media_area' %>
 
+        <% else %>
+
+        	<%= render 'media_table' %>
+
+        <% end %>
+
+        <div class="clearboth"></div>
+        <div class="clearboth"></div>
+
+    		
+    	</div>
+    </div>
