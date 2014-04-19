@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20140418085134) do
 
   create_table "admins", :force => true do |t|
     t.string   "email"
@@ -54,8 +54,15 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "comments", ["ancestry"], :name => "index_comments_on_ancestry"
 
+  create_table "contact_forms", :force => true do |t|
+    t.string "name",    :default => "", :null => false
+    t.text   "message",                 :null => false
+    t.string "email",   :default => "", :null => false
+    t.string "subject", :default => "", :null => false
+  end
+
   create_table "menu_options", :force => true do |t|
-    t.integer  "menu_id"
+    t.integer "menu_id"
     t.integer "option_id"
     t.integer "parent_id"
     t.string  "data_type"
@@ -73,7 +80,7 @@ ActiveRecord::Schema.define(:version => 0) do
   create_table "posts", :force => true do |t|
     t.integer  "admin_id"
     t.datetime "post_date"
-    t.text     "post_content"
+    t.text     "post_content",         :limit => 2147483647
     t.text     "post_title"
     t.string   "post_status"
     t.string   "post_template"
@@ -124,6 +131,16 @@ ActiveRecord::Schema.define(:version => 0) do
     t.integer  "term_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  add_index "term_relationships_banners", ["banner_id"], :name => "post_id"
+
+  create_table "terms", :force => true do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
 end

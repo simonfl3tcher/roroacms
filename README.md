@@ -129,3 +129,10 @@ Licensed under the [MIT License](http://creativecommons.org/licenses/MIT/)
 Copyright 2012 [Simon Fletcher](https://github.com/fletcher890)
 
 Icons from [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
+
+## Other Information
+
+* Project homepage: http://roroacms.co.uk
+* Wiki : https://github.com/fletcher890/roroacms/wiki
+* Mailing list: https://groups.google.com/forum/#!forum/roroacms
+* Version: 1.0
