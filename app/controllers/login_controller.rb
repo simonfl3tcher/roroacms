@@ -1,3 +1,4 @@
 class LoginController < ApplicationController   
-  layout "login" 
+	# Change the layout for the login page
+    layout "login" 
 end

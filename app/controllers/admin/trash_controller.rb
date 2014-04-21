@@ -1,6 +1,5 @@
 class Admin::TrashController < AdminController
 
-	before_filter :authorize_admin
 	before_filter :authorize_admin_access
 
 	def index 

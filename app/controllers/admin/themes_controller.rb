@@ -1,6 +1,5 @@
 class Admin::ThemesController < AdminController
 
-	before_filter :authorize_admin
 	include AdminRoroaHelper
 	
 	def index 
