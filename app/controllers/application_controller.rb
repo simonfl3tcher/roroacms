@@ -47,13 +47,9 @@ class ApplicationController < ActionController::Base
     @current_admin = Admin.find(session[:admin_id]) if session[:admin_id]
 
     if !@current_admin.nil?
-
       return @current_admin.access_level
-
     else
-
       return false;
-
     end
   end
 
@@ -65,9 +61,8 @@ class ApplicationController < ActionController::Base
   # checks to see if the admin logged in has the necesary rights, if not it will redirect them with an error message
   def authorize_admin_access
     if current_admin_access == 'editor'
-
+      
       flash[:error] = "Not authorized"
-
       redirect_to admin_path
 
     end
