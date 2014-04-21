@@ -11,21 +11,16 @@ class Admin::PostsController < AdminController
 	# that you can assign to the post.
 
 	def new
-		
 		# get the systems categories
 		@categories = Post.get_cats
-		
 		# get the systems tags
 		@tags = Post.get_tags
-
 	    @post = Post.new
-	
 	end
 
 	# create the post object
 
 	def create
-		 
 		@post = Post.new(post_params)
 
 		# simply does some checks and updates so the data is correct when entering the data
@@ -50,13 +45,11 @@ class Admin::PostsController < AdminController
 		  end
 
 		end
-
 	end
 
 	# gets and displays the post object with the necessary dependencies 
 
 	def edit 
-
 		@edit = true
 
 		# get categories and tags
@@ -67,13 +60,11 @@ class Admin::PostsController < AdminController
 		@revisions = Post.where(:ancestry => params[:id], :post_type => 'autosave').order('created_at desc')
 
 		@post = Post.find(params[:id])
-
 	end
 
 	# updates the post object with the updates params
 
 	def update
-
 	    @post = Post.find(params[:id])
 
 	    respond_to do |format|
@@ -89,26 +80,22 @@ class Admin::PostsController < AdminController
 	      end
 
 	    end
-	    
 	end
 
 	# delete the post
 
 	def destroy
-
 	    Post.disable_post params[:id]
 
 	    respond_to do |format|
 	      format.html { redirect_to admin_posts_path, notice: 'Post was successfully put into trash can.' }
 	    end
-
 	end
 
 	# is called via an ajax call on BOTH post/page this saves the current state post every 2 mins
 	# and saves it as a "autosave" these posts are then displayed as revisions underneath the post editor
 
 	def autosave_update
-		
 		@post = Post.new(post_params)
 		ret = Post.do_autosave params, @post
 
@@ -121,7 +108,6 @@ class Admin::PostsController < AdminController
 		else
 			return render :text => "failed" 
 		end
-
 	end
 
 	# Takes all of the checked options and updates them with the given option selected. 
@@ -131,21 +117,21 @@ class Admin::PostsController < AdminController
 	# - Move to trash
 
 	def bulk_update
-
 		notice = Post.bulk_update params, 'posts'
 
 		respond_to do |format|
 	      format.html { redirect_to admin_posts_path, notice: notice }
 	    end
-
 	end
 
-	def post_params
+	private 
 
+	# Strong parameter
+
+	def post_params
 		if !session[:admin_id].blank?	
 			params.require(:post).permit(:admin_id, :post_content, :post_date, :post_name, :parent_id, :post_slug, :post_status, :post_title, :post_template, :post_type, :disabled, :post_seo_title, :post_seo_description, :post_seo_keywords, :post_seo_is_disabled, :post_seo_no_follow, :post_seo_no_index)
 		end
-
 	end
 
 end

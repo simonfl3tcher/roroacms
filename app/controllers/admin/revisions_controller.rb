@@ -16,9 +16,7 @@ class Admin::RevisionsController < AdminController
 	end
 
 	def restore
-		
 		post = Post.find(params[:id])
-		
 		# do the restore
 		restore = Post.restore post
 
@@ -28,7 +26,6 @@ class Admin::RevisionsController < AdminController
 		else
 			redirect_to edit_admin_post_path(restore.id), notice: 'Post was successfully restored.'
 		end
-
 	end
 
 end

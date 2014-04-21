@@ -20,25 +20,33 @@ class Admin::AdministratorsController < AdminController
 
 		# only allowed to edit the super user if you are the super user.
 		if @admin.overlord == 'Y' && @admin.id != session[:admin_id]
+			
 			respond_to do |format|
+				
 				flash[:error] = "You are unable to edit the superuser administrator"
-			 	 format.html { redirect_to admin_administrators_path }
+			 	format.html { redirect_to admin_administrators_path }
+		    
 		    end
+		
 		end
 	end
 
 	# update the admins object
 
 	def update
+
 	    @admin = Admin.find(params[:id])
 
 	    respond_to do |format|
+
 	      if @admin.update_attributes(administrator_params)
 	        format.html { redirect_to edit_admin_administrator_path(@admin), notice: 'Admin was successfully updated.' }
 	      else
 	        format.html { render action: "edit" }
 	      end
+
 	    end
+
 	end
 
 	# Delete the admin, one thing to remember is you are not allowed to destory the super user.
@@ -51,7 +59,6 @@ class Admin::AdministratorsController < AdminController
 	    respond_to do |format|
 	      format.html { redirect_to admin_administrators_path, notice: 'Admin was successfully deleted.' }
 	    end
-
 	end
 
 	# create a new admin object
@@ -67,16 +74,22 @@ class Admin::AdministratorsController < AdminController
 		@admin = Admin.new(administrator_params)
 
 		respond_to do |format|
+		  
 		  if @admin.save
+
 		  	Notifier.profile(@admin).deliver
 		    format.html { redirect_to admin_administrators_path, notice: 'Admin was successfully created.' }
+
 		  else
 		    format.html { render action: "new" }
 		  end
+
 		end
 	end
 	
 	private
+
+	# Strong parameter
 
 	def administrator_params
 		if !session[:admin_id].blank?

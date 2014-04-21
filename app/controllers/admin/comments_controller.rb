@@ -27,7 +27,6 @@ class Admin::CommentsController < AdminController
 	# update the comment. You are able to update everything about the comment as an admin
 
 	def update
-	    
 	    @comment = Comment.find(params[:id])
 	    atts = comments_params
 	    #  remove any html from the comment as we do not need it and it can be detrimental to the system
@@ -42,7 +41,6 @@ class Admin::CommentsController < AdminController
 	      end
 
 	    end
-
 	end
 
 	# bulk_update function takes all of the checked options and updates them with the given option selected. The options for the bulk update in comments area are
@@ -65,7 +63,6 @@ class Admin::CommentsController < AdminController
 	# the record is then not visable unless you explicity tell the system that you want to see spam records.
 
 	def mark_as_spam
-
 		comment = Comment.find(params[:id])
 		comment.comment_approved = "S"
 		respond_to do |format|
@@ -78,6 +75,8 @@ class Admin::CommentsController < AdminController
 	end
 
 	private
+
+	# Strong parameter
 
 	def comments_params
 		if !session[:admin_id].blank?
