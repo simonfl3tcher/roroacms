@@ -6,7 +6,7 @@ class Admin::TermsController < AdminController
 
 		@categories = Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy).page(params[:page]).per(Setting.get_pagination_limit)
 		@category = Term.new
-		
+
 	end
 
 	# displays all the current tags and creates a new category object for creating a new one
@@ -83,6 +83,7 @@ class Admin::TermsController < AdminController
 	# delete the term
 
 	def destroy
+		
 		# return url will be different for either tag or category
 	    session[:return_to] = request.referer
 
