@@ -1,22 +1,33 @@
 class Admin::AdministratorsController < AdminController
 
+	# Make sure that only the super user is allowed to create new admin accounts. 
+	# This is to stop people allowing themselves more access than they area allowed
 	before_filter :authorize_admin_access, :except => [:edit, :update]
-		
+
+	# show all of the admins for the system
+
 	def index
 		@admins = Admin.setup_and_search params
 	end
 
+	# get and disply certain admin
+
 	def edit
 		@admin = Admin.find(params[:id])
+		
+		# action for the form as both edit/new are using the same form.
 		@action = 'update'
 
+		# only allowed to edit the super user if you are the super user.
 		if @admin.overlord == 'Y' && @admin.id != session[:admin_id]
 			respond_to do |format|
-				flash[:error] = "You are unable to editing the superuser administrator"
+				flash[:error] = "You are unable to edit the superuser administrator"
 			 	 format.html { redirect_to admin_administrators_path }
 		    end
 		end
 	end
+
+	# update the admins object
 
 	def update
 	    @admin = Admin.find(params[:id])
@@ -30,6 +41,9 @@ class Admin::AdministratorsController < AdminController
 	    end
 	end
 
+	# Delete the admin, one thing to remember is you are not allowed to destory the super user.
+	# You are only allowed to destroy yourself unless you are the super user.
+
 	def destroy
 	    @admin = Admin.find(params[:id])
 	    @admin.destroy
@@ -40,10 +54,14 @@ class Admin::AdministratorsController < AdminController
 
 	end
 
+	# create a new admin object
+
 	def new
 	    @admin = Admin.new
 	    @action = 'create'
 	end
+
+	# actually create the new admin with the given param data
 
 	def create
 		@admin = Admin.new(administrator_params)

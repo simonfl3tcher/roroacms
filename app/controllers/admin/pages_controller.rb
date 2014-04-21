@@ -1,52 +1,86 @@
 class Admin::PagesController < AdminController
 
+	# displays all the "posts" with the post_type of "page". This is also set up 
+	# to take search parameters so you can search for an individual page itself.
+
 	def index
 		@pages = Post.setup_and_search_posts params, 'page'
-
 	end
+
+	# creates a new post object
 
 	def new
 	    @page = Post.new
 	end
 
+	# create the post object
+
 	def create
+
 		@page = Post.new(page_params)
+
+		# simply does some checks and updates so the data is correct when entering the data
+		# the things it checks/updates are:-
+		# - post slug
+		# - post status
+		# - structured url
 
 		@page.deal_with_abnormalaties
 
 		respond_to do |format|
+
 		  if @page.save
 		    format.html { redirect_to admin_pages_path, notice: 'Page was successfully created.' }
 		  else
 		    format.html { render action: "new" }
 		  end
+
 		end
+
 	end
+
+	# gets and displays the post object with the necessary dependencies 
 
 	def edit 
+
 		@edit = true
+		
+		# the system creates revisions every 2 mins. Gets these revisions and lists them out below the editor
 		@revisions = Post.where(:ancestry => params[:id], :post_type => 'autosave').order('created_at desc')
+
 		@page = Post.find(params[:id])
+
 	end
 
+	# updates the post object with the updates params
+
 	def update
-		Rails.cache.clear 
-	    @page = Post.find(params[:id])
-	    cur_url = @page.post_slug
 	    
+	    @page = Post.find(params[:id])
+	    
+	    # gets the current url
+	    cur_url = @page.post_slug
+
+	    # again deals with any bnormalaties
 	    @page.deal_with_abnormalaties
 
 	    respond_to do |format|
+	      
 	      if @page.update_attributes(page_params)
-	      	
+
+	      	# updates the old url and replaces it with the new URL if the name has changed.
 	      	Post.deal_with_slug_update params, cur_url
-	        
 	        format.html { redirect_to edit_admin_page_path(@page), notice: 'Page was successfully updated.' }
+
 	      else
 	        format.html { render action: "edit" }
 	      end
+
 	    end
+
 	end
+
+	# deletes the post
 
 	def destroy
 	   Post.disable_post params[:id]
@@ -55,6 +89,11 @@ class Admin::PagesController < AdminController
 	    end
 	end
 
+	# Takes all of the checked options and updates them with the given option selected. 
+	# The options for the bulk update in pages area are:-
+	# - Publish
+	# - Draft
+	# - Move to trash
 
 	def bulk_update
 		notice = Post.bulk_update params, 'pages'
