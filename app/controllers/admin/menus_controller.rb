@@ -64,7 +64,7 @@ class Admin::MenusController < AdminController
 
 	private 
 
-	# Strong parameter
+	# Strong parameters
 
 	def menu_params
 		if !session[:admin_id].blank?
