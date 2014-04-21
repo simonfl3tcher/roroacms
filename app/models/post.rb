@@ -1,272 +1,287 @@
 class Post < ActiveRecord::Base
   
-  has_ancestry
-  
-  
-  belongs_to :admin
-  has_many :post_abstractions
-  has_many :attachments
+    has_ancestry
 
-  has_many :term_relationships, :dependent => :destroy
-  has_many :terms, :through => :term_relationships
+    # relations, validations and scope
 
-  has_many :child, :class_name => "Post", :foreign_key => "parent_id", conditions: "post_type != 'autosave'"
+    belongs_to :admin
+    has_many :post_abstractions
+    has_many :attachments
+    has_many :term_relationships, :dependent => :destroy
+    has_many :terms, :through => :term_relationships
+    has_many :child, :class_name => "Post", :foreign_key => "parent_id", conditions: "post_type != 'autosave'"
 
-  validates :post_title, :presence => true
-  validates_uniqueness_of :post_slug, :scope => [:post_type]
+    validates :post_title, :presence => true
+    validates_uniqueness_of :post_slug, :scope => [:post_type]
+    validates_format_of :post_slug, :with => /^[A-Za-z0-9-]*$/
 
-  validates_format_of :post_slug, :with => /^[A-Za-z0-9-]*$/
+    scope :from_this_year, where("post_date > ? AND < ?", Time.now.beginning_of_year, Time.now.end_of_year)
 
-  POST_STATUS = ["Published", "Draft", "Disabled"]
+    # general data that doesn't change very often
 
-  
-  POST_TAGS = Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy)
-  POST_CATEGORIES = Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
+    POST_STATUS = ["Published", "Draft", "Disabled"]
+    POST_TAGS = Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy)
+    POST_CATEGORIES = Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
 
-  scope :from_this_year, where("post_date > ? AND < ?", Time.now.beginning_of_year, Time.now.end_of_year)
+    # get all the posts/pages in the system - however if there is a search parameter 
+    # search the necessary fields for the given value
 
+    def self.setup_and_search_posts(params, type)
+        if params.has_key?(:search) && !params[:search].blank?
+            posts = Post.where("(id LIKE ? or post_title LIKE ? or post_slug LIKE ?) and disabled = 'N' and post_type = ? and post_status != 'Autosave'", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", type)
+        else
+            posts = Post.select('*').where("disabled ='N' and post_type = '#{type}'").order("COALESCE(ancestry, id), ancestry IS NOT NULL, id")
 
-  def self.setup_and_search_posts(params, type)
-      
-      posts = Post.select('*').where("disabled ='N' and post_type = '#{type}'").order("COALESCE(ancestry, id), ancestry IS NOT NULL, id")
-
-      if type == 'post'
-        posts = posts.page(params[:page]).per(Setting.get_pagination_limit)
-      end
-      if params.has_key?(:search) && !params[:search].blank?
-        posts = Post.where("(id like ? or post_title like ? or post_slug like ?) and disabled = 'N' and post_type = ? and post_status != 'Autosave'", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", type)
-      end
-
-      return posts
-
-  end
-
-  def self.get_tags
-    terms = Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy)
-    return terms
-
-  end
-
-  def self.get_cats
-    cats = Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
-    return cats
-
-  end
-
-  def self.get_records(off, type)
-    posts = Post.where(:disabled => 'N', :post_type => type).order("COALESCE(ancestry, id), ancestry IS NOT NULL, id").limit(10).offset(off)
-    return posts
-
-  end
-
-  def self.deal_with_categories(post, cats, tags, del = false) 
-
-      @delcats = TermRelationship.where(:post_id => post.id)
-
-      if del 
-        if !@delcats.blank?
-              @delcats.each do |f|
-
-              @cat = TermRelationship.find(f.id)
-              @cat.destroy
-
-              end
-          end
-      end
-
-      if !cats.blank?
-          cats.each do |val|
-          TermRelationship.create(:term_id => val, :post_id => post.id)
-        end
-      end
-      if !tags.blank?
-          tags.each do |val|
-          TermRelationship.create(:term_id => val, :post_id => post.id)
-        end
-      end
-
-  end
-
-  def self.deal_with_slug_update(params, current_url)
-
-    if current_url != params[:post][:post_slug]
-
-       p = Post.where("(structured_url like ?)", "%#{current_url}%")
-
-        p.each do |pst|
-          pst.structured_url = pst.structured_url.gsub("/#{current_url}", "/#{params[:post][:post_slug]}")
-          pst.save
-        end      
-    else 
-      # Do nothing then
-    end
-
-  end
-
-  def self.disable_post(post_id)
-
-    post = Post.find(post_id)
-    post.disabled = "Y"
-    post.save
-
-  end
-
-
-  def deal_with_abnormalaties
-
-   if self.post_slug.empty?
-      self.post_slug = self.post_title.gsub(' ', '-').downcase
-    end
-
-    if self.post_status.blank?
-      self.post_status = 'Draft'
-    end
-
-    if self.parent_id
-      self.structured_url = "#{self.parent.structured_url}/#{self.post_slug}"
-    else
-      self.structured_url = "/#{self.post_slug}"
-    end
-
-  end
-
-  def self.sort_url_structure(post)
-
-    if post.parent_id
-      url = "#{post.parent.structured_url}/#{post.post_slug}"
-    else
-      url = "/#{post.post_slug}"
-    end
-
-    return url
-
-  end
-
-  def self.do_autosave(params, post)
-
-    parent = params[:post][:id]
-    @autosave_records = Post.where("ancestry = ? and post_type = 'autosave'", parent).order("created_at DESC")
-
-    if @autosave_records.length > 9
-      Post.destroy(@autosave_records.last[:id])
-    end
-    
-    # Do the autosave
-    @cats = params[:category_ids]
-
-    post.id = nil
-    post.parent_id = params[:post][:id]
-
-    if post.post_slug.empty?
-      post.post_slug = post.post_title.gsub(' ', '-')
-    end
-
-    post.post_status = 'Autosave'
-    post.post_type = 'autosave'
-
-    post.post_content = params[:ck_content]
-
-    if post.save(:validate => false)
-      @delcats = TermRelationship.where(:post_id => post.id)
-
-          if !@delcats.blank?
-            @delcats.each do |f|
-
-              @cat = TermRelationship.find(f.id)
-            @cat.destroy
-
+            if type == 'post'
+              posts = posts.page(params[:page]).per(Setting.get_pagination_limit)
             end
         end
-        
-        if !@cats.blank?
-        @cats.each do |val|
-          TermRelationship.create(:term_id => val, :post_id => post.id)
+
+        posts
+    end
+
+    # get all the tags for the system
+
+    def self.get_tags
+        Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy)
+    end
+
+    # get all the categories for the system
+
+    def self.get_cats
+        Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
+    end
+
+    # get all the records but with an offset/limit
+
+    def self.get_records(off, type)
+        Post.where(:disabled => 'N', :post_type => type).order("COALESCE(ancestry, id), ancestry IS NOT NULL, id").limit(10).offset(off)
+    end
+
+    # gets called when a post gets saved to add categories/tags against the post
+
+    def self.deal_with_categories(post, cats, tags, delete = false) 
+
+        @delcats = TermRelationship.where(:post_id => post.id)
+
+        # if delete is true it will remove all relationships with that individual post
+
+        if delete 
+            if !@delcats.blank?
+                @delcats.each do |f|
+                    @cat = TermRelationship.find(f.id)
+                    @cat.destroy
+                end
+            end
         end
-      end
-      
-      return "passed"
-    else
-      return "failed" 
-    end
-  end
 
-  def self.restore(post) 
+        # if categories is not blank it will create a new relationship with that post
 
-    parent = Post.find(post.parent_id)
+        if !cats.blank?
+            cats.each do |val|
+                TermRelationship.create(:term_id => val, :post_id => post.id)
+            end
+        end
 
-    parent.post_content = post.post_content
-    parent.post_date = post.post_date
-    parent.post_name = post.post_name
-    parent.post_slug = post.post_slug
-    parent.post_title = post.post_title
-    parent.disabled = post.disabled
+        # if tags is not blank it will create a new relationship with that post
 
-    parent.save
-
-    return parent
-
-  end
-
-  def self.bulk_update(params, type)
-
-    action = params[:to_do]
-    action = action.gsub(' ', '_')
-
-    if type == 'pages'
-      act = params[:pages]
-    else
-      act = params[:posts]
-    end
-
-    if act.nil?
-      action = ""
-    end
-
-    case action.downcase 
-      
-      when "publish"
-        bulk_update_publish act
-            return "#{type.capitalize} were successfully published"
-      when "draft"
-        bulk_update_draft act
-            return "#{type.capitalize} were successfully set to draft"
-      when "move_to_trash"
-        bulk_update_move_to_trash act
-            return "#{type.capitalize} were successfully moved to trash"
-      else
-      
-      respond_to do |format|
-          return 'Nothing was done'
+        if !tags.blank?
+            tags.each do |val|
+                TermRelationship.create(:term_id => val, :post_id => post.id)
+            end
         end
     end
 
-  end
+    # if the post slug is not the same as the old slug. it will update the structured url against the record
 
-  private 
+    def self.deal_with_slug_update(params, current_url)
 
-  def self.bulk_update_publish(params)
-    params.each do |val|
-      post = Post.find(val)
-      post.post_status = "Published"
-      post.post_date = Time.now.utc.to_s(:db)
-      post.save
+        if current_url != params[:post][:post_slug]
+            p = Post.where("(structured_url like ?)", "%#{current_url}%")
+            p.each do |pst|
+                pst.structured_url = pst.structured_url.gsub("/#{current_url}", "/#{params[:post][:post_slug]}")
+                pst.save
+            end 
+        else 
+            # Do nothing then
+        end
+
     end
-  end
 
-  def self.bulk_update_draft(params)
-    params.each do |val|
-      post = Post.find(val)
-      post.post_status = "Draft"
-      post.save
-    end 
-  end
+    # disables the post essentially putting it into the trash area
 
-  def self.bulk_update_move_to_trash(params)
-    params.each do |val|
-      post = Post.find(val)
-      post.disabled ="Y"
-      post.save
+    def self.disable_post(post_id)
+        post = Post.find(post_id)
+        post.disabled = "Y"
+        post.save
     end
-  end
+
+    # will make sure that specific data is correctly formatted for the database
+
+    def deal_with_abnormalaties
+
+        # if the slug is empty it will take the title and create a slug
+        if self.post_slug.empty?
+            self.post_slug = self.post_title.gsub(' ', '-').downcase
+        end
+
+        # if post status is left blank it will set the status to draft
+        if self.post_status.blank?
+            self.post_status = 'Draft'
+        end
+
+        # if the post has a parent it will prefix the structured url with its parents url
+        if self.parent_id
+            self.structured_url = "#{self.parent.structured_url}/#{self.post_slug}"
+        else
+            self.structured_url = "/#{self.post_slug}"
+        end
+
+    end
+
+    # creates a revision record of the post
+
+    def self.do_autosave(params, post)
+
+        parent = params[:post][:id]
+        @autosave_records = Post.where("ancestry = ? and post_type = 'autosave'", parent).order("created_at DESC")
+
+        # if the amount of records is equal to 10 remove the last one
+        if @autosave_records.length > 9
+            Post.destroy(@autosave_records.last[:id])
+        end
+
+        # Do the autosave
+        @cats = params[:category_ids]
+
+        # create the settings for the revision record
+
+        post.id = nil
+        post.parent_id = params[:post][:id]
+
+        if post.post_slug.empty?
+            post.post_slug = post.post_title.gsub(' ', '-')
+        end
+
+        post.post_status = 'Autosave'
+        post.post_type = 'autosave'
+
+        post.post_content = params[:ck_content]
+
+        # save the post and its categories/tags
+        if post.save(:validate => false)
+            
+            @delcats = TermRelationship.where(:post_id => post.id)
+
+            if !@delcats.blank?
+                @delcats.each do |f|
+                    @cat = TermRelationship.find(f.id)
+                    @cat.destroy
+                end
+            end
+
+            if !@cats.blank?
+                @cats.each do |val|
+                    TermRelationship.create(:term_id => val, :post_id => post.id)
+                end
+            end
+
+            return "passed"
+
+        else
+            return "failed" 
+        end
+
+    end
+
+    # restore the given post back to the revision record data
+
+    def self.restore(post) 
+
+        parent = Post.find(post.parent_id)
+
+        parent.post_content = post.post_content
+        parent.post_date = post.post_date
+        parent.post_name = post.post_name
+        parent.post_slug = post.post_slug
+        parent.post_title = post.post_title
+        parent.disabled = post.disabled
+
+        parent.save
+
+        return parent
+
+    end
+
+    # is the bootstrap for the bulk update function. It takes in the call
+    # and decides what function to call in order to get the correct output
+
+    def self.bulk_update(params, type)
+
+        action = params[:to_do]
+        action = action.gsub(' ', '_')
+
+        if type == 'pages'
+            act = params[:pages]
+        else
+            act = params[:posts]
+        end
+
+        if act.nil?
+            action = ""
+        end
+
+        case action.downcase 
+
+            when "publish"
+                bulk_update_publish act
+                return "#{type.capitalize} were successfully published"
+            when "draft"
+                bulk_update_draft act
+                return "#{type.capitalize} were successfully set to draft"
+            when "move_to_trash"
+                bulk_update_move_to_trash act
+                return "#{type.capitalize} were successfully moved to trash"
+            else
+
+            respond_to do |format|
+                return 'Nothing was done'
+            end
+        end
+
+    end
+
+    private 
+
+    # update all of the given records to have a post_status of published
+
+    def self.bulk_update_publish(params)
+        params.each do |val|
+            post = Post.find(val)
+            post.post_status = "Published"
+            post.post_date = Time.now.utc.to_s(:db)
+            post.save
+        end
+    end
+
+    # update all of the given records to have a post_status of draft
+
+    def self.bulk_update_draft(params)
+        params.each do |val|
+            post = Post.find(val)
+            post.post_status = "Draft"
+            post.save
+        end 
+    end
+
+    # move all of the given records into the trash
+
+    def self.bulk_update_move_to_trash(params)
+        params.each do |val|
+            post = Post.find(val)
+            post.disabled ="Y"
+            post.save
+        end
+    end
 
 end
