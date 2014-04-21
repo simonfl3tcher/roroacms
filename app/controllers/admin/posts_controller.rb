@@ -126,7 +126,7 @@ class Admin::PostsController < AdminController
 
 	private 
 
-	# Strong parameter
+	# Strong parameters
 
 	def post_params
 		if !session[:admin_id].blank?	
