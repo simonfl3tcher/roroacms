@@ -13,7 +13,6 @@ class Media < ActiveRecord::Base
 		else 
 			# if url is defined it will either get all objects inside a directory or get an inidividual
 			# file depending on the type of string passed in through prefix
-
 			files = AWS::S3::Bucket.objects(Setting.find_by_setting_name('aws_bucket_name')[:setting], :prefix => url)
 		end
 		
