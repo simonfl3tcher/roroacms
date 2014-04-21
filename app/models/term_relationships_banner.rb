@@ -1,6 +1,5 @@
 class TermRelationshipsBanner < ActiveRecord::Base
-  
-  belongs_to :banner
-  belongs_to :term
-
+	# relations and validations
+	belongs_to :banner
+	belongs_to :term
 end
