@@ -1,26 +1,24 @@
 class Notifier < ActionMailer::Base
-  default from: "simonfletcher0@gmail.com"
+  default from: Setting.find_by_setting_name('site_email')[:setting]
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.notifier.profile.subject
-  #
+  # sends an email to the admin email address (set in the admin panel)
+  # notifying them that a new administrator has been set up
   def profile admin = nil
     @admin = admin
     mail to: Setting.find_by_setting_name('site_email')[:setting]
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.notifier.comment.subject
-  #
+  # sends an email to the admin email address (set in the admin panel)
+  # when someone comments on a blog post
+
   def comment com
     @comment = com
 
     mail to: Setting.find_by_setting_name('site_email')[:setting]
   end
+
+  # sends an email to the admin email address (set in the admin panel)
+  # when someone sends an email via the contact form
 
   def contact_form params
     @params = params
