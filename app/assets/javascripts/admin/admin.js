@@ -31,7 +31,7 @@ $(document).ready(function(){
 	            });
 	          } 
 	        }
-	    }, 10000);
+	    }, 120000);
 	}
 
     /* URL writer when writing the title of the page */
@@ -47,8 +47,6 @@ $(document).ready(function(){
 	$("select").select2({ placeholder: "Please select"	, allowClear: true});
 
 	$.scrollUp();
-
-	// $('#main-nav li a').tooltip({placement: 'bottom'})
  
 
 })

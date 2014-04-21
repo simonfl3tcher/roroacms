@@ -1,14 +1,18 @@
 class Admin::Settings::GeneralController < AdminController
 
-	before_filter :authorize_admin
+	# This controller is used for the settings page. This simply relates to all of the settings that are set in the database
+
 	before_filter :authorize_admin_access
 
 	def create
 
 		redirect = params[:redirect]
 
+		# To do update this table we loop through the fields and update the key with the value. 
+		# In order to do this we need to remove any unnecessary keys from the params hash
 		remove_unwanted_keys
 
+		# loop through the param fields and update the key with the value
 		params.each do |key, value|
 			set = Setting.where("setting_name = '#{key}'").update_all('setting' => value)
 		end
@@ -23,6 +27,7 @@ class Admin::Settings::GeneralController < AdminController
 
 	private
 
+	# removes any unnecessary param field ready for the loop in the create function 
 	def remove_unwanted_keys
 
 		params.delete :utf8

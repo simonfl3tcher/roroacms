@@ -1,6 +1,10 @@
 class Admin::TermRelationshipController < AdminController
 
+	# TermRelationship is relation table. So in order to remove a relation 
+	# you remove the record
+
 	def destroy
+	   
 	    @term = TermRelationship.find(params[:id])
 	    @term.destroy
 

@@ -1,9 +1,7 @@
 class Admin::DashboardController < AdminController
 
-	before_filter :authorize_admin
-
+	# interface to the admin dashboard
 	def index 
-
 	end
 
 end
