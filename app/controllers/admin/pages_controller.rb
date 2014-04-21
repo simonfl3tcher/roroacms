@@ -16,7 +16,6 @@ class Admin::PagesController < AdminController
 	# create the post object
 
 	def create
-
 		@page = Post.new(page_params)
 
 		# simply does some checks and updates so the data is correct when entering the data
@@ -36,26 +35,22 @@ class Admin::PagesController < AdminController
 		  end
 
 		end
-
 	end
 
 	# gets and displays the post object with the necessary dependencies 
 
 	def edit 
-
 		@edit = true
 		
 		# the system creates revisions every 2 mins. Gets these revisions and lists them out below the editor
 		@revisions = Post.where(:ancestry => params[:id], :post_type => 'autosave').order('created_at desc')
 
 		@page = Post.find(params[:id])
-
 	end
 
 	# updates the post object with the updates params
 
 	def update
-	    
 	    @page = Post.find(params[:id])
 	    
 	    # gets the current url
@@ -77,13 +72,12 @@ class Admin::PagesController < AdminController
 	      end
 
 	    end
-
 	end
 
 	# deletes the post
 
 	def destroy
-	   Post.disable_post params[:id]
+	    Post.disable_post params[:id]
 	    respond_to do |format|
 	      format.html { redirect_to admin_pages_path, notice: 'Page was successfully put into trash can.' }
 	    end
@@ -96,6 +90,7 @@ class Admin::PagesController < AdminController
 	# - Move to trash
 
 	def bulk_update
+		# returns a message to disply to the user
 		notice = Post.bulk_update params, 'pages'
 		respond_to do |format|
 	      format.html { redirect_to admin_pages_path, notice: notice }

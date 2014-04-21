@@ -5,7 +5,6 @@ class Admin::Settings::GeneralController < AdminController
 	before_filter :authorize_admin_access
 
 	def create
-
 		redirect = params[:redirect]
 
 		# To do update this table we loop through the fields and update the key with the value. 
@@ -22,24 +21,24 @@ class Admin::Settings::GeneralController < AdminController
 		respond_to do |format|
 			format.html { redirect_to send(redirect_url), notice:  "Settings were updated" }
 		end
-		
 	end
 
 	private
 
 	# removes any unnecessary param field ready for the loop in the create function 
 	def remove_unwanted_keys
-
 		params.delete :utf8
 		params.delete :authenticity_token
 		params.delete :commit
 		params.delete :redirect
-
 	end
 
 	private 
 
+	# Strong parameter
+
 	def settings_params
 		params.permit(:setting_name, :setting)
 	end
+
 end

@@ -7,10 +7,8 @@ class Admin::MenusController < AdminController
 	# for the form to create a new menu object if desired
 
 	def index
-
 		@menu = Menu.new
 		@menugroups = Menu.all
-		
 	end
 
 	# create a new (empty) menu object from the form on the index page.
@@ -30,7 +28,6 @@ class Admin::MenusController < AdminController
 		  end
 
 		end
-
 	end
 
 	# get menu object and display it for editing
@@ -42,11 +39,9 @@ class Admin::MenusController < AdminController
 	# saves the menu on the fly via ajax. This usually gets called if there is any change to the menu object
 
 	def save_menu
-
 		if Menu.save_menu_on_fly params
 			render :inline => 'done'
 		end
-
 	end
 
 	# when you add an option to the menu this creates an edit form to allow you to edit the option straight away
@@ -59,22 +54,22 @@ class Admin::MenusController < AdminController
 	# which is then interpreted when you save the menu as a whole.
 
 	def destroy 
-
 		@menu = Menu.find(params[:id])
 	    @menu.destroy
 
 	    respond_to do |format|
 	      format.html { redirect_to admin_menus_path, notice: "Menu group successfully deleted." }
 	    end
-	    
 	end
 
-	def menu_params
+	private 
 
+	# Strong parameter
+
+	def menu_params
 		if !session[:admin_id].blank?
 			params.require(:menu).permit(:name, :key, :content)
 		end
-
 	end
 
 end

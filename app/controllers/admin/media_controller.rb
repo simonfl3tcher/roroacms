@@ -18,23 +18,16 @@ class Admin::MediaController < AdminController
 	# this method is called via ajax
 
 	def create 
-
 		if !params[:create_dir].blank?
-
-			media_create params
-	       	
+			media_create params	
 	    end
-
 	end
 
 	# This is called via an ajax call when you select/drop the files on the drop zone.
 
 	def multipleupload
-
 		if !params[:file].blank?
-
 			media_advanced_create params
-			
 		else
 			render :text => "No Files!"
 		end
@@ -45,17 +38,18 @@ class Admin::MediaController < AdminController
 	# as well as all different kinds of media so the view splits this all up for you.
 
 	def get_via_ajax 
-
 		@slash_count = params[:key].count('/').to_i
 
 		if params[:key] == 'all'
+
 			@files = media_setup_and_search_posts
 			@initial = true
+
 		else 
 			@files = media_get_by_key params
 		end
-		print render :partial => 'admin/media/media_loop'
 
+		print render :partial => 'admin/media/media_loop'
 	end
 
 	# deletes a directory or a file.
@@ -81,7 +75,6 @@ class Admin::MediaController < AdminController
 	# gets all the folders in a nested view
 	
 	def get_folder_list
-		
 		@initial = true
 		@r = media_get_folder_list params
 		print render :partial => 'admin/media/media_folder_loop'

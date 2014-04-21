@@ -44,7 +44,6 @@ class ApplicationController < ActionController::Base
   # Returns the current access that is granted to the logged in admin. Allowing you to restrict necessary areas to certain types of user
   # currently there are only two user types (admin or editor)
   def current_admin_access
-    
     @current_admin = Admin.find(session[:admin_id]) if session[:admin_id]
 
     if !@current_admin.nil?
@@ -56,7 +55,6 @@ class ApplicationController < ActionController::Base
       return false;
 
     end
-
   end
 
   # checks if the admin is logged in before anything else
@@ -66,7 +64,6 @@ class ApplicationController < ActionController::Base
 
   # checks to see if the admin logged in has the necesary rights, if not it will redirect them with an error message
   def authorize_admin_access
-
     if current_admin_access == 'editor'
 
       flash[:error] = "Not authorized"
@@ -74,7 +71,6 @@ class ApplicationController < ActionController::Base
       redirect_to admin_path
 
     end
-
   end
 
 end
