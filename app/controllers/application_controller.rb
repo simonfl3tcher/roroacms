@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   helper ViewHelper 
   helper MenuHelper
   helper SeoHelper  
-  helper ThemeHelper 
   helper CommentsHelper
 
   private

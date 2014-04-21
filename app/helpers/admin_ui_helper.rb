@@ -1,36 +1,20 @@
 module AdminUiHelper
 
-	def bulk_update_dropdown(options)
+	# returns the html for the generic bulk update dropdown
+	# Params:
+	# +options+:: a hash of the values that you want in the dropdown i.e. Hash['move_to_trash' => 'Move To Trash']
 
+	def bulk_update_dropdown(options)
 		@options = options
 		render :partial => "admin/partials/bulk_update_dropdown" 
-
 	end
 
-	def pagination
-		render :partial => 'admin/partials/pagination'
-
-	end
+	# returns the html for the generic back button
 
 	def back_button
-
 	    html = link_to :back, :class => 'btn btn-mini pull-right'
 	    html += '<i class="icon-arrow-left"></i>'
-	   	
-	   	return html.html_safe
-
-	end
-
-	def deal_with_filecontents(filetype)
-
-		if filetype[0,5] == 'image'
-
-			render :inline => '<i class="icon-picture icon-3x"></i>'
-
-		else
-			render :inline => '<i class="icon-file icon-3x"></i>'
-		end
-
+	   	html.html_safe
 	end
 
 end

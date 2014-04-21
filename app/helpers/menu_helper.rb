@@ -1,22 +1,26 @@
 module MenuHelper
 
-		def make_hash(str)
+	# Returns a hash as key and value from the custom data string
+	# Params:
+	# +str+:: contains all of the data for the link
+
+	def make_hash(str)
 
 		str = str.split('&')
-
 		hash = {}
 
-		str.each do | s |
-
+		str.each do |s|
 			opt = s.split('=')
-
 			hash[opt[0]] = URI.unescape(opt[1].to_s.gsub('+', ' '))
-
 		end
 
-		return hash
+		hash
 
 	end
+
+	# returns the count of the children within the lft and rgt values
+	# Params:
+	# +value+:: the current record that you want to check against
 
 	def descendants_count(m)
       return (m.rgt - m.lft - 1)/2
@@ -67,61 +71,61 @@ module MenuHelper
 
 	end
 
-	def menu_routing(m) 
+	# create the a links with the given attributes
+	# Params:
+	# +menuOption+:: is the menu option record
 
-		existingData = make_hash m.custom_data
+	def menu_routing(menuOption) 
+
+		# create a hash of the menu option id
+		existingData = make_hash menuOption.custom_data
+
+		# create generic variables
 		article_url = Setting.get('articles_slug')	
 		category_url = Setting.get('category_slug')	
 		tag_url = Setting.get('tag_slug')	
 		
-		target = get_target existingData['target']
-		atts = target
+		# start the string by defining the target 
+		atts = get_target(existingData['target'])
 
-		if m.data_type == 'page'
+		if menuOption.data_type == 'page'
 			p = Post.find(existingData['linkto'])
-
 			atts += " href='#{site_url(p.post_slug)}'"
 
-
-		elsif m.data_type == 'article'
+		elsif menuOption.data_type == 'article'
 			p = Post.find(existingData['linkto'])
 			atts += " href='#{site_url(article_url + '/' + p.post_slug)}'"
 
-		elsif m.data_type == 'category'
+		elsif menuOption.data_type == 'category'
 			t = Term.find(existingData['linkto'])
 			atts += " href='#{site_url(article_url + '/' + category_url + '/' + t.slug)}'"
 
-		elsif m.data_type == 'tag'
+		elsif menuOption.data_type == 'tag'
 			t = Term.find(existingData['linkto'])
 			atts += " href='#{site_url(article_url + '/' + tag_url + '/' + t.slug)}'"
 
-		elsif m.data_type == article_url && m.option_id == 0
-
+		elsif menuOption.data_type == article_url && menuOption.option_id == 0
 			atts += " href='#{site_url(article_url)}'"
 
-
-		elsif m.data_type == 'custom'
+		elsif menuOption.data_type == 'custom'
 			atts += " href='#{existingData['customlink']}'"
 		end
 
-		return atts
-
+		atts
 
 	end
+
+	# returns target blank if target is equal to nt
+	# Params:
+	# +target+:: is the "target" value that comes from the custom data
 
 	def get_target(target) 
-
 		ret = ''
-
 		if target == 'nt'
-
 			ret = 'target="_blank"'
-
 		end
 
-		return ret
-
+		ret
 	end
-
 
 end
