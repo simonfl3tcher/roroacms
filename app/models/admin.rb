@@ -10,10 +10,10 @@ class Admin < ActiveRecord::Base
 	validates_uniqueness_of :email, :username
 	validates_presence_of :password, :on => :create
 
-	# general data that doesn't change very often mainly for views
+	# general data that doesn't change very often
 
 	ACCESS_LEVELS = ["admin", "editor"]
-	GET_ADMINS = Admin.where('1=1').order('name asc')
+	GET_ADMINS = Admin.where('1+1=2').order('name asc')
 
 
 	# get all the admins in the system - however if there is a search parameter 
