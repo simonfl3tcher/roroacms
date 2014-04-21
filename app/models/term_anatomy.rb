@@ -1,3 +1,4 @@
 class TermAnatomy < ActiveRecord::Base
-  belongs_to :term 
+	# relations and validations
+  	belongs_to :term 
 end
