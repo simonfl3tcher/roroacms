@@ -76,7 +76,7 @@ class Admin::CommentsController < AdminController
 
 	private
 
-	# Strong parameter
+	# Strong parameters
 
 	def comments_params
 		if !session[:admin_id].blank?

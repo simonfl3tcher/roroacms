@@ -99,7 +99,7 @@ class Admin::BannersController < AdminController
 
 	private
 
-	# Strong parameter
+	# Strong parameters
 
 	def banner_params
 		if !session[:admin_id].blank?

@@ -35,7 +35,7 @@ class Admin::Settings::GeneralController < AdminController
 
 	private 
 
-	# Strong parameter
+	# Strong parameters
 
 	def settings_params
 		params.permit(:setting_name, :setting)

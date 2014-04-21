@@ -89,7 +89,7 @@ class Admin::AdministratorsController < AdminController
 	
 	private
 
-	# Strong parameter
+	# Strong parameters
 
 	def administrator_params
 		if !session[:admin_id].blank?
