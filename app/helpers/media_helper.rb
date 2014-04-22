@@ -1,12 +1,11 @@
 module MediaHelper
 
-	AWS::S3::Base.establish_connection!(
-      :access_key_id     => Setting.find_by_setting_name('aws_access_key_id')[:setting],
-      :secret_access_key => Setting.find_by_setting_name('aws_secret_access_key')[:setting]
-    )
+	# establish a connection to S3
 
+	AWS::S3::Base.establish_connection!(:access_key_id     => Setting.find_by_setting_name('aws_access_key_id')[:setting], :secret_access_key => Setting.find_by_setting_name('aws_secret_access_key')[:setting])
 	BUCKET = Setting.find_by_setting_name('aws_bucket_name')[:setting]
 
+	# require the dependencies
 	include AWS::S3
 	require 'digest/md5'
 
