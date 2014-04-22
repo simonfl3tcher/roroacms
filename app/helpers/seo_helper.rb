@@ -31,6 +31,7 @@ module SeoHelper
 
 			else
 
+
 				if !params[:slug].nil?
 					url_arr = params[:slug].split('/')
 				end
@@ -149,7 +150,7 @@ module SeoHelper
 
 	def get_robots_tag(overide = nil)
 
-		if !overide.nil?
+		if overide.nil?
 			# if you use override the system will use the generic settings
 
 			if overide == 'archive' && Setting.get('seo_no_index_archives')	== 'Y'
@@ -159,6 +160,8 @@ module SeoHelper
 			end
 
 		else
+
+			abort @content.inspect
 
 			if @content.post_seo_no_index == 'Y' && @content.post_seo_no_follow == 'Y'
 				ret = "<meta name=\"robots\" content=\"noindex, nofollow\" />"

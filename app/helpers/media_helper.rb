@@ -9,11 +9,18 @@ module MediaHelper
 	include AWS::S3
 	require 'digest/md5'
 
+
+	# get all objects inside the BUCKET 
+	# Params:
+	# +url+:: path that you want to get the objects from
+
 	def media_setup_and_search_posts url = nil
 
 		if url.nil?    
 			files = AWS::S3::Bucket.find("#{BUCKET}").objects
 		else 
+			# if url is defined it will either get all objects inside a directory or get an inidividual
+			# file depending on the type of string passed in through prefix
 			files = AWS::S3::Bucket.objects(Setting.find_by_setting_name('aws_bucket_name')[:setting], :prefix => url)
 		end
 		
@@ -21,105 +28,107 @@ module MediaHelper
 
 	end
 
-	def media_create(p, url = '') 
+	# create the object in S3 this  a directory
+	# Params:
+	# +params+:: the generic parameters	
+	# +url+:: path including the directory name
+
+	def media_create(params, url = '') 
 		begin
-          AWS::S3::S3Object.store(url + "#{p[:create_dir]}/", url + "#{p[:create_dir]}/", BUCKET, :access => :public_read, :content_type => 'binary/octet-stream')
+          AWS::S3::S3Object.store(url + "#{params[:create_dir]}/", url + "#{params[:create_dir]}/", BUCKET, :access => :public_read, :content_type => 'binary/octet-stream')
           render :text => 'Folder was successfully created.' 
         rescue
           render :text => "Couldn't create folder"
         end
-
 	end
 
-	def media_advanced_create(p, url = '') 
+	# create the object in S3 this is a file
+	# Params:
+	# +params+:: the generic parameters	
+	# +url+:: path including the folder name
 
-		if p[:reference].blank?
-
-			dir = url + ''
-			where = "#{BUCKET}/#{dir}"
-		else
-			dir = url + p[:reference]
-			where = "#{BUCKET}/#{dir}"
-		end
-
-		current_size = get_folder_size(aws3_trainer_url(current_user.id),false)
-
-		if (current_size + p[:file].size) <= trainer_max_size
-
-			begin
-		        @file = AWS::S3::S3Object.store(sanitize_filename(p[:file].original_filename), p[:file].read, where, :access => :public_read)
-		        
-		        return render :json => {:message => p[:file].original_filename, :code => 501}.to_json
-		       
-		    rescue ResponseError => error
-			    render :text => error.message
-			 end
-		else
-			return render :json => {:message => 'You have exceeded your storage limit!', :code => 403}.to_json
-		end
-	end
-
-	def media_advance_create_admin(p, url = '')
+	def media_advanced_create(params, url = '') 
 
 		if p[:reference].blank?
 
 			dir = ''
 			where = BUCKET
 		else
+			# create object inside the given directory
 			dir = p[:reference]
 			where = "#{BUCKET}/#{dir}"
 		end
 
 		begin
-	        @file = AWS::S3::S3Object.store(sanitize_filename(p[:file].original_filename), p[:file].read, where, :access => :public_read)
-	        
+	        @file = AWS::S3::S3Object.store(sanitize_filename(params[:file].original_filename), params[:file].read, where, :access => :public_read)
 	        render :text => "Success!"
 	       
-	     rescue ResponseError => error
+	    rescue ResponseError => error
 		    render :text => error.message
-		  end
+		end
 
 	end
+
+	# manually create the folder with the given url
+	# Params:
+	# +url+:: path including the folder name
 
 	def manually_create_folder url 
 		AWS::S3::S3Object.store(url, url, BUCKET, :access => :public_read, :content_type => 'binary/octet-stream')
 	end
 
+	# return the size of the folder
+	# Params:
+	# +url+:: path to the directory or file that you want to find the size of
+	# +human+:: human readable value or a value in bytes
+
 	def get_folder_size url, human = true
+		
 		total_bytes = 0
 		files = AWS::S3::Bucket.objects(Setting.find_by_setting_name('aws_bucket_name')[:setting], :prefix => url)		
+		
 		files.each do |f|
 			total_bytes += f.size.to_i
 		end
-		if human
-			number_to_human_size(total_bytes) 
-		else
-			total_bytes
-		end
-	end
 
-	def media_get_by_key(p, url = '')
-
-		return AWS::S3::Bucket.objects(Setting.find_by_setting_name('aws_bucket_name')[:setting], :prefix => url + p[:key])
+		human ? number_to_human_size(total_bytes) : total_bytes
 
 	end
 
-	def media_get_folder_list(p, url = nil)
+	# get media object by the key
+	# Params:
+	# +params+:: the generic parameters	
+	# +url+:: the path that you want to get a list of files and folders from
 
-		files = Media.setup_and_search_posts url
-		@f = Array.new
- 		files.each_with_index {|item, index|
+	def media_get_by_key(params, url = '')
+		AWS::S3::Bucket.objects(Setting.find_by_setting_name('aws_bucket_name')[:setting], :prefix => url + params[:key])
+	end
+
+	# get a list of folders in the amazon S3 account
+	# Params:
+	# +params+:: the generic parameters	
+	# +url+:: the path that you want to get a list of files and folders from	
+
+	def media_get_folder_list(params, url = nil)
+
+		files = setup_and_search_posts(url)
+		array = Array.new
+ 		
+ 		files.each_with_index do |item, index|
  			if item.content_type != 'binary/octet-stream'
 				next
 			end
+		   array.push item
+		end
 
-		   @f.push item
-		}
-
-		return @f
+		array
 
 	end
 
+	# delete all with the prefix of the given prefix
+	# Params:
+	# +prefix+:: the path that you want to delete. THis will delete everything in the prefix
+	
 	def delete_all prefix
 
 		obj = AWS::S3::Bucket.objects(BUCKET, :prefix => prefix)
@@ -129,155 +138,15 @@ module MediaHelper
 
 	end
 
-	def upload_trainer_image(p, user, type = 'trainers') 
-
-		where = "#{BUCKET}/" + type + "/" + user + "/"
-
-		begin
-	        @file = AWS::S3::S3Object.store(sanitize_filename(p[:file].original_filename), p[:file].read, where, :access => :public_read)
-	        @url = S3Object.url_for("/" + type + "/" + user + "/" + p[:file].original_filename, BUCKET, :authenticated => false)
-
-	        return @url
-
-	    rescue ResponseError => error
-	    	return @url = ''
-		end
-
-	end
-
-	def upload_featured_image(image, user, type = 'trainers')
-
-		where = "#{BUCKET}/" + type + "/" + user.to_s + "/article_featured_images/"
-
-		begin
-	        @file = AWS::S3::S3Object.store(sanitize_filename(image.original_filename), image.read, where, :access => :public_read)
-	        @url = S3Object.url_for("/" + type + "/" + user.to_s + "/article_featured_images/" + image.original_filename, BUCKET, :authenticated => false)
-
-	        return @url
-
-	    rescue ResponseError => error
-	    	return @url = ''
-		end
-	end
-
-	def message_multiple_upload params, trainer 
-
-		fol = Digest::MD5.hexdigest(params[:message][:user_id].to_s + "_" + trainer.to_s + '_' + Time.now.to_s)
-
-		where = "#{BUCKET}/messages/" + fol + "/"
-		arr = []
-
-		if !params[:attachments].blank?
-
-			params[:attachments].each do |f|
-
-				begin
-			        @file = AWS::S3::S3Object.store(sanitize_filename(f.original_filename), f.read, where, :access => :public_read)
-			        @url = S3Object.url_for("/messages/" + fol + "/" + f.original_filename, BUCKET, :authenticated => false)
-			        arr.push(@url) 
-
-			    rescue ResponseError => error
-			    	arr = []
-				end
-			end
-		end
-
-		arr.join('|')
-
-	end
-
-	def plan_multiple_upload params, trainer,  
-
-		fol = Digest::MD5.hexdigest( "plan_" + trainer.to_s + '_' + Time.now.to_s)
-
-		where = "#{BUCKET}/plan/" + fol + "/"
-		arr = []
-
-		if !params[:attachments].blank?
-
-			params[:attachments].each do |f|
-
-				begin
-			        @file = AWS::S3::S3Object.store(sanitize_filename(f.original_filename), f.read, where, :access => :public_read)
-			        @url = S3Object.url_for("/plan/" + fol + "/" + f.original_filename, BUCKET, :authenticated => false)
-			        arr.push(@url) 
-
-			    rescue ResponseError => error
-			    	arr = []
-				end
-			end
-		end
-
-		arr.join('|')
-
-	end
-
-	def front_render_folder_loop(initial = false, url= nil)
-
-		files = Media.setup_and_search_posts url 
-
-		@initial = initial
-		@f = Array.new
- 		files.each_with_index {|item, index|
- 			if item.content_type != 'binary/octet-stream'
-				next
-			end
-
-		   @f.push item
-		}
-		render :partial => 'trainer/train/media/media_folder_loop'
-
-
-	end
-
-	def trainer_reached_limit
-		path = 'trainers/' + current_user.id.to_s + '/trainers_files/'
-		user_size = trainer_max_size
-		current_size = get_folder_size(path, false)
-		if current_size > user_size
-			true
-		else
-			false
-		end
-	end
-
-	def trainer_close_to_limit
-		path = 'trainers/' + current_user.id.to_s + '/trainers_files/'
-		user_size = trainer_max_size
-		current_size = get_folder_size(path, false)
-		percent = ((current_size.to_f / user_size.to_f) * 100)
-		if percent >= 80 && percent <= 100
-			true
-		else
-			false
-		end
-	end
-
-	def is_trainer_media_size_under p 
-		path = 'trainers/' + current_user.id.to_s + '/trainers_files/'
-		current_size = get_folder_size(path, false)
-		if current_size > p
-			false
-		else
-			true
-		end
-
-	end
-
-	def aws3_trainer_url id
-		'trainers/' + id.to_s + '/trainers_files/'
-	end
-
-	def trainer_max_size
-		current_user.user_detail.media_limit
-	end
-
 	private
 
-	  def sanitize_filename(file_name)
-	    just_filename = File.basename(file_name)
-	    just_filename.sub(/[^\w\.\-]/,'_')
-	  end
-
+	# delete all with the prefix of the given prefix
+	# Params:
+	# +prefix+:: string to the file name that you want to store the file
+	
+	def sanitize_filename(file_name)
+		just_filename = File.basename(file_name)
+		just_filename.sub(/[^\w\.\-]/,'_')
+	end
 
 end

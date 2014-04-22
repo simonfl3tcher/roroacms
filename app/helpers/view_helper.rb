@@ -1,102 +1,128 @@
 module ViewHelper
 
+	# The view helper contains all of the functions that the views
+	# will use in order to display the contents of either the content
+	# or format other data
+
+
+	# display the content of the globalized @content record
+
 	def display_content
 		render :inline => prep_content.html_safe
 	end
 
+
+	# display the content of the globalized @content record
+
 	def display_title
-
 		render :inline => @content.post_title
-
 	end
 
-	def display_date(format = nil)
 
-		if format
+	# display the date of the globalized @content record
+	# Params:
+	# +format+:: the date format that you want the date to be provided in
 
-			render :inline => @content.post_date.strftime(format)
-
-		else
-
-			render :inline => @content.post_date.strftime("%d-%m-%Y")
-
-		end
-
+	def display_date(format = "%d-%m-%Y")
+		render :inline => @content.post_date.strftime(format)
 	end
+
+
+	# display the taxonomy name from the url
 
 	def get_term_name
+
 		segments = params[:slug].split('/')
 
+		# get the taxonomy name and search the database for the record with this as its slug
 		if !segments[2].blank?
-
 			t =  Term.where(:slug => segments[2]).last
-
 			return t.name
-
 		else
 			return nil
 		end
 
 	end
 
+
+	# return what type of taxonomy it is either - category or tag
+
 	def get_term_type 
+		
 		segments = params[:slug].split('/')
 
 		if !segments[1].blank?
-
 			term = TermAnatomy.where(:taxonomy => segments[1]).last
-
 			return term.taxonomy
-
 		else
 			return nil
 		end
+
 	end
+
+
+	# display the content of the given post via the post parameter
+	# Params:
+	# +post+:: post record that you want to return the content of
 
 	def get_the_content(post)
-
 		render :inline => prep_content(post).html_safe
-
 	end
+
+
+	# display the title of the given post via the post parameter
+	# Params:
+	# +post+:: post record that you want to return the title of
 
 	def get_the_title(post)
-
 		render :inline => post.post_title
-
 	end
+
+
+	# A short extract from the post content
+	# Params:
+	# +post+:: post record that you want to return the title of
+	# +length+:: length of the string in characters  
+	# +omission+:: something to represent the omission of the content
 
 	def get_the_excerpt(post, length = 300, omission = '...')
-
 		render :inline => truncate(post.post_content.to_s.gsub(/<[^>]*>/ui,'').html_safe, :omission => omission, :length => length)
-
-
 	end
 
-	def get_the_date(post, format = nil)
 
-		if format
+	# The same as the above however you can provide any content to this function
 
-			render :inline => post.post_date.strftime(format)
-
-		else
-
-			render :inline => post.post_date.strftime("%d-%m-%Y")
-
-		end
-
+	def excerpt(content, length = 255, omission = '...')
+		render :inline => truncate(content, :omission => omission, :length => length)
 	end
+
+
+	# display the date of the given post via the post parameter
+	# Params:
+	# +format+:: the date format that you want the date to be provided in
+
+	def get_the_date(post, format = "%d-%m-%Y")
+		render :inline => post.post_date.strftime(format)
+	end
+
+
+	# Easy to understand function for getting the category data
 
 	def get_category_data 
-
-		return @content
-
+		@content
 	end
+
+
+	# Easy to understand function for getting the archive data
 
 	def get_archive_date
-
-		return @content
-
+		@content
 	end
+
+
+	# Gets the link to the post
+	# Params:
+	# +post+:: post record that you want to return the link of
 
 	def get_the_permalink(post)
 
@@ -104,25 +130,17 @@ module ViewHelper
 		site_url = Setting.get('site_url')
 
 		if post.post_type == 'post'
-
 			render :inline => "#{site_url}#{article_url}/#{post.post_slug}"
-		
 		else 
-
 			render :inline => "#{site_url}#{post.post_slug}"
-
 		end
 
 	end
 
-	def get_archive_caption
 
-		render :inline => 'Archive area'
-
-	end
+	# Returns generic notifications if the flash data exists
 
 	def get_notifications
-
 		if flash[:notice]
 	    	html = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert'>x</button><strong>Success!</strong> #{flash[:notice]}</div>"
 	    	render :inline => html.html_safe
@@ -132,55 +150,51 @@ module ViewHelper
 	    end
 	end
 
+
+	# gets the comment form from the theme folder and displays it.
+
 	def display_comments_form
 
-		comments_on = Setting.get('article_comments') 
-
-		if comments_on == 'Y'
-
+		if Setting.get('article_comments') == 'Y'
 			type = Setting.get('article_comment_type')
-
 			render(:template =>"theme/#{current_theme}/comments_form.html.erb", :layout => nil, :locals => { :type => type }).to_s
-
-		else
-
-			# do nothing 
-
 		end
 
 	end
 
-	def return_comments(id = nil)
+
+	# Gets the comments of the given post
+	# Params:
+	# +post_id+:: id of the post that you want to get comments for
+
+	def return_comments(post_id = nil)
 				
-
-		if !id.nil?
-
-			@comments = Comment.where(:post_id => id)
-
+		if !post_id.nil?
+			comments = Comment.where(:post_id => post_id)
 		else
-
-			@comments = Comment.where(:post_id => @content.id, :comment_approved => 'Y')
-
+			comments = Comment.where(:post_id => @content.id, :comment_approved => 'Y')
 		end
 
-		return @comments
+		comments
 
 	end
 
-	def display_comments_loop(id = nil)
 
-		if !id.nil?
+	# Returns a nested list of the comments
+	# Params:
+	# +post_id+:: id of the post that you want to get comments for
 
-			@comments = Comment.where(:post_id => id)
+	def display_comments_loop(post_id = nil)
 
+		# get the comments by the post id or the globalized @content record
+		if !post_id.nil?
+			comments = Comment.where(:post_id => post_id)
 		else
-
-			@comments = Comment.where(:post_id => @content.id, :comment_approved => 'Y', :is_spam => 'N')
-
+			comments = Comment.where(:post_id => @content.id, :comment_approved => 'Y', :is_spam => 'N')
 		end
 
-		if @comments.count > 0 
-			html = "<h3 id='comments-title'>#{@comments.count} responses to #{display_title}</h3>"
+		if comments.count > 0 
+			html = "<h3 id='comments-title'>#{comments.count} responses to #{display_title}</h3>"
 		end
 		
 		html = nested_comments return_comments.arrange(:order => 'created_at ASC')
@@ -189,9 +203,13 @@ module ViewHelper
 
 	end
 
+
+	# Return the author information of the articles
+
 	def display_author_information
 
 		@admin = Admin.find_by_id(@content.admin_id)
+
 		unless @admin.blank?
 				html = "<div id='author-info'>
 				<div id='author-description'>
@@ -205,35 +223,44 @@ module ViewHelper
 
 	end
 
+
+	# Returns the url of site appended with the given string
+	# Params:
+	# +str+:: the string to append onto the end of the site url
+
 	def site_url(str = nil)
-
 		url = Setting.get('site_url')
-
 		return "#{url}#{str}"
 	end
 
+
+	# Easy to understand function for getting the search form. 
+	# this is created and displayed from the theme.
+
 	def get_search_form
-
 		render :template => "theme/#{current_theme}/search_form.html.erb" rescue nil
-
 	end
 
-	def excerpt(content, length = 255, omission = '...')
 
-		render :inline => truncate(content, :omission => omission, :length => length)
-
-	end
+	# Returns a hash of the records with the banner category key of the given value
+	# Params:
+	# +hash+:: a hash of both the key of the category and the limit to the amount of banners you want to return
 
 	def get_banners(hash)
-
-		return Banner.where(terms: {slug: hash[:key]}).includes(:terms).limit(hash[:limit]).order('sort_order')
-
+		Banner.where(terms: {slug: hash[:key]}).includes(:terms).limit(hash[:limit]).order('sort_order')
 	end
+
+
+	# Returns a list of the archives
+	# Params:
+	# +type+:: has to be either Y (year) or M (month)
 
 	def get_archives(type, blockbydate = nil)
 
+		# if year 
 		if type == 'Y'
 
+			# variables and data
 			@posts = Post.where(:post_type => 'post', :post_status => 'Published', :disabled => 'N').uniq.pluck("EXTRACT(YEAR FROM post_date)")
 			article_url = Setting.get('articles_slug') 
 			category_url = Setting.get('category_slug')
@@ -244,8 +271,10 @@ module ViewHelper
 				h["#{article_url}/#{f}"] = f
 			end
 
+		# if month
 		elsif type == 'M'
 			
+			# variables and data
 			@posts = Post.where("(post_type = 'post' && post_status = 'Published' && disabled = 'N') && post_date <= CURDATE()").uniq.pluck("EXTRACT(YEAR FROM post_date)")
 			article_url = Setting.get('articles_slug')
 			category_url = Setting.get('category_slug')
@@ -253,6 +282,7 @@ module ViewHelper
 			h = {}
 			lp = {}
 			mon = {}		
+			
 			@posts.each do |f|
 				lp["#{f}"] = Post.where("YEAR(post_date) = #{f}  AND (post_type = 'post' && disabled = 'N' && post_status = 'Published' && post_date <= CURDATE())").uniq.pluck("EXTRACT(MONTH FROM post_date)")
 			end
@@ -264,88 +294,129 @@ module ViewHelper
 				end
 				
 				i.each do |nm|
-
-					h["#{article_url}/#{k}/#{nm}"] = "#{getdatenamebynumber(nm)} - #{k}"
-
+					h["#{article_url}/#{k}/#{nm}"] = "#{get_date_name_by_number(nm)} - #{k}"
 				end
+
 			end
 
 		end			
-		return li_loop h
+		
+		li_loop(h)
 
 	end
-	
-	def get_categories(arr = nil)
 
+
+	# Returns a list of the categories
+	
+	def get_categories
+
+		# variables and data
 		@terms = Term.where(term_anatomies: {taxonomy: 'category'}).includes(:term_anatomy)
-
-			article_url = Setting.get('articles_slug')
-			tag_url = Setting.get('category_slug')
-			
-			h = {}
-			
-			@terms.each do |f|
-				h["#{article_url}/#{tag_url}/#{f.slug}"] = f.name
-			end
-			
-			return li_loop h
+		article_url = Setting.get('articles_slug')
+		tag_url = Setting.get('category_slug')
+		
+		h = {}
+		
+		@terms.each do |f|
+			h["#{article_url}/#{tag_url}/#{f.slug}"] = f.name
+		end
+		
+		li_loop(h)
 
 	end
+
+
+	# Returns either a list or a tag cloud of the tags - this shows ALL of the tags
+	# Params:
+	# +type+:: string or list style 
 	
-	def get_tag_cloud(type, arr = nil)
+	def get_tag_cloud(type)
 
 		@terms = Term.where(term_anatomies: {taxonomy: 'tag'}).includes(:term_anatomy)
+		article_url = Setting.get('articles_slug')
+		tag_url = Setting.get('tag_slug')
 
 		if type == 'string'
-			return @terms.all.collect {|u| u.name}.join ', '
+
+			# if you want a tag cloud
+			return @terms.all.map do |u| 
+				url = article_url + '/' + tag_url + '/' + u.slug
+				"<a href='#{site_url(url)}'>" + u.name + "</a>"
+			end.join(', ').html_safe
+
 		elsif type == 'list'
 
-			article_url = Setting.get('articles_slug')
-			tag_url = Setting.get('tag_slug')
-			
+			# if you want a list style
 			h = {}
-			
 			@terms.each do |f|
 				h["#{article_url}/#{tag_url}/#{f.slug}"] = f.name
 			end
-			
-			return li_loop h
+			return li_loop(h)
+
 		end
 
 	end
 
+	def tag_cloud(id = nil)
 
+		article_url = Setting.get('articles_slug')
+		tag_url = Setting.get('tag_slug')
 
-	def nested_comments(messages)
-	  
-	  messages.map do |message, sub_messages|
-	  	@comment = message
-	    render('admin/partials/comment') + content_tag(:div, nested_comments(sub_messages), :class => "nested_comments")
-	  end.join.html_safe
+		if id.blank?
+			terms = @content.terms.where(term_anatomies: {taxonomy: 'tag'}).includes(:term_anatomy)
+		else
+			terms = Post.find(id).terms.where(term_anatomies: {taxonomy: 'tag'}).includes(:term_anatomy) 
+		end
 
+		return terms.all.map do |u| 
+				url = article_url + '/' + tag_url + '/' + u.slug
+				"<a href='#{site_url(url)}'>" + u.name + "</a>"
+			end.join(', ').html_safe
 	end
 
 
+	# Returns the html for the comments tree of a post
+	# Params:
+	# +messages+:: all of the messages for the post
+
+	def nested_comments(messages)
+		messages.map do |message, sub_messages|
+			@comment = message
+			render('admin/partials/comment') + content_tag(:div, nested_comments(sub_messages), :class => "nested_comments")
+		end.join.html_safe
+	end
+
+
+	# Returns the year that you are viewing via the segmentation
 
 	def the_archive_year
 		segments = params[:slug].split('/')
-		return segments[1]
+		segments[1]
 	end
 
+
+	# Returns a list of the given data
+	# Params:
+	# +arr+:: array that you want to list through to create the list
+
 	def li_loop arr
-		html = '<ul>'
 		
+		html = '<ul>'
 		arr.each do |k, v|
 			html += "<li><a href='#{site_url}#{k}'>#{v}</a></li>"
 		end
-		
 		html += '</ul>'
+		
 		render :inline => html
 
 	end
 
 
-	def getdatenamebynumber(s)
+	# Returns a sub string of the month name 
+	# Params:
+	# +s+:: integer of the month 
+
+	def get_date_name_by_number(s)
         case s
             when  1 then "Jan"
             when  2 then "Feb"
@@ -362,57 +433,74 @@ module ViewHelper
         end
 	end
 
-	def view_file_exists(f)
-		return File.exists?("app/views/theme/#{current_theme}/template-#{f}.html.erb")
+
+	# Check to see if the template file actually exists
+	# Params:
+	# +name+:: template name
+
+	def view_file_exists?(name)
+		File.exists?("app/views/theme/#{current_theme}/template-#{name}.html.erb")
 	end
 
-	def is_page(i)
+
+	# Check to see if given id or string is the current content record
+	# Params:
+	# +check+:: can be either name or id of the post 
+
+	def is_page?(check)
 
 		@p = @content
 
-		i = i.to_s
+		check = check.to_s
 
 		if defined? @p.post_title
 			if !@p.blank? 
-
-				if i.nonnegative_float?
-					if @p.id == i.to_i
+				if check.nonnegative_float?
+					if @p.id == check.to_i
 						return true
 					else
 						return false
 					end
 				else 
-					if @p.post_title.downcase == i.downcase
+					if @p.post_title.downcase == check.downcase
 						return true
 					else
 						return false
 					end
-
 				end
-
 			else
-
 				return false
-
 			end
 		else
-
 			return false
 		end
 
 	end
 
-	def get_latest_article howmany = 1
 
-		Post.where("post_type ='post' AND disabled = 'N' AND post_status = 'Published' AND post_date AND post_date <= CURDATE()").order('post_date DESC').limit(howmany)
+	# returns the lastest article. By default this is 1 but you can get more than one if you want.
+	# Params:
+	# +how_many+:: how many records you want to return
 
+	def get_latest_article(how_many = 1)
+		Post.where("post_type ='post' AND disabled = 'N' AND post_status = 'Published' AND post_date AND post_date <= CURDATE()").order('post_date DESC').limit(how_many)
 	end
+
+
+	# get current theme 
 
 	def current_theme
-		return Setting.find_by_setting_name('theme_folder')[:setting]
+		Setting.find_by_setting_name('theme_folder')[:setting]
 	end
 
+
+	# returns a full url to the file that you want to render from the theme file. 
+	# example usage would be: <%= render theme_url 'sidebar' %>
+	# Params:
+	# +append+:: the name of the file that you want to render
+
 	def theme_url(append)
-		return "theme/#{current_theme}/#{append}"
+		"theme/#{current_theme}/#{append}"
 	end
+
 end
