@@ -6,15 +6,20 @@ module SeoHelper
 
 	def get_meta_headers
 
+		# decide wether it is a page or it is a template displying other content i.e. the category page
+
 		if !@content.nil?
 			
+			# if it has ACTUAL content then generate meta from the page content
 			if !(@content.respond_to? :length)
 
 				home_id = Setting.get('home_page')		
 
 				if @content.id == home_id.to_f
+					# if it is the homepage create the meta tags manually
 					headtags = get_manual_metadata 'home'
 				else
+					# use the page content to generate the meta data
 					headtags = "#{get_page_title}\n"
 					headtags += "#{get_meta_description}\n"
 					headtags += "#{get_additional_headers}\n"
@@ -26,19 +31,19 @@ module SeoHelper
 
 			else
 
-				if params[:slug].nil?
-					url_arr = ''
-				else 
+				if !params[:slug].nil?
 					url_arr = params[:slug].split('/')
 				end
-				
+
+				# get generic variables
 				last_url = url_arr.last
 				article_url = Setting.get('articles_slug')	
 				category_url = Setting.get('category_slug')	
 
+				# if the url is equal to the article, category or archive area
 				if (last_url == article_url || last_url.nonnegative_float? || url_arr[1] == category_url)
 
-					robots_var = false
+					robots_var = nil
 
 					if url_arr[1] == category_url
 						robots_var = 'category'
@@ -48,10 +53,9 @@ module SeoHelper
 
 					new_string = last_url.slice(0,1).capitalize + last_url.slice(1..-1)
 
-
 					if last_url.nonnegative_float? 
-
 						if !url_arr[2].blank?
+							
 							new_string = Date::MONTHNAMES[url_arr[2].to_i]
 							new_string = "#{new_string} #{url_arr[1]}"
 
@@ -60,7 +64,6 @@ module SeoHelper
 							end
 
 						end
-
 					end
 
 					headtags = "#{get_page_title new_string}\n"
@@ -69,12 +72,17 @@ module SeoHelper
 					headtags += "#{get_robots_tag robots_var}"
 
 					render :inline => headtags
+
 				end
 
 			end
+
 		else 
+
+			# render the 404 meta data
 			headtags = get_manual_metadata '404'
 			render :inline => headtags
+
 		end
 
 	end
