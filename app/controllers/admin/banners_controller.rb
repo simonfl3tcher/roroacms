@@ -6,6 +6,7 @@ class Admin::BannersController < AdminController
 		@banners = Banner.setup_and_search_posts params
 	end
 
+
 	# get and disply certain banner
 
 	def edit 
@@ -13,6 +14,7 @@ class Admin::BannersController < AdminController
 		@banner_categories = Banner.get_banner_categories
 		@banner = Banner.find(params[:id])
 	end
+
 
 	# update the banner with the given params
 
@@ -35,6 +37,7 @@ class Admin::BannersController < AdminController
 	    end
 	end
 
+
 	# create a new banner object
 
 	def new
@@ -42,6 +45,7 @@ class Admin::BannersController < AdminController
 		@banner_categories = Banner.get_banner_categories
 	    @banner = Banner.new
 	end
+
 
 	# actually create the new banner with the given param data
 
@@ -65,6 +69,7 @@ class Admin::BannersController < AdminController
 
 	end
 
+
 	# Delete the banner
 
 	def destroy
@@ -74,23 +79,24 @@ class Admin::BannersController < AdminController
 	    respond_to do |format|
 	      format.html { redirect_to admin_banners_path, notice: 'Banner was successfully deleted.' }
 	    end
+
 	end
+
 
 	# Will display a page with the banner categories and the option to add a new banner
 
 	def categories
 		# current banner categories
 		@categories = Term.where(term_anatomies: {taxonomy: 'banner'}).order('name asc').includes(:term_anatomy).page(params[:page]).per(Setting.get_pagination_limit)
-		
 		# new banner category object
 		@category = Term.new
 	end
+
 
 	# bulk update function - this will update all of the checked options on the page. 
 
 	def bulk_update
 		func = Banner.bulk_update params
-
 		respond_to do |format|
 			# currently in the banners area there is only one option - to bulk delete the banner options.
 	      format.html { redirect_to admin_banners_path, notice: "Banners were successfully deleted" }
@@ -98,6 +104,7 @@ class Admin::BannersController < AdminController
 	end
 
 	private
+	
 
 	# Strong parameters
 

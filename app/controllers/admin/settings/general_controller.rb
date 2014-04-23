@@ -25,7 +25,9 @@ class Admin::Settings::GeneralController < AdminController
 
 	private
 
+
 	# removes any unnecessary param field ready for the loop in the create function 
+
 	def remove_unwanted_keys
 		params.delete :utf8
 		params.delete :authenticity_token
@@ -34,6 +36,7 @@ class Admin::Settings::GeneralController < AdminController
 	end
 
 	private 
+	
 
 	# Strong parameters
 

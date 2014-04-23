@@ -10,6 +10,7 @@ class Admin::ThemesController < AdminController
 		@current = Setting.find_by_setting_name('theme_folder')[:setting]
 	end
 
+
 	# update the currently used theme
 
 	def create
@@ -20,6 +21,7 @@ class Admin::ThemesController < AdminController
 			format.html { redirect_to admin_themes_path, notice:  "Theme used was updated" }
 		end
 	end
+	
 
 	# remove the theme from the theme folder stopping any future usage.
 

@@ -18,6 +18,7 @@ module AdminMenuHelper
 
 	end
 
+
 	# Returns a string to check the checkbox if the two variables match
 	# Params:
 	# +one+:: comparable to two
@@ -30,6 +31,7 @@ module AdminMenuHelper
 			return ''
 		end
 	end
+
 
 	# Returns the menu options in a html format for the admin editing area
 	# Params:
@@ -84,6 +86,7 @@ module AdminMenuHelper
 
 	end
 
+
 	# returns the count of the children within the lft and rgt values
 	# Params:
 	# +value+:: the current record that you want to check against
@@ -91,6 +94,7 @@ module AdminMenuHelper
 	def descendants_count(value)
       return (value.rgt - value.lft - 1)/2
     end
+    
 
     # returns a list of all of the menus as an accordion with its list items inside 
 	# Params:

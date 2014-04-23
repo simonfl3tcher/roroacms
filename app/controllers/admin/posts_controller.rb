@@ -7,6 +7,7 @@ class Admin::PostsController < AdminController
 		@posts = Post.setup_and_search_posts params, 'post'
 	end
 
+
 	# creates a new post object. But it also gets the current tags/categories 
 	# that you can assign to the post.
 
@@ -17,6 +18,7 @@ class Admin::PostsController < AdminController
 		@tags = Post.get_tags
 	    @post = Post.new
 	end
+
 
 	# create the post object
 
@@ -47,6 +49,7 @@ class Admin::PostsController < AdminController
 		end
 	end
 
+
 	# gets and displays the post object with the necessary dependencies 
 
 	def edit 
@@ -61,6 +64,7 @@ class Admin::PostsController < AdminController
 
 		@post = Post.find(params[:id])
 	end
+
 
 	# updates the post object with the updates params
 
@@ -82,6 +86,7 @@ class Admin::PostsController < AdminController
 	    end
 	end
 
+
 	# delete the post
 
 	def destroy
@@ -92,8 +97,10 @@ class Admin::PostsController < AdminController
 	    end
 	end
 
+
 	# is called via an ajax call on BOTH post/page this saves the current state post every 2 mins
 	# and saves it as a "autosave" these posts are then displayed as revisions underneath the post editor
+
 
 	def autosave_update
 		@post = Post.new(post_params)
@@ -110,6 +117,7 @@ class Admin::PostsController < AdminController
 		end
 	end
 
+
 	# Takes all of the checked options and updates them with the given option selected. 
 	# The options for the bulk update in pages area are:-
 	# - Publish
@@ -125,6 +133,7 @@ class Admin::PostsController < AdminController
 	end
 
 	private 
+
 
 	# Strong parameters
 

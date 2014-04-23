@@ -22,24 +22,12 @@
 //= require_self
 //= require twitter/bootstrap
 
-$('.checkall').change(function() {
-  var checkboxes = $(this).closest('form').find(':checkbox');
-  checkboxes.attr('checked', $(this).is(':checked'));
-});
+// // 
+// $('#editButton').click(function(){
+// 	clickToEdit();
+// });
 
-$('#editButton').click(function(){
-	clickToEdit();
-});
-
+// setup ajax for crf-token needed by ruby
 $.ajaxSetup({
 	beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-});
-
-
-$("#term_name").keyup(function(){
-    $("#term_slug").val($(this).val().toLowerCase().split(' ').join('-'));
-});
-
-$("#term_name").change(function(){
-	$("#term_slug").val($(this).val().toLowerCase().split(' ').join('-'));
 });

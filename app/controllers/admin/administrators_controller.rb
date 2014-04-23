@@ -10,6 +10,7 @@ class Admin::AdministratorsController < AdminController
 		@admins = Admin.setup_and_search params
 	end
 
+
 	# get and disply certain admin
 
 	def edit
@@ -31,6 +32,7 @@ class Admin::AdministratorsController < AdminController
 		end
 	end
 
+
 	# update the admins object
 
 	def update
@@ -49,6 +51,7 @@ class Admin::AdministratorsController < AdminController
 
 	end
 
+
 	# Delete the admin, one thing to remember is you are not allowed to destory the super user.
 	# You are only allowed to destroy yourself unless you are the super user.
 
@@ -61,12 +64,14 @@ class Admin::AdministratorsController < AdminController
 	    end
 	end
 
+
 	# create a new admin object
 
 	def new
 	    @admin = Admin.new
 	    @action = 'create'
 	end
+
 
 	# actually create the new admin with the given param data
 
@@ -86,6 +91,7 @@ class Admin::AdministratorsController < AdminController
 
 		end
 	end
+	
 	
 	private
 

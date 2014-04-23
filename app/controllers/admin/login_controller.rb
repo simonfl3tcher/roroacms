@@ -17,6 +17,7 @@ class Admin::LoginController < LoginController
 		end
 
 	end
+	
 
 	# destroy function is used for login the user out of the admin panel
 
