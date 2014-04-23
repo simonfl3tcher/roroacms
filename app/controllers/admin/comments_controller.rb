@@ -6,11 +6,13 @@ class Admin::CommentsController < AdminController
 		@comments = Comment.setup_and_search params
 	end
 
+
 	# get and disply certain comment
 
 	def edit
 		@comment = Comment.find(params[:id])
 	end
+
 
 	# delete the comment
 
@@ -23,6 +25,7 @@ class Admin::CommentsController < AdminController
 	    end
 
 	end
+
 
 	# update the comment. You are able to update everything about the comment as an admin
 
@@ -43,6 +46,7 @@ class Admin::CommentsController < AdminController
 	    end
 	end
 
+
 	# bulk_update function takes all of the checked options and updates them with the given option selected. The options for the bulk update in comments area are
 	# - Unapprove
 	# - Approve
@@ -58,6 +62,7 @@ class Admin::CommentsController < AdminController
 	    end
 
 	end
+
 
 	# mark_as_spam function is a button on the ui and so need its own function. The function simply marks the comment as spam against the record in the database. 
 	# the record is then not visable unless you explicity tell the system that you want to see spam records.
@@ -75,6 +80,7 @@ class Admin::CommentsController < AdminController
 	end
 
 	private
+	
 
 	# Strong parameters
 

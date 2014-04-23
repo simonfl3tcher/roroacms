@@ -1,7 +1,6 @@
 module MediaHelper
 
 	# establish a connection to S3
-
 	AWS::S3::Base.establish_connection!(:access_key_id     => Setting.find_by_setting_name('aws_access_key_id')[:setting], :secret_access_key => Setting.find_by_setting_name('aws_secret_access_key')[:setting])
 	BUCKET = Setting.find_by_setting_name('aws_bucket_name')[:setting]
 
@@ -28,6 +27,7 @@ module MediaHelper
 
 	end
 
+
 	# create the object in S3 this  a directory
 	# Params:
 	# +params+:: the generic parameters	
@@ -41,6 +41,7 @@ module MediaHelper
           render :text => "Couldn't create folder"
         end
 	end
+
 
 	# create the object in S3 this is a file
 	# Params:
@@ -69,6 +70,7 @@ module MediaHelper
 
 	end
 
+
 	# manually create the folder with the given url
 	# Params:
 	# +url+:: path including the folder name
@@ -76,6 +78,7 @@ module MediaHelper
 	def manually_create_folder url 
 		AWS::S3::S3Object.store(url, url, BUCKET, :access => :public_read, :content_type => 'binary/octet-stream')
 	end
+
 
 	# return the size of the folder
 	# Params:
@@ -95,6 +98,7 @@ module MediaHelper
 
 	end
 
+
 	# get media object by the key
 	# Params:
 	# +params+:: the generic parameters	
@@ -103,6 +107,7 @@ module MediaHelper
 	def media_get_by_key(params, url = '')
 		AWS::S3::Bucket.objects(Setting.find_by_setting_name('aws_bucket_name')[:setting], :prefix => url + params[:key])
 	end
+
 
 	# get a list of folders in the amazon S3 account
 	# Params:
@@ -125,6 +130,7 @@ module MediaHelper
 
 	end
 
+
 	# delete all with the prefix of the given prefix
 	# Params:
 	# +prefix+:: the path that you want to delete. THis will delete everything in the prefix
@@ -139,6 +145,7 @@ module MediaHelper
 	end
 
 	private
+
 
 	# delete all with the prefix of the given prefix
 	# Params:

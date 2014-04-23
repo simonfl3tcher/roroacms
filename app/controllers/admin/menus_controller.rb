@@ -11,6 +11,7 @@ class Admin::MenusController < AdminController
 		@menugroups = Menu.all
 	end
 
+
 	# create a new (empty) menu object from the form on the index page.
 
 	def create
@@ -30,11 +31,13 @@ class Admin::MenusController < AdminController
 		end
 	end
 
+
 	# get menu object and display it for editing
 
 	def edit
 		@menu = Menu.find(params[:id])
 	end
+
 
 	# saves the menu on the fly via ajax. This usually gets called if there is any change to the menu object
 
@@ -44,11 +47,13 @@ class Admin::MenusController < AdminController
 		end
 	end
 
+
 	# when you add an option to the menu this creates an edit form to allow you to edit the option straight away
 
 	def ajax_dropbox 
 		print render :partial => 'admin/partials/menu_dropdown'
 	end
+
 
 	# deletes the whole menu. Although there is a delete button on each menu option this just removes it from the list 
 	# which is then interpreted when you save the menu as a whole.
@@ -63,6 +68,7 @@ class Admin::MenusController < AdminController
 	end
 
 	private 
+	
 
 	# Strong parameters
 

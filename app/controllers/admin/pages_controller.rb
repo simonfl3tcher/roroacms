@@ -7,11 +7,13 @@ class Admin::PagesController < AdminController
 		@pages = Post.setup_and_search_posts params, 'page'
 	end
 
+
 	# creates a new post object
 
 	def new
 	    @page = Post.new
 	end
+
 
 	# create the post object
 
@@ -37,6 +39,7 @@ class Admin::PagesController < AdminController
 		end
 	end
 
+
 	# gets and displays the post object with the necessary dependencies 
 
 	def edit 
@@ -47,6 +50,7 @@ class Admin::PagesController < AdminController
 
 		@page = Post.find(params[:id])
 	end
+
 
 	# updates the post object with the updates params
 
@@ -74,6 +78,7 @@ class Admin::PagesController < AdminController
 	    end
 	end
 
+
 	# deletes the post
 
 	def destroy
@@ -82,6 +87,7 @@ class Admin::PagesController < AdminController
 	      format.html { redirect_to admin_pages_path, notice: 'Page was successfully put into trash can.' }
 	    end
 	end
+
 
 	# Takes all of the checked options and updates them with the given option selected. 
 	# The options for the bulk update in pages area are:-
@@ -98,6 +104,7 @@ class Admin::PagesController < AdminController
 	end
 
 	private
+	
 
 	# Strong parameters
 

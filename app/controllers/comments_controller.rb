@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
 
 	# CommentsController is simply used for the blog comments form. On post it will save the data in the database for the admin to filter.
+	
 	include CommentsHelper
 
 	def create

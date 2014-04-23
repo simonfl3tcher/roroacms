@@ -9,6 +9,7 @@ module AdminUiHelper
 		render :partial => "admin/partials/bulk_update_dropdown" 
 	end
 
+
 	# returns the html for the generic back button
 
 	def back_button

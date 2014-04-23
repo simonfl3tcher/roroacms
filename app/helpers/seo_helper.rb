@@ -90,6 +90,7 @@ module SeoHelper
 
 	private
 
+
 	# returns the description meta tag. It will return a truncated version of the content if nothing is given and it does not have an seo description 
 	# Params:
 	# +override+:: override the content with the data provided
@@ -112,6 +113,7 @@ module SeoHelper
 		end
 
 	end
+
 
 	# returns the page title meta tag. It will return the post content title if nothing is given via override and it does not have an seo title
 	# Params:
@@ -142,6 +144,7 @@ module SeoHelper
 		end
 
 	end
+
 
 	# returns the page robots meta tag. The setting being compared are both set to N by default
 	# Params:
@@ -177,6 +180,7 @@ module SeoHelper
 
 	end
 
+
 	# returns all the meta data for a given type
 	# Params:
 	# +type+:: type of settings that you want from the admin panel, this only works with the home settings currently
@@ -196,6 +200,7 @@ module SeoHelper
 		
 	end
 
+
 	# This includes the additional headers that you can set within the admin panel
 
 	def get_additional_headers
@@ -206,6 +211,7 @@ module SeoHelper
 		end	
 
 	end
+
 
 	# returns the google analytics code with the given UI tracking code that you set in the admin settings
 
@@ -229,6 +235,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 		end
 
 	end
+	
 
 	# if you set to use canonical urls in the admin panel it will return the html to allow this
 
