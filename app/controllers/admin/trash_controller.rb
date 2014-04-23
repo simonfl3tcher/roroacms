@@ -13,6 +13,7 @@ class Admin::TrashController < AdminController
 		@pages = Post.find(:all, :conditions => { :disabled => 'Y', :post_type => 'page' })
 	end
 
+
 	# remvove all of the posts/pages in the trash area in one go
 
 	def empty_posts 
@@ -21,6 +22,7 @@ class Admin::TrashController < AdminController
 		
 		redirect_to admin_trash_path, notice: "All #{@type}s were removed from the trash can."
 	end
+	
 
 	# delete an individual post/pages
 

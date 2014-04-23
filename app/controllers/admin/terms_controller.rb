@@ -7,12 +7,14 @@ class Admin::TermsController < AdminController
 		@category = Term.new
 	end
 
+
 	# displays all the current tags and creates a new category object for creating a new one
 
 	def tags
 		@tags = Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy).page(params[:page]).per(Setting.get_pagination_limit)
 		@category = Term.new
 	end
+
 
 	# create tag or category - this is set within the form
 
@@ -39,12 +41,14 @@ class Admin::TermsController < AdminController
 		end
 	end
 
+
 	# get the term record to be edited
 
 	def edit 
 		@category = Term.find(params[:id])
 		@type = @category.term_anatomy.taxonomy
 	end
+
 
 	# update the term record with the given parameters
 
@@ -66,6 +70,7 @@ class Admin::TermsController < AdminController
 	    end
 	end
 
+
 	# delete the term
 
 	def destroy
@@ -79,6 +84,7 @@ class Admin::TermsController < AdminController
 	      format.html { redirect_to "#{session[:return_to]}", notice: "Successfully deleted" }
 	    end
 	end
+
 
 	# Takes all of the checked options and updates them with the given option selected. 
 	# The options for the bulk update in pages area are:-
@@ -94,6 +100,7 @@ class Admin::TermsController < AdminController
 	end
 
 	private 
+	
 
 	# Strong parameter
 

@@ -8,6 +8,7 @@ module AdminRoroaHelper
 	   obj.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) == nil ? false : true
 	end
 
+
 	# returns a hash of the different themes as a hash with the details kept in the theme.yml file
 
 	def get_theme_options
@@ -21,6 +22,7 @@ module AdminRoroaHelper
 
 		hash
 	end
+
 
 	# destroys the theme from the file structure
 	# Params:
@@ -48,6 +50,7 @@ module AdminRoroaHelper
 		hash
 	end
 
+
 	# returns a html dropdown of the template options 
 	# Params:
 	# +current+:: current post template, if it doesn't have one it will just return a standard dropdown
@@ -69,12 +72,14 @@ module AdminRoroaHelper
 
 	end
 
+
 	# returns boolean as to wether the logged in user is the complete overlord of the system
 
 	def is_overlord?
 		admin = Admin.find(session[:admin_id])
 		admin.overlord == 'Y' ? true : false
 	end
+
 
 	# returns a table block of html that has nested ootions
 	# Params:
@@ -90,6 +95,7 @@ module AdminRoroaHelper
 
 		end.join.html_safe
 	end
+
 
 	# returns a html block of line indentation to show that it is underneath its parent
 	# Params:
@@ -110,6 +116,7 @@ module AdminRoroaHelper
 
 	end
 
+
 	# returns the site url + an extention if you give it one
 	# Params:
 	# +ext+:: extension to add on to the end of the site url
@@ -126,6 +133,7 @@ module AdminRoroaHelper
 		end 
 
 	end 
+	
 
 	# checks if the current theme being used actually exists. If not it will return an error message to the user
 

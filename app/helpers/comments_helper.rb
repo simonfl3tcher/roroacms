@@ -21,11 +21,13 @@ module CommentsHelper
 		html
 	end
 
+
 	# returns a success message if the comment has been saved successfully
 
 	def comments_success_message
 		html = '<div class="success">Comment was successfully posted. Awaiting Review</div>'.html_safe
 	end
+	
 
 	# returns true or false as to wether the admin has comments turned on
 

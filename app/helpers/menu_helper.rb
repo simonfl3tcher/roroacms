@@ -18,6 +18,7 @@ module MenuHelper
 
 	end
 
+
 	# returns the count of the children within the lft and rgt values
 	# Params:
 	# +value+:: the current record that you want to check against
@@ -71,6 +72,7 @@ module MenuHelper
 
 	end
 
+
 	# create the a links with the given attributes
 	# Params:
 	# +menuOption+:: is the menu option record
@@ -114,6 +116,7 @@ module MenuHelper
 		atts
 
 	end
+	
 
 	# returns target blank if target is equal to nt
 	# Params:

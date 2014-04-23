@@ -5,6 +5,7 @@ module AdminMediaHelper
 	AWS::S3::Base.establish_connection!(:access_key_id => Setting.find_by_setting_name('aws_access_key_id')[:setting], :secret_access_key => Setting.find_by_setting_name('aws_secret_access_key')[:setting])
 	BUCKET = Setting.find_by_setting_name('aws_bucket_name')[:setting]
 
+
 	# Returns a url to the file from S3
 	# Params:
 	# +key+:: string to the file 
@@ -12,6 +13,7 @@ module AdminMediaHelper
 	def download_url_for(key)  
 	    AWS::S3::S3Object.url_for(key, BUCKET, :authenticated => false)  
 	end
+
 
 	# Returns a block of html 
 	# Params:
@@ -35,6 +37,7 @@ module AdminMediaHelper
 		render :partial => 'admin/media/media_folder_loop'
 
 	end
+	
 
 	# Create a folder tree of the directories on S3. 
 	# This is complicated as S3 returns the data as a string.

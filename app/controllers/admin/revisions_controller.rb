@@ -14,6 +14,9 @@ class Admin::RevisionsController < AdminController
 
 		@revision = { 'parent' => parent, 'revision' => post}
 	end
+	
+
+	# restore the post to the given post data
 
 	def restore
 		post = Post.find(params[:id])

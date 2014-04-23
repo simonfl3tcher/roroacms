@@ -9,9 +9,11 @@ class PagesController < ApplicationController
 	# a homepage is set in the admin panel, route_index_page will display this page. 
 	# (params) is also passed in, for the search form which send a GET request to the homepage
 	# if the necessary params exist then it will display the search results otherwise it will display the homepage
+
 	def index
 		route_index_page params
  	end
+
 
  	def show
  		redirect_to show_url params
@@ -19,10 +21,12 @@ class PagesController < ApplicationController
 
  	# if the url has segments the application will run through the dynamic_page method.
  	# route_dynamic_page function will take the url and search for the correct data to display
+
 	def dynamic_page
 		add_breadcrumb "Home", :root_path, :title => "Home"
 		route_dynamic_page params
 	end
+	
 
 	# contact_form is used for the contact form displayed on the contact page. This will take the params
 	# save and send and email with the details to the admin email address that is set in the admin panel

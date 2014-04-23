@@ -27,8 +27,8 @@ module RoutingHelper
 
 		end
 
-
 	end
+
 
 	# changes the view to use the given template if it doesn't exist it will just use the page.html.erb
 	# the template file is set in the admin panel on each individual page.
@@ -66,7 +66,9 @@ module RoutingHelper
 			end
 
 		end	
+
 	end
+
 
 	# is used to find out if the requested is an article or a page
 	# if it is a post it will prepend the url with the article url
@@ -89,6 +91,7 @@ module RoutingHelper
  		url
 
 	end
+
 
 
 	# this is the function that gets the url and decides what to display 
@@ -136,6 +139,7 @@ module RoutingHelper
 
 	end
 
+
 	# renders a standard post page
 	# Params:
 	# +url+:: the url that has been requested by the user
@@ -171,6 +175,7 @@ module RoutingHelper
 		end
 
 	end
+
 
 	# renders a category, tag or view all articles page
 	# Params:
@@ -211,6 +216,7 @@ module RoutingHelper
 
 	end
 
+
 	# renders a single article page
 	# Params:
 	# +segments+:: an array of the url segments split via "/"
@@ -240,6 +246,7 @@ module RoutingHelper
 		render_template 'single'
 
 	end
+	
 
 	# renders a archive of articles - this could do with some refactoring
 	# Params:
