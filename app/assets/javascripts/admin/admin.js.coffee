@@ -50,4 +50,3 @@ $(document).ready ->
 
   $.scrollUp()
   return
-
