@@ -503,4 +503,16 @@ module ViewHelper
 		"theme/#{current_theme}/#{append}"
 	end
 
+	# displays the header.html.erb template in the theme if the file exists 
+
+	def display_header 
+		render :template => "/theme/#{current_theme}/header.html.erb" if File.exists?("app/views/theme/#{current_theme}/header.html.erb")
+	end
+
+	# displays the header.html.erb template in the theme if the file exists 
+
+	def display_footer
+		render :template => "theme/#{current_theme}/footer.html.erb" if File.exists?("app/views/theme/#{current_theme}/footer.html.erb")
+	end
+
 end
