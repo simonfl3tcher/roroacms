@@ -48,9 +48,11 @@ module RoutingHelper
 				# check if a file with the given name exists
 				if File.exists?("app/views/theme/#{current_theme}/#{name}.html.erb")	
 					render :template => "theme/#{current_theme}/#{name}"
-				else 
+				elsif File.exists?("app/views/theme/#{current_theme}/page.html.erb")
 					# if not use the page.html.erb template which has to be included in the theme
 					render :template => "theme/#{current_theme}/page.html.erb"
+				else 
+					render :inline => 'You have to have page.html.erb tempalte included in your theme'
 				end
 
 			end
@@ -60,9 +62,11 @@ module RoutingHelper
 			# check if a file with the given name exists
 			if File.exists?("app/views/theme/#{current_theme}/#{name}.html.erb")
 				render :template => "theme/#{current_theme}/#{name}"
-			else
+			elsif File.exists?("app/views/theme/#{current_theme}/page.html.erb")
 				# if not use the page.html.erb template which has to be included in the theme
 				render :template => "theme/#{current_theme}/page.html.erb"
+			else 
+				render :inline => 'You have to have page.html.erb tempalte included in your theme'
 			end
 
 		end	
