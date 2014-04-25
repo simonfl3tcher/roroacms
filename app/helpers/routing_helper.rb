@@ -257,38 +257,33 @@ module RoutingHelper
 
 		# add the breadcrumb
 		add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
+		# add for year minimum
+		add_breadcrumb "#{segments[1]}", "/#{article_url}/#{segments[1]}", :title => "Back to #{segments[1]}"
+		# build SQL variable
+		build_sql = sanitize_sql_array(["(disabled = 'N' AND post_status = 'Published') AND post_type = 'Post' AND (YEAR(post_date) = ? AND", segments[1]])
+
+
+		if !segments[2].blank?
+			#  add to SQL query
+			build_sql += sanitize_sql_array([" MONTH(post_date) = ? AND", segments[2]])
+			# add the breadcrumbs
+			add_breadcrumb "#{segments[2]}", "/#{article_url}/#{segments[1]}/#{segments[2]}", :title => "Back to #{segments[2]}"
+		end
 
 		if !segments[3].blank?
-
-			#  do seach for the content within the given parameters
-			gloalize Post.where("(disabled = 'N' AND post_status = 'Published') AND post_type = 'Post' AND (YEAR(post_date) = ? AND MONTH(post_date) = ? AND DAY(post_date) = ? AND post_date <= NOW())", segments[1], segments[2], segments[3]).order('post_date DESC')
-			
+			#  add to SQL query
+			build_sql += sanitize_sql_array([" DAY(post_date) = ? AND", segments[3]])
 			# add the breadcrumbs
-			add_breadcrumb "#{segments[1]}", "/#{article_url}/#{segments[1]}", :title => "Back to #{segments[1]}"
-			add_breadcrumb "#{segments[2]}", "/#{article_url}/#{segments[1]}/#{segments[2]}", :title => "Back to #{segments[2]}"
 			add_breadcrumb "#{segments[3]}", "/#{article_url}/#{segments[1]}/#{segments[2]}/#{segments[3]}", :title => "Back to #{segments[3]}"
-
-			render :template => "theme/#{current_theme}/archive"
-
-		elsif !segments[2].blank?
-			
-			#  do seach for the content within the given parameters
-			gloalize Post.where("(disabled = 'N' AND post_status = 'Published') AND post_type = 'Post' AND (YEAR(post_date) = ? AND MONTH(post_date) = ? AND post_date <= NOW())", segments[1], segments[2]).order('post_date DESC')
-			# add the breadcrumbs
-			add_breadcrumb "#{segments[1]}", "/#{article_url}/#{segments[1]}", :title => "Back to #{segments[1]}"
-			add_breadcrumb "#{segments[2]}", "/#{article_url}/#{segments[1]}/#{segments[2]}", :title => "Back to #{segments[2]}"
-
-			render :template => "theme/#{current_theme}/archive"
-
-		else
-			#  do seach for the content within the given parameters
-			gloalize Post.where("(disabled = 'N' AND post_status = 'Published') AND post_type = 'Post' AND (YEAR(post_date) = ? AND post_date <= NOW())", segments[1]).order('post_date DESC')
-			# add the breadcrumbs
-			add_breadcrumb "#{segments[1]}", "/#{article_url}/#{segments[1]}", :title => "Back to #{segments[1]}"
-			
-			render :template => "theme/#{current_theme}/archive"
-
 		end
+
+
+		#  add to SQL query
+		build_sql += " post_date <= NOW())"
+		#  do seach for the content within the given parameters
+		gloalize Post.where(build_sql).order('post_date DESC')
+		
+		render :template => "theme/#{current_theme}/archive"
 
 	end
 
