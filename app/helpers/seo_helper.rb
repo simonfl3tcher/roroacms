@@ -46,7 +46,7 @@ module SeoHelper
 
 					robots_var = nil
 
-					if url_arr[1] == category_url
+					if url_arr[0] == article_url || url_arr[1] == category_url 
 						robots_var = 'category'
 					elsif last_url.nonnegative_float?
 						robots_var = 'archive'
@@ -55,7 +55,7 @@ module SeoHelper
 					new_string = last_url.slice(0,1).capitalize + last_url.slice(1..-1)
 
 					if last_url.nonnegative_float? 
-						if !url_arr[2].blank?
+						if !url_arr[2].lank?
 							
 							new_string = Date::MONTHNAMES[url_arr[2].to_i]
 							new_string = "#{new_string} #{url_arr[1]}"
@@ -153,7 +153,7 @@ module SeoHelper
 
 	def get_robots_tag(overide = nil)
 
-		if overide.nil?
+		if !overide.blank?
 			# if you use override the system will use the generic settings
 
 			if overide == 'archive' && Setting.get('seo_no_index_archives')	== 'Y'
@@ -163,8 +163,6 @@ module SeoHelper
 			end
 
 		else
-
-			abort @content.inspect
 
 			if @content.post_seo_no_index == 'Y' && @content.post_seo_no_follow == 'Y'
 				ret = "<meta name=\"robots\" content=\"noindex, nofollow\" />"
