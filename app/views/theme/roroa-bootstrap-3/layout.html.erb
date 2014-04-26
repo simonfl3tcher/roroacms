@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<%= get_meta_headers %>
-		<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-	    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
-	    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-		<%= csrf_meta_tags %>
-	</head>
-	<body>
-		<%= yield %>
-	</body>
-</html>
+<%= display_header() %>
+
+  <%= yield %>
+
+<%= display_footer() %>
