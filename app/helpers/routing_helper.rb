@@ -166,13 +166,12 @@ module RoutingHelper
 				add_breadcrumb "#{p.post_title.capitalize}", "#{p.structured_url}", :title => "Back to #{p.post_title.capitalize}"
 			end
 		end
-
 		# if content if blank return a 404 
-		render_404 and return if @content.nil?
+		render_404 and return if @content.blank?
 		gloalize @content
 
 		# if the content id is the same as the home page redirect to the home page do not render the content
-		if Setting.get('home_page').to_i == @content.id.to_i
+		if Setting.get('home_page').to_i == @content.id
 			redirect_to site_url
 		else 
 			render_template 'page'
