@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= get_meta_headers %>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <%= stylesheet_link_tag "theme/rbs3/application", :media => "all" %>
+    <%= stylesheet_link_tag 'theme/rbs3/application' %>
 	<%= javascript_include_tag 'theme/rbs3/application' %>
 
 </head>
@@ -23,7 +23,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
-                <a class="navbar-brand" href="index.html">Roroacms</a>
+                <a class="navbar-brand" href="<%= site_url %>">Roroacms</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -67,12 +67,19 @@
 
         <script type="text/javascript">
           var locations = [
-                    ["", 51.510879,-0.119405, 1]
+                    ["", 51.510879,-0.119405, 1],
+                    ["", 40.731492, -73.988952, 1],
+                    ["", 33.795470, -118.203511, 1],
+                    ["", 51.440889, 5.471219, 1],
+                    ["", 18.520222, 73.856273, 1],
+                    ["", 35.166107, 33.366948, 1],
+                    ["", 53.352404, -6.263711, 1],
+                    ["", 35.776669, -78.642653, 1]
             ];
 
           var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 15,
-            center: new google.maps.LatLng(51.510879,-0.119405),
+            zoom: 3,
+            center: new google.maps.LatLng(39.662989, -8.705100),
             mapTypeId: google.maps.MapTypeId.ROADMAP
           });
 
