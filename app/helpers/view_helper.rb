@@ -79,6 +79,13 @@ module ViewHelper
 	end
 
 
+	# checks to see if it is the home page
+
+	def is_homepage?
+		return false if !defined?(@content.length).blank?
+		@content.id == Setting.get('home_page').to_i	? true : false
+	end	
+
 	# A short extract from the post content
 	# Params:
 	# +post+:: post record that you want to return the title of
@@ -125,6 +132,8 @@ module ViewHelper
 	# +post+:: post record that you want to return the link of
 
 	def get_the_permalink(post)
+
+		post = Post.find(post) if post.is_a? Integer 
 
 		article_url = Setting.get('articles_slug')
 		site_url = Setting.get('site_url')
@@ -206,19 +215,22 @@ module ViewHelper
 
 	# Return the author information of the articles
 
-	def display_author_information
+	def display_author_information(raw = false)
 
 		@admin = Admin.find_by_id(@content.admin_id)
+		if raw 
+			return @admin
+		else 
+			unless @admin.blank?
+					html = "<div id='author-info'>
+					<div id='author-description'>
+						<h2>About #{@admin.first_name} #{@admin.last_name}</h2>
+						<p>#{@admin.description}</p>						
+					</div>
+				</div>"
 
-		unless @admin.blank?
-				html = "<div id='author-info'>
-				<div id='author-description'>
-					<h2>About #{@admin.first_name} #{@admin.last_name}</h2>
-					<p>#{@admin.description}</p>						
-				</div>
-			</div>"
-
-			render :inline => html.html_safe
+				render :inline => html.html_safe
+			end
 		end
 
 	end
@@ -390,8 +402,10 @@ module ViewHelper
 	# Returns the year that you are viewing via the segmentation
 
 	def the_archive_year
+		str = ''
 		segments = params[:slug].split('/')
-		segments[1]
+		str = (get_date_name_by_number(segments[2].to_i) + ' ') if !segments[2].blank?
+		str += segments[1]
 	end
 
 
@@ -514,5 +528,5 @@ module ViewHelper
 	def display_footer
 		render :template => "theme/#{current_theme}/footer.html.erb" if File.exists?("app/views/theme/#{current_theme}/footer.html.erb")
 	end
-
+	
 end

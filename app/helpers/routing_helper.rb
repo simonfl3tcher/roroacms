@@ -7,7 +7,7 @@ module RoutingHelper
 
 	def route_index_page(params)
 
-		if !params[:search].blank?
+		if defined?(params[:search]) && !params[:search].blank?
 
 			# make the content avalible to the view
 			gloalize Post.where("(post_title LIKE :p or post_slug LIKE :p2 or post_content LIKE :p3) and (post_type != 'autosave') AND (post_date <= NOW())", {:p => "%#{params[:search]}%", :p2 => "%#{params[:search]}%", :p3 => "%#{params[:search]}%"})
@@ -247,7 +247,7 @@ module RoutingHelper
 		add_breadcrumb "#{@content.post_title}", "/#{@content.post_name}", :title => "Back to #{@content.post_title}"
 
 		# render the single template
-		render_template 'single'
+		render_template 'article'
 
 	end
 	
@@ -273,14 +273,14 @@ module RoutingHelper
 			#  add to SQL query
 			build_sql = build_sql.where("MONTH(post_date) = ?", segments[2])
 			# add the breadcrumbs
-			add_breadcrumb "#{segments[2]}", "/#{article_url}/#{segments[1]}/#{segments[2]}", :title => "Back to #{segments[2]}"
+			add_breadcrumb "#{get_date_name_by_number(segments[2].to_i)}", "/#{article_url}/#{segments[1]}/#{segments[2]}", :title => "Back to #{segments[2]}"
 		end
 
 		if !segments[3].blank?
 			#  add to SQL query
 			build_sql = build_sql.where("DAY(post_date) = ?", segments[3])
 			# add the breadcrumbs
-			add_breadcrumb "#{segments[3]}", "/#{article_url}/#{segments[1]}/#{segments[2]}/#{segments[3]}", :title => "Back to #{segments[3]}"
+			# add_breadcrumb "#{segments[3]}", "/#{article_url}/#{segments[1]}/#{segments[2]}/#{segments[3]}", :title => "Back to #{segments[3]}"
 		end
 
 

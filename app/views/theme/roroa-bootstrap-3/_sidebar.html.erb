@@ -1,0 +1,33 @@
+<div class="blogSidebar">
+
+    <div class="well">
+            <h4>Blog Search</h4>
+            <%= get_search_form %>
+            <!-- /input-group -->
+        </div>
+        <!-- /well -->
+        <div class="well">
+            <h4>Archive</h4>
+            <div class="row">
+                <div class="col-lg-6">
+                	<%= get_archives 'M', true %>
+                </div>
+            </div>
+        </div>
+        
+        <div class="well">
+            <div class="row">
+                <div class="col-lg-6 borderRight">
+                 	<strong>Categories</strong>
+                	<%= get_categories %>
+                </div>
+                <div class="col-lg-6">
+                 	<strong>Tags</strong>
+                	<%= get_tag_cloud 'list'  %>
+                </div>
+            </div>
+        </div>
+        <!-- /well -->
+    </div>
+
+</div>

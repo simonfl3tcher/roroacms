@@ -1,5 +1,22 @@
-<h1><span id="post_title" data-mercury="full"><%= display_title %></span></h1>
 
-<div id="post_content" data-mercury="full">
-	<%= display_content %>
-</div>
+	<% if !is_homepage?  %>
+
+   		<div class="row">
+    		<div class="col-lg-12 col-md-12">
+    			<h1 class="page-header"><%= display_title %></h1>
+    		</div>
+    	</div>
+
+
+    	<div class="row">
+    		<div class="col-lg-12 col-md-12">
+    			<%= render_breadcrumbs %>
+    		</div>
+    	</div>
+	<% end %>
+    <div class="row">
+    	<div class="col-lg-12 col-md-12">
+    		<%= display_content %>
+    	</div>
+    </div>
+    <!-- /.row -->

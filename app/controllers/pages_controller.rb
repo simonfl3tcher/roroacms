@@ -48,4 +48,9 @@ class PagesController < ApplicationController
 		end
 	end
 
+	def contact_form_params
+
+	    params.permit(:name, :email, :subject, :message)
+	end
+
 end
