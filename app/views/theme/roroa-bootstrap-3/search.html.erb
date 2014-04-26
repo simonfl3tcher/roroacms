@@ -1,0 +1,29 @@
+<div class="row">
+	<div class="col-lg-12 col-md-12">
+		<h1 class="page-header">Search For "<%= !params[:search].nil? ? params[:search] : '' %>"</h1>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-12 col-md-12">
+		<% if !get_category_data.blank?
+
+		    get_category_data.each do |p| %>
+
+		       
+			 		<div class="blog_article">
+						<h2><a href="<%= get_the_permalink p %>"><%= get_the_title p %></a></h2>
+			 			<span class="date"><%= get_the_date p %></span>
+						<p><%= get_the_excerpt p %></p>
+						<div class="clear"></div>
+						<div class="divide"></div> 
+					</div>
+
+		    <% end %>
+
+		<% else %>
+		    
+		    <p>Nothing matched the given search.</p>
+
+		<% end %>
+	</div>
+</div>

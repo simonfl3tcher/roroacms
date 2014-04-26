@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   
   require 'ext/string'
-  
+
   protect_from_forgery
   helper ShortcodeHelper 
   helper ViewHelper 
@@ -11,11 +11,10 @@ class ApplicationController < ActionController::Base
 
   private
 
-
   # Override the generic 404 page to use the 404 in the theme directory
 
   def render_404
-    render :template => "theme/#{current_theme}/error_404", :layout => true, :status => :not_found
+    render(:template => "theme/#{current_theme}/error_404", :layout => true, :status => :not_found) if File.exists?("app/views/theme/#{current_theme}/error_404.html.erb")
   end
 
   # Get the current theme being used by the application

@@ -27,7 +27,7 @@ module MenuHelper
       return (m.rgt - m.lft - 1)/2
     end
 
-	def get_menu(menu,  sub = false)
+	def get_menu(menu,  sub = false, c = '')
 		if menu.is_a? Integer
 			if sub 
 				data = MenuOption.find(menu)
@@ -45,7 +45,7 @@ module MenuHelper
 			end
 		end
 
-		html = "<ul class='menu_#{menu}'>"
+		html = "<ul class='menu_#{menu} #{c}'>"
 		
 		data.each do |m|
 			if m.parent_id != 0
@@ -69,6 +69,28 @@ module MenuHelper
 		html +='</ul>'
 
 		return html.html_safe
+
+	end
+
+	def raw_menu(menu, sub = false)
+		if menu.is_a? Integer
+			if sub 
+				data = MenuOption.find(menu)
+				data = MenuOption.where(:parent_id => data.option_id)
+			else 
+				data = MenuOption.where(:menu_id => menu, :parent_id => nil)
+			end
+		else
+			m = Menu.find_by_key(menu)
+			if sub 
+				data = MenuOption.find(m[:id])
+				data = MenuOption.where(:parent_id => data.option_id)
+			else 
+				data = MenuOption.where(:menu_id => m[:id], :parent_id => nil)
+			end
+		end
+
+		return data
 
 	end
 

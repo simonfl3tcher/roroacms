@@ -1,0 +1,43 @@
+<%= display_comments_loop %>
+
+<div id="commentsArea">
+    <h4>Make a comment about <strong><%= display_title %></strong></h4>
+    
+    <% if flash[:notice] %>
+      
+      <div class="notice"><%= flash[:notice] %></div>
+
+    <% end %>
+	<div class="well">
+        <%= form_for [@new_comment] do |f| %>
+
+	      <fieldset class="commentForm">
+
+	        <%= f.hidden_field :post_id, :value => @content.id %>
+	        <%= f.hidden_field :parent_id, :value => nil, :id => 'comment_comment_parent' %>
+
+	        <div id="replyToTitle"></div>
+
+	        <div class="form-group">
+	          <%= f.label :author %>
+	          <%= f.text_field :author, :value => "", size: 40, :class => 'form-control' %>
+	        </div>
+	        <div class="form-group">
+	          <%= f.label :email %>
+	          <%= f.text_field :email, :value => "", size: 40, :class => 'form-control' %>
+	        </div>
+	        <div class="form-group">
+	          <%= f.label :website %>
+	          <%= f.text_field :website, :value => "", :class => 'form-control'  %>
+	        </div>
+	         <div class="form-group">
+	          <%= f.label :comment %>
+	          <%= f.text_area :comment, :value => "", :class => 'form-control', :rows => '6' %>
+	        </div>
+	        <div class="form-group">
+	            <%= f.submit "Submit Comment", :class => 'btn btn-primary' %>
+	        </div>
+	      </fieldset>
+	    <% end %>
+    </div>
+</div>

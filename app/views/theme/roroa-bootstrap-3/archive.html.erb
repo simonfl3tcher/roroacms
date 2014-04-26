@@ -1,0 +1,59 @@
+
+        <div class="row">
+    		<div class="col-lg-12 col-md-12">
+				<h1 class="page-header">Archive - <%= the_archive_year %></h1>
+    		</div>
+    	</div>
+
+
+    	<div class="row">
+    		<div class="col-lg-12 col-md-12">
+    			<%= render_breadcrumbs %>
+    		</div>
+    	</div>
+
+		<div class="row">
+    		<div class="col-md-8">
+
+		        <div class="row">
+
+		            
+
+		            <% if !get_category_data.blank?
+
+					 	get_category_data.each do |p| %>
+
+					 		<div class="blogoption">
+						 		<div class="col-md-5">
+					                <a href="<%= get_the_permalink p %>">
+					                    <img src="http://placehold.it/600x325" class="img-responsive">
+					                </a>
+					            </div>
+					            <div class="col-md-6">
+					                <strong><a href="<%= get_the_permalink p %>"><%= get_the_title p %></a></strong>
+					                <p><%= get_the_date p %></p>
+					                <p><%= get_the_excerpt p, 100 %></p>
+					                <a class="btn btn-primary" href="<%= get_the_permalink p %>">Read More <i class="fa fa-angle-right"></i></a>
+					            </div>
+					            <div class="clearfix"></div>
+					        </div>
+
+
+						<% end %>
+
+					<% else %>
+						
+						<p>No posts match the criteria.</p>
+
+					<% end %>
+
+
+		        </div>
+
+    		</div>
+
+    		<div class="col-md-4">
+    			<%= render theme_url('sidebar') %>
+    		</div>
+
+    	</div>

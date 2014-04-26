@@ -37,13 +37,12 @@ module SeoHelper
 				end
 
 				# get generic variables
-				last_url = url_arr.last
 				article_url = Setting.get('articles_slug')	
 				category_url = Setting.get('category_slug')	
 
 				# if the url is equal to the article, category or archive area
-				if (last_url == article_url || last_url.nonnegative_float? || url_arr[1] == category_url)
-
+				if (!url_arr.blank? && (url_arr.last == article_url || url_arr.last.nonnegative_float? || url_arr[1] == category_url))
+					last_url = url_arr.last
 					robots_var = nil
 
 					if url_arr[0] == article_url || url_arr[1] == category_url 
@@ -55,7 +54,7 @@ module SeoHelper
 					new_string = last_url.slice(0,1).capitalize + last_url.slice(1..-1)
 
 					if last_url.nonnegative_float? 
-						if !url_arr[2].lank?
+						if !url_arr[2].blank?
 							
 							new_string = Date::MONTHNAMES[url_arr[2].to_i]
 							new_string = "#{new_string} #{url_arr[1]}"
