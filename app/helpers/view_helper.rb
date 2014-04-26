@@ -82,7 +82,7 @@ module ViewHelper
 	# checks to see if it is the home page
 
 	def is_homepage?
-		return false if !defined?(@content.length).blank?
+		return false if (!defined?(@content.length).blank? || @content.blank?)
 		@content.id == Setting.get('home_page').to_i	? true : false
 	end	
 
