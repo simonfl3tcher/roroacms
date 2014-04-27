@@ -504,7 +504,7 @@ module ViewHelper
 	# get current theme 
 
 	def current_theme
-		Setting.find_by_setting_name('theme_folder')[:setting]
+		Setting.get('theme_folder')
 	end
 
 

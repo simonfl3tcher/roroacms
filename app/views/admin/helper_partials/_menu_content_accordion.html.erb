@@ -20,8 +20,8 @@
 							<option value="<%= opt.id %>" data-type="article"><%= opt.post_title %></option>
 						<% end %>
 		            </optgroup>
-		            <optgroup label="<%=Setting.find_by_setting_name('articles_slug')[:setting].capitalize %>">
-		            	<option value="news" data-type="<%=Setting.find_by_setting_name('articles_slug')[:setting].downcase %>"> <%=Setting.find_by_setting_name('articles_slug')[:setting].capitalize %> Page</option>
+		            <optgroup label="<%= Setting.get('articles_slug').capitalize %>">
+		            	<option value="news" data-type="<%= Setting.get('articles_slug').downcase %>"> <%= Setting.get('articles_slug').capitalize %> Page</option>
 		            </optgroup>
 		            <optgroup label="Categories">
 		                <% Post::POST_CATEGORIES.each do |opt| %>
