@@ -18,7 +18,7 @@ class Admin::ThemesController < AdminController
 		Setting.where("setting_name = 'theme_folder'").update_all('setting' => params[:theme])
 
 		respond_to do |format|
-			format.html { redirect_to admin_themes_path, notice:  "Theme used was updated" }
+			format.html { redirect_to admin_themes_path, notice:  "Theme used was updated. Please restart the server for the theme to fully install." }
 		end
 	end
 	
