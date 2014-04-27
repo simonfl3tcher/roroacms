@@ -74,7 +74,7 @@ class Admin::MediaController < AdminController
 	# renames the files. Currently you cannot rename directories once they are created.
 
 	def rename_media 
-		AWS::S3::S3Object.rename params[:previous], params[:new], Setting.find_by_setting_name('aws_bucket_name')[:setting]
+		AWS::S3::S3Object.rename params[:previous], params[:new], Setting.get('aws_bucket_name')
 		render :text => "Success!"
 	end
 	

@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   # Get the current theme being used by the application
 
   def current_theme 
-    @theme_folder = Setting.find_by_setting_name('theme_folder')[:setting]
+    @theme_folder = Setting.get('theme_folder')
   end 
 
   helper_method :current_theme
