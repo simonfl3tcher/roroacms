@@ -2,8 +2,8 @@ module AdminMediaHelper
 
 	# establish a connection to S3
 
-	AWS::S3::Base.establish_connection!(:access_key_id => Setting.find_by_setting_name('aws_access_key_id')[:setting], :secret_access_key => Setting.find_by_setting_name('aws_secret_access_key')[:setting])
-	BUCKET = Setting.find_by_setting_name('aws_bucket_name')[:setting]
+	AWS::S3::Base.establish_connection!(:access_key_id => Setting.get('aws_access_key_id'), :secret_access_key => Setting.get('aws_secret_access_key'))
+	BUCKET = Setting.get('aws_bucket_name')
 
 
 	# Returns a url to the file from S3

@@ -70,7 +70,7 @@
           <% end %>              
           </a>
         </li>
-        <% if Setting.find_by_setting_name('article_comment_type')[:setting] == 'R' && Setting.find_by_setting_name('article_comments')[:setting] == 'Y' %>
+        <% if Setting.get('article_comment_type') == 'R' && Setting.get('article_comments') == 'Y' %>
            <li class="nav-icon">
             <%= link_to admin_comments_path do %>
               <i class="icon-comments"></i>

@@ -1,11 +1,11 @@
 class Notifier < ActionMailer::Base
-  default from: Setting.find_by_setting_name('site_email')[:setting]
+  default from: Setting.get('site_email')
 
   # sends an email to the admin email address (set in the admin panel)
   # notifying them that a new administrator has been set up
   def profile admin = nil
     @admin = admin
-    mail to: Setting.find_by_setting_name('site_email')[:setting]
+    mail to: Setting.get('site_email')
   end
 
   # sends an email to the admin email address (set in the admin panel)
@@ -14,7 +14,7 @@ class Notifier < ActionMailer::Base
   def comment com
     @comment = com
 
-    mail to: Setting.find_by_setting_name('site_email')[:setting]
+    mail to: Setting.get('site_email')
   end
 
   # sends an email to the admin email address (set in the admin panel)
@@ -22,7 +22,7 @@ class Notifier < ActionMailer::Base
 
   def contact_form params
     @params = params
-    mail to: Setting.find_by_setting_name('site_email')[:setting]
+    mail to: Setting.get('site_email')
   end
   
 end

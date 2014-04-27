@@ -1,8 +1,8 @@
 module MediaHelper
 
 	# establish a connection to S3
-	AWS::S3::Base.establish_connection!(:access_key_id     => Setting.find_by_setting_name('aws_access_key_id')[:setting], :secret_access_key => Setting.find_by_setting_name('aws_secret_access_key')[:setting])
-	BUCKET = Setting.find_by_setting_name('aws_bucket_name')[:setting]
+	AWS::S3::Base.establish_connection!(:access_key_id     => Setting.get('aws_access_key_id'), :secret_access_key => Setting.get('aws_secret_access_key'))
+	BUCKET = Setting.get('aws_bucket_name')
 
 	# require the dependencies
 	include AWS::S3
@@ -20,7 +20,7 @@ module MediaHelper
 		else 
 			# if url is defined it will either get all objects inside a directory or get an inidividual
 			# file depending on the type of string passed in through prefix
-			files = AWS::S3::Bucket.objects(Setting.find_by_setting_name('aws_bucket_name')[:setting], :prefix => url)
+			files = AWS::S3::Bucket.objects(Setting.get('aws_bucket_name'), :prefix => url)
 		end
 		
 		files
@@ -88,7 +88,7 @@ module MediaHelper
 	def get_folder_size url, human = true
 		
 		total_bytes = 0
-		files = AWS::S3::Bucket.objects(Setting.find_by_setting_name('aws_bucket_name')[:setting], :prefix => url)		
+		files = AWS::S3::Bucket.objects(Setting.get('aws_bucket_name'), :prefix => url)		
 		
 		files.each do |f|
 			total_bytes += f.size.to_i
@@ -105,7 +105,7 @@ module MediaHelper
 	# +url+:: the path that you want to get a list of files and folders from
 
 	def media_get_by_key(params, url = '')
-		AWS::S3::Bucket.objects(Setting.find_by_setting_name('aws_bucket_name')[:setting], :prefix => url + params[:key])
+		AWS::S3::Bucket.objects(Setting.get('aws_bucket_name'), :prefix => url + params[:key])
 	end
 
 

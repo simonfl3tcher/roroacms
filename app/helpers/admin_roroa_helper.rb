@@ -37,7 +37,7 @@ module AdminRoroaHelper
 
 	def get_templates
 		hash = []
-		current_theme = Setting.find_by_setting_name('theme_folder')[:setting]
+		current_theme = Setting.get('theme_folder')
 
 		Dir.glob("app/views/theme/#{current_theme}/template-*.html.erb") do |my_text_file|
 			opt = my_text_file.split('/').last
@@ -139,7 +139,7 @@ module AdminRoroaHelper
 
 	def theme_exists
 		
-		current_theme = Setting.find_by_setting_name('theme_folder')[:setting]
+		current_theme = Setting.get('theme_folder')
 
 		if !Dir.exists?("app/views/theme/#{current_theme}/")
 			html = "<div class='alert alert-danger'><strong>Warning!</strong> The current theme being used does not exist!</div>"
