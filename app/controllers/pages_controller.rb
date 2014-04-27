@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
 
+
 	# everything request that is not the /admin goes through PagesController
 
 	# Include the necessary helpers to load the file, RoutingHelper does the routing of the url to the correct data

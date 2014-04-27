@@ -11,6 +11,7 @@ end
 
 module Roroacms
   class Application < Rails::Application
+    config.autoload_paths += %W(#{config.root}/lib)
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
@@ -27,6 +28,25 @@ module Roroacms
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     config.action_controller.include_all_helpers = true
-    config.assets.paths << Rails.root.join("vendor").to_s
+
+    require 'active_record'
+    require 'mysql2'
+    DB = YAML.load_file("#{Rails.root}/config/database.yml")
+
+    ActiveRecord::Base.establish_connection(
+      adapter:  'mysql2',
+      database: DB[Rails.env]['database'],
+      username: DB[Rails.env]['username'],
+      password: DB[Rails.env]['password'],
+      host:     DB[Rails.env]['host']
+    )
+    require "#{Rails.root}/app/models/setting.rb"
+
+    config.assets.paths << Rails.root.join("vendor", "assets", "externals").to_s
+    config.assets.paths << "#{Rails.root}/app/views/theme/#{Setting.get('theme_folder')}/assets/stylesheets"
+    config.assets.paths << "#{Rails.root}/app/views/theme/#{Setting.get('theme_folder')}/assets/javascripts"
+    config.assets.paths << "#{Rails.root}/app/views/theme/#{Setting.get('theme_folder')}/assets/font"
+    config.assets.paths << "#{Rails.root}/app/views/theme/#{Setting.get('theme_folder')}/assets/images"
+
   end
 end
