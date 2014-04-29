@@ -1,5 +1,8 @@
 class PagesController < ApplicationController
 
+	before_filter :rewrite_theme_helper
+	before_filter :check_theme_folder
+
 
 	# everything request that is not the /admin goes through PagesController
 

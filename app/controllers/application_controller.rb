@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   helper MenuHelper
   helper SeoHelper  
   helper CommentsHelper
+  helper GeneralHelper
 
   private
 
@@ -54,7 +55,6 @@ class ApplicationController < ActionController::Base
   def current_admin
   	@current_admin ||= Admin.find(session[:admin_id]) if session[:admin_id]
   end
-
 
   # Returns the current access that is granted to the logged in admin. Allowing you to restrict necessary areas to certain types of user
   # currently there are only two user types (admin or editor)
