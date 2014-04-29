@@ -16,8 +16,10 @@ module AdminRoroaHelper
 		hash = []
 		Dir.glob("app/views/theme/*/") do |themes|
 			opt = themes.split('/').last
-			info = YAML.load(File.read("#{themes}theme.yml"))
-			hash << info
+			if File.exists?("#{themes}theme.yml")
+				info = YAML.load(File.read("#{themes}theme.yml"))
+				hash << info
+			end
 		end
 
 		hash
