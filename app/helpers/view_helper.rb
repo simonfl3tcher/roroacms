@@ -86,6 +86,24 @@ module ViewHelper
 		@content.id == Setting.get('home_page').to_i	? true : false
 	end	
 
+	# is a category page
+
+	def is_category?
+
+	end
+
+	# is a archive page
+
+	def is_archive?
+
+	end
+
+	# is a archive page
+
+	def is_articles?
+
+	end
+
 	# A short extract from the post content
 	# Params:
 	# +post+:: post record that you want to return the title of

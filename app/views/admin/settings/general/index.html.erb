@@ -18,8 +18,13 @@
 			</div>
 
 			<div class="field formSep">
-				<%= label_tag(:pagination_per, "Pagination per page") %>
+				<%= label_tag(:pagination_per, "Pagination per page (admin)") %>
 				<%= text_field_tag(:pagination_per, Setting.get('pagination_per')) %>
+			</div>
+
+			<div class="field formSep">
+				<%= label_tag(:pagination_per_fe, "Pagination per page (Theme)") %>
+				<%= text_field_tag(:pagination_per_fe, Setting.get('pagination_per_fe')) %>
 			</div>
 
 			<div class="field formSep">

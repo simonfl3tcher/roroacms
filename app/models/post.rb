@@ -42,14 +42,22 @@ class Post < ActiveRecord::Base
 
     # get all the tags for the system
 
-    def self.get_tags
-        Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy)
+    def self.get_tags(id = nil)
+        sql = Term.where(term_anatomies: {taxonomy: 'tag'})
+        if !id.blank?
+            sql = sql.where('terms.id != ?', id)
+        end
+        sql.order('name asc').includes(:term_anatomy)
     end
 
     # get all the categories for the system
 
-    def self.get_cats
-        Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
+    def self.get_cats(id = nil)
+        sql = Term.where(term_anatomies: {taxonomy: 'category'})
+        if !id.blank?
+            sql = sql.where('terms.id != ?', id)
+        end
+        sql.order('name asc').includes(:term_anatomy)
     end
 
     # get all the records but with an offset/limit

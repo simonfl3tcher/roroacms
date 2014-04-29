@@ -43,10 +43,13 @@
 
 					<% else %>
 						
-						<p>No posts match the criteria.</p>
+						<p>No articles match the criteria.</p>
 
 					<% end %>
 
+					<div class="col-md-12">
+						<%= paginate get_category_data %>
+					</div>
 
 		        </div>
 
