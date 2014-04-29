@@ -166,7 +166,7 @@ module ViewHelper
 
 		if Setting.get('article_comments') == 'Y'
 			type = Setting.get('article_comment_type')
-			render(:template =>"theme/#{current_theme}/comments_form.html.erb", :layout => nil, :locals => { :type => type }).to_s
+			render(:template =>"theme/#{current_theme}/comments_form." + get_theme_ext , :layout => nil, :locals => { :type => type }).to_s
 		end
 
 	end
@@ -250,7 +250,7 @@ module ViewHelper
 	# this is created and displayed from the theme.
 
 	def get_search_form
-		render :template => "theme/#{current_theme}/search_form.html.erb" rescue nil
+		render :template => "theme/#{current_theme}/search_form." + get_theme_ext  rescue nil
 	end
 
 
@@ -386,6 +386,25 @@ module ViewHelper
 			end.join(', ').html_safe
 	end
 
+	# get posts with the ID of the given string '1,2,4'
+	# Params:
+	# +ids+:: an array of ids that you want to get the post object of
+
+	def get_posts ids 
+		Post.where(:id => ids)
+	end
+
+	# get sub pages of a post
+	# Params:
+	# +parent_id+:: ID of the parent post that you want to get the sub pages for
+
+	def get_subpages parent_id = nil, limit = nil, orderby = 'post_title'
+		posts = Post.where(:parent_id => parent_id.blank? ? @content.id : parent_id).order("post_title")
+		if !limit.blank?
+			posts = posts.limit(1)
+		end
+		posts
+	end
 
 	# Returns the html for the comments tree of a post
 	# Params:
@@ -453,7 +472,7 @@ module ViewHelper
 	# +name+:: template name
 
 	def view_file_exists?(name)
-		File.exists?("app/views/theme/#{current_theme}/template-#{name}.html.erb")
+		File.exists?("app/views/theme/#{current_theme}/template-#{name}." + get_theme_ext )
 	end
 
 
@@ -517,16 +536,16 @@ module ViewHelper
 		"theme/#{current_theme}/#{append}"
 	end
 
-	# displays the header.html.erb template in the theme if the file exists 
+	# displays the header.  + get_theme_ext template in the theme if the file exists 
 
 	def display_header 
-		render :template => "/theme/#{current_theme}/header.html.erb" if File.exists?("app/views/theme/#{current_theme}/header.html.erb")
+		render :template => "/theme/#{current_theme}/header." + get_theme_ext  if File.exists?("app/views/theme/#{current_theme}/header." + get_theme_ext )
 	end
 
-	# displays the header.html.erb template in the theme if the file exists 
+	# displays the header.  + get_theme_ext template in the theme if the file exists 
 
 	def display_footer
-		render :template => "theme/#{current_theme}/footer.html.erb" if File.exists?("app/views/theme/#{current_theme}/footer.html.erb")
+		render :template => "theme/#{current_theme}/footer." + get_theme_ext  if File.exists?("app/views/theme/#{current_theme}/footer." + get_theme_ext )
 	end
 	
 end

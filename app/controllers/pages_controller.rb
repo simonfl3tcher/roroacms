@@ -6,6 +6,10 @@ class PagesController < ApplicationController
 	# Include the necessary helpers to load the file, RoutingHelper does the routing of the url to the correct data
 	include ViewHelper
 	include RoutingHelper
+	include GeneralHelper
+
+	# theme helper for the theme
+	helper ThemeHelper
 
 	# a homepage is set in the admin panel, route_index_page will display this page. 
 	# (params) is also passed in, for the search form which send a GET request to the homepage
