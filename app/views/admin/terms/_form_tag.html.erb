@@ -20,6 +20,10 @@
       <%= f.text_field :name, size: 40 %>
     </div>
     <div class="field">
+      <%= f.label :parent %>
+      <%= f.select(:parent, Post.get_tags(@category.blank? ? nil : @category.id).all.collect {|p| [ p.name, p.id ] }, {include_blank: 'None'}) %>
+    </div>
+    <div class="field">
       <%= f.label :slug %>
       <%= f.text_field :slug, size: 40 %>
     </div>

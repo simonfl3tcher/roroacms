@@ -10,13 +10,18 @@ module RoutingHelper
 		if defined?(params[:search]) && !params[:search].blank?
 
 			# make the content avalible to the view
-			gloalize Post.where("(post_title LIKE :p or post_slug LIKE :p2 or post_content LIKE :p3) and (post_type != 'autosave') AND (post_date <= NOW())", {:p => "%#{params[:search]}%", :p2 => "%#{params[:search]}%", :p3 => "%#{params[:search]}%"})
+			gloalize Post.where("(post_title LIKE :p or post_slug LIKE :p2 or post_content LIKE :p3) and (post_type != 'autosave') AND (post_date <= NOW())", {:p => "%#{params[:search]}%", :p2 => "%#{params[:search]}%", :p3 => "%#{params[:search]}%"}).page(params[:page]).per(Setting.get('pagination_per_fe'))
 			
 			# add breadcrumbs to the hash
 			add_breadcrumb "Home", :root_path, :title => "Home"
 			add_breadcrumb "Search", "/"
 
-			render :template => "theme/#{current_theme}/search"
+			# template Hierarchy
+			if template_exists?("category")
+				render :template => "theme/#{current_theme}/search"
+			else
+				render :tempalte => "theme/#{current_theme}/page"
+			end
 
 		else
 
@@ -199,7 +204,7 @@ module RoutingHelper
 				term = Term.where(:slug => segments[2]).first
 
 				# do a search for the content
-				gloalize Post.joins('LEFT JOIN term_relationships ON term_relationships.post_id = posts.id').where("(post_status = 'Published' AND post_date <= NOW() AND disabled = 'N') and term_relationships.term_id = ?", term).order('post_date DESC')
+				gloalize Post.joins('LEFT JOIN term_relationships ON term_relationships.post_id = posts.id').where("(post_status = 'Published' AND post_date <= NOW() AND disabled = 'N') and term_relationships.term_id = ?", term).order('post_date DESC').page(params[:page]).per(Setting.get('pagination_per_fe'))
 				
 				# add the breadcrumbs
 				add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
@@ -212,8 +217,14 @@ module RoutingHelper
 
 			# add article homepage
 			add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
-			gloalize Post.where("#{status} and post_type ='post' and disabled = 'N'").order('post_date DESC')
-			render :template => "theme/#{current_theme}/category." + get_theme_ext
+			gloalize Post.where("#{status} and post_type ='post' and disabled = 'N'").order('post_date DESC').page(params[:page]).per(Setting.get('pagination_per_fe'))
+			
+			# template Hierarchy
+			if template_exists?("category")
+				render :template => "theme/#{current_theme}/category." + get_theme_ext
+			else 
+				render :template => "theme/#{current_theme}/page." + get_theme_ext
+			end
 
 		end
 
@@ -287,9 +298,26 @@ module RoutingHelper
 		build_sql = build_sql.where("post_date <= NOW()")
 		
 		#  do seach for the content within the given parameters
-		gloalize build_sql.order('post_date DESC')
-		
-		render :template => "theme/#{current_theme}/archive." + get_theme_ext
+		gloalize build_sql.order('post_date DESC').page(params[:page]).per(Setting.get('pagination_per_fe'))
+
+		if template_exists?("archive")
+			render :template => "theme/#{current_theme}/archive." + get_theme_ext
+		elsif template_exists?("category")
+			render :template => "theme/#{current_theme}/category." + get_theme_ext
+		else 
+			render :template => "theme/#{current_theme}/page." + get_theme_ext
+		end
+
+	end
+
+	# does the template file actually exist in the theme?
+	def template_exists?(path)
+		File.exists?("app/views/theme/#{current_theme}/" + path + '.' + get_theme_ext)
+	end
+
+	# checks for the top level file, but returns the file that it can actually use
+	
+	def do_hierarchy_templating
 
 	end
 

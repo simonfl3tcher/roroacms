@@ -42,6 +42,7 @@ module GeneralHelper
 	    load("#{Rails.root}/app/helpers/theme_helper.rb")
 	end
 
+	# do a check to see if theme has theme.yml file
 	def check_theme_folder
 		if !File.exists?("#{Rails.root}/app/views/theme/#{current_theme}/theme.yml")
 			render :inline => "There is no theme.yml file included in the theme" and return 

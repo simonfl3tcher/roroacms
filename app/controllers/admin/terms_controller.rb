@@ -106,7 +106,7 @@ class Admin::TermsController < AdminController
 
 	def term_params
 		if !session[:admin_id].blank?
-			params.require(:term).permit(:name, :slug, :description, :term_group)
+			params.require(:term).permit(:name, :parent, :slug, :description, :term_group)
 		end
 	end
 
