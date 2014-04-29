@@ -89,6 +89,8 @@ GEM
     guard-rspec (3.0.2)
       guard (>= 1.8)
       rspec (~> 2.13)
+    haml (4.0.5)
+      tilt
     hike (1.2.3)
     http_parser.rb (0.5.3)
     i18n (0.6.4)
@@ -226,6 +228,7 @@ DEPENDENCIES
   faker
   guard-livereload
   guard-rspec
+  haml
   jquery-rails
   kaminari
   less-rails
