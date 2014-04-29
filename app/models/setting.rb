@@ -12,4 +12,8 @@ class Setting < ActiveRecord::Base
 		return Setting.get('pagination_per').to_i
 	end
 
+	def self.get_pagination_limit_fe
+		return Setting.get('pagination_per_fe').to_i
+	end
+
 end
