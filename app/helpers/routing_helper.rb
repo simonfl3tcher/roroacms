@@ -39,18 +39,18 @@ module RoutingHelper
 		if !@content.post_template.blank?
 
 			# check if the template file actually exists
-			if File.exists?("app/views/theme/#{current_theme}/template-#{@content.post_template.downcase}.html.erb")
+			if File.exists?("app/views/theme/#{current_theme}/template-#{@content.post_template.downcase}." + get_theme_ext)
 
-				render :template => "theme/#{current_theme}/template-#{@content.post_template.downcase}"
+				render :template => "theme/#{current_theme}/template-#{@content.post_template.downcase}." + get_theme_ext 
 
 			else
 
 				# check if a file with the given name exists
-				if File.exists?("app/views/theme/#{current_theme}/#{name}.html.erb")	
-					render :template => "theme/#{current_theme}/#{name}"
-				elsif File.exists?("app/views/theme/#{current_theme}/page.html.erb")
+				if File.exists?("app/views/theme/#{current_theme}/#{name}." + get_theme_ext)	
+					render :template => "theme/#{current_theme}/#{name}." + get_theme_ext
+				elsif File.exists?("app/views/theme/#{current_theme}/page." + get_theme_ext)
 					# if not use the page.html.erb template which has to be included in the theme
-					render :template => "theme/#{current_theme}/page.html.erb"
+					render :template => "theme/#{current_theme}/page." + get_theme_ext
 				else 
 					render :inline => 'You have to have page.html.erb tempalte included in your theme'
 				end
@@ -60,11 +60,11 @@ module RoutingHelper
 		else
 
 			# check if a file with the given name exists
-			if File.exists?("app/views/theme/#{current_theme}/#{name}.html.erb")
-				render :template => "theme/#{current_theme}/#{name}"
-			elsif File.exists?("app/views/theme/#{current_theme}/page.html.erb")
+			if File.exists?("app/views/theme/#{current_theme}/#{name}." + get_theme_ext)
+				render :template => "theme/#{current_theme}/#{name}." + get_theme_ext
+			elsif File.exists?("app/views/theme/#{current_theme}/page." + get_theme_ext)
 				# if not use the page.html.erb template which has to be included in the theme
-				render :template => "theme/#{current_theme}/page.html.erb"
+				render :template => "theme/#{current_theme}/page." + get_theme_ext
 			else 
 				render :inline => 'You have to have page.html.erb tempalte included in your theme'
 			end
@@ -205,7 +205,7 @@ module RoutingHelper
 				add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
 				add_breadcrumb "#{term.name.capitalize}", "/#{term.name}", :title => "Back to #{term.name.capitalize}"
 
-				render :template => "theme/#{current_theme}/category"
+				render :template => "theme/#{current_theme}/category." + get_theme_ext
 			end
 
 		else 
@@ -213,7 +213,7 @@ module RoutingHelper
 			# add article homepage
 			add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
 			gloalize Post.where("#{status} and post_type ='post' and disabled = 'N'").order('post_date DESC')
-			render :template => "theme/#{current_theme}/category"
+			render :template => "theme/#{current_theme}/category." + get_theme_ext
 
 		end
 
@@ -289,7 +289,7 @@ module RoutingHelper
 		#  do seach for the content within the given parameters
 		gloalize build_sql.order('post_date DESC')
 		
-		render :template => "theme/#{current_theme}/archive"
+		render :template => "theme/#{current_theme}/archive." + get_theme_ext
 
 	end
 

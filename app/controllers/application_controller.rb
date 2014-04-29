@@ -25,6 +25,13 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_theme
 
+  # theme extension 
+
+  def get_theme_ext 
+    theme_yaml('view_extension')
+  end
+
+  helper_method :get_theme_ext
 
   # Return the current user data
 
