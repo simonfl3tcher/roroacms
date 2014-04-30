@@ -85,38 +85,43 @@ module ViewHelper
 		return false if (!defined?(@content.length).blank? || @content.blank?)
 		@content.id == Setting.get('home_page').to_i	? true : false
 	end	
+	
 
 	# is a category page
 	# Params:
 	# +check+:: check wether it is a certain category or not by name or id
 
 	def is_category?(name = nil)
-		if get_type_by_url == 'CT' ? true : false
+		get_type_by_url == 'CT' ? true : false
 	end
+
 
 	# is archive page
 	# Params:
 	# +check+:: check wether it is a certain carchive or not by name or id
 
 	def is_archive?(check = nil)
-		if get_type_by_url == 'AR' ? true : false
+		get_type_by_url == 'AR' ? true : false
 	end
+
 
 	# is a single archive page
 	# Params:
 	# +check+:: check wether it is a certain category or not by name or id
 
 	def is_article?(check = nil)
-		if get_type_by_url == 'A' ? true : false
+		get_type_by_url == 'A' ? true : false
 	end
+
 
 	# is a overall category page
 	# Params:
 	# +check+:: can be either name or id of the post 
 
 	def is_home_articles?
-		if get_type_by_url == 'C' ? true : false
+		get_type_by_url == 'C' ? true : false
 	end
+
 
 	# Check to see if given id or string is the current content record
 	# Params:
