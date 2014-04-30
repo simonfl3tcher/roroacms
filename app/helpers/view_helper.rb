@@ -87,20 +87,68 @@ module ViewHelper
 	end	
 
 	# is a category page
+	# Params:
+	# +check+:: check wether it is a certain category or not by name or id
 
-	def is_category?
-
+	def is_category?(name = nil)
+		true if get_type_by_url == 'CT'
 	end
 
-	# is a archive page
+	# is archive page
+	# Params:
+	# +check+:: check wether it is a certain carchive or not by name or id
 
-	def is_archive?
-
+	def is_archive?(check = nil)
+		true if get_type_by_url == 'AR'
 	end
 
-	# is a archive page
+	# is a single archive page
+	# Params:
+	# +check+:: check wether it is a certain category or not by name or id
 
-	def is_articles?
+	def is_article?(check = nil)
+		true if get_type_by_url == 'A'
+	end
+
+	# is a overall category page
+	# Params:
+	# +check+:: can be either name or id of the post 
+
+	def is_home_articles?
+		true if get_type_by_url == 'C'
+	end
+
+	# Check to see if given id or string is the current content record
+	# Params:
+	# +check+:: can be either name or id of the post 
+
+	def is_page?(check)
+
+		@p = @content
+
+		check = check.to_s
+
+		if defined? @p.post_title
+			if !@p.blank? 
+				if check.nonnegative_float?
+					if @p.id == check.to_i
+						return true
+					else
+						return false
+					end
+				else 
+					if @p.post_title.downcase == check.downcase
+						return true
+					else
+						return false
+					end
+				end
+			else
+				return false
+			end
+		else
+			return false
+		end
 
 	end
 
@@ -491,41 +539,6 @@ module ViewHelper
 
 	def view_file_exists?(name)
 		File.exists?("app/views/theme/#{current_theme}/template-#{name}." + get_theme_ext )
-	end
-
-
-	# Check to see if given id or string is the current content record
-	# Params:
-	# +check+:: can be either name or id of the post 
-
-	def is_page?(check)
-
-		@p = @content
-
-		check = check.to_s
-
-		if defined? @p.post_title
-			if !@p.blank? 
-				if check.nonnegative_float?
-					if @p.id == check.to_i
-						return true
-					else
-						return false
-					end
-				else 
-					if @p.post_title.downcase == check.downcase
-						return true
-					else
-						return false
-					end
-				end
-			else
-				return false
-			end
-		else
-			return false
-		end
-
 	end
 
 
