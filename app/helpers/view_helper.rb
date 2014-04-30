@@ -85,14 +85,44 @@ module ViewHelper
 		return false if (!defined?(@content.length).blank? || @content.blank?)
 		@content.id == Setting.get('home_page').to_i	? true : false
 	end	
-	
+
 
 	# is a category page
 	# Params:
 	# +check+:: check wether it is a certain category or not by name or id
 
-	def is_category?(name = nil)
-		get_type_by_url == 'CT' ? true : false
+	def is_category?(check = nil)
+		segments = params[:slug].split('/')
+		if check.blank?
+			Setting.get('category_slug') == segments[1] ? true : false
+		else 
+			(Setting.get('category_slug') == segments[1] && (Term.where(slug: segments[2]).first.name == check || Term.where(slug: segments[2]).first.id == check) ) ? true : false
+		end
+	end
+
+	# is a single archive page
+	# Params:
+	# +check+:: check wether it is a certain category or not by name or id
+
+	def is_article?(check = nil)
+		segments = params[:slug].split('/')
+		if check.blank?
+			Setting.get('articles_slug') == segments[0] ? true : false
+		else 
+			if !defined?(@content.size).blank?
+				return false
+			end
+			(Setting.get('articles_slug') == segments[0] && (@content.post_title == check || @content.id == check) ) ? true : false
+		end
+	end
+
+	def is_tag?(check = nil)
+		segments = params[:slug].split('/')
+		if check.blank?
+			Setting.get('tag_slug') == segments[1] ? true : false
+		else 
+			(Setting.get('tag_slug') == segments[1] && (Term.where(slug: segments[2]).first.name == check || Term.where(slug: segments[2]).first.id == check) ) ? true : false
+		end
 	end
 
 
@@ -100,17 +130,8 @@ module ViewHelper
 	# Params:
 	# +check+:: check wether it is a certain carchive or not by name or id
 
-	def is_archive?(check = nil)
+	def is_archive?
 		get_type_by_url == 'AR' ? true : false
-	end
-
-
-	# is a single archive page
-	# Params:
-	# +check+:: check wether it is a certain category or not by name or id
-
-	def is_article?(check = nil)
-		get_type_by_url == 'A' ? true : false
 	end
 
 
@@ -118,7 +139,7 @@ module ViewHelper
 	# Params:
 	# +check+:: can be either name or id of the post 
 
-	def is_home_articles?
+	def is_articles_home?
 		get_type_by_url == 'C' ? true : false
 	end
 
