@@ -17,11 +17,7 @@ module RoutingHelper
 			add_breadcrumb "Search", "/"
 
 			# template Hierarchy
-			if template_exists?("category")
-				render :template => "theme/#{current_theme}/search"
-			else
-				render :tempalte => "theme/#{current_theme}/page"
-			end
+			do_hierarchy_templating('search')
 
 		else
 
@@ -31,50 +27,6 @@ module RoutingHelper
 			render_template 'home'
 
 		end
-
-	end
-
-
-	# changes the view to use the given template if it doesn't exist it will just use the page.html.erb
-	# the template file is set in the admin panel on each individual page.
-	# Params:
-	# +name+:: the template file to use.
-
-	def render_template(name)
-		if !@content.post_template.blank?
-
-			# check if the template file actually exists
-			if File.exists?("app/views/theme/#{current_theme}/template-#{@content.post_template.downcase}." + get_theme_ext)
-
-				render :template => "theme/#{current_theme}/template-#{@content.post_template.downcase}." + get_theme_ext 
-
-			else
-
-				# check if a file with the given name exists
-				if File.exists?("app/views/theme/#{current_theme}/#{name}." + get_theme_ext)	
-					render :template => "theme/#{current_theme}/#{name}." + get_theme_ext
-				elsif File.exists?("app/views/theme/#{current_theme}/page." + get_theme_ext)
-					# if not use the page.html.erb template which has to be included in the theme
-					render :template => "theme/#{current_theme}/page." + get_theme_ext
-				else 
-					render :inline => 'You have to have page.html.erb tempalte included in your theme'
-				end
-
-			end
-
-		else
-
-			# check if a file with the given name exists
-			if File.exists?("app/views/theme/#{current_theme}/#{name}." + get_theme_ext)
-				render :template => "theme/#{current_theme}/#{name}." + get_theme_ext
-			elsif File.exists?("app/views/theme/#{current_theme}/page." + get_theme_ext)
-				# if not use the page.html.erb template which has to be included in the theme
-				render :template => "theme/#{current_theme}/page." + get_theme_ext
-			else 
-				render :inline => 'You have to have page.html.erb tempalte included in your theme'
-			end
-
-		end	
 
 	end
 
@@ -123,31 +75,59 @@ module RoutingHelper
 		status = "(post_status = 'Published' AND post_date <= NOW() AND disabled = 'N')"
 
 		# is it a article post or a page post
-		if segments[0] == article_url
 
-			if !segments[1].blank?
-				if segments[1] == category_url || segments[1] == tag_url
-					# render a category or tag page
-					render_category segments, article_url, true, status
-				elsif segments[1].nonnegative_float?
-					# render the archive page
-					render_archive segments, article_url
-				else
-					# otherwise render a single article page
-					render_single segments, article_url, status
-				end
-			else
-				# render the overall all the articles
+		case get_type_by_url
+			when "CT"
+				render_category segments, article_url, true, status
+			when "AR"
+				render_archive segments, article_url
+			when "A"
+				render_single segments, article_url, status
+			when "C"
 				render_category segments, article_url, false, status
-			end
-
-		else
-			# render a page
-			render_page url, status
+			when "P"
+				render_page url, status
 		end
 
 	end
 
+	def get_type_by_url
+
+		# split the url up into segments
+		segments = params[:slug].split('/')
+
+		# general variables
+		url = params[:slug]
+		article_url = Setting.get('articles_slug')
+		category_url = Setting.get('category_slug')	
+		tag_url = Setting.get('tag_slug')
+
+		status = "(post_status = 'Published' AND post_date <= NOW() AND disabled = 'N')"
+
+		# is it a article post or a page post
+		if segments[0] == article_url
+			if !segments[1].blank?
+				if segments[1] == category_url || segments[1] == tag_url
+					# render a category or tag page
+					return 'CT'
+				elsif segments[1].nonnegative_float?
+					# render the archive page
+					return 'AR'
+				else
+					# otherwise render a single article page
+					return 'A'
+				end
+			else
+				# render the overall all the articles
+				return 'C'
+			end
+
+		else
+			# render a page
+			return 'P'
+		end
+
+	end
 
 	# renders a standard post page
 	# Params:
@@ -210,7 +190,8 @@ module RoutingHelper
 				add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
 				add_breadcrumb "#{term.name.capitalize}", "/#{term.name}", :title => "Back to #{term.name.capitalize}"
 
-				render :template => "theme/#{current_theme}/category." + get_theme_ext
+				do_hierarchy_templating('category')
+
 			end
 
 		else 
@@ -220,11 +201,7 @@ module RoutingHelper
 			gloalize Post.where("#{status} and post_type ='post' and disabled = 'N'").order('post_date DESC').page(params[:page]).per(Setting.get('pagination_per_fe'))
 			
 			# template Hierarchy
-			if template_exists?("category")
-				render :template => "theme/#{current_theme}/category." + get_theme_ext
-			else 
-				render :template => "theme/#{current_theme}/page." + get_theme_ext
-			end
+			do_hierarchy_templating('category')
 
 		end
 
@@ -300,13 +277,7 @@ module RoutingHelper
 		#  do seach for the content within the given parameters
 		gloalize build_sql.order('post_date DESC').page(params[:page]).per(Setting.get('pagination_per_fe'))
 
-		if template_exists?("archive")
-			render :template => "theme/#{current_theme}/archive." + get_theme_ext
-		elsif template_exists?("category")
-			render :template => "theme/#{current_theme}/category." + get_theme_ext
-		else 
-			render :template => "theme/#{current_theme}/page." + get_theme_ext
-		end
+		do_hierarchy_templating('archive')
 
 	end
 
@@ -316,9 +287,83 @@ module RoutingHelper
 	end
 
 	# checks for the top level file, but returns the file that it can actually use
-	
-	def do_hierarchy_templating
+	# Params:
+	# +type+:: type of 
+
+	def do_hierarchy_templating type
+		
+		case type 
+			when 'archive'
+
+				if template_exists?("archive")
+					render :template => "theme/#{current_theme}/archive." + get_theme_ext
+				elsif template_exists?("category")
+					render :template => "theme/#{current_theme}/category." + get_theme_ext
+				else 
+					render :template => "theme/#{current_theme}/page." + get_theme_ext
+				end
+
+			when 'category'
+
+				if template_exists?("category")
+					render :template => "theme/#{current_theme}/category." + get_theme_ext
+				else 
+					render :template => "theme/#{current_theme}/page." + get_theme_ext
+				end
+
+			when 'search'
+
+				if template_exists?("category")
+					render :template => "theme/#{current_theme}/search." + get_theme_ext
+				else
+					render :tempalte => "theme/#{current_theme}/page." + get_theme_ext
+				end
+
+		end
 
 	end
+
+	# changes the view to use the given template if it doesn't exist it will just use the page.html.erb
+	# the template file is set in the admin panel on each individual page.
+	# Params:
+	# +name+:: the template file to use.
+
+	def render_template(name)
+		if !@content.post_template.blank?
+
+			# check if the template file actually exists
+			if template_exists?("template-#{@content.post_template.downcase}")
+
+				render :template => "theme/#{current_theme}/template-#{@content.post_template.downcase}." + get_theme_ext 
+
+			else
+
+				# check if a file with the given name exists
+				if template_exists?(name)	
+					render :template => "theme/#{current_theme}/#{name}." + get_theme_ext
+				elsif template_exists?("page")
+					# if not use the page.html.erb template which has to be included in the theme
+					render :template => "theme/#{current_theme}/page." + get_theme_ext
+				else 
+					render :inline => 'You have to have page.html.erb tempalte included in your theme'
+				end
+
+			end
+
+		else
+
+			# check if a file with the given name exists
+			if template_exists?(name)
+				render :template => "theme/#{current_theme}/#{name}." + get_theme_ext
+			elsif template_exists?("page")
+				# if not use the page.html.erb template which has to be included in the theme
+				render :template => "theme/#{current_theme}/page." + get_theme_ext
+			else 
+				render :inline => 'You have to have page.html.erb tempalte included in your theme'
+			end
+
+		end	
+
+	end		
 
 end
