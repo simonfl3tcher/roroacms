@@ -91,7 +91,7 @@ module ViewHelper
 	# +check+:: check wether it is a certain category or not by name or id
 
 	def is_category?(name = nil)
-		true if get_type_by_url == 'CT'
+		if get_type_by_url == 'CT' ? true : false
 	end
 
 	# is archive page
@@ -99,7 +99,7 @@ module ViewHelper
 	# +check+:: check wether it is a certain carchive or not by name or id
 
 	def is_archive?(check = nil)
-		true if get_type_by_url == 'AR'
+		if get_type_by_url == 'AR' ? true : false
 	end
 
 	# is a single archive page
@@ -107,7 +107,7 @@ module ViewHelper
 	# +check+:: check wether it is a certain category or not by name or id
 
 	def is_article?(check = nil)
-		true if get_type_by_url == 'A'
+		if get_type_by_url == 'A' ? true : false
 	end
 
 	# is a overall category page
@@ -115,7 +115,7 @@ module ViewHelper
 	# +check+:: can be either name or id of the post 
 
 	def is_home_articles?
-		true if get_type_by_url == 'C'
+		if get_type_by_url == 'C' ? true : false
 	end
 
 	# Check to see if given id or string is the current content record
