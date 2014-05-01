@@ -101,6 +101,17 @@ class Term < ActiveRecord::Base
 			self.slug = self.slug.gsub(' ', '-').downcase
 		end
 
+		# make sure you prepend the parent structured url if parent exitst
+		self.structured_url = self.slug 
+
+  	end
+
+  	# update the url in sub pages if the url changes 
+
+  	def update_slug_for_subcategories(old_url)
+  		# find all the records with the old url - change the url to use the new one
+  		term = Term.find(self.id)
+  		abort term.inspect
   	end
 
 
