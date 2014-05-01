@@ -58,14 +58,17 @@ class Admin::TermsController < AdminController
 	    # redirect url will be different for either tag or category
 	    redirect_url = Term.get_redirect_url params
 	    type = Term.get_type_of_term params
+	   	old_url = @term.structured_url
+
 
 	    respond_to do |format|
-
-	      if @term.update_attributes(term_params)
-	        format.html { redirect_to send(redirect_url), notice: "#{type} was successfully updated" }
-	      else
-	        format.html { render action: "edit" }
-	      end
+	    	# deal with abnormalaties - update the structure url 
+			if @term.update_attributes(term_params)
+			    @term.update_slug_for_subcategories(old_url)
+				format.html { redirect_to send(redirect_url), notice: "#{type} was successfully updated" }
+			else
+				format.html { render action: "edit" }
+			end
 
 	    end
 	end
@@ -106,7 +109,7 @@ class Admin::TermsController < AdminController
 
 	def term_params
 		if !session[:admin_id].blank?
-			params.require(:term).permit(:name, :parent, :slug, :description, :term_group)
+			params.require(:term).permit(:name, :parent, :slug, :structured_url, :description, :term_group)
 		end
 	end
 
