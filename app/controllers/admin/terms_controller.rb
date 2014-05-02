@@ -53,21 +53,24 @@ class Admin::TermsController < AdminController
 	# update the term record with the given parameters
 
 	def update
-	    @term = Term.find(params[:id])
+	    @category = Term.find(params[:id])
 
 	    # redirect url will be different for either tag or category
 	    redirect_url = Term.get_redirect_url params
 	    type = Term.get_type_of_term params
-	   	old_url = @term.structured_url
-
+	   	old_url = @category.structured_url
 
 	    respond_to do |format|
 	    	# deal with abnormalaties - update the structure url 
-			if @term.update_attributes(term_params)
-			    @term.update_slug_for_subcategories(old_url)
+			if @category.update_attributes(term_params)
+
+			    Term.update_slug_for_subcategories(@category.id, old_url, true)
 				format.html { redirect_to send(redirect_url), notice: "#{type} was successfully updated" }
+
 			else
+
 				format.html { render action: "edit" }
+
 			end
 
 	    end

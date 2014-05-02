@@ -9,7 +9,7 @@ class Term < ActiveRecord::Base
 	has_one :term_anatomy, :dependent => :destroy
   	validates :name, :presence => true
   	validates_format_of :slug, :with => /^[A-Za-z0-9-]*$/
-  	validates_uniqueness_of :slug
+  	validates_uniqueness_of :slug, :on => :create
 
   	
   	def self.create(params)
@@ -101,17 +101,44 @@ class Term < ActiveRecord::Base
 			self.slug = self.slug.gsub(' ', '-').downcase
 		end
 
-		# make sure you prepend the parent structured url if parent exitst
-		self.structured_url = self.slug 
-
   	end
 
   	# update the url in sub pages if the url changes 
 
-  	def update_slug_for_subcategories(old_url)
+  	def self.update_slug_for_subcategories(term_id, old_url, initial = true)
+
   		# find all the records with the old url - change the url to use the new one
-  		term = Term.find(self.id)
-  		abort term.inspect
+  		term = Term.find(term_id)
+
+  		if initial
+
+	  		str_url = '/' + term.slug 
+			# make sure you prepend the parent structured url if parent exitst
+			if !term.parent.blank?
+				str_url = Term.find(term.parent.to_i).structured_url + str_url
+			end
+			term.structured_url = str_url
+			term.save
+
+		end
+
+
+  		if term.structured_url != old_url
+  			Term.where(parent: term.id).each do |f|
+  				t = Term.find(f.id)
+  				
+  				url_old = t.structured_url
+  				
+  				t.structured_url = t.structured_url.gsub(old_url + '/', term.structured_url + '/')
+  				t.save
+
+  				if !t.parent.blank?
+  					update_slug_for_subcategories(t.id, url_old, false)
+  				end
+
+  			end
+  		end
+
   	end
 
 
@@ -124,6 +151,10 @@ class Term < ActiveRecord::Base
 			@category = Term.find(val)
 			@category.destroy
 		end
+	end
+
+	def do_slug_update(id)
+		abort '1223'.inspect
 	end
 
 
