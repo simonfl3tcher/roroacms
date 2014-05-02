@@ -173,6 +173,8 @@ module RoutingHelper
 	# +status+:: the general status of the posts
 
 	def render_category(segments, article_url = nil, term = false, status)
+		category_url = Setting.get('category_slug')	
+		tag_slug = Setting.get('tag_slug')	
 
 		# do you want to filter the results down further than the top level
 		if term
@@ -181,14 +183,19 @@ module RoutingHelper
 				# if segment 2 is blank then you want to disply the top level article page
 				redirect_to article_url
 			else
-				term = Term.where(:slug => segments[2]).first
+				segments.shift(2)
+				term = Term.where(:structured_url => '/' + segments.join('/')).first
 
 				# do a search for the content
 				gloalize Post.joins('LEFT JOIN term_relationships ON term_relationships.post_id = posts.id').where("(post_status = 'Published' AND post_date <= NOW() AND disabled = 'N') and term_relationships.term_id = ?", term).order('post_date DESC').page(params[:page]).per(Setting.get('pagination_per_fe'))
 				
 				# add the breadcrumbs
 				add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
-				add_breadcrumb "#{term.name.capitalize}", "/#{term.name}", :title => "Back to #{term.name.capitalize}"
+				segments.each do |f|
+					term = Term.find_by_slug(f)
+					type_url = term.term_anatomy.taxonomy == 'tag' ? tag_slug : category_url
+					add_breadcrumb "#{term.name.capitalize}", "/#{article_url}/#{type_url}#{term.structured_url}", :title => "Back to #{term.name.capitalize}"
+				end
 
 				do_hierarchy_templating('category')
 

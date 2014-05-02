@@ -36,7 +36,7 @@ module ViewHelper
 
 		# get the taxonomy name and search the database for the record with this as its slug
 		if !segments[2].blank?
-			t =  Term.where(:slug => segments[2]).last
+			t =  Term.where(:structured_url => "/" +  segments.drop(2).join('/')).last
 			return t.name
 		else
 			return nil
@@ -411,21 +411,33 @@ module ViewHelper
 
 
 	# Returns a list of the categories
+	# Params:
+	# +sub_only+:: show only the sub categories of the current category
 	
-	def get_categories
-
+	def get_categories sub_only = false
+		segments = params[:slug].split('/')
+		category_url = Setting.get('category_slug')
 		# variables and data
-		@terms = Term.where(term_anatomies: {taxonomy: 'category'}).includes(:term_anatomy)
-		article_url = Setting.get('articles_slug')
-		tag_url = Setting.get('category_slug')
-		
-		h = {}
-		
-		@terms.each do |f|
-			h["#{article_url}/#{tag_url}/#{f.slug}"] = f.name
+
+		# check to see if we are on the category term type, that we just want the sub cateogries and the segments actually exist
+		if segments[1] == category_url && sub_only && !segments[2].blank?
+
+			# get the current category 
+			parent_term = Term.where(term_anatomies: {taxonomy: 'category'}, :structured_url => "/" +  segments.drop(2).join('/')).includes(:term_anatomy).first
+			
+			if !parent_term.blank?
+				# get all the records with the current category as its parent
+				terms = Term.where(:parent => parent_term.id)
+			else
+				terms = []
+			end
+
+		else
+			# get all the categories
+			terms = Term.where(term_anatomies: {taxonomy: 'category'}, :parent => nil).includes(:term_anatomy)
 		end
-		
-		li_loop(h)
+
+		li_loop_for_terms(terms, category_url)
 
 	end
 
@@ -433,29 +445,44 @@ module ViewHelper
 	# Returns either a list or a tag cloud of the tags - this shows ALL of the tags
 	# Params:
 	# +type+:: string or list style 
+	# +sub_only+:: show only the sub tags of the current category
 	
-	def get_tag_cloud(type)
+	def get_tag_cloud(type, sub_only = false)
 
-		@terms = Term.where(term_anatomies: {taxonomy: 'tag'}).includes(:term_anatomy)
 		article_url = Setting.get('articles_slug')
 		tag_url = Setting.get('tag_slug')
+		segments = params[:slug].split('/')
 
 		if type == 'string'
 
+			@terms = Term.where(term_anatomies: {taxonomy: 'tag'}).includes(:term_anatomy)
 			# if you want a tag cloud
 			return @terms.all.map do |u| 
-				url = article_url + '/' + tag_url + '/' + u.slug
+				url = article_url + '/' + tag_url + u.structured_url
 				"<a href='#{site_url(url)}'>" + u.name + "</a>"
 			end.join(', ').html_safe
 
 		elsif type == 'list'
 
-			# if you want a list style
-			h = {}
-			@terms.each do |f|
-				h["#{article_url}/#{tag_url}/#{f.slug}"] = f.name
+			# check to see if we are on the tag term type, that we just want the sub tags and the segments actually exist
+			if segments[1] == tag_url && sub_only && !segments[2].blank?
+					
+				# get the current tag record
+				parent_term = Term.where(term_anatomies: {taxonomy: 'tag'}, :structured_url => "/" +  segments.drop(2).join('/')).includes(:term_anatomy).first
+				
+				if !parent_term.blank?
+					# get all the records with the current tag as its parent
+					terms = Term.where(:parent => parent_term.id)
+				else
+					terms = []
+				end
+
+			else	
+				# get all the tags
+				terms = Term.where(term_anatomies: {taxonomy: 'tag'}, :parent => nil).includes(:term_anatomy)
 			end
-			return li_loop(h)
+			# if you want a list style
+			return li_loop_for_terms(terms, tag_url)
 
 		end
 
@@ -473,7 +500,7 @@ module ViewHelper
 		end
 
 		return terms.all.map do |u| 
-				url = article_url + '/' + tag_url + '/' + u.slug
+				url = article_url + '/' + tag_url + u.structured_url
 				"<a href='#{site_url(url)}'>" + u.name + "</a>"
 			end.join(', ').html_safe
 	end
@@ -529,6 +556,27 @@ module ViewHelper
 		html = '<ul>'
 		arr.each do |k, v|
 			html += "<li><a href='#{site_url}#{k}'>#{v}</a></li>"
+		end
+		html += '</ul>'
+		
+		render :inline => html
+
+	end
+
+	# Returns a list of the given data, but puts children records in the loop
+	# Params:
+	# +arr+:: array that you want to list through to create the list
+
+	def li_loop_for_terms arr, term_type, initial = 'initial'
+
+		article_url = Setting.get('articles_slug')
+		
+		html = '<ul class="' + initial + '">'
+		arr.each do |f|
+			html += "<li><a href='#{site_url}#{article_url}/#{term_type}#{f.structured_url}'>#{f.name}</a>"
+			children = Term.where(:parent => f.id)
+			html +=li_loop_for_terms(children, term_type, 'sub') unless children.blank?
+			html += "</li>"
 		end
 		html += '</ul>'
 		
