@@ -159,8 +159,48 @@
           </div>
         </div>
       </div>
-    </div>      
+    </div>   
+
+    <div class="accordion articleImagesAccordion" id="accordionArticleImage">
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordionArticleImage" href="#collapseArticleImages"><i class="icon-picture pull-left"></i>&nbsp;Article Image<i class="accordionSign pull-right"></i></a>
+        </div>
+        <% if !@post.post_image.blank? %>
+          <div id="collapseArticleImages" class="accordion-body collapse in">
+        <% else %>
+          <div id="collapseArticleImages" class="accordion-body collapse">
+        <% end %>
+           <div class="accordion-inner">
+              <div class="field">
+                <%= f.hidden_field :post_image  %>
+                <div class="imagePlaceholder">
+                  <% if !@post.post_image.blank? %>
+                      <img src="<%= @post.post_image %>" />
+                      <a href="javascript:;" id="filebrowser" class="removeArticleImage"><i class="icon-remove"></i>&nbsp;Remove Article Image</a>
+                  <% else %>
+                      <a href="javascript:;" class="addArticleImage"><i class="icon-plus"></i>&nbsp;Add Article Image</a>
+                  <% end %>
+
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>   
 
   </div>
   <% end %>
 </div>
+
+<script type="text/javascript">
+
+  function returnImageFunction(image){
+    $('#post_post_image').val(image);
+    $('.imagePlaceholder').html('<img src="' + image + '"/>');
+    $('.imagePlaceholder').append('<a href="javascript:;" class="removeArticleImage"><i class="icon-remove"></i>&nbsp;Remove Article Image</a>');
+  }
+  
+</script>
+
+<%= javascript_include_tag 'admin/post/post' %>

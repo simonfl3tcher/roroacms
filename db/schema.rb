@@ -11,22 +11,38 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140418085134) do
+ActiveRecord::Schema.define(:version => 20140506070332) do
 
   create_table "admins", :force => true do |t|
-    t.string   "email"
-    t.string   "password_digest"
+    t.string   "email",                               :default => "",  :null => false
+    t.text     "password_digest"
+    t.text     "description"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "username"
-    t.string   "access_level",    :limit => 6
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.string   "access_level"
     t.string   "avatar"
-    t.string   "inline_editing",  :limit => 1, :default => "Y"
-    t.string   "overlord",        :limit => 1, :default => "N"
-    t.text     "description"
+    t.string   "inline_editing",         :limit => 1, :default => "Y"
+    t.string   "overlord",               :limit => 1, :default => "Y"
+    t.string   "encrypted_password",                  :default => "",  :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                       :default => 0,   :null => false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.integer  "failed_attempts",                     :default => 0,   :null => false
+    t.string   "unlock_token"
+    t.datetime "locked_at"
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
   end
+
+  add_index "admins", ["email"], :name => "index_admins_on_email", :unique => true
+  add_index "admins", ["reset_password_token"], :name => "index_admins_on_reset_password_token", :unique => true
+  add_index "admins", ["username"], :name => "unique_username", :unique => true
 
   create_table "banners", :force => true do |t|
     t.string   "name"
@@ -82,6 +98,7 @@ ActiveRecord::Schema.define(:version => 20140418085134) do
     t.datetime "post_date"
     t.text     "post_content",         :limit => 2147483647
     t.text     "post_title"
+    t.text     "post_image"
     t.string   "post_status"
     t.string   "post_template"
     t.string   "post_name"
@@ -138,9 +155,11 @@ ActiveRecord::Schema.define(:version => 20140418085134) do
   create_table "terms", :force => true do |t|
     t.string   "name"
     t.string   "slug"
+    t.text     "structured_url"
     t.text     "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.integer  "parent"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
 end

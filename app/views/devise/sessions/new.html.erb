@@ -1,0 +1,45 @@
+<div class="background"></div>
+
+<div id="LoginBody">
+	<div class="account-container login">
+
+		<p class="notice"><%= flash[:notice] %></p>
+		<p class="error"><%= flash[:error] %></p>
+
+		
+		<div class="content clearfix">
+
+			<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+							
+				<div class="login-fields">
+					
+					<div class="field">
+						<label for="username"><%= f.label :email %></label>
+						<%= f.text_field :email, autofocus: true, :placeholder => "Email / Username" %>
+					</div> 
+					
+					<div class="field">
+						<label for="password"><%= f.label :password %></label>
+						<%= f.password_field :password, autocomplete: "off", :placeholder => "Password" %>
+					</div> 
+
+					<% if devise_mapping.rememberable? %>
+						
+						<div class="checkbox">
+						      <%= f.check_box :remember_me %> <%= f.label :remember_me %>
+						</div>
+					<% end %>
+
+					
+				</div> 
+				
+				<div class="login-actions">
+					<%= f.submit "Sign in", :class => 'btn btn-primary' %>
+				</div> 
+				
+			<% end %>
+			<%= render "devise/shared/links" %>
+			
+		</div>
+	</div> 
+</div>

@@ -1,14 +1,11 @@
 class Admin < ActiveRecord::Base
-
-	has_secure_password
+	
+	devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 	
 	# relations and validations
 
 	has_many :posts
-	validates :email, presence: true, uniqueness: true, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i}
-  	validates :username, :access_level, :presence => true 
-	validates_uniqueness_of :email, :username
-	validates_presence_of :password, :on => :create
+	validates :username, presence: true, uniqueness: true
 
 	# general data that doesn't change very often
 
@@ -48,5 +45,15 @@ class Admin < ActiveRecord::Base
 		session[:admin_id] = nil
 		session[:username] = nil
 	end
+
+	def self.find_for_database_authentication(conditions={})
+	  self.where("username = ?", conditions[:email]).limit(1).first || self.where("email = ?", conditions[:email]).limit(1).first
+	end
+
+	def self.find_record(login)
+		abort login.inspect
+		where(["username = :value OR email = :value", { :value => login }]).first
+	end
+
 
 end 

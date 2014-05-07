@@ -35,3 +35,5 @@ gem 'twitter-bootstrap-rails'
 gem 'aws-s3', :require => 'aws/s3'
 gem 'jquery-rails'
 gem 'bcrypt-ruby', '~> 3.0.0'
+
+gem 'devise'

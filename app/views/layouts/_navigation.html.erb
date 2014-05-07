@@ -48,8 +48,8 @@
           <ul class="dropdown-menu">              
             <!-- <li><%= link_to 'Users', admin_users_path %></li>
             <li><%= link_to 'Add New User', new_admin_user_path %></li> -->
-            <li><%= link_to 'Profile', edit_admin_administrator_path(session[:admin_id]) %></li>
-            <% if @current_admin.access_level == 'admin' %>
+            <li><%= link_to 'Profile', edit_admin_administrator_path(1) %></li>
+            <% if current_user.access_level == 'admin' %>
 	            <li class="divider"></li>
 	            <li><%= link_to 'Admins', admin_administrators_path %></li>
 	            <li><%= link_to 'Add New Admin', new_admin_administrator_path %></li>
@@ -88,7 +88,7 @@
           </a>
         </li>
         
-        <% if @current_admin.access_level == "admin" %>
+        <% if current_user.access_level == "admin" %>
           <li class="nav-icon">
               <%= link_to admin_settings_general_index_path do %>
                 <i class="icon-cogs"></i>
@@ -98,7 +98,7 @@
             </li>
         <% end %>
 
-        <% if @current_admin.access_level == "admin" %>
+        <% if current_user.access_level == "admin" %>
 	         <li class="nav-icon">
 	          <%= link_to admin_trash_index_path do %>
 	            <i class="icon-trash"></i>

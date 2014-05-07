@@ -114,19 +114,19 @@ module MenuHelper
 
 		if menuOption.data_type == 'page'
 			p = Post.find(existingData['linkto'])
-			atts += " href='#{site_url(p.post_slug)}'"
+			atts += " href='#{site_url(p.structured_url)}'"
 
 		elsif menuOption.data_type == 'article'
 			p = Post.find(existingData['linkto'])
-			atts += " href='#{site_url(article_url + '/' + p.post_slug)}'"
+			atts += " href='#{site_url(article_url +  p.structured_url)}'"
 
 		elsif menuOption.data_type == 'category'
 			t = Term.find(existingData['linkto'])
-			atts += " href='#{site_url(article_url + '/' + category_url + '/' + t.slug)}'"
+			atts += " href='#{site_url(article_url + '/' + category_url + t.structured_url)}'"
 
 		elsif menuOption.data_type == 'tag'
 			t = Term.find(existingData['linkto'])
-			atts += " href='#{site_url(article_url + '/' + tag_url + '/' + t.slug)}'"
+			atts += " href='#{site_url(article_url + '/' + tag_url + t.structured_url)}'"
 
 		elsif menuOption.data_type == article_url && menuOption.option_id == 0
 			atts += " href='#{site_url(article_url)}'"
