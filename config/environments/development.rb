@@ -16,6 +16,7 @@ Roroacms::Application.configure do
   # Don't care if the mailer can't send
   # config.action_mailer.raise_delivery_errors = false
   ENV = YAML.load_file("#{Rails.root}/config/config.yml")
+  config.action_mailer.default_url_options = { :host => "localhost:3000" }
  
   Roroacms::Application.configure do 
     config.action_mailer.delivery_method = :smtp
@@ -50,5 +51,6 @@ Roroacms::Application.configure do
   config.assets.debug = true
 
   config.serve_static_assets = true
+
 
 end

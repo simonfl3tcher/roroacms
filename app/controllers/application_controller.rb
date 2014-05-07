@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
   helper SeoHelper  
   helper CommentsHelper
   helper GeneralHelper
+  include GeneralHelper
+  include ViewHelper
 
   private
 
@@ -36,13 +38,15 @@ class ApplicationController < ActionController::Base
 
   # Return the current user data
 
-  def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  def current_user 
+    if !session["warden.user.admin.key"].blank?
+      Admin.find(session["warden.user.admin.key"][0][0])
+    else
+      nil
+    end
   end
- 
   helper_method :current_user
-
-
+  
   # globalize allows access to all of the given content from anywhere
 
   def gloalize content
@@ -53,14 +57,14 @@ class ApplicationController < ActionController::Base
   # Return the current user logged in as admin data
 
   def current_admin
-  	@current_admin ||= Admin.find(session[:admin_id]) if session[:admin_id]
+  	@current_admin ||= current_user if !current_user.blank?
   end
 
   # Returns the current access that is granted to the logged in admin. Allowing you to restrict necessary areas to certain types of user
   # currently there are only two user types (admin or editor)
 
   def current_admin_access
-    @current_admin = Admin.find(session[:admin_id]) if session[:admin_id]
+    @current_admin = current_user if !current_user.blank?
 
     if !@current_admin.nil?
       return @current_admin.access_level
@@ -73,7 +77,7 @@ class ApplicationController < ActionController::Base
   # checks if the admin is logged in before anything else
 
   def authorize_admin
-  	redirect_to admin_login_path, error: "Not Authorized" if current_admin.nil?
+  	redirect_to admin_login_path, error: "Not Authorized" if current_user.nil?
   end
 
 
@@ -86,6 +90,19 @@ class ApplicationController < ActionController::Base
       redirect_to admin_path
     end
 
+  end
+
+  # devise settings
+
+  def after_sign_in_path_for(resource)
+    sign_in_url = url_for(:action => 'new', :controller => 'sessions', :only_path => false, :protocol => 'http')
+    Admin.set_sessions(session, current_user)
+    admin_path
+  end
+
+  def after_sign_out_path_for(resource_or_scope)
+    Admin.destroy_session session
+    admin_login_index_path
   end
 
 end

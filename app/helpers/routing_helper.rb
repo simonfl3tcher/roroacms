@@ -193,6 +193,9 @@ module RoutingHelper
 				add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
 				segments.each do |f|
 					term = Term.find_by_slug(f)
+					if term.blank?
+						render_404 and return
+					end
 					type_url = term.term_anatomy.taxonomy == 'tag' ? tag_slug : category_url
 					add_breadcrumb "#{term.name.capitalize}", "/#{article_url}/#{type_url}#{term.structured_url}", :title => "Back to #{term.name.capitalize}"
 				end

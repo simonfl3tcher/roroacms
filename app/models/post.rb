@@ -129,7 +129,7 @@ class Post < ActiveRecord::Base
     def deal_with_abnormalaties
 
         # if the slug is empty it will take the title and create a slug
-        if self.post_slug.empty?
+        if self.post_slug.blank?
             self.post_slug = self.post_title.gsub(' ', '-').downcase
         end
 

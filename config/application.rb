@@ -29,6 +29,15 @@ module Roroacms
     config.assets.version = '1.0'
     config.action_controller.include_all_helpers = true
 
+    config.to_prepare do
+      Devise::SessionsController.layout "login"
+      Devise::SessionsController.layout "login"
+      Devise::RegistrationsController.layout "login"
+      Devise::ConfirmationsController.layout "login"
+      Devise::UnlocksController.layout "login"
+      Devise::PasswordsController.layout "login"
+    end
+
     require 'active_record'
     require 'mysql2'
     DB = YAML.load_file("#{Rails.root}/config/database.yml")

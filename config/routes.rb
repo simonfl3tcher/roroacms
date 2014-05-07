@@ -1,12 +1,14 @@
 Roroacms::Application.routes.draw do
   
+  devise_for :admins, :path => "admin", :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'reset', :confirmation => 'verification', :unlock => 'unblock', :registration => 'register', :sign_up => 'register' }, skip: :registrations
+
+  devise_scope :admin do
+    get "admin/login", :to => "devise/sessions#new"
+    get "admin/logout", :to => "devise/sessions#destroy"
+  end
+
   resources :pages,  only: [:index, :show, :dynamic_page, :contact_form]
   resources :comments
-
-  namespace :installation do
-    get '', to: 'install#index'
-    post '', to: 'install#create'
-  end
 
   post 'email', to: 'pages#contact_form'
 

@@ -334,6 +334,11 @@ module ViewHelper
 
 	def site_url(str = nil)
 		url = Setting.get('site_url')
+		
+		if !str.blank? && str[0,1] == '/'
+			str = str[1..-1]
+		end
+
 		return "#{url}#{str}"
 	end
 
