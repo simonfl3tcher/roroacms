@@ -1,34 +1,5 @@
 <div class="background"></div>
 
-<div id="LoginBody">
-	<div class="account-container login">
 
-		
-		<div class="content clearfix">
-			
-			<%= form_tag admin_login_path do %>
-				
-				<div class="login-fields">
-					
-					<div class="field">
-						<label for="username">Username:</label>
-						<%= text_field_tag :username, params[:username], :placeholder => "Username", :class => 'login username-field' %>
-					</div> 
-					
-					<div class="field">
-						<label for="password">Password:</label>
-						<%= password_field_tag :password, '',:placeholder => "Password", :class => "login password-field" %>
-					</div> 
-					
-				</div> 
-				
-				<div class="login-actions">
-					<%= submit_tag "Sign In", :class => 'btn btn-primary' %>
-				</div> 
-				
-			<% end %>
-			
-	</div>
-</div> 
 
 </div>

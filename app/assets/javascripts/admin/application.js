@@ -17,17 +17,15 @@
 //= require scrolltop.js
 //= require select.js
 //= require sortable.js
-//= require_tree .
 //= require_directory .
 //= require_self
 //= require twitter/bootstrap
-
-// // 
-// $('#editButton').click(function(){
-// 	clickToEdit();
-// });
 
 // setup ajax for crf-token needed by ruby
 $.ajaxSetup({
 	beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
 });
+
+function base_url(str) {
+	return location.protocol + "//" + location.hostname + (location.port && ":" + location.port) + str
+}
