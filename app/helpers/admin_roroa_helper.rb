@@ -150,4 +150,20 @@ module AdminRoroaHelper
 
 	end
 
+	def latest_comments limit = 5
+		if !limit.blank?
+			Comment.where(:comment_approved => 'N').order("submitted_on DESC").first(limit)
+		else
+			Comment.where(:comment_approved => 'N').order("submitted_on DESC")
+		end
+	end
+
+	def get_count_post type
+		Post.where(:post_type => type).count
+	end
+
+	def get_count_comments
+		Comment.all.count
+	end
+
 end

@@ -1,169 +1,273 @@
-<%= form_tag(site_url('admin/settings/general')) do %>
+<div class="row">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="#">Dashboard</a>
+            </li>
+            <li class="active">Settings</li>
+        </ul>
+        <!--breadcrumbs end -->
+       <h1 class="h1">Settings</h1>
+    </div>
+</div>
 
-<%= hidden_field_tag 'redirect', 'general' %>
-<fieldset>
-	<div class="row">
-		<div class="span6">
+<div class="row settingsArea">
 
-			<div class="title">General Settings</div>
+  <div class="col-md-12">
 
-			<div class="field formSep">
-				<%= label_tag(:display_url, "Display Url") %>
-				<%= text_field_tag(:display_url, Setting.get('display_url')) %>
-			</div>
+  	<%= form_tag(site_url('admin/settings/general'), :html => {:class => 'form-horizontal'}) do %>
 
-			<div class="field formSep">
-				<%= label_tag(:site_url, "Site Url") %>
-				<%= text_field_tag(:site_url, Setting.get('site_url')) %>
-			</div>
+		<%= hidden_field_tag 'redirect', 'general' %>
 
-			<div class="field formSep">
-				<%= label_tag(:pagination_per, "Pagination per page (admin)") %>
-				<%= text_field_tag(:pagination_per, Setting.get('pagination_per')) %>
-			</div>
+		<div class="panel panel-default">
+		    <div class="panel-body">
+		        <div class="tab-wrapper tab-left ">
+		            <ul class="nav nav-tabs">
+		                <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-cog"></i> General</a></li>
+		                <li><a href="#comment" data-toggle="tab"><i class="fa fa-comments"></i> Comments</a></li>
+		                <li><a href="#amazon" data-toggle="tab"><i class="fa fa-cloud-upload"></i> Amazon S3</a></li>
+		                <li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> Search Engine Optimisation</a></li>
+		            </ul>
+		            <div class="tab-content">
+		                <div class="tab-pane active" id="general">
+		                	<div class="form-group">
+		                		<%= submit_tag "Save", :class => 'btn btn-small btn-primary pull-right' %>
+		                		<div class="clearfix"></div>
+		                	</div>
+		                    <div class="form-group">
+							    <label for="inputEmail3" class="col-sm-3 control-label">Display URL</label>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:display_url, Setting.get('display_url'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="form-group">
+							    <label for="inputEmail3" class="col-sm-3 control-label">Site URL</label>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:site_url, Setting.get('site_url'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="form-group">
+							    <label for="inputEmail3" class="col-sm-3 control-label">Pagination per page (admin)</label>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:pagination_per, Setting.get('pagination_per'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="form-group">
+							    <label for="inputEmail3" class="col-sm-3 control-label">Pagination per page (Theme)</label>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:pagination_per_fe, Setting.get('pagination_per_fe'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="form-group">
+							    <label for="inputEmail3" class="col-sm-3 control-label">Site Email Address</label>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:site_email, Setting.get('site_email'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="form-group">
+							    <label for="inputEmail3" class="col-sm-3 control-label">Articles Slug</label>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:articles_slug, Setting.get('articles_slug'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="form-group">
+							    <label for="inputEmail3" class="col-sm-3 control-label">Category Slug</label>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:category_slug, Setting.get('category_slug'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="form-group">
+							    <label for="inputEmail3" class="col-sm-3 control-label">Tag Slug</label>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:tag_slug, Setting.get('tag_slug'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="form-group">
+							    <label for="inputEmail3" class="col-sm-3 control-label">Home Page</label>
+							    <div class="col-sm-6">
+							    	<%= select_tag :home_page, options_for_select(Post.where(:post_type => 'page').collect {|p| [ p.post_title, p.id ] }, Setting.get('home_page')), prompt: 'Select a homepage', class: 'form-control' %>
+			
+							    </div>
+							</div>
+		                </div>
+		                <div class="tab-pane" id="comment">
+		                	<div class="form-group">
+		                		<%= submit_tag "Save", :class => 'btn btn-small btn-primary pull-right' %>
+		                		<div class="clearfix"></div>
+		                	</div>
+		                	<div class="form-group">
+							    <label for="inputEmail3" class="col-sm-3 control-label">Article Comments On?</label>
+							    <div class="col-sm-6">
+							    	<div class="">
+									    <label class="radio-inline">
+									    	<%= hidden_field_tag :article_comments, 'N' %>
+										    <%= check_box_tag :article_comments, 'Y', Setting.get('article_comments') == 'Y' ? true : false %>
+									    </label>
+									  </div>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="form-group">
+							    <label for="inputEmail3" class="col-sm-3 control-label">Article Comment type</label>
+							    <div class="col-sm-6">
+							    	<div class="">
+									    <label class="radio-inline">
+									      <%= radio_button(:article_comment_type, nil, "R", :checked => Setting.get('article_comment_type') == 'R' ? true : false) %> System Comments
+									    </label>
+									    <label class="radio-inline">
+									    	<%= radio_button(:article_comment_type, nil, "F", :checked => Setting.get('article_comment_type') == 'F' ? true : false) %> Facebook Comments
+									    </label>
+									  </div>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+		                </div>
 
-			<div class="field formSep">
-				<%= label_tag(:pagination_per_fe, "Pagination per page (Theme)") %>
-				<%= text_field_tag(:pagination_per_fe, Setting.get('pagination_per_fe')) %>
-			</div>
+		                <div class="tab-pane" id="amazon">
+							<div class="form-group">
+		                		<%= submit_tag "Save", :class => 'btn btn-small btn-primary pull-right' %>
+		                		<div class="clearfix"></div>
+		                	</div>
+		                    <div class="form-group">
+		                    	<%= label_tag(:aws_access_key_id, "Access Key ID", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:aws_access_key_id, Setting.get('aws_access_key_id'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="form-group">
+		                    	<%= label_tag(:aws_secret_access_key, "Secret Access Key", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:aws_secret_access_key, Setting.get('aws_secret_access_key'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="form-group">
+		                    	<%= label_tag(:aws_bucket_name, "Bucket Name", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:aws_bucket_name, Setting.get('aws_bucket_name'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+		                </div>
+		                <div class="tab-pane" id="seo">
+		                	<div class="form-group">
+		                		<%= submit_tag "Save", :class => 'btn btn-small btn-primary pull-right' %>
+		                		<div class="clearfix"></div>
+		                	</div>
+		                   <div class="form-group">
+		                    	<%= label_tag(:seo_site_title, "Website Title", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:seo_site_title, Setting.get('seo_site_title'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="form-group">
+		                    	<%= label_tag(:seo_home_title, "Home Title", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:seo_home_title, Setting.get('seo_home_title'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="form-group">
+		                    	<%= label_tag(:seo_home_description, "Home Description", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<%= text_area_tag(:seo_home_description, Setting.get('seo_home_description'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="form-group">
+		                    	<%= label_tag(:seo_404_title, "404 Title", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:seo_404_title, Setting.get('seo_404_title'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="form-group">
+		                    	<%= label_tag(:seo_404_description, "404 Description", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<%= text_area_tag(:seo_404_description, Setting.get('seo_404_description'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="form-group">
+		                    	<%= label_tag(:seo_google_analytics_code, "Google Analytics ID", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:seo_google_analytics_code, Setting.get('seo_google_analytics_code'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
 
-			<div class="field formSep">
-				<%= label_tag(:site_email, "Site Email Address") %>
-				<%= text_field_tag(:site_email, Setting.get('site_email')) %>
-			</div>
+							<div class="form-group">
+								<%= hidden_field_tag :seo_rewrite_titles, 'N' %>
+		                    	<%= label_tag(:seo_rewrite_titles, "Rewrite Titles", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<label class="radio-inline">
+							    		<%= check_box_tag :seo_rewrite_titles, 'Y', Setting.get('seo_rewrite_titles') == 'Y' ? true : false %>
+							    	</label>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
 
-			<div class="field formSep">
-				<%= label_tag(:articles_slug, "Articles Slug") %>
-				<%= text_field_tag(:articles_slug, Setting.get('articles_slug')) %>
-			</div>
+							<div class="form-group">
+								<%= hidden_field_tag :seo_no_index_categories, 'N' %>
+		                    	<%= label_tag(:seo_no_index_categories, "No index categories", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<label class="radio-inline">
+							    		<%= check_box_tag :seo_no_index_categories, 'Y', Setting.get('seo_no_index_categories') == 'Y' ? true : false %>
+							    	</label>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
 
-			<div class="field formSep">
-				<%= label_tag(:category_slug, "Category Slug") %>
-				<%= text_field_tag(:category_slug, Setting.get('category_slug')) %>
-			</div>
+							<div class="form-group">
+								<%= hidden_field_tag :seo_no_index_archives, 'N' %>
+		                    	<%= label_tag(:seo_no_index_archives, "No index archives", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<label class="radio-inline">
+							    		<%= check_box_tag :seo_no_index_archives, 'Y', Setting.get('seo_no_index_archives') == 'Y' ? true : false %>
+							    	</label>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
 
-			<div class="field formSep">
-				<%= label_tag(:tag_slug, "Tag Slug") %>
-				<%= text_field_tag(:tag_slug, Setting.get('tag_slug')) %>
-			</div>
+							<div class="form-group">
+								<%= hidden_field_tag :seo_no_index_archives, 'N' %>
+		                    	<%= label_tag(:seo_no_index_archives, "No index archives", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<label class="radio-inline">
+							    		<%= check_box_tag :seo_no_index_archives, 'Y', Setting.get('seo_no_index_archives') == 'Y' ? true : false %>
+							    	</label>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
 
-			<div class="field">
-				<%= label_tag(:home_page, "Homepage") %>
-				<%= select_tag :home_page, options_for_select(Post.where(:post_type => 'page').collect {|p| [ p.post_title, p.id ] }, Setting.get('home_page')), prompt: 'Select a homepage' %>
-			</div>
+							<div class="form-group">
+								<%= hidden_field_tag :seo_autogenerate_descriptions, 'N' %>
+		                    	<%= label_tag(:seo_autogenerate_descriptions, "Autogenerate Decriptions", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<label class="radio-inline">
+							    		<%= check_box_tag :seo_autogenerate_descriptions, 'Y', Setting.get('seo_autogenerate_descriptions') == 'Y' ? true : false %>
+							    	</label>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+
+
+		                </div>
+		            </div>
+		        </div>
+		    </div>
 		</div>
-
-		<div class="span6">
-
-			<div class="title">Comments Settings</div>
-
-			<div class="field formSep">
-				<%= hidden_field_tag :article_comments, 'N' %>
-			    <%= check_box_tag :article_comments, 'Y', Setting.get('article_comments') == 'Y' ? true : false %>
-				<%= label_tag "Article Comments On" %>
-			</div>
-			<div class="field">
-			<%= label_tag "Article Comment type" %>
-			<%= radio_button(:article_comment_type, nil, "R", :checked => Setting.get('article_comment_type') == 'R' ? true : false) %>Roroa Comments
-			<%= radio_button(:article_comment_type, nil, "F", :checked => Setting.get('article_comment_type') == 'F' ? true : false) %>Facebook Comments
-			</div>
-
-			<br />
-			<br />
-
-			<div class="title">Amazon S3 Settings</div>
-
-			<div class="field formSep">
-				<%= label_tag(:aws_access_key_id, "Access Key ID") %>
-				<%= text_field_tag(:aws_access_key_id, Setting.get('aws_access_key_id')) %>
-			</div>
-			<div class="field">
-				<%= label_tag(:aws_secret_access_key, "Secret Access Key") %>
-				<%= text_field_tag(:aws_secret_access_key, Setting.get('aws_secret_access_key')) %>
-			</div>
-			<div class="field">
-				<%= label_tag(:aws_bucket_name, "Bucket Name") %>
-				<%= text_field_tag(:aws_bucket_name, Setting.get('aws_bucket_name')) %>
-			</div>
-
-
-		</div>
-
+	<% end %>
 	</div>
-
-	<br />
-	<br />
-
-	<div class="title">SEO Settings</div>
-	<div class="row">
-
-		<div class="span8">
-
-			<div class="field formSep">
-				<%= label_tag(:seo_site_title, "Website Title") %>
-				<%= text_field_tag(:seo_site_title, Setting.get('seo_site_title'), :class => 'seo_input') %>
-			</div>
-			<div class="field formSep">
-				<%= label_tag(:seo_home_title, "Home Title") %>
-				<%= text_field_tag(:seo_home_title, Setting.get('seo_home_title'), :class => 'seo_input') %>
-			</div>
-			<div class="field formSep">
-				<%= label_tag(:seo_home_description, "Home Description") %>
-				<%= text_area_tag(:seo_home_description, Setting.get('seo_home_description'), :class => 'seo_textarea') %>
-			</div>
-
-			<div class="field formSep">
-				<%= label_tag(:seo_404_title, "404 Title") %>
-				<%= text_field_tag(:seo_404_title, Setting.get('seo_404_title'), :class => 'seo_input') %>
-			</div>
-
-			<div class="field formSep">
-				<%= label_tag(:seo_404_description, "404 Description") %>
-				<%= text_area_tag(:seo_404_description, Setting.get('seo_404_description'), :class => 'seo_textarea') %>
-			</div>
-
-			<div class="field formSep">
-				<%= label_tag(:seo_google_analytics_code, "Google Analytics ID") %>
-				<%= text_field_tag(:seo_google_analytics_code, Setting.get('seo_google_analytics_code'), :class => 'seo_input') %>
-			</div>
-
-			<div class="field formSep">
-				<%= hidden_field_tag :seo_rewrite_titles, 'N' %>
-			    <%= check_box_tag :seo_rewrite_titles, 'Y', Setting.get('seo_rewrite_titles') == 'Y' ? true : false %>
-				<%= label_tag "Rewrite Titles" %>
-			</div>
-
-			<div class="field formSep">
-				<%= hidden_field_tag :seo_no_index_categories, 'N' %>
-			    <%= check_box_tag :seo_no_index_categories, 'Y', Setting.get('seo_no_index_categories') == 'Y' ? true : false %>
-				<%= label_tag "No index categories" %>
-			</div>
-
-			<div class="field formSep">
-				<%= hidden_field_tag :seo_no_index_archives, 'N' %>
-			    <%= check_box_tag :seo_no_index_archives, 'Y', Setting.get('seo_no_index_archives') == 'Y' ? true : false %>
-				<%= label_tag "No index archives" %>
-			</div>
-
-			<div class="field">
-				<%= hidden_field_tag :seo_autogenerate_descriptions, 'N' %>
-			    <%= check_box_tag :seo_autogenerate_descriptions, 'Y', Setting.get('seo_autogenerate_descriptions') == 'Y' ? true : false %>
-				<%= label_tag "Autogenerate Decriptions" %>
-			</div>
-
-			<!-- <div class="field">
-				<%= label_tag(:seo_additional_headers, "Additional Headers") %>
-				<%= text_area_tag(:seo_additional_headers, Setting.get('seo_additional_headers'), :class => 'seo_textarea') %>
-			</div> -->
-		</div>
-	</div>
-
-			<div class="formSepUpp">
-
-				<div class="field">
-					<%= submit_tag "Update", :class => 'btn btn-small btn-warning' %>
-				</div>
-			</div>
-</fieldset>
-<% end %>
+</div>
 		

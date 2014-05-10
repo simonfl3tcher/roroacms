@@ -1,45 +1,126 @@
-<h2 class="title">Dashboard</h2>
-<div class="row-fluid">
-  <div class="span12 shortcuts">
-    <div class="row-fluid">
-         <div class="span4">
-            <%= link_to admin_pages_path, :class => 'shortcut' do %>
-              <i class="icon-file icon-4x"></i>
-              <span class="shortcut-label">Pages</span>
-            <% end %>
+<div class="dashboard">
+  <div class="row">
+      <div class="col-md-4 col-sm-6">
+          <div class="dashboard-tile detail tile-red">
+              <div class="content">
+                  <h1 class="text-left timer"><%= get_count_post('page') %></h1>
+                  <p>Pages</p>
+              </div>
+              <div class="icon"><i class="fa fa-files-o"></i>
+              </div>
           </div>
-         <div class="span4">
-            <%= link_to admin_posts_path, :class => 'shortcut' do %>
-              <i class="icon-file-alt icon-4x"></i>
-              <span class="shortcut-label">Articles</span>
-            <% end %>
+      </div>
+      <div class="col-md-4 col-sm-6">
+          <div class="dashboard-tile detail tile-turquoise">
+              <div class="content">
+                  <h1 class="text-left timer"><%= get_count_post('post') %></h1>
+                  <p>Articles</p>
+              </div>
+              <div class="icon"><i class="fa fa-file-text-o"></i>
+              </div>
           </div>
-         <div class="span4">
-            <%= link_to admin_administrators_path, :class => 'shortcut' do %>
-              <i class="icon-user icon-4x"></i>
-              <span class="shortcut-label">Administrators</span>
-            <% end %>
+      </div>
+      <div class="col-md-4 col-sm-6">
+          <div class="dashboard-tile detail tile-blue">
+              <div class="content">
+                  <h1 class="text-left timer"><%= get_count_comments %></h1>
+                  <p>Comments</p>
+              </div>
+              <div class="icon"><i class="fa fa fa-comments"></i>
+              </div>
           </div>
-    </div>
-    <div class="row-fluid">
-         <div class="span4">
-            <%= link_to admin_settings_general_index_path, :class => 'shortcut' do %>
-              <i class="icon-cogs icon-4x"></i>
-              <span class="shortcut-label">Settings</span>
-            <% end %>
+      </div>
+  </div>
+
+  <div class="row">
+      <div class="col-md-6">
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                  <h3 class="panel-title">Quick Links</h3>
+                  <div class="actions pull-right">
+                      <i class="fa fa-chevron-down"></i>
+                  </div>
+              </div>
+              <div class="panel-body">
+
+                  <div class=" shortcuts">
+                      <div class="col-md-4 col-sm-6">
+                        <%= link_to admin_pages_path, :class => 'shortcut' do %>
+                          <i class="fa fa-file fa-4x"></i>
+                          <span class="shortcut-label">Pages</span>
+                        <% end %>
+                      </div>
+                      <div class="col-md-4 col-sm-6">
+                        <%= link_to admin_posts_path, :class => 'shortcut' do %>
+                          <i class="fa fa-file-o fa-4x"></i>
+                          <span class="shortcut-label">Articles</span>
+                        <% end %>
+                      </div>
+                      <div class="col-md-4 col-sm-6">
+                        <%= link_to admin_administrators_path, :class => 'shortcut' do %>
+                          <i class="fa fa-user fa-4x"></i>
+                          <span class="shortcut-label">Administrators</span>
+                        <% end %>
+                      </div>
+                  </div>
+
+                  <div class=" shortcuts">
+                    <div class="col-md-4 col-sm-6">
+                      <%= link_to admin_settings_general_index_path, :class => 'shortcut' do %>
+                        <i class="fa fa-cogs fa-4x"></i>
+                        <span class="shortcut-label">Settings</span>
+                      <% end %>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                      <%= link_to admin_media_path, :class => 'shortcut' do %>
+                        <i class="fa fa-cloud fa-4x"></i>
+                        <span class="shortcut-label">Media</span>
+                      <% end %>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                      <%= link_to admin_trash_index_path, :class => 'shortcut' do %>
+                        <i class="fa fa-trash-o fa-4x"></i>
+                        <span class="shortcut-label">Trash</span>
+                      <% end %>
+                    </div>
+                </div>
+              </div>
           </div>
-         <div class="span4">
-            <%= link_to admin_media_path, :class => 'shortcut' do %>
-              <i class="icon-cloud icon-4x"></i>
-              <span class="shortcut-label">Media</span>
-            <% end %>
+      </div>
+      <div class="col-md-6 comments">
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                  <h3 class="panel-title">Latest 5 Comments</h3>
+                  <div class="actions pull-right">
+                      <i class="fa fa-chevron-down"></i>
+                  </div>
+              </div>
+              <div class="panel-body">
+                  <ul class="list-group">
+                    <% latest_comments.each do |comment| %>
+                      <li class="list-group-item">
+                          <div class="pull-left">
+                            <strong><%= comment.author %></strong><br />
+                            <small><%= excerpt(comment.comment, 50) %></small>
+                          </div>
+                          <div class="pull-right action-buttons">
+                            <%= link_to edit_admin_comment_path(comment) do %>
+                              <i class="fa fa-pencil"></i>
+                            <% end %>
+                             <%= link_to mark_as_spam_admin_comment_path(comment) do %>
+                              <i class="fa fa-fire"></i>
+                            <% end %>              
+                            <%= link_to admin_comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                              <i class="fa fa-trash-o"></i>
+                            <% end %>
+                          </div>
+                          <div class="clearfix"></div>
+                      </li>
+
+                    <% end %>
+                  </ul>
+              </div>
           </div>
-         <div class="span4">
-            <%= link_to admin_trash_index_path, :class => 'shortcut' do %>
-              <i class="icon-trash icon-4x"></i>
-              <span class="shortcut-label">Trash</span>
-            <% end %>
-          </div>
-    </div>
+      </div>
   </div>
 </div>
