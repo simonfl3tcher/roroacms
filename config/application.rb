@@ -56,6 +56,5 @@ module Roroacms
     config.assets.paths << "#{Rails.root}/app/views/theme/#{Setting.get('theme_folder')}/assets/javascripts"
     config.assets.paths << "#{Rails.root}/app/views/theme/#{Setting.get('theme_folder')}/assets/font"
     config.assets.paths << "#{Rails.root}/app/views/theme/#{Setting.get('theme_folder')}/assets/images"
-
   end
 end

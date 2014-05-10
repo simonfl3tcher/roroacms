@@ -1,75 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Roroa Dashboard | Login Page</title>
-  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,800">
-  <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-  <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-  <%= stylesheet_link_tag    "admin/application", :media => "all" %>
-  <%= stylesheet_link_tag    "admin/admin", :media => "all" %>
-  <%= csrf_meta_tags %>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <style type="text/css">
+    <title>Dashboard | Roroa CMS</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  	body.login {
-  		background-color: #000000;
-	    display: none;
-  	}
+    <!-- jQuery UI -->
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 
-  	.background {
+    <%= stylesheet_link_tag "admin/application", :media => "all" %>
+    <%= javascript_include_tag 'admin/application' %>
 
-    height: 420px;
-    left: 25%;
-    margin: 0 auto;
-    position: absolute;
-    top: 0;
-    width: 570px;
-    z-index: 0;
-  	}
+    <%= csrf_meta_tags %>
 
-  	.account-container {
-  		background: none repeat scroll 0 0 transparent !important;
-	    box-shadow: none !important;
-	    margin: 100px auto 0;
-	    padding-top: 103px;
-	    position: relative;
-	    z-index: 1;
-  	}
+  </head>
+  <body class="animated fadeIn">
+    <section id="login-container">
 
-  	textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
-  		border:1px solid #3A3737;
-  	}
+        <div class="row">
+            <div class="col-md-3" id="login-wrapper">
+                <%= yield %>
+            </div>
+        </div>
 
-  	.login-fields input {
-  		box-shadow: 2px 2px 4px #302F2F inset;
-  	}
-
-  	textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
-  		border-color: #F4F4F4;
-  		color:#F4F4F4;
-  	}
-
-  	.login-fields input {
-  		color: #F4F4F4;
-  	}
-
-  </style>
-
-  <script type="text/javascript">
-
-  	$('body').hide();
-
-  	$(document).ready(function(){
-	  	$('body').fadeIn(2500);
-  	})
-
-
-  </script>
-</head>
-<body class="login">
-	   <%= yield %>
+    </section>
 </body>
 </html>
 

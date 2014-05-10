@@ -1,59 +1,81 @@
-<div class="row-fluid">
-	<div class="span12">
+<div class="row">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="#">Dashboard</a>
+            </li>
+            <li class="active">Themes</li>
+        </ul>
+        <!--breadcrumbs end -->
+       <h1 class="h1">Themes</h1>
+    </div>
+</div>
 
-		<h2 class="title">Themes</h2>
+<div class="row">
 
-
-    <%= form_tag(site_url('admin/themes/')) do %>
-	    <table class="table table-bordered table-striped table_vam">
-	    <thead>
-	      <tr>
-	        <th>&nbsp;</th>
-	        <th>Theme Name</th>
-	        <th>Description</th>
-	        <th>Author</th>
-	        <th>Version</th>
-	        <th>Action</th>
-	      </tr>
-	    </thead>
-    <% @themes.each do |theme| %>
-      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-
-      <td><%= radio_button_tag  'theme', theme['foldername'], theme['foldername'] == @current ? true : false  %></td>
-    	<td><span class="hhfr">Theme Name:-</span>
-    		<%= theme['name'] %>
-    	</td>
-    	<td><span class="hhfr">Description:-</span>
-    		<%= theme['description'] %>
-    	</td>
-    	<td><span class="hhfr">Author:-</span>
-    		<%= theme['author'] %>
-    	</td>
-    	<td><span class="hhfr">Version:-</span>
-    		<%= theme['version'] %>
-    	</td>
-        <td>
-          <div class="btn-group">  
-            <% if theme['foldername'] != @current %> 
-              <%= link_to "/admin/themes/#{theme['foldername']}", method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-small' do %>       
-                <i class="icon-trash"></i>
-              <% end %>
-            <% end %>
-          </div>
-        </td>
-        
-      </tr>
-    <% end %>
-    </table>
-
-    <div class="formSepUpp">
-
-        <div class="field">
-          <%= submit_tag "Update", :class => 'btn btn-small btn-warning' %>
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Available themes</h3>
+        <div class="actions pull-right">
+            <i class="fa fa-chevron-down"></i>
         </div>
       </div>
-  <% end %>
+      <div class="panel-body">
+        <%= form_tag(site_url('admin/themes/')) do %>
+          <table class="table table-hover table_vam">
+          <thead>
+            <tr>
+              <th>&nbsp;</th>
+              <th>Theme Name</th>
+              <th>Description</th>
+              <th>Author</th>
+              <th>Version</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+        <% @themes.each do |theme| %>
+          <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 
-        
+          <td>
+            <label class="">
+              <%= radio_button_tag  'theme', theme['foldername'], theme['foldername'] == @current ? true : false, :style => "position: absolute; opacity: 0;", :class => "icheck" %>
+            </label>
+          </td>
+          <td><span class="hhfr">Theme Name:-</span>
+            <%= theme['name'] %>
+          </td>
+          <td><span class="hhfr">Description:-</span>
+            <%= theme['description'] %>
+          </td>
+          <td><span class="hhfr">Author:-</span>
+            <%= theme['author'] %>
+          </td>
+          <td><span class="hhfr">Version:-</span>
+            <%= theme['version'] %>
+          </td>
+            <td class="center">
+                <% if theme['foldername'] != @current %> 
+                  <%= link_to "/admin/themes/#{theme['foldername']}", method: :delete, data: { confirm: 'Are you sure?' }, :class => '' do %>       
+                    <i class="fa fa-trash-o"></i>
+                  <% end %>
+                <% end %>
+            </td>
+            
+          </tr>
+        <% end %>
+        </table>
+
+        <div class="formSepUpp">
+
+            <div class="field">
+              <%= submit_tag "Update", :class => 'btn btn-small btn-primary' %>
+            </div>
+          </div>
+      <% end %>
+
+      </div>
     </div>
+  </div>
+
 </div>
