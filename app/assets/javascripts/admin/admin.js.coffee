@@ -43,10 +43,5 @@ $(document).ready ->
     return
   )
   
-  # Select2 options
-  $("select").select2
-    placeholder: "Please select"
-    allowClear: true
-
   $.scrollUp()
   return

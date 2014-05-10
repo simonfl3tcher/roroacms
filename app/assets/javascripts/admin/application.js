@@ -10,22 +10,33 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //= require ckeditor-jquery
-//= require jquery
-//= require jquery_ujs
-//= require jquery_ui.js
-//= require dropzone.js
-//= require scrolltop.js
-//= require select.js
-//= require sortable.js
+//= require ../../../../vendor/assets/javascripts/admin/jquery-1.10.2.min.js
+//= require ../../../../vendor/assets/javascripts/admin/jquery-ui-1.10.4.min.js
+//= require ../../../../vendor/assets/javascripts/admin/datatables/js/jquery.datatables.js
+//= require ../../../../vendor/assets/javascripts/admin/datatables/js/datatables.bootstrap.js
+//= require_tree ../../../../vendor/assets/javascripts/admin
+//= require_tree .
 //= require_directory .
 //= require_self
-//= require twitter/bootstrap
 
-// setup ajax for crf-token needed by ruby
+$('.checkall').change(function() {
+  var checkboxes = $(this).closest('form').find(':checkbox');
+  checkboxes.attr('checked', $(this).is(':checked'));
+});
+
+$('#editButton').click(function(){
+	clickToEdit();
+});
+
 $.ajaxSetup({
 	beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
 });
 
-function base_url(str) {
-	return location.protocol + "//" + location.hostname + (location.port && ":" + location.port) + str
-}
+
+$("#term_name").keyup(function(){
+    $("#term_slug").val($(this).val().toLowerCase().split(' ').join('-'));
+});
+
+$("#term_name").change(function(){
+	$("#term_slug").val($(this).val().toLowerCase().split(' ').join('-'));
+});
