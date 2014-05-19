@@ -1,21 +1,46 @@
 <div class="row">
-	<div class="span4">
-
-	    <div class="title">Add New Menu Group</div>
-
-		<%= render 'menu_form' %>
-
+	<div class="col-md-12">
+		<!--breadcrumbs start -->
+		<ul class="breadcrumb">
+			<li><a href="#">Dashboard</a>
+			</li>
+			<li class="active">Menus</li>
+		</ul>
+		<!--breadcrumbs end -->
+		<h1 class="h1">Menus</h1>
 	</div>
+</div>
 
 
+<div class="row settingsArea">
 
-	<div class="span8" id="menuGroupDisplay">
+	<div class="col-md-12">
 
-		<% @menugroups.each do |m| %>
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="tab-wrapper tab-left ">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#new" data-toggle="tab"><i class="fa fa-plus"></i> New Menu</a></li>
+						<% @menugroups.each_with_index do |m, index| %>
+							<li><a href="#<%= m.key + '-' + index.to_s %>" data-toggle="tab"><i class="fa fa-list"></i> <%= m.name %></a></li>
+						<% end %>
+					</ul>
+					<div class="tab-content">
+						
+						<div class="tab-pane active" id="new">
+							<%= render 'menu_form' %>
+						</div>
 
-			<%= get_menu_groups m %>
+						<% @menugroups.each_with_index do |m, index| %>
+							<div class="tab-pane menuGroupDisplay" id="<%= m.key + '-' + index.to_s %>">
+								<%= get_menu_groups m %>
+							</div>
+						<% end %>
 
-		<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	</div>
 </div>

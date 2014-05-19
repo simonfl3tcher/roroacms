@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(:version => 20140506070332) do
     t.string   "last_name"
     t.string   "username"
     t.string   "access_level"
-    t.string   "avatar"
+    t.text     "avatar"
     t.string   "inline_editing",         :limit => 1, :default => "Y"
     t.string   "overlord",               :limit => 1, :default => "Y"
     t.string   "encrypted_password",                  :default => "",  :null => false
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20140506070332) do
     t.integer  "parent_id"
     t.string   "post_type"
     t.text     "post_slug"
+    t.string   "post_visible",                               :default => "Y"
     t.datetime "created_at",                                                  :null => false
     t.datetime "updated_at",                                                  :null => false
     t.string   "disabled",             :limit => 1,          :default => "N"

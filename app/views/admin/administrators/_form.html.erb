@@ -1,72 +1,128 @@
 <%= form_for @admin, :url => url_for(:controller => 'administrators', :action => @action) do |f| %>
-  <% if @admin.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@admin.errors.count, "error") %> errors:</h2>
-
-      <ul>
-      <% @admin.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="tab-wrapper tab-left ">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-user"></i> Profile</a></li>
       </ul>
-    </div>
-  <% end %>
-  <div class="row">
-      <div class="span8">
-        <fieldset>
-            <div class="formSep">
-              <div class="row">
-                <div class="field span4">
-                  <%= f.label :first_name %>
-                  <%= f.text_field :first_name, size: 40 %>
-                </div>
-                <div class="field span4">
-                  <%= f.label :last_name %>
-                  <%= f.text_field :last_name, size: 40 %>
-                </div>
-              </div>
-              <div class="clearboth"></div>
-            </div>
-          <div class="field formSep">
-            <%= f.label :email %>
-            <%= f.text_field :email, size: 40 %>
-          </div>
-          <div class="field formSep">
-            <%= f.label :username %>
-            <%= f.text_field :username, size: 40 %>
-          </div>
-          <% if is_overlord? || @admin.id == nil %>
-            
-            <div class="field formSep">
-              <%= f.label :access_level %>
-               <%= f.select :access_level, Admin::ACCESS_LEVELS, prompt: 'Select access level' %>
-            </div>
+      <div class="tab-content">
+        <div class="tab-pane active" id="general">
 
+          <% if !@admin.id.blank? %>
+            <div class="well" style="background-image: url('<%= @admin.cover_picture %>');background-position: center center;">
+            <center>
+              <a href="#aboutModal" data-toggle="modal" data-target="#myModal">
+                <img src="<%= @admin.avatar %>" name="aboutme" width="140" height="140" class="img-circle">
+              </a>
+              <h3><%= @admin.username %></h3>
+              <small><%= @admin.first_name + ' ' + @admin.last_name %></small>
+            </center>
+          </div>
+
+          <% else %>
+            <div class="well">
+              <center>
+                <a href="#aboutModal" data-toggle="modal" data-target="#myModal">
+                  <img src="https://s3.amazonaws.com/roroa/default-user-icon-profile.png" name="aboutme" width="140" height="140" class="img-circle">
+                </a>
+              </center>
+            </div>
           <% end %>
 
-          <div class="field formSep">
-            <%= f.label 'Author Description (this will be displayed against your posts)' %>
-            <%= f.text_area :description, :class => 'seo_textarea' %>
+          <div class="form-group">
+            <%= f.label :first_name, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.text_field :first_name, size: 40, :class => "form-control" %>
+            </div>
+            <div class="clearfix"></div>
           </div>
-      	    <div class="field formSep">
-                <div class="row">
-                <div class="field span4">
-                <%= f.label :password, 'Password' %>
-                <%= f.password_field :password, size: 40 %>
-                </div>
-                <div class="field span4">
-                <%= f.label :password_confirmation, 'Confirm' %>
-                <%= f.password_field :password_confirmation, size: 40 %>
-                </div>
-              </div>
-      	    </div>
-          <div class="field">
-            <% if @action == 'create' %>
-              <%= f.submit "Create Administrator", :class => 'btn btn-small btn-warning'  %>
-            <% else %>
-              <%= f.submit "Update Administrator", :class => 'btn btn-small btn-warning'  %>
-            <% end %>
+          <div class="form-group">
+            <%= f.label :last_name, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.text_field :last_name, size: 40, :class => "form-control" %>
+            </div>
+            <div class="clearfix"></div>
           </div>
-        </fieldset>
+          <div class="form-group">
+            <%= f.label :email, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.text_field :email, size: 40, :class => "form-control" %>
+              <%= errors_for @admin, :email %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="form-group">
+            <%= f.label :username, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.text_field :username, size: 40, :class => "form-control" %>
+              <%= errors_for @admin, :username %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label 'Profile Picture', :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.file_field :avatar, :class => "" %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label 'Cover Picture', :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.file_field :cover_picture, :class => "" %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <% if is_overlord? || @admin.id == nil %>
+
+          <div class="form-group">
+            <%= f.label :access_level, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.select :access_level, Admin::ACCESS_LEVELS,  { prompt: 'Select access level' }, { :class => "form-control" } %>
+
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <% end %>
+          <div class="form-group">
+            <%= f.label :description, 'Author Description', :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.text_area :description, :class => "form-control" %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :password, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.password_field :password, :class => "form-control" %>
+              <%= errors_for @admin, :password %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :password_confirmation, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.password_field :password_confirmation, :class => "form-control" %>
+              <%= errors_for @admin, :password_confirmation %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">&nbsp;</label>
+            <div class="col-sm-6">
+              <%= submit_tag "Save", :class => 'btn btn-small btn-primary' %>
+            </div>
+          </div>
+
+        </div>
       </div>
+    </div>
   </div>
 <% end %>

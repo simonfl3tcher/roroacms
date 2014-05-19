@@ -58,7 +58,7 @@ class Admin::CommentsController < AdminController
 		func = Comment.bulk_update params
 
 		respond_to do |format|
-	      format.html { redirect_to admin_comments_path, notice: "Comments were successfully #{func}" }
+	      format.html { redirect_to admin_comments_path, notice: func == 'ntd' ? "I had nothing to do" : "Comments were successfully #{func}" }
 	    end
 
 	end

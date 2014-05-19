@@ -2,72 +2,73 @@
 	<div class="col-md-12">
 		<!--breadcrumbs start -->
 		<ul class="breadcrumb">
-				<li><a href="#">Dashboard</a>
-				</li>
-				<li class="active">Users</li>
+			<li><a href="#">Dashboard</a>
+			</li>
+			<li class="active">Users</li>
 		</ul>
 		<!--breadcrumbs end -->
 	</div>
 </div>
 <div class="row">
-		
-		<div class="col-md-6">
-			<h1 class="h1">Users</h1>
-		</div>
+	
+	<div class="col-md-6">
+		<h1 class="h1">Users</h1>
+	</div>
 
-		<div class="col-md-6">
+	<div class="col-md-6">
 
-			<%= link_to new_admin_administrator_path do %>
-				<button class="pull-right btn btn-small btn-primary"><span class="icon-plus"></span>&nbsp;Add New User</button>
-			<% end %>
+		<%= link_to new_admin_administrator_path do %>
+		<button class="pull-right btn btn-small btn-primary"><span class="fa fa-plus"></span>&nbsp;Add New User</button>
+		<% end %>
 
-		</div>
+	</div>
 
 </div>
 
 <div class="row">
 	<div class="col-md-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Users</h3>
-						<div class="actions pull-right">
-								<i class="fa fa-chevron-down"></i>
-						</div>
-					</div>
-					<div class="panel-body">
-						<table id="dtable" class="table table-striped table-bordered" cellspacing="0" width="100%">
-						<thead>
-								<tr>
-										<th>#</th>
-										<th>Name</th>
-										<th>Email Address</th>
-										<th>&nbsp;</th>
-								</tr>
-						</thead>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">&nbsp;</h3>
+				<div class="actions pull-right">
+					<i class="fa fa-chevron-down"></i>
+				</div>
+			</div>
+			<div class="panel-body">
+				<table id="dtable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Email Address</th>
+							<th>&nbsp;</th>
+						</tr>
+					</thead>
 
-						<tbody>
-							<% @admins.each do |admin| %>
-								<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+					<tbody>
+						<% @admins.each do |admin| %>
+						<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 
-								<td>#<%= admin.id %></td>
-								<td><%= admin.first_name + " " + admin.last_name %></td>
-								<td><%= admin.email %></td>
-								<td class="center">
-									<% if admin.overlord != 'Y' || (admin.id.to_i == session[:admin_id].to_i) %>       
-									<%= link_to edit_admin_administrator_path(admin), :class => '' do %>
-										<i class="fa fa-pencil"></i>
-									<% end %> 
-										<%= link_to admin_administrator_path(admin), method: :delete, data: { confirm: 'Are you sure?' }, :class => '' do %>
-											<i class="fa fa-trash-o"></i>
-										<% end %>
-									<% end %>
-								</td>
-								</tr>
-							<% end %>
-						</tbody>
+							<td>
+								<img src="<%= admin.avatar %>" class="img-circle" width="35">&nbsp;
+								<%= admin.first_name + " " + admin.last_name %>
+							</td>
+							<td><%= admin.email %></td>
+							<td class="center">
+								<% if admin.overlord != 'Y' || (admin.id.to_i == session[:admin_id].to_i) %>       
+								<%= link_to edit_admin_administrator_path(admin), :class => '' do %>
+								<i class="fa fa-pencil"></i>
+								<% end %> 
+								<%= link_to admin_administrator_path(admin), method: :delete, data: { confirm: 'Are you sure?' }, :class => '' do %>
+								<i class="fa fa-trash-o"></i>
+								<% end %>
+								<% end %>
+							</td>
+						</tr>
+						<% end %>
+					</tbody>
 				</table>
 
-			 </div>
-		 </div>
+			</div>
+		</div>
 	</div>
 </div>

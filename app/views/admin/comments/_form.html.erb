@@ -1,71 +1,84 @@
-<div class="row" id="postPage">
-    <%= form_for [:admin, @comment] do |f| %>
-      <div class="span9">
-      <% if @comment.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@comment.errors.count, "error") %> errors:</h2>
+<%= form_for [:admin, @comment] do |f| %>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="tab-wrapper tab-left ">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-comment"></i> Comment</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="general">
 
-          <ul>
-          <% @comment.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-  <fieldset>
-
-    <div class="accordion" id="accordion2">
-      <div class="accordion-group">
-        <div class="accordion-heading">
-          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"><i class="icon-user pull-left"></i>&nbsp;Author<i class="accordionSign pull-right"></i></a>
-        </div>
-        <div id="collapseTwo" class="accordion-body collapse in">
-          <div class="accordion-inner">
-	        <div class="field">
-	          <%= f.text_field :author, size: 40, :placeholder => 'Author' %>
-	        </div>
-	        <div class="field margin10 ">
-	          <%= f.text_field :email, size: 40, :placeholder => 'Email' %>
-	        </div>
-	        <div class="field">
-	          <%= f.text_field :website, size: 40, :placeholder => 'Website' %>
-	        </div>
-          </div>
-        </div>
-      </div>
-    </div>  
- 
-        <div class="field">
-          <%= f.text_area :comment, :class => 'ckeditor'%>
-        </div>
-      </fieldset>
-
-  </div>
-  <div class="span3">
-
-    <div class="accordion" id="accordion1">
-      <div class="accordion-group">
-        <div class="accordion-heading">
-          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne"><i class="icon-lightbulb pull-left"></i>&nbsp;Status<i class="accordionSign pull-right"></i></a>
-        </div>
-        <div id="collapseOne" class="accordion-body collapse in">
-          <div class="accordion-inner">
-
-          	<div class="field">
-			<%= f.radio_button :comment_approved, "Y", :checked => @comment.comment_approved == 'Y' ? true : false %>Approved<br />
-			<%= f.radio_button :comment_approved, "N", :checked => @comment.comment_approved == 'N' ? true : false %>Pending<br />
-			<%= f.radio_button :comment_approved, "S", :checked => @comment.comment_approved == 'S' ? true : false %>Spam<br />
-          	</div>
-
-          	<div class="field">
-              <%= f.label :submitted_on %>
-              <%= f.datetime_select :submitted_on, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => 'Time:- '}, :class => 'dateselect' %>
+          <div class="form-group">
+            <%= f.label :author, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.text_field :author, size: 40, :placeholder => 'Author', :class => "form-control" %>
+              <%= errors_for @comment, :author %>
             </div>
-
+            <div class="clearfix"></div>
           </div>
+
+          <div class="form-group">
+            <%= f.label :email, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.text_field :email, size: 40, :placeholder => 'Email Address', :class => "form-control" %>
+              <%= errors_for @comment, :email %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :website, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.text_field :website, size: 40, :placeholder => 'Email Address', :class => "form-control" %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag(:comment_approved, "Comment Status", class: "col-sm-3 control-label") %>
+              <div class="col-sm-6">
+                <div class="">
+                  <label class="radio-inline">
+                    <%= f.radio_button :comment_approved, "Y", :checked => @comment.comment_approved == 'Y' ? true : false %>Approved
+                  </label>
+                  <label class="radio-inline">
+                    <%= f.radio_button :comment_approved, "N", :checked => @comment.comment_approved == 'N' ? true : false %>Pending
+                  </label>
+                  <label class="radio-inline">
+                    <%= f.radio_button :comment_approved, "S", :checked => @comment.comment_approved == 'S' ? true : false %>Spam
+                  </label>
+                </div>
+              </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :submitted_on, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              Date:-
+              <%= f.datetime_select :submitted_on, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => 'Time:- '}, :class => 'form-control' %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :comment, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+               <%= f.text_area :comment, :class => 'form-control'%>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+         
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">&nbsp;</label>
+            <div class="col-sm-6">
+              <%= submit_tag "Save", :class => 'btn btn-small btn-primary' %>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
-  <% end %>
-</div>
+  </div>
+<% end %>

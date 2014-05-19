@@ -39,25 +39,25 @@ Roroacms::Application.routes.draw do
 
     end
 
-    resources :media do
+    # resources :media do
 
-      collection do
-        post 'delete_via_ajax'
-        post 'bulk_update'
-        post 'get_via_ajax'
-        post 'get_folder_list'
-        post 'multipleupload'
-        post 'rename_media'
-      end
+    #   collection do
+    #     post 'delete_via_ajax'
+    #     post 'bulk_update'
+    #     post 'get_via_ajax'
+    #     post 'get_folder_list'
+    #     post 'multipleupload'
+    #     post 'rename_media'
+    #   end
 
-    end
+    # end
 
-    resources :banners do 
-      collection do
-          get 'categories'
-          post 'bulk_update'
-        end
-    end
+    # resources :banners do 
+    #   collection do
+    #       get 'categories'
+    #       post 'bulk_update'
+    #     end
+    # end
 
     resources :filebrowser do
         member {post 'upload'}

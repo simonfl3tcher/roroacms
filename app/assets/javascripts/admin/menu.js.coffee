@@ -19,7 +19,7 @@ $(document).ready ->
   
   # create a success message when you save the menu
   do_alert = ->
-    $("#content .container h2").before "<div class=\"alert alert-success\"><button data-dismiss=\"alert\" class=\"close\" type=\"button\">x</button><strong>Success!</strong> Menu was successfully updated.</div>"
+    $( "#main-content .row > .col-md-12 .alertWarpper"  ).html "<div class=\"alert alert-success\"><button data-dismiss=\"alert\" class=\"close\" type=\"button\">x</button><strong>Success!</strong> Menu was successfully updated.</div>"
     
     # scroll to the message when created
     $("html,body").animate
@@ -37,6 +37,7 @@ $(document).ready ->
       dataType: "html"
       success: (data) ->
         populate data, selector
+        do_checkboxes()
         return
 
     return
@@ -47,12 +48,9 @@ $(document).ready ->
     return
 
   # nestedSortable function instantiation
-  $("ol.sortable").nestedSortable
+  $("#menuSortableFields ol.sortable").nestedSortable
     items: "li"
     maxLevels: 3
-    update: ->
-      do_update_function()
-      return
 
   # Save button 
   $(".updateMenu").bind "click", (e) ->
@@ -64,13 +62,13 @@ $(document).ready ->
   $("ol.sortable").on "click", "i.handler", ->
     container = $(" > .itemInformation", $(this).closest("li"))
     if container.hasClass("active")
-      $(this).removeClass "icon-minus-sign"
-      $(this).addClass "icon-plus-sign"
+      $(this).removeClass "fa-minus"
+      $(this).addClass "fa-plus"
       container.slideUp "slow"
       container.removeClass "active"
     else
-      $(this).removeClass "icon-plus-sign"
-      $(this).addClass "icon-minus-sign"
+      $(this).removeClass "fa-plus"
+      $(this).addClass "fa-minus"
       container.slideDown "slow"
       container.addClass "active"
     return
@@ -82,7 +80,7 @@ $(document).ready ->
     return
 
   # creating a menu option 
-  $(".span3 form").bind "submit", (e) ->
+  $("#menuForms form").bind "submit", (e) ->
     e.preventDefault()
     # generic variables
     type = $(this).attr("data-type")
@@ -97,13 +95,13 @@ $(document).ready ->
     randomnumber = Math.floor(Math.random() * 11)
     if type is "custom"
       if ($("input[name=customlink]", $(this)).val() isnt "") and ($("input[name=label]", $(this)).val() isnt "")
-        html = "<li class=\"\" style=\"\" data-id=\"option_" + data[1]["value"] + "\" id=\"custom_" + randomnumber + "\" data-type=\"custom\" data-data=\"" + dataString + "\"><div>" + label + "<i class=\"icon-plus-sign pull-right handler\"></i></div>"
+        html = "<li class=\"dd-item\" style=\"\" data-id=\"option_" + data[1]["value"] + "\" id=\"custom_" + randomnumber + "\" data-type=\"custom\" data-data=\"" + dataString + "\"><div class=\"dd-handle\">" + label + "<i class=\"fa fa-plus pull-right handler\"></i></div>"
         $("ol.sortable").append html
         build_under_form data, "#custom_" + randomnumber
     else
       if ($("select[name=linkto]", $(this)).val() isnt "") and ($("input[name=label]", $(this)).val() isnt "")
         formData = $(this).serialize()
-        html = "<li class=\"\" style=\"\" data-id=\"option_" + data[1]["value"] + "\" id=\"" + data[0]["value"] + "_" + randomnumber + "\" data-type=\"" + data[0]["value"] + "\" data-data=\"" + dataString + "\"><div>" + label + "<i class=\"icon-plus-sign pull-right handler\"></i></div>"
+        html = "<li class=\"dd-item\" style=\"\" data-id=\"option_" + data[1]["value"] + "\" id=\"" + data[0]["value"] + "_" + randomnumber + "\" data-type=\"" + data[0]["value"] + "\" data-data=\"" + dataString + "\"><div class=\"dd-handle\">" + label + "<i class=\"fa fa-plus pull-right handler\"></i></div>"
         $("ol.sortable").append html
         build_under_form data, "#" + data[0]["value"] + "_" + randomnumber
     return
@@ -113,15 +111,21 @@ $(document).ready ->
       save the actual menu it will take this data and send it to the server
   ###
   $("ol.sortable").on "click", ".submitForm", ->
-    $(this).closest("li").attr "data-data", $(this).closest("form").serialize()
+    form_data = $(this).closest("form")
+
+
+    $(this).closest("li").attr "data-data", form_data.serialize()
+    $(this).closest("li").find('> .dd-handle > .listNameOption').text(form_data.find('input[name=label]').val())
+
     $(".updateMenu").trigger "click"
+
     return
 
   ###
       remove the option form the list. The form is not updated until you click the update function
       at which point it serializes the data without the option in.
   ###
-  $(".span9").on "click", ".deleteOption", (e) ->
+  $("#menuSortableFields").on "click", ".deleteOption", (e) ->
     e.preventDefault()
     $(this).closest(".itemInformation").slideUp "slow"
     li = $(this).closest("li").fadeOut("slow")
@@ -130,14 +134,6 @@ $(document).ready ->
       return
     ), 1000
     return
-
-  # $(".span9").on "submit", "form", (e) ->
-  #   e.preventDefault()
-  #   dataString = $(this).serialize()
-  #   parent = $(this).closest("li")
-  #   $(parent).attr "data-data", dataString
-  #   $("#updateMenu").trigger "click"
-  #   return
 
   return
 

@@ -139,9 +139,9 @@ module RoutingHelper
 
 		# get content - if the admin isn't logged in your add the extra status requirements
 		if !session[:admin_id].blank?
-			@content = Post.where(:post_type => 'page', :post_status => 'Published').find_by_structured_url("/#{url}")
+			@content = Post.where(:post_type => 'page', :post_status => 'Published', :post_visible => 'Y').find_by_structured_url("/#{url}")
 		else
-			@content = Post.where(status, :post_type => 'page', :post_status => 'Published').find_by_structured_url("/#{url}")
+			@content = Post.where(status, :post_type => 'page', :post_status => 'Published', :post_visible => 'Y').find_by_structured_url("/#{url}")
 		end
 
 		# add a breadcrumb for each of its parents by running through each segment
@@ -228,9 +228,9 @@ module RoutingHelper
 
 		# get content - if the admin isn't logged in your add the extra status requirements
 		if !session[:admin_id].blank?
-			@content = Post.where(:post_type => 'post').find_by_post_slug(segments[1])
+			@content = Post.where(:post_type => 'post', :post_visible => 'Y').find_by_post_slug(segments[1])
 		else
-			@content = Post.where(status, :post_type => 'post', :disabled => 'N').find_by_post_slug(segments[1])
+			@content = Post.where(status, :post_type => 'post', :disabled => 'N', :post_visible => 'Y').find_by_post_slug(segments[1])
 		end
 
 		render_404 and return if @content.nil?

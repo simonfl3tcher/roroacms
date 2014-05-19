@@ -37,33 +37,44 @@ module MenuHelper
 			end
 		else
 			m = Menu.find_by_key(menu)
-			if sub 
-				data = MenuOption.find(m[:id])
-				data = MenuOption.where(:parent_id => data.option_id)
-			else 
-				data = MenuOption.where(:menu_id => m[:id], :parent_id => nil)
+			if m.blank?
+				data = []
+			else
+
+				if sub 
+					data = MenuOption.find(m[:id])
+					data = MenuOption.where(:parent_id => data.option_id)
+				else 
+					data = MenuOption.where(:menu_id => m[:id], :parent_id => nil)
+				end
+
 			end
 		end
 
+
 		html = "<ul class='menu_#{menu} #{c}'>"
-		
-		data.each do |m|
-			if m.parent_id != 0
-				existingData = make_hash m.custom_data
 
-				name = existingData['label']
-				attributes = menu_routing m
+		if !data.blank?
+			
+			data.each do |m|
+				if m.parent_id != 0
+					existingData = make_hash m.custom_data
 
-				html += "<li><a " + attributes + ">#{name}</a>"
+					name = existingData['label']
+					attributes = menu_routing m
 
-				if descendants_count(m) > 0
-					html += get_menu m.id, true
+					html += "<li><a " + attributes + ">#{name}</a>"
+
+					if descendants_count(m) > 0
+						html += get_menu m.id, true
+
+					end
+
+					html += '</li>'
 
 				end
-
-				html += '</li>'
-
 			end
+			
 		end
 
 		html +='</ul>'

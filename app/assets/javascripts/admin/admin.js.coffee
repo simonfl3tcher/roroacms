@@ -3,6 +3,10 @@ $(document).ready ->
     $("#term_slug").val $(this).val().replace(/[^a-zA-Z0-9 -]/g, "").toLowerCase().split(" ").join("-")
     return
 
+  $("#menu_name").bind "change keyup", ->
+    $("#menu_key").val $(this).val().toLowerCase().split(" ").join("-")
+    return
+
   
   # submit the closest form on click of the updatepost class
   $(".updatepost").bind "click", (e) ->
@@ -42,6 +46,8 @@ $(document).ready ->
     $("#post_post_slug").val $(this).val().replace(/[^a-zA-Z0-9 -]/g, "").toLowerCase().split(" ").join("-")
     return
   )
+
+  $(".chosen-select").chosen({width: "100%", placeholder_text_multiple: "Please start typing..."})
   
   $.scrollUp()
   return

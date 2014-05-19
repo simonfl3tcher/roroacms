@@ -70,6 +70,7 @@ var app = function() {
               e.stopPropagation();
         });
     };
+    
     //End functions
 
     //Dashboard functions
@@ -212,14 +213,19 @@ var app = function() {
     };
 }();
 
-//Load global functions
-$(document).ready(function() {
-    app.init();
-
+var do_checkboxes = function(){
     $('input').iCheck({
         checkboxClass: 'icheckbox_flat-grey',
         radioClass: 'iradio_flat-grey'
     });
+}
+
+//Load global functions
+$(document).ready(function() {
+    app.init();
+
+    do_checkboxes();
+    
 
     $('#dtable').dataTable({
        "oLanguage": {

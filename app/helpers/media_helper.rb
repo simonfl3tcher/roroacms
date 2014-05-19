@@ -79,6 +79,30 @@ module MediaHelper
 		AWS::S3::S3Object.store(url, url, BUCKET, :access => :public_read, :content_type => 'binary/octet-stream')
 	end
 
+	# manually create the folder with the given url
+	# Params:
+	# +p+:: uploaded file object
+	# +user+:: username of the user
+	# +initial_folder+:: is the initial folder name
+
+
+	def upload_user_images(p, user, initial_folder = 'users') 
+
+		where = "#{BUCKET}/" + initial_folder.to_s + "/" + user.to_s + "/"
+
+		begin
+
+	        @file = AWS::S3::S3Object.store(sanitize_filename(p.original_filename), p.read, where, :access => :public_read)
+	        @url = S3Object.url_for("/" + initial_folder.to_s + "/" + user.to_s + "/" + p.original_filename, BUCKET, :authenticated => false)
+
+	        return @url
+
+	    rescue ResponseError => error
+	    	return @url = ''
+		end
+
+	end
+
 
 	# return the size of the folder
 	# Params:

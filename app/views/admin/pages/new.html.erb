@@ -1,13 +1,293 @@
-<h2 class="title">Create Page
-
-	<div class="btn-group pull-right">
-  <%= link_to admin_pages_path, :class => 'btn btn-mini pull-left' do %>
-    <i class="icon-arrow-left"></i>
-  <% end %>   
-  <%= link_to admin_posts_path, :class => 'btn btn-mini pull-right updatepost' do %>
-    <i class="icon-refresh"></i>
-  <% end %> 
+<div class="row">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="#">Dashboard</a>
+            </li>
+            <li><a href="">Pages</a></li>
+            <li class="active">Create New Page</li>
+        </ul>
+        <!--breadcrumbs end -->
+       <h1 class="h1">Create New Page</h1>
+    </div>
 </div>
-</h2>
 
-<%= render 'form' %>
+<!-- <%= render 'form' %> -->
+
+<div class="row settingsArea">
+
+	<div class="col-md-12">
+
+		<%= form_for [:admin, @page], :url => { :action => :create } do |f| %>
+
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="tab-wrapper tab-left ">
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-cog"></i> General</a></li>
+							<li><a href="#content" data-toggle="tab"><i class="fa fa-desktop"></i> Content</a></li>
+							<li><a href="#revisions" data-toggle="tab"><i class="fa fa-save"></i> Revisions</a></li>
+							<li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> Search Engine Optimisation</a></li>
+							<li><a href="#categories" data-toggle="tab"><i class="fa fa-sitemap"></i> Tags &amp; Categories</a></li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane active" id="general">
+
+								<% if !@page.post_image.blank? %>
+
+									<div class="well" style="background-image: url('<%= @admin.cover_picture %>');background-position: center center;">
+										<center>
+											<a style="margin:10px;" class="btn btn-xs btn-primary pull-right addArticleImage" href="javascript:;"><span class="fa fa-picture-o"></span> Change cover</a>
+											<h3><%= @page.post_title %></h3>
+										</center>
+										<%= f.file_field :post_image %>
+									</div>
+
+									<% else %>
+
+									<div class="well">
+										<a style="margin:10px;" class="btn btn-xs btn-primary pull-right addArticleImage" href="javascript:;"><span class="fa fa-picture-o"></span> Change cover</a>
+										<%= f.file_field :post_image %>
+									</div>
+
+								<% end %>
+
+								<div class="form-group">
+									<%= f.hidden_field :admin_id, :value => session[:admin_id], size: 40 %>
+									<%= f.hidden_field :id %>
+									<%= f.hidden_field :post_type, :value => "page" %>
+								</div>
+
+								<div class="form-group">
+									<%= f.label :post_title, 'Title', :class => "col-sm-3 control-label"  %>
+									<div class="col-sm-6">
+										<%= f.text_field :post_title, size: 40, :class => "form-control" %>
+										<%= errors_for @page, :post_title %>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<div class="form-group">
+									<%= f.label :post_slug, 'URL', :class => "col-sm-3 control-label"  %>
+									<div class="col-sm-6">
+										<div class="input-group">
+									      <span class="input-group-addon">
+									        	/
+									      </span>
+									      <%= f.text_field :post_slug, size: 40, :class => "form-control" %>
+									    </div>
+										<%= errors_for @page, :post_slug %>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<div class="form-group">
+									<%= f.label :post_visible, 'Is invisible through the url?', :class => "col-sm-3 control-label"  %>
+									<div class="col-sm-6">
+										<%= f.check_box :post_visible, {checked: false}, 'N', 'Y'  %>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<div class="form-group">
+									<%= f.label :status, 'Status', :class => "col-sm-3 control-label"  %>
+									<div class="col-sm-6">
+										<%= f.select :post_status, Post::POST_STATUS, {:selected => 'Draft'}, { :class => "form-control" }  %>
+										<%= errors_for @page, :post_status %>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<div class="form-group">
+									<%= f.label :parent_id, 'Parent', :class => "col-sm-3 control-label"  %>
+									<div class="col-sm-6">
+										<%= f.select :parent_id, Post.where(:post_type => 'page', :disabled => 'N').collect {|p| [ p.post_title, p.id ] }, { include_blank: 'None' }, { :class => "form-control" } %>
+										<%= errors_for @page, :parent_id %>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<div class="form-group">
+									<%= f.label :parent_id, 'Parent', :class => "col-sm-3 control-label"  %>
+									<div class="col-sm-6">
+										<%= f.select :parent_id, Post.where(:post_type => 'page', :disabled => 'N').collect {|p| [ p.post_title, p.id ] }, { include_blank: 'None' }, { :class => "form-control" } %>
+										<%= errors_for @page, :parent_id %>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<% if !get_template_dropdown(@page.post_template).blank? %>
+
+									<div class="form-group">
+										<%= f.label :post_template, 'Template', :class => "col-sm-3 control-label"  %>
+										<div class="col-sm-6">
+											<%= f.select :post_template, get_template_dropdown(@page.post_template), { include_blank: true }, { :class => "form-control" } %>
+											<%= errors_for @page, :post_template %>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+
+								<% end %>
+
+
+								<div class="form-group">
+									<%= f.label :post_date, 'Published Date', :class => "col-sm-3 control-label"  %>
+									<div class="col-sm-6">
+										Date:-
+										<%= f.datetime_select :post_date, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => 'Time:- '}, :class => 'form-control' %>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-3 control-label">&nbsp;</label>
+									<div class="col-sm-6">
+										<%= submit_tag "Save", :class => 'btn btn-small btn-primary' %>
+									</div>
+								</div>
+
+							</div>
+							<div class="tab-pane" id="content">
+
+								<!-- <%= f.text_area :post_content, :class => 'ckeditor' %> -->
+
+								<div class="features">
+									<section class="editor">
+										<div class="outer">
+											<div class="editorwrap">
+												<section class="entry-markdown">
+													<header class="floatingheader">Markdown <a href="javascript:;" data-toggle="modal" data-target="#mdModal"><i class="fa fa-info-circle pull-right"></i></a></header>
+													<section class="entry-markdown-content">
+														<textarea id="entry-markdown">...</textarea>
+													</section>
+												</section>
+												<section class="entry-preview active">
+													<header class="floatingheader"> &nbsp;&nbsp; Preview <span class="entry-word-count">0 words</span> </header>
+													<section class="entry-preview-content">
+														<div class="rendered-markdown"></div>
+													</section>
+												</section>
+											</div>
+										</div>
+									</section>
+								</div>
+
+
+							</div>
+
+							<div class="tab-pane" id="revisions">
+
+
+								<%= render 'admin/partials/revision_tree' %>
+
+
+							</div>
+							<div class="tab-pane" id="seo">
+
+								<div class="form-group">
+									<%= f.label :post_seo_title, 'Meta Title', :class => "col-sm-3 control-label"  %>
+									<div class="col-sm-6">
+										<%= f.text_field :post_seo_title, size: 40, :class => "form-control" %>
+										<%= errors_for @page, :post_seo_title %>
+										<small>* The contents of this tag are generally shown as the title in search results (and of course in the user's browser)</small>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<div class="form-group">
+									<%= f.label :post_seo_description, 'Meta Description', :class => "col-sm-3 control-label"  %>
+									<div class="col-sm-6">
+										<%= f.text_field :post_seo_description, size: 40, :class => "form-control" %>
+										<%= errors_for @page, :post_seo_description %>
+										<small>* This tag provides a short description of the page. In some situations this description is used as a part of the snippet shown in the search results</small>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<div class="form-group">
+									<%= f.label :post_seo_is_disabled, 'Is disabled on this page', :class => "col-sm-3 control-label"  %>
+									<div class="col-sm-6">
+										<%= f.check_box :post_seo_is_disabled, {checked: false}, 'Y', 'N'  %>
+										<small>* if you want to leave these blank</small>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<div class="form-group">
+									<%= f.label :post_seo_no_index, 'No Index', :class => "col-sm-3 control-label"  %>
+									<div class="col-sm-6">
+										<%= f.check_box :post_seo_no_index, {checked: false}, 'Y', 'N'  %>
+										<small>* prevents the page from being indexed by search engines</small>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+
+								<div class="form-group">
+									<%= f.label :post_seo_no_follow, 'No Follow', :class => "col-sm-3 control-label"  %>
+									<div class="col-sm-6">
+										<%= f.check_box :post_seo_no_follow, {checked: false}, 'Y', 'N'  %>
+										<small>* prevents the Googlebot from following links from this page</small>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+
+							</div>
+							<div class="tab-pane" id="categories">
+
+								<div class="col-sm-6">
+									<h3 class="underline">Categories</h3>
+									<% if !@categories.blank? %>
+				                        <%= select_tag 'category_ids[]', options_for_select(@categories.map {|c| [c.name, c.id]}, @page.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
+					              	<% else %>
+						                <div style="text-align:center;">
+						                  <strong>No categories!</strong>
+						                </div>
+					              	<% end %>
+								</div>
+
+								<div class="col-sm-6">
+									<h3 class="underline">Tags</h3>
+									<% if !@tags.blank? %>
+				                        <%= select_tag 'tag_ids[]', options_for_select(@tags.map {|c| [c.name, c.id]}, @page.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
+					              	<% else %>
+						                <div style="text-align:center;">
+						                  <strong>No tags!</strong>
+						                </div>
+					              	<% end %>
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>
+
+<%= render 'admin/partials/markdown_modal' %>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+
+		function readURL(input) {
+	        if (input.files && input.files[0]) {
+	            var reader = new FileReader();
+	            
+	            reader.onload = function (e) {
+	                $('#blah').attr('src', e.target.result);
+	            }
+	            
+	            reader.readAsDataURL(input.files[0]);
+	        }
+	    }
+	    
+	    $("#imgInp").change(function(){
+	        readURL(this);
+	    });
+
+	});
+	
+</script>
+

@@ -1,8 +1,6 @@
 <div class="panel panel-primary animated flipInY">
     <div class="panel-heading">
-        <h3 class="panel-title">     
-           Forgot your password?
-        </h3>      
+        <div class="brandLogin"></div>       
     </div>
     <div class="panel-body">
 		<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, :class => 'form-horizontal' }) do |f| %>

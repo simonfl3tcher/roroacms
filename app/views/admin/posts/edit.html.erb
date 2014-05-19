@@ -1,19 +1,15 @@
-<h2 class="title">Edit Article
-
-<div class="btn-group pull-right">
-  <%= link_to admin_posts_path, :class => 'btn btn-mini pull-left' do %>
-    <i class="icon-arrow-left"></i>
-  <% end %>   
-  <%= link_to admin_post_path(@post), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-mini btn-danger pull-left' do %>
-    <i class="icon-trash"></i>
-  <% end %> 
-  <%= link_to page_path(@post), :class => 'btn btn-mini pull-left', :target => '_blank' do %>
-    <i class="icon-search"></i>
-  <% end %>  
-  <%= link_to admin_posts_path, :class => 'btn btn-mini pull-right updatepost' do %>
-    <i class="icon-refresh"></i>
-  <% end %> 
+<div class="row">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="#">Dashboard</a>
+            </li>
+            <li><a href="">Articles</a></li>
+            <li class="active">Edit "<%= @post.post_title %>" Article</li>
+        </ul>
+        <!--breadcrumbs end -->
+       <h1 class="h1">Edit "<%= @post.post_title %>" Article</h1>
+    </div>
 </div>
-</h2>
 
 <%= render 'form' %>

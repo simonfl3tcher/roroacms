@@ -1,7 +1,7 @@
-<div class='accordion' id='linkOption'>
+<!-- <div class='accordion' id='linkOption'>
       <div class='accordion-group'>
         <div class='accordion-heading'>
-          <a class='accordion-toggle' data-toggle='collapse' data-parent='#linkOption' href='#collapseLink'><i class='icon-link pull-left'></i>&nbsp;Link<i class='accordionSign pull-right'></i></a>
+          <a class='accordion-toggle' data-toggle='collapse' data-parent='#linkOption' href='#collapseLink'><i class='fa fa-link pull-left'></i>&nbsp;Link<i class='accordionSign pull-right'></i></a>
         </div>
         <div id='collapseLink' class='accordion-body collapse in'>
           <div class='accordion-inner'>
@@ -42,7 +42,7 @@
 					<input type="radio" value="nt" name="target"><label>New Tab</label><br>
 				<div class='formSepUpp'>
 					<button type="submit" class='btn btn-mini pull-left'> 
-					    <i class="icon-plus"></i>
+					    <i class="fa fa-plus"></i>
 					  </button>
 				</div>
 
@@ -50,4 +50,73 @@
           </div>
         </div>
       </div>
+</div> -->
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+    	<h3 class="panel-title"><i class='fa fa-link pull-left'></i>&nbsp;Link</h3>
+		<div class="actions pull-right">
+			<i class="fa fa-chevron-down"></i>
+		</div>
+    </div>
+    <div class="panel-body">
+
+    	<form data-type="normal">
+      		<input type="hidden" name="type" value="page" />
+      		<div class="form-group">
+				<select name="linkto" class="mod form-control">
+					<option value="">Select an option</option>
+					<optgroup label="Pages">
+						<% Post.where(:post_type => 'page', :disabled => 'N').each do |opt| %>
+							<option value="<%= opt.id %>" data-type="page"><%= opt.post_title %></option>
+						<% end %>
+		            </optgroup>
+
+		            <optgroup label="Articles">
+						<% Post.where(:post_type => 'post', :disabled => 'N').each do |opt| %>
+							<option value="<%= opt.id %>" data-type="article"><%= opt.post_title %></option>
+						<% end %>
+		            </optgroup>
+		            <optgroup label="<%= Setting.get('articles_slug').capitalize %>">
+		            	<option value="news" data-type="<%= Setting.get('articles_slug').downcase %>"> <%= Setting.get('articles_slug').capitalize %> Page</option>
+		            </optgroup>
+		            <optgroup label="Categories">
+		                <% Post::POST_CATEGORIES.each do |opt| %>
+							<option value="<%= opt.id %>" data-type="category"><%= opt.name %></option>
+						<% end %>
+		            </optgroup>
+		            <optgroup label="Tags">
+		                <% Post::POST_TAGS.each do |opt| %>
+							<option value="<%= opt.id %>" data-type="tag"><%= opt.name %></option>
+						<% end %>
+		            </optgroup>
+				</select>	
+			</div>
+
+			<div class="form-group">
+				<input name="label" type="text" placeholder="Label" class="form-control">
+			</div>
+			<div class="form-group">
+				<input name="class" type="text" placeholder="Class" class="form-control">
+			</div>
+
+			<label>Target</label>
+			<div class="form-group">
+				<div class="radio-inline">
+					<input type="radio" value="sw" name="target" checked="checked">Same Window
+				</div>
+				<div class="radio-inline">
+					<input type="radio" value="nt" name="target">New Tab
+				</div>
+			</div>
+
+			<div class='formSepUpp'>
+				<button type="submit" class='btn btn-sm btn-primary pull-left'> 
+				    <i class="fa fa-plus"></i>&nbsp; Add Link
+				  </button>
+			</div>
+
+		</form>	
+
+    </div>
 </div>

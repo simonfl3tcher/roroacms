@@ -166,4 +166,24 @@ module AdminRoroaHelper
 		Comment.all.count
 	end
 
+	def errors_for(model, attribute)
+	  if model.errors[attribute].present?
+	    content_tag :span, :class => 'help-block' do
+	      attribute.to_s.capitalize + ' ' + model.errors[attribute].join(", ")
+	    end
+	  end
+	end
+
+	def profile_images params, admin
+
+		if !params[:admin][:avatar].blank?
+			Admin.deal_with_profile_images admin, upload_user_images(params[:admin][:avatar], admin.username), 'avatar'
+		end 
+
+		if !params[:admin][:cover_picture].blank?
+			Admin.deal_with_profile_images admin, upload_user_images(params[:admin][:cover_picture], admin.username), 'cover_picture'
+		end 
+
+	end
+
 end

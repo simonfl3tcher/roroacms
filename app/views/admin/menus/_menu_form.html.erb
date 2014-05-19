@@ -1,42 +1,29 @@
 <%= form_for [:admin, @menu] do |f| %>
-  <% if @menu.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@menu.errors.count, "error") %> errors:</h2>
 
-      <ul>
-      <% @menu.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+  <div class="form-group">
+    <%= f.label :name, :class => "col-sm-3 control-label"  %>
+    <div class="col-sm-6">
+      <%= f.text_field :name, size: 40, :class => "form-control" %>
+      <%= errors_for @menu, :name %>
     </div>
-  <% end %>
+    <div class="clearfix"></div>
+  </div>
 
-  <fieldset class="categoriesForm">
+  <div class="form-group">
+    <%= f.label :key, :class => "col-sm-3 control-label"  %>
+    <div class="col-sm-6">
+      <%= f.text_field :key, size: 40, :class => "form-control" %>
+      <%= errors_for @menu, :key %>
+    </div>
+    <div class="clearfix"></div>
+  </div>
 
-    <div class="field">
-      <%= f.label :name %>
-      <%= f.text_field :name, size: 40 %>
+  <div class="form-group">
+    <label class="col-sm-3 control-label">&nbsp;</label>
+    <div class="col-sm-6">
+      <%= f.submit "Add menu group", :class => 'btn btn-small btn-primary' %>
     </div>
-    <div class="field formSep">
-      <%= f.label :key %>
-      <%= f.text_field :key, size: 40 %>
-    </div>
-    <div class="field ">
-        <%= f.submit "Add menu group", :class => 'btn btn-small btn-warning' %>
-    </div>
-  </fieldset>
+    <div class="clearfix"></div>
+  </div>
+
 <% end %>
-
-<script type="text/javascript">
-    
-    $(document).ready(function(){
-
-      $("#menu_name").keyup(function(){
-          $("#menu_key").val($(this).val().toLowerCase().split(' ').join('-'));
-      });
-       $("#menu_name").change(function(){
-          $("#menu_key").val($(this).val().toLowerCase().split(' ').join('-'));
-      });
-    })
-  
-</script>
