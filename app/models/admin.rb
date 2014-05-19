@@ -6,6 +6,7 @@ class Admin < ActiveRecord::Base
 
 	has_many :posts
 	validates :username, presence: true, uniqueness: true
+	validates :access_level, presence: true
 
 	# general data that doesn't change very often
 
@@ -51,9 +52,22 @@ class Admin < ActiveRecord::Base
 	end
 
 	def self.find_record(login)
-		abort login.inspect
 		where(["username = :value OR email = :value", { :value => login }]).first
 	end
+
+	def self.deal_with_profile_images admin, image, type
+		p = Admin.find(admin.id)
+		p[type.to_sym] = image
+		p.save
+	end
+
+	def deal_with_abnormalaties 
+
+		self.overlord = 'N'
+		self.avatar = 'https://s3.amazonaws.com/roroa/default-user-icon-profile.png'
+
+	end
+
 
 
 end 

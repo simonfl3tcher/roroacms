@@ -1,13 +1,15 @@
-<h2 class="title">Create Banner
-
-	<div class="btn-group pull-right">
-  <%= link_to admin_posts_path, :class => 'btn btn-mini pull-left' do %>
-    <i class="icon-arrow-left"></i>
-  <% end %>   
-  <%= link_to admin_posts_path, :class => 'btn btn-mini pull-right updatepost' do %>
-    <i class="icon-refresh"></i>
-  <% end %> 
+<div class="row">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="#">Dashboard</a>
+            </li>
+            <li><a href="">Banners</a></li>
+            <li class="active">Create New Banner</li>
+        </ul>
+        <!--breadcrumbs end -->
+       <h1 class="h1">Create New Banner</h1>
+    </div>
 </div>
-</h2>
 
 <%= render 'form' %>

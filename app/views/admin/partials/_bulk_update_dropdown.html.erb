@@ -1,23 +1,23 @@
 <div class="btn-group pull-left">
-    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Bulk Action
+    <a data-toggle="dropdown" class="btn btn-primary dropdown-toggle btn-sm" type="button">Bulk Action
     <span class="caret"></span>
   </a>
-    <ul class="dropdown-menu">
+    <ul role="menu" class="dropdown-menu">
     	<% @options.each do |k, v| %>
 			<% if k == 'publish' %>
-				<li><a href="javascript:void(0)" data-val="<%= k %>"><i class="icon-refresh"></i>&nbsp;<%= v %></a></li>
+				<li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-refresh"></i>&nbsp;<%= v %></a></li>
 			<% elsif k == 'draft' %>
-				<li><a href="javascript:void(0)" data-val="<%= k %>"><i class="icon-edit"></i>&nbsp;<%= v %></a></li>
+				<li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-edit"></i>&nbsp;<%= v %></a></li>
 			<% elsif k == 'move_to_trash' || k == 'destroy' %>
-				<li><a href="javascript:void(0)" data-val="<%= k %>"><i class="icon-trash"></i>&nbsp;<%= v %></a></li>
+				<li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-trash-o"></i>&nbsp;<%= v %></a></li>
 			<% elsif k == 'mark_as_spam'%>
-                <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="icon-fire"></i>&nbsp;<%= v %></a></li>
+                <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-fire"></i>&nbsp;<%= v %></a></li>
             <% elsif k == 'approve' %>
-                <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="icon-ok"></i>&nbsp;<%= v %></a></li>
+                <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-check"></i>&nbsp;<%= v %></a></li>
             <% elsif k == 'unapprove' %>
-                <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="icon-minus"></i>&nbsp;<%= v %></a></li>
+                <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-minus"></i>&nbsp;<%= v %></a></li>
             <% elsif k == 'reinstate' %>
-                <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="icon-reply"></i>&nbsp;<%= v %></a></li>
+                <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-reply"></i>&nbsp;<%= v %></a></li>
             <% else %>
 				<li><a href="javascript:void(0)" data-val="<%= k %>"><%= v %></a></li>
 			<% end %>
@@ -27,9 +27,18 @@
 <input type="hidden" name="to_do" />
 
 <script type='text/javascript'>
-    $('#check_all').on("click", function(){ $('td input[type="checkbox"]').click(); });
+    
+    setTimeout(function(){
+
+        $('body').on("click", 'ins', function(){ 
+            console.log("in here");
+        });
+
+    }, 1000);
+
     $('ul.dropdown-menu li a').bind('click', function(){
       $('input[name=to_do]').val($(this).attr('data-val'))
       $(this).closest('form').submit();
     });
+
 </script>

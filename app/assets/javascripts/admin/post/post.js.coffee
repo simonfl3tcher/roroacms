@@ -1,29 +1,27 @@
-popitup = ->
-  left = (screen.width / 2) - (1137 / 2)
-  top = (screen.height / 2) - (600 / 2)
-  newwindow = window.open(base_url("/admin/media/?manualBrowse=true"), "name", "height=600,width=1137,scrollbars=yes,top=" + top + ",left=" + left)
-  newwindow.focus()  if window.focus
-  false
-  
-returnImageFunction = (image) ->
-  $("#post_post_image").val image
-  $(".imagePlaceholder").html "<img src=\"" + image + "\"/>"
-  $(".imagePlaceholder").append "<a href=\"javascript:;\" class=\"removeArticleImage\"><i class=\"icon-remove\"></i>&nbsp;Remove Article Image</a>"
-  return
+readURL = (input) ->
+  if input.files and input.files[0]
+    reader = new FileReader()
+    reader.onload = (e) ->
+      $(".well").css({ 
+        'background-position': 'center center', 
+        'background-image': 'url(' + e.target.result + ')',
+        'background-repeat': 'no-repeat',
+        'background-size': 'cover',
+        'overflow': 'hidden'
+      })
+      return
 
-removeFeaturedImage = ->
-  $("#post_post_image").val ""
-  $(".imagePlaceholder").html "<a href=\"javascript:;\" id=\"filebrowser\" class=\"addArticleImage\"><i class=\"icon-plus\"></i>&nbsp;Add Article Image</a>"
+    reader.readAsDataURL input.files[0]
   return
 
 $(document).ready ->
   $("body").on "click", ".addArticleImage", (e) ->
     e.preventDefault()
-    popitup()
+    $('#post_post_image').trigger('click');
     return
 
-  $("body").on "click", ".removeArticleImage", ->
-    removeFeaturedImage()
+  $("#post_post_image").change ->
+    readURL this
     return
 
   return

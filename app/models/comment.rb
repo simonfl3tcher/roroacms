@@ -19,7 +19,7 @@ class Comment < ActiveRecord::Base
 		if params.has_key?(:search) && !params[:search].blank?
 			comments = Comment.where("(author like ? or email like ? or comment like ?) and comment_approved != 'S'", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%").order('submitted_on desc').page(params[:page]).per(Setting.get_pagination_limit)
 		else
-			comments = Comment.where("comment_approved != 'S'").order('submitted_on desc').page(params[:page]).per(Setting.get_pagination_limit)
+			comments = Comment.order('submitted_on desc').order('created_at desc').page(params[:page]).per(Setting.get_pagination_limit)
 		end
 
 		if params.has_key?(:filter) && params[:filter] != 'filter'
@@ -37,22 +37,27 @@ class Comment < ActiveRecord::Base
 		action = params[:to_do]
 		action = action.gsub(' ', '_')
 
-		case action.downcase 
-			when "unapprove"
-				bulk_update_unapprove params[:comments]
-				return 'unapproved'
-			when "approve"
-				bulk_update_approve params[:comments]
-				return 'approved'
-			when "mark_as_spam"
-				bulk_update_mark_as_spam params[:comments]
-				return 'marked as spam'
-			when "destroy"
-				bulk_update_destroy params[:comments]
-				return 'destroyed'
+		if !params[:comments].blank?
+
+			case action.downcase 
+				when "unapprove"
+					bulk_update_unapprove params[:comments]
+					return 'unapproved'
+				when "approve"
+					bulk_update_approve params[:comments]
+					return 'approved'
+				when "mark_as_spam"
+					bulk_update_mark_as_spam params[:comments]
+					return 'marked as spam'
+				when "destroy"
+					bulk_update_destroy params[:comments]
+					return 'destroyed'
+			end
+		else
+			return 'ntd'
 		end
 
-	end
+end
 
 
 	private 

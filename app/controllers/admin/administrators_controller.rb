@@ -4,6 +4,9 @@ class Admin::AdministratorsController < AdminController
 	# This is to stop people allowing themselves more access than they area allowed
 	before_filter :authorize_admin_access, :except => [:edit, :update]
 
+	include MediaHelper
+	include AdminRoroaHelper
+
 	# show all of the admins for the system
 
 	def index
@@ -42,8 +45,12 @@ class Admin::AdministratorsController < AdminController
 	    respond_to do |format|
 
 	      if @admin.update_attributes(administrator_params)
+
+	      	profile_images(params, @admin)
+	        
 	        format.html { redirect_to edit_admin_administrator_path(@admin), notice: 'Admin was successfully updated.' }
 	      else
+	      	@action = 'update'
 	        format.html { render action: "edit" }
 	      end
 
@@ -77,15 +84,19 @@ class Admin::AdministratorsController < AdminController
 
 	def create
 		@admin = Admin.new(administrator_params)
+		@admin.deal_with_abnormalaties
 
 		respond_to do |format|
 		  
 		  if @admin.save
 
+		  	profile_images(params, @admin)
 		  	Notifier.profile(@admin).deliver
+
 		    format.html { redirect_to admin_administrators_path, notice: 'Admin was successfully created.' }
 
 		  else
+		  	@action = 'create'
 		    format.html { render action: "new" }
 		  end
 
@@ -99,7 +110,7 @@ class Admin::AdministratorsController < AdminController
 
 	def administrator_params
 		if !session[:admin_id].blank?
-			params.require(:admin).permit(:email, :password, :first_name, :last_name, :username, :access_level, :password_confirmation, :avatar, :inline_editing, :description)
+			params.require(:admin).permit(:email, :password, :first_name, :last_name, :username, :access_level, :password_confirmation, :inline_editing, :description)
 		end
 	end
 

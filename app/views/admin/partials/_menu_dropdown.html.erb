@@ -1,32 +1,50 @@
 <div class='itemInformation'>
+
 	<form action='' method='post' data-type='custom'>
-		<div class='one_half'>
+		<div class="row">
+			<div class='col-md-6'>
+				<label>Options</label><br />
 
-			<span class='title'>Options</span>
 
-			<input type="hidden" name="linkto" value="<%= params[:linkto] %>" />
-			<input type="hidden" name="type" value="<%= params[:type] %>" />
+				<input type="hidden" name="linkto" value="<%= params[:linkto] %>" />
+				<input type="hidden" name="type" value="<%= params[:type] %>" />
 
-			<% if params[:customlink] %>
-				<input name='customlink' type='text' placeholder='http://...' value='<%= params[:customlink] %>'>
-			<% end %>
+				<% if params[:customlink] %>
+					<div class="form-group">
+						<input name='customlink' type='text' placeholder='http://...' value='<%= params[:customlink] %>' class="form-control">
+					</div>
+				<% end %>
 
-			<input name='label' type='text' placeholder='Label' value='<%= params[:label] %>'>
-			<input name='class' type='text' placeholder='Class' value='<%= params[:class] %>'>
-		</div>
+				<div class="form-group">
+		    		<input name='label' type='text' placeholder='Label' value='<%= params[:label] %>' class="form-control">
+		    	</div>
 
-		<div class="one_half last">
+				<div class="form-group">
+					<input name='class' type='text' placeholder='Class' value='<%= params[:class] %>' class="form-control">
+				</div>
 
-			<span class='title'>Target</span>
-			<input name='target' type='radio' value='sw' <%= check_for_checked("sw", params['target'].to_s) %>><label>Same Window</label>
-			<input name='target' type='radio' value='nt' <%= check_for_checked("nt", params['target'].to_s) %>><label>New Tab</label>
-		</div>
-		<div class="clearboth"></div>
-		<div class='formSepUpp'>
-			<div class='btn-group pull-right'>
-				<a class='btn btn-mini submitForm'><i class='icon-refresh'></i></a>
-				<a class='btn btn-danger btn-mini deleteOption'><i class='icon-trash'></i></a>
+			</div>
+
+
+			<div class='col-md-6'>
+				<label>Target</label><br />
+				<div class="form-group">
+					<div class="radio-inline">
+						<input name='target' type='radio' value='sw' <%= check_for_checked("sw", params['target'].to_s) %>>Same Window
+					</div>
+					<div class="radio-inline">
+						<input name='target' type='radio' value='nt' <%=  check_for_checked("nt", params['target'].to_s) %>>New Tab
+					</div>
+				</div>
 			</div>
 		</div>
-	</form>
+		<div class='clearfix'></div>
+		<hr>
+		<div class='btn-group pull-right'>
+			<a class='btn btn-sm btn-default submitForm'><i class='fa fa-refresh'></i>&nbsp;Update</a>
+			<a class='btn btn-danger btn-sm deleteOption'><i class='fa fa-trash-o'></i>&nbsp;Remove</a>
+		</div>
+		<div class="clearfix"></div>
+   	</form>
+
 </div>

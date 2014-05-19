@@ -1,28 +1,19 @@
-<h2 class="title">Edit Comment
-
-<div class="btn-group pull-right">
-  <%= link_to admin_comments_path, :class => 'btn btn-mini pull-left' do %>
-    <i class="icon-arrow-left"></i>
-  <% end %>   
-  <%= link_to admin_comment_path(@comment), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-mini btn-danger pull-left' do %>
-    <i class="icon-trash"></i>
-  <% end %>  
-  <%= link_to admin_comments_path, :class => 'btn btn-mini pull-right updatepost' do %>
-    <i class="icon-refresh"></i>
-  <% end %> 
+<div class="row">
+    <div class="col-md-12">
+        <ul class="breadcrumb">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Comments</a></li>
+            <li class="active">Edit Comment</li>
+        </ul>
+       <h1 class="h1">Edit Comment</h1>
+    </div>
 </div>
-</h2>
 
-<script type="text/javascript">
-	
-	$(document).ready(function(){
-		$('.updatepost').bind('click', function(e){
-			$('body').find('form').submit();
-			e.preventDefault();
-		})
-	});
-	
-</script>
+<div class="row settingsArea">
 
+  <div class="col-md-12">
 
-<%= render 'form' %>
+      <%= render 'form' %>
+      
+  </div>
+</div>

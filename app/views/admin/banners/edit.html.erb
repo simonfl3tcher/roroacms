@@ -1,16 +1,15 @@
-<h2 class="title">Edit Banner
-
-	<div class="btn-group pull-right">
-  <%= link_to admin_banners_path, :class => 'btn btn-mini pull-left' do %>
-    <i class="icon-arrow-left"></i>
-  <% end %>  
-  <%= link_to admin_banner_path(@banner), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-mini btn-danger pull-left' do %>
-    <i class="icon-trash"></i>
-  <% end %>  
-  <%= link_to admin_banners_path, :class => 'btn btn-mini pull-right updatepost' do %>
-    <i class="icon-refresh"></i>
-  <% end %> 
+<div class="row">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="#">Dashboard</a>
+            </li>
+            <li><a href="">Banners</a></li>
+            <li class="active">Edit "<%= @banner.name %>" Banner</li>
+        </ul>
+        <!--breadcrumbs end -->
+       <h1 class="h1">Edit "<%= @banner.name %>" Banner</h1>
+    </div>
 </div>
-</h2>
 
 <%= render 'form' %>

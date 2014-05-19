@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
+    <%= favicon_link_tag 'admin/favicon.ico' %>
     <title>Dashboard | Roroa CMS</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -25,7 +25,7 @@
         <header id="header">
             <!--logo start-->
             <div class="brand">
-                <a href="index.html" class="logo"><span>Roroa</span>cms</a>
+                <a href="<%= site_url('admin') %>" class="logo"><span>Roroa</span>cms</a>
             </div>
             <!--logo end-->
             <div class="toggle-navigation toggle-left">
@@ -36,44 +36,19 @@
 
             <div class="user-nav">
                 <ul>
-                    <% if Setting.get('article_comment_type') == 'R' && Setting.get('article_comments') == 'Y' && latest_comments(nil).count > 0 %>
-                      <li class="dropdown messages">
-                          <span class="badge badge-danager animated bounceIn" id="new-messages"><%= latest_comments(nil).count %></span>
-                          <button type="button" class="btn btn-default dropdown-toggle options" id="toggle-mail" data-toggle="dropdown">
-                              <i class="fa fa-comment"></i>
-                              
-                          </button>
-                          <ul class="dropdown-menu alert animated fadeInDown">
-                              <li>
-                                  <h1>The <strong><%= latest_comments.count %></strong> latest new comments to be reviewed</h1>
-                              </li>
-                              <% latest_comments.each do |comment| %>
-                                <li>
-                                    <%= link_to edit_admin_comment_path(comment) do %>
-                                        <div class="message-info">
-                                            <span class="sender"><%= comment.author %></span>
-                                            <span class="time"><%= time_ago_in_words(comment.submitted_on) %></span>
-                                            <div class="message-content"><%= excerpt(comment.comment, 50) %></div>
-                                        </div>
-                                    <% end %>
-                                </li>
-                              <% end %>
-                              <li>
-                                <%= link_to admin_comments_path do %>
-                                  View all comments <i class="fa fa-angle-right"></i>
-                                <% end %>
-                              </li>
-                          </ul>
-                      </li>
-                    <% end %>
                     <li class="profile-photo">
-                        <%= image_tag("admin/avatar.png", :class => 'img-circle') %>
+                        <img src="<%= current_user.avatar %>" class="img-circle" width="35">
                     </li>
                     <li class="dropdown settings">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                      <%= current_user.first_name + ' ' + current_user.last_name %> <i class="fa fa-angle-down"></i>
+                        <i class="fa fa-angle-down"></i>
                     </a>
                         <ul class="dropdown-menu animated fadeInDown">
+                            <li class="userDetails">
+                                <img src="<%= current_user.avatar %>" class="img-circle" width="50">
+                                <span><%= current_user.first_name + ' ' + current_user.last_name %><small><%= current_user.username %> - admin</small></span>
+                            </li>
+                            <li class="divide"></li>
                             <li>
                               <%= link_to edit_admin_administrator_path(session[:admin_id]) do %>
                                 <i class="fa fa-user"></i> Profile
@@ -108,10 +83,12 @@
                           <li><%= link_to 'Add New Article', new_admin_post_path %></li>
                           <li><%= link_to 'Categories', admin_post_categories_path %></li>
                           <li><%= link_to 'Tags', admin_post_tags_path %></li>
+<!-- 
                           <li class="divider"></li>
                           <li><%= link_to 'Banners', admin_banners_path %></li>
                           <li><%= link_to 'Add New Banner', new_admin_banner_path %></li>
                           <li><%= link_to 'Banner Categories', categories_admin_banners_path %></li>
+                           -->
                         </ul>
                     </li>
                     <li class="sub-menu">
@@ -119,7 +96,6 @@
                         <ul>
                           <li><%= link_to 'Profile', edit_admin_administrator_path(session[:admin_id]) %></li>
                           <% if current_user.access_level == 'admin' %>
-                              <li class="divider"></li>
                               <li><%= link_to 'Users', admin_administrators_path %></li>
                               <li><%= link_to 'Add New User', new_admin_administrator_path %></li>
                           <% end %>
@@ -128,11 +104,6 @@
                     <li>
                       <%= link_to admin_menus_path do %>
                         <i class="fa fa-list"></i><span>Menus</span>
-                      <% end %>
-                    </li>
-                    <li>
-                      <%= link_to admin_media_path do %>
-                        <i class="fa fa-cloud"></i><span>Media</span>
                       <% end %>
                     </li>
                     <% if Setting.find_by_setting_name('article_comment_type')[:setting] == 'R' && Setting.find_by_setting_name('article_comments')[:setting] == 'Y' %>
