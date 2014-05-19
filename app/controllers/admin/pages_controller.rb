@@ -11,6 +11,9 @@ class Admin::PagesController < AdminController
 	# creates a new post object
 
 	def new
+				@categories = Post.get_cats
+		# get the systems tags
+		@tags = Post.get_tags
 	    @page = Post.new
 	end
 
@@ -110,7 +113,7 @@ class Admin::PagesController < AdminController
 
 	def page_params
 		if !session[:admin_id].blank?	
-			params.require(:post).permit(:admin_id, :post_content, :post_date, :post_name, :parent_id, :post_slug, :post_status, :post_title, :post_image, :post_template, :post_type, :disabled, :post_seo_title, :post_seo_description, :post_seo_keywords, :post_seo_is_disabled, :post_seo_no_follow, :post_seo_no_index)
+			params.require(:post).permit(:admin_id, :post_content, :post_date, :post_name, :parent_id, :post_slug, :post_visible, :post_status, :post_title, :post_image, :post_template, :post_type, :disabled, :post_seo_title, :post_seo_description, :post_seo_keywords, :post_seo_is_disabled, :post_seo_no_follow, :post_seo_no_index)
 		end
 	end
 end

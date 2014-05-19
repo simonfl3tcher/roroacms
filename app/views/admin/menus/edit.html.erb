@@ -1,27 +1,35 @@
-	<h2 class="title">
-	Edit "<%= @menu.name %>" menu
-
-	<div class="btn-group pull-right">
-		<%= link_to admin_menus_path, :class => 'btn btn-mini pull-left' do %>
-		    <i class="icon-arrow-left"></i>
-		  <% end %>   
-	  <%= link_to admin_menu_path(@menu), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-mini btn-danger pull-left' do %>
-	    <i class="icon-trash"></i>
-	  <% end %> 
-	  <a class='btn btn-mini pull-right updateMenu'> 
-	    <i class="icon-refresh"></i>
-	  </a>
-	</div>
-
-</h2>
 <div class="row">
-	<div class="span9">
+	<div class="col-md-12">
+		<!--breadcrumbs start -->
+		<div class="alertWarpper"></div>
+		<ul class="breadcrumb">
+			<li><a href="#">Dashboard</a></li>
+			<li><a href="#">Menus</a></li>
+			<li class="active">Edit "<%= @menu.name %>" menu</li>
+		</ul>
+		<!--breadcrumbs end -->
+		<h1 class="h1">Edit "<%= @menu.name %>" menu</h1>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-7" id="menuSortableFields">
+
+		<div class="panel panel-default">
+			<div class="panel-body">
 		
-		<%= render 'menu_list' %>
+				<%= render 'menu_list' %>
+
+				<hr>
+
+				<button class="btn btn-primary updateMenu">Save</button>
+
+			</div>
+		</div>
 
 	</div>
 
-	<div class="span3">
+	<div class="col-md-5" id="menuForms">
 
 		<%= render 'admin/helper_partials/menu_content_accordion' %>
 

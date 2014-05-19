@@ -1,4 +1,118 @@
 <div class="row">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="#">Dashboard</a>
+            </li>
+            <li class="active">Trash</li>
+        </ul>
+        <!--breadcrumbs end -->
+       <h1 class="h1">Trash</h1>
+    </div>
+</div>
+
+<div class="row trashArea">
+
+	<% if @posts.blank? && @pages.blank? %>
+		<div class="col-md-12" style="text-align:center;">
+			<span style="margin-top:100px; font-size:25px; display:block; ">The trash can is currently empty</span>
+		</div>
+
+	<% end %>
+
+	<% if !@posts.blank? %>
+
+		<div class="col-md-6">
+
+			<%= form_tag site_url("admin/trash/deal_with_form") do %>
+
+				<div class="panel panel-default">
+		            <div class="panel-heading">Articles
+		                <div class="pull-right action-buttons">
+		                    <div class="btn-group pull-right">
+		                    	<%= link_to empty_posts_admin_trash_index_path('post'), :class => 'btn btn-danger btn-xs', data: { confirm: 'Are you sure?' } do %>
+						            <i class="fa fa-trash-o"></i>&nbsp;Delete all
+						        <% end %> 
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="panel-body">
+		                <ul class="list-group">
+		                	<% @posts.each do |post| %>
+
+		                		<li class="list-group-item">
+			                        <%= check_box_tag 'posts[]', post.id %>&nbsp;<span for="checkbox"><%= post.post_title %><%= post.post_status == "Draft" ? ' - draft' : '' %> <small>(Published Date:- <%= post.post_date.strftime "%d-%m-%Y" %>)</small></span>
+			                    </li>
+
+		                	<% end %>
+		                </ul>
+		            </div>
+		            <div class="panel-footer">
+		                <div class="row">
+		                	<div class="col-md-6">
+		                		<%= bulk_update_dropdown Hash['reinstate' => 'Reinstate', 'destroy' => 'Destroy'] %>
+		                	</div>
+		                    <div class="col-md-6">
+		                        <h6 class="pull-right">Total Count <span class="label label-primary"><%= @posts.count %></span></h6>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+
+	        <% end %>
+
+		</div>
+
+	<% end %>
+
+	<% if !@pages.blank? %>
+
+		<div class="col-md-6">
+
+			<%= form_tag site_url("admin/trash/deal_with_form") do %>
+
+				<div class="panel panel-default">
+		            <div class="panel-heading">Pages
+		                <div class="pull-right action-buttons">
+		                    <div class="btn-group pull-right">
+		                    	<%= link_to empty_posts_admin_trash_index_path('page'), :class => 'btn btn-danger btn-xs', data: { confirm: 'Are you sure?' } do %>
+						            <i class="fa fa-trash-o"></i>&nbsp;Delete all
+						        <% end %> 
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="panel-body">
+		                <ul class="list-group">
+		                	<% @pages.each do |page| %>
+
+		                		<li class="list-group-item">
+			                        <%= check_box_tag 'pages[]', page.id %>&nbsp;<span for="checkbox"><%= page.post_title %><%= page.post_status == "Draft" ? ' - draft' : '' %> <small>(Published Date:- <%= page.post_date.strftime "%d-%m-%Y" %>)</small></span>
+			                    </li>
+
+		                	<% end %>
+		                </ul>
+		            </div>
+		            <div class="panel-footer">
+		                <div class="row">
+		                	<div class="col-md-6">
+		                		<%= bulk_update_dropdown Hash['reinstate' => 'Reinstate', 'destroy' => 'Destroy'] %>
+		                	</div>
+		                    <div class="col-md-6">
+		                        <h6 class="pull-right">Total Count <span class="label label-primary"><%= @pages.count %></span></h6>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+
+	        <% end %>
+
+		</div>
+
+	<% end %>
+
+</div>
+
+<!-- <div class="row">
 	<div class="span12">
 		<h2 class="title">Trash Can</h2>
 	</div>
@@ -99,10 +213,4 @@
 	</div>
 
 </div>
-
-<script type="text/javascript">
-	$('.check_all').on("click", function(){
-		var form = $(this).closest('form');
-		$('td input[type="checkbox"]', form).click(); 
-	});
-</script>
+ -->

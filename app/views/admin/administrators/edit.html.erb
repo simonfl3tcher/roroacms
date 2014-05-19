@@ -1,23 +1,22 @@
-<h2 class="title">
 
-	<% if @admin.id == session[:admin_id] %>
-		Edit Profile
-	<% else %>
-		Edit Administrator
-	<% end %>
+<div class="row">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Users</a></li>
+            <li class="active">Edit User</li>
+        </ul>
+        <!--breadcrumbs end -->
+       <h1 class="h1">Edit User</h1>
+    </div>
+</div>
 
-  	<div class="btn-group pull-right">
-	    <%= link_to :back, :class => 'btn btn-mini' do %>
-	      <i class="icon-arrow-left"></i>
-	    <% end %>
-	    
-	    <% if @admin.overlord != 'Y' %>  
-		    <%= link_to admin_administrator_path(@admin), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-mini btn-danger' do %>
-			  <i class="icon-trash"></i>
-			<% end %>
-		<% end %>
+<div class="row settingsArea">
 
+  <div class="col-md-12">
+
+  		<%= render 'form' %>
+  		
 	</div>
-</h2>
-
-<%= render 'form' %>
+</div>
