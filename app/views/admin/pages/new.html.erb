@@ -33,6 +33,19 @@
 						<div class="tab-content">
 							<div class="tab-pane active" id="general">
 
+								<div class="formToolbar"> 
+									<div class="btn-group pull-right">
+										<%= link_to admin_post_path(1), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-sm btn-danger pull-left' do %>
+											<i class="fa fa-trash-o"></i>Delete
+										<% end %> 
+										<%= link_to page_path(1), :class => 'btn btn-default btn-sm pull-left', :target => '_blank' do %>
+											<i class="fa fa-search"></i>View
+										<% end %>  
+										<button type="submit" class="btn btn-small btn-primary btn-sm pull-right"><i class="fa fa-check"></i>Save</button>
+									</div>
+									<div class="clearfix"></div>
+								</div>
+
 								<% if !@page.post_image.blank? %>
 
 									<div class="well" style="background-image: url('<%= @admin.cover_picture %>');background-position: center center;">
@@ -139,12 +152,6 @@
 									<div class="clearfix"></div>
 								</div>
 
-								<div class="form-group">
-									<label class="col-sm-3 control-label">&nbsp;</label>
-									<div class="col-sm-6">
-										<%= submit_tag "Save", :class => 'btn btn-small btn-primary' %>
-									</div>
-								</div>
 
 							</div>
 							<div class="tab-pane" id="content">
@@ -234,28 +241,37 @@
 							</div>
 							<div class="tab-pane" id="categories">
 
-								<div class="col-sm-6">
-									<h3 class="underline">Categories</h3>
-									<% if !@categories.blank? %>
-				                        <%= select_tag 'category_ids[]', options_for_select(@categories.map {|c| [c.name, c.id]}, @page.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
-					              	<% else %>
-						                <div style="text-align:center;">
-						                  <strong>No categories!</strong>
-						                </div>
-					              	<% end %>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Categories</label>
+									<div class="col-sm-6">
+										
+										<% if !@categories.blank? %>
+					                        <%= select_tag 'category_ids[]', options_for_select(@categories.map {|c| [c.name, c.id]}, @page.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
+						              	<% else %>
+							                <div style="text-align:center;">
+							                  <strong>No categories!</strong>
+							                </div>
+						              	<% end %>
+
+									</div>
+									<div class="clearfix"></div>
 								</div>
 
-								<div class="col-sm-6">
-									<h3 class="underline">Tags</h3>
-									<% if !@tags.blank? %>
-				                        <%= select_tag 'tag_ids[]', options_for_select(@tags.map {|c| [c.name, c.id]}, @page.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
-					              	<% else %>
-						                <div style="text-align:center;">
-						                  <strong>No tags!</strong>
-						                </div>
-					              	<% end %>
-								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">Tags</label>
+									<div class="col-sm-6">
+										
+										<% if !@tags.blank? %>
+					                        <%= select_tag 'tag_ids[]', options_for_select(@tags.map {|c| [c.name, c.id]}, @page.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
+						              	<% else %>
+							                <div style="text-align:center;">
+							                  <strong>No tags!</strong>
+							                </div>
+						              	<% end %>
 
+									</div>
+									<div class="clearfix"></div>
+								</div>
 
 							</div>
 						</div>
