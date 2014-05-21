@@ -42,9 +42,18 @@ class Admin::AdministratorsController < AdminController
 
 	    @admin = Admin.find(params[:id])
 
+	    @admin.deal_with_cover params
+
+
 	    respond_to do |format|
 
-	      if @admin.update_attributes(administrator_params)
+	    	if params[:admin][:password].blank?
+	    		admin_passed = @admin.update_without_password(administrator_params)
+	    	else
+	    		admin_passed = @admin.update_attributes(administrator_params)
+	    	end
+
+	      if admin_passed
 
 	      	profile_images(params, @admin)
 	        

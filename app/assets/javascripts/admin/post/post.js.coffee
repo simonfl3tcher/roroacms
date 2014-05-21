@@ -9,6 +9,7 @@ readURL = (input) ->
         'background-size': 'cover',
         'overflow': 'hidden'
       })
+      $(".well input[name=has_cover_image]").val("Y")
       return
 
     reader.readAsDataURL input.files[0]
@@ -22,6 +23,30 @@ $(document).ready ->
 
   $("#post_post_image").change ->
     readURL this
+    return
+
+
+  $("body").on "click", ".addProfileImage", (e) ->
+    e.preventDefault()
+    $('#admin_cover_picture').trigger('click');
+    return
+
+  $("#admin_cover_picture").change ->
+    readURL this
+    $('.addProfileImage').addClass('hidden')
+    $('.removeProfileImage').removeClass('hidden')
+    return
+
+  $("body").on "click", ".removeProfileImage", (e) ->
+    
+    input = $("#admin_cover_picture")
+
+    $(".well").attr("style", "")
+    $(this).addClass('hidden')
+    $('.addProfileImage').removeClass('hidden')
+    $(".well input[name=has_cover_image]").val('')
+
+    input.replaceWith(input.val('').clone(true))
     return
 
   return
