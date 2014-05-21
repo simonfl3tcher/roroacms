@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+
+  before_filter :configure_permitted_parameters, if: :devise_controller?
+
   
   require 'ext/string'
 
@@ -103,6 +106,17 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource_or_scope)
     Admin.destroy_session session
     admin_login_index_path
+  end
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) do |u|
+      u.permit(:email, :password, :first_name, :last_name, :username, :access_level, :password_confirmation, :inline_editing, :description)
+    end
+    devise_parameter_sanitizer.for(:account_update) do |u|
+      u.permit(:email, :password, :first_name, :last_name, :username, :access_level, :password_confirmation, :inline_editing, :description)
+    end
   end
 
 end

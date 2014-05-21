@@ -26,7 +26,7 @@
 						<ul class="nav nav-tabs">
 							<li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-cog"></i> General</a></li>
 							<li><a href="#content" data-toggle="tab"><i class="fa fa-desktop"></i> Content</a></li>
-							<li><a href="#revisions" data-toggle="tab"><i class="fa fa-save"></i> Revisions</a></li>
+							<li><a href="#revisions" data-toggle="tab"><i class="fa fa-history"></i> History</a></li>
 							<li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> Search Engine Optimisation</a></li>
 							<li><a href="#categories" data-toggle="tab"><i class="fa fa-sitemap"></i> Tags &amp; Categories</a></li>
 						</ul>
@@ -48,7 +48,7 @@
 
 								<% if !@page.post_image.blank? %>
 
-									<div class="well" style="background-image: url('<%= @admin.cover_picture %>');background-position: center center;">
+									<div class="well wellBackground" style="background-image: url('<%= @admin.cover_picture %>');">
 										<center>
 											<a style="margin:10px;" class="btn btn-xs btn-primary pull-right addArticleImage" href="javascript:;"><span class="fa fa-picture-o"></span> Change cover</a>
 											<h3><%= @page.post_title %></h3>
@@ -58,7 +58,7 @@
 
 									<% else %>
 
-									<div class="well">
+									<div class="well wellBackground">
 										<a style="margin:10px;" class="btn btn-xs btn-primary pull-right addArticleImage" href="javascript:;"><span class="fa fa-picture-o"></span> Change cover</a>
 										<%= f.file_field :post_image %>
 									</div>
@@ -283,27 +283,4 @@
 </div>
 
 <%= render 'admin/partials/markdown_modal' %>
-
-<script type="text/javascript">
-	$(document).ready(function(){
-
-		function readURL(input) {
-	        if (input.files && input.files[0]) {
-	            var reader = new FileReader();
-	            
-	            reader.onload = function (e) {
-	                $('#blah').attr('src', e.target.result);
-	            }
-	            
-	            reader.readAsDataURL(input.files[0]);
-	        }
-	    }
-	    
-	    $("#imgInp").change(function(){
-	        readURL(this);
-	    });
-
-	});
-	
-</script>
 
