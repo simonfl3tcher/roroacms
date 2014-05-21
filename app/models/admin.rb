@@ -8,6 +8,9 @@ class Admin < ActiveRecord::Base
 	validates :username, presence: true, uniqueness: true
 	validates :access_level, presence: true
 
+	validates :password, length: { in: 6..128 }, on: :create
+	validates :password, length: { in: 6..128 }, on: :update, allow_blank: true
+
 	# general data that doesn't change very often
 
 	ACCESS_LEVELS = ["admin", "editor"]
@@ -61,10 +64,21 @@ class Admin < ActiveRecord::Base
 		p.save
 	end
 
-	def deal_with_abnormalaties 
+	# set the defaults for the admin
+
+	def deal_with_abnormalaties
 
 		self.overlord = 'N'
 		self.avatar = 'https://s3.amazonaws.com/roroa/default-user-icon-profile.png'
+
+	end
+
+	# If the has cover image has been removed this will be set to nothing and will update the cover image option agasint the admin
+
+	def deal_with_cover params
+		if params[:has_cover_image].blank?
+			self.cover_picture = ''
+		end
 
 	end
 

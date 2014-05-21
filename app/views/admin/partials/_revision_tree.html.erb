@@ -1,92 +1,53 @@
-<ul class="timeline">
+<ul class="timelineSingle">
     <li>
-      <div class="timeline-badge"><i class="fa fa-circle-o"></i></div>
-      <div class="timeline-panel">
-        <div class="timeline-heading">
-          <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-          <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
+      <div class="timelineSingle-badge"><i class="fa fa-user"></i></div>
+      <div class="timelineSingle-panel">
+        <div class="timelineSingle-heading">
+          <h4 class="timelineSingle-title"><%= Diffy::Diff.new("Post Title One", "Post Title Two", :include_plus_and_minus_in_html => true, :context => 1).to_s(:html).html_safe %></h4>
+          <p><small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago by simon-fletcher</small></p>
         </div>
-        <div class="timeline-body">
-          <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-        </div>
-      </div>
-    </li>
-    <li class="timeline-inverted">
-      <div class="timeline-badge warning"><i class="fa fa-circle-o"></i></div>
-      <div class="timeline-panel">
-        <div class="timeline-heading">
-          <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-        </div>
-        <div class="timeline-body">
-          <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-          <p>Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Interagi no mé, cursus quis, vehicula ac nisi. Aenean vel dui dui. Nullam leo erat, aliquet quis tempus a, posuere ut mi. Ut scelerisque neque et turpis posuere pulvinar pellentesque nibh ullamcorper. Pharetra in mattis molestie, volutpat elementum justo. Aenean ut ante turpis. Pellentesque laoreet mé vel lectus scelerisque interdum cursus velit auctor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac mauris lectus, non scelerisque augue. Aenean justo massa.</p>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="timeline-badge danger"><i class="fa fa-circle-o"></i></div>
-      <div class="timeline-panel">
-        <div class="timeline-heading">
-          <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-        </div>
-        <div class="timeline-body">
-          <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-        </div>
-      </div>
-    </li>
-    <li class="timeline-inverted">
-      <div class="timeline-panel">
-        <div class="timeline-heading">
-          <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-        </div>
-        <div class="timeline-body">
-          <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-        </div>
-      </div>
-    </li>
-    <li>
-      <div class="timeline-badge info"><i class="fa fa-circle-o"></i></div>
-      <div class="timeline-panel">
-        <div class="timeline-heading">
-          <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-        </div>
-        <div class="timeline-body">
+        <div class="timelineSingle-body">
+          <strong>Post Title One</strong>
           <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
           <hr>
           <div class="btn-group">
             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-              <i class="glyphicon glyphicon-cog"></i> <span class="caret"></span>
+              <i class="fa fa-cog"></i> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Separated link</a></li>
+              <li><a href="#">Resotre</a></li>
+              <li><a href="#">View</a></li>
             </ul>
           </div>
         </div>
       </div>
     </li>
     <li>
-      <div class="timeline-panel">
-        <div class="timeline-heading">
-          <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+      <div class="timelineSingle-badge danger"><i class="fa fa-save"></i></div>
+      <div class="timelineSingle-panel">
+        <div class="timelineSingle-heading">
+          <h4 class="timelineSingle-title">
+            Mussum ipsum cacilds
+          </h4>
+          <p><small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago by simon-fletcher</small></p>
         </div>
-        <div class="timeline-body">
-          <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-        </div>
-      </div>
-    </li>
-    <li class="timeline-inverted">
-      <div class="timeline-badge success"><i class="fa fa-circle-o"></i></div>
-      <div class="timeline-panel">
-        <div class="timeline-heading">
-          <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-        </div>
-        <div class="timeline-body">
-          <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+        <div class="timelineSingle-body">
+          <%= Diffy::Diff.new("foo\nfoo\nBAR\nbang\nbaz", "foo\nfoo\nbar\nbang\nbaz", :include_plus_and_minus_in_html => true, :context => 1).to_s(:html).html_safe %>
+          <hr>
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-cog"></i> <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Resotre</a></li>
+              <li><a href="#">View</a></li>
+            </ul>
+          </div>
         </div>
       </div>
     </li>
 </ul>
+<!--
+<%= Diffy::Diff.new("foo\nfoo\nBAR\nbang\nbaz", "foo\nfoo\nbar\nbang\nbaz", :include_plus_and_minus_in_html => true, :context => 1).to_s(:html).html_safe %>
+<%= Diffy::Diff.new("foo\nfoo\nBAR\nbang\nbaz", "foo\nfoo\nBAR\nbang\nbaz").to_s.blank? %>
+ -->

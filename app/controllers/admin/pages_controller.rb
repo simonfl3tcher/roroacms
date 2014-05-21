@@ -11,7 +11,7 @@ class Admin::PagesController < AdminController
 	# creates a new post object
 
 	def new
-				@categories = Post.get_cats
+		@categories = Post.get_cats
 		# get the systems tags
 		@tags = Post.get_tags
 	    @page = Post.new
