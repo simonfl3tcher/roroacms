@@ -2,9 +2,11 @@ class AdminController < ApplicationController
 
 	# AdminController extends the ApplicationController 
 	# but also includes any admin specific helpers and changes the general layout
+	require 'differ'
 
 	helper AdminRoroaHelper
 	helper AdminUiHelper
+
 
 	before_filter :authorize_admin
   	layout "admin" 

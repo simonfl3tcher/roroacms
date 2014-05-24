@@ -14,6 +14,7 @@ class Post < ActiveRecord::Base
     validates :post_title, :presence => true
     validates_uniqueness_of :post_slug, :scope => [:post_type]
     validates_format_of :post_slug, :with => /^[A-Za-z0-9-]*$/
+    validates :sort_order, :numericality => true
 
     scope :from_this_year, where("post_date > ? AND < ?", Time.now.beginning_of_year, Time.now.end_of_year)
 
@@ -28,7 +29,7 @@ class Post < ActiveRecord::Base
 
     def self.setup_and_search_posts(params, type)
         if params.has_key?(:search) && !params[:search].blank?
-            posts = Post.where("(id LIKE ? or post_title LIKE ? or post_slug LIKE ?) and disabled = 'N' and post_type = ? and post_status != 'Autosave'", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", type)
+            posts = Post.where("(id LIKE ? or post_title LIKE ? or post_slug LIKE ?) and disabled = 'N' and post_type = ? and post_type != 'autosave'", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", type)
         else
             posts = Post.select('*').where("disabled ='N' and post_type = '#{type}'").order("COALESCE(ancestry, id), ancestry IS NOT NULL, id")
 
@@ -151,54 +152,116 @@ class Post < ActiveRecord::Base
 
     def self.do_autosave(params, post)
 
-        parent = params[:post][:id]
-        @autosave_records = Post.where("ancestry = ? and post_type = 'autosave'", parent).order("created_at DESC")
 
-        # if the amount of records is equal to 10 remove the last one
-        if @autosave_records.length > 9
-            Post.destroy(@autosave_records.last[:id])
+        parent = Post.find(params[:post][:id])
+        @autosave_records = Post.where("ancestry = ? and post_type = 'autosave' and post_status = 'Autosave'", parent.id).order("created_at DESC")
+        post.post_content = params[:ck_content]
+
+        if (remove_uncessary(post) != remove_uncessary(parent)) && (remove_uncessary(post) != remove_uncessary(@autosave_records.first))
+
+            # if the amount of records is equal to 10 remove the last one
+            if @autosave_records.length > 9
+                Post.destroy(@autosave_records.last[:id])
+            end
+
+            # Do the autosave
+            @cats = params[:category_ids]
+
+            # create the settings for the revision record
+
+            post.id = nil
+            post.parent_id = parent.id
+
+            if post.post_slug.empty?
+                post.post_slug = post.post_title.gsub(' ', '-')
+            end
+
+            post.post_status = 'Autosave'
+            post.post_type = 'autosave'
+
+
+            # save the post and its categories/tags
+            if post.save(:validate => false)
+                
+                @delcats = TermRelationship.where(:post_id => post.id)
+
+                if !@delcats.blank?
+                    @delcats.each do |f|
+                        @cat = TermRelationship.find(f.id)
+                        @cat.destroy
+                    end
+                end
+
+                if !@cats.blank?
+                    @cats.each do |val|
+                        TermRelationship.create(:term_id => val, :post_id => post.id)
+                    end
+                end
+
+                return "passed"
+
+            else
+                return "failed" 
+            end
+
+        else 
+            return "nothing changed"
         end
 
-        # Do the autosave
-        @cats = params[:category_ids]
+    end
 
-        # create the settings for the revision record
+    def self.create_user_backup_record(post)
 
+        
+
+        post.parent_id = post.id
+        post.structured_url = nil
+        post.updated_at = nil
+        post.created_at = nil
         post.id = nil
-        post.parent_id = params[:post][:id]
 
         if post.post_slug.empty?
             post.post_slug = post.post_title.gsub(' ', '-')
         end
 
-        post.post_status = 'Autosave'
+        post.post_status = 'User-Autosave'
         post.post_type = 'autosave'
 
-        post.post_content = params[:ck_content]
+        Post.new(post.attributes).save({validate: false}) and return true
 
-        # save the post and its categories/tags
-        if post.save(:validate => false)
-            
-            @delcats = TermRelationship.where(:post_id => post.id)
+    end
 
-            if !@delcats.blank?
-                @delcats.each do |f|
-                    @cat = TermRelationship.find(f.id)
-                    @cat.destroy
-                end
-            end
+    def self.do_update_check(post, params)
 
-            if !@cats.blank?
-                @cats.each do |val|
-                    TermRelationship.create(:term_id => val, :post_id => post.id)
-                end
-            end
+        str1 = params[:post_content] + '//' + params[:post_title] + '//' + params[:post_slug] + '//'
+        str2 = post[:post_content] + '//' + post[:post_title] + '//' + post[:post_slug] + '//'
 
-            return "passed"
-
-        else
-            return "failed" 
+        if str1 != str2
+            post
+        else 
+            nil
         end
+
+    end
+
+    # remove the unwanted keys from the hash to be able to successfully compare the hashes
+
+
+    def self.remove_uncessary(obj)
+
+        obj.post_content = obj.post_content.gsub("\n", ' ').gsub("\r", ' ').squeeze(' ')
+        obj = obj.attributes
+        obj.delete('id')
+        obj.delete('created_at')
+        obj.delete('updated_at')
+        obj.delete('ancestry')
+        obj.delete('structured_url')
+        obj.delete('post_visible')
+        obj.delete('post_status')
+        obj.delete('post_type')
+        obj.delete('parent_id')
+
+        obj
 
     end
 

@@ -3247,10 +3247,74 @@ ol.sortable .itemInformation {
 .diff ins strong{font-weight:normal;background:#9f9;}
 .diff li.diff-comment { display: none; }
 .diff li.diff-block-info { background: none repeat scroll 0 0 gray; }
+del.differ {
+  background:#fee; 
+  color:#b00;
+  text-decoration: none;
+}
 
+ins.differ {
+  background:#dfd; color:#080;
+  text-decoration: none;
+}
 h4.timelineSingle-title * {
   font-size: 18px !important;
 }
+
+.timelineSingle {
+  label {
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 15px;
+    display:block;
+  }
+}
+
+.table > thead > tr > td.success, .table > tbody > tr > td.success, .table > tfoot > tr > td.success, .table > thead > tr > th.success, .table > tbody > tr > th.success, .table > tfoot > tr > th.success, .table > thead > tr.success > td, .table > tbody > tr.success > td, .table > tfoot > tr.success > td, .table > thead > tr.success > th, .table > tbody > tr.success > th, .table > tfoot > tr.success > th {
+  background-color: #5CE0AA;
+  color: #ffffff;
+}
+
+.keycode {
+  display: inline-block;
+  height: 30px;
+  width:30px;
+  margin-right:10px;
+  vertical-align: middle;
+  margin-bottom:10px;
+  &.green {
+    background:#dfd;
+  }
+  &.red {
+    background:#fee;
+  }
+}
+
+.sort-input {
+  width:50px;
+  text-align: center;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 999px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */

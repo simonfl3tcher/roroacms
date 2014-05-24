@@ -115,6 +115,7 @@ class Admin::PostsController < AdminController
 		else
 			return render :text => "failed" 
 		end
+
 	end
 
 
