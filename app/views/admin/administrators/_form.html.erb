@@ -82,7 +82,9 @@
           <div class="form-group">
             <%= f.label 'Profile Picture', :class => "col-sm-3 control-label"  %>
             <div class="col-sm-6">
-              <%= f.file_field :avatar, :class => "" %>
+              <span class="file-input btn btn-primary btn-file btn-sm">
+                Browse… <%= f.file_field :avatar, :class => "" %>
+              </span>
             </div>
             <div class="clearfix"></div>
           </div>

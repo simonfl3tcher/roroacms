@@ -49,4 +49,14 @@ module GeneralHelper
 		end
 	end
 
+	# list controllers in given directory
+
+	def list_controllers dir = ""
+		dir = dir + "/**/" if !dir.blank?
+		controller_list = Array.new
+		Dir["app/controllers**/#{dir}*.rb"].each do |file|
+		    controller_list.push(file.split('/').last.sub!("_controller.rb",""))
+		end
+	end
+
 end
