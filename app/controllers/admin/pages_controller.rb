@@ -66,13 +66,19 @@ class Admin::PagesController < AdminController
 	    # again deals with any bnormalaties
 	    @page.deal_with_abnormalaties
 
+	    update_check = Post.do_update_check(Post.find(params[:id]), params[:post])
+
+
 	    respond_to do |format|
 
 	      if @page.update_attributes(page_params)
 
 	      	# updates the old url and replaces it with the new URL if the name has changed.
 	      	Post.deal_with_slug_update params, cur_url
-	        format.html { redirect_to edit_admin_page_path(@page), notice: 'Page was successfully updated.' }
+
+	      	Post.create_user_backup_record(update_check) if !update_check.blank?
+
+	        format.html { redirect_to edit_admin_page_path(@page.id), notice: 'Page was successfully updated.' }
 
 	      else
 	        format.html { render action: "edit" }

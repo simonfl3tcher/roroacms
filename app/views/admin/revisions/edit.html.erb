@@ -1,4 +1,105 @@
-<h4 class="title">Revision for "<%= link_to @revision['parent'].post_title, :controller => "admin/#{@revision['parent'].post_type}s", :action => "edit", :id => @revision['parent'].id %>" created on <%= @revision['revision'].created_at.strftime "%d %B, %Y at %H:%M" %></h4>
+<div class="row">
+    <div class="col-md-12">
+        <!--breadcrumbs start -->
+        <ul class="breadcrumb">
+            <li><a href="#">Dashboard</a>
+            </li>
+            <li class="active">Revisions</li>
+        </ul>
+        <!--breadcrumbs end -->
+       <h2>Revision for "<%= link_to @revision['parent'].post_title, :controller => "admin/#{@revision['parent'].post_type}s", :action => "edit", :id => @revision['parent'].id %>" created on <%= @revision['revision'].created_at.strftime "%d %B, %Y at %H:%M" %></h2>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">&nbsp;</h3>
+        <div class="actions pull-right">
+          <i class="fa fa-chevron-down"></i>
+        </div>
+      </div>
+      <div class="panel-body">
+
+      	<div class="row form-group">
+
+	      	<div class="col-md-3">
+				<strong>Keycode</strong>
+			</div>
+
+			<div class="col-md-9">
+				
+				<span class="keycode green"></span> What will be added<br />
+				<span class="keycode red"></span> What will be removed
+
+			</div>
+
+		</div>
+
+		<hr>
+
+      	<div class="row form-group">
+
+	      	<div class="col-md-3">
+				<strong>Title</strong>
+			</div>
+
+			<div class="col-md-9">
+				<%= Differ.diff_by_word(@revision['revision'].post_title, @revision['parent'].post_title).format_as(:html).html_safe %>
+			</div>
+
+		</div>
+
+		<div class="row form-group">
+
+	      	<div class="col-md-3">
+				<strong>Post Slug</strong>
+			</div>
+
+			<div class="col-md-9">
+				<%= Differ.diff_by_word("/" + @revision['revision'].post_slug, "/" + @revision['parent'].post_slug).format_as(:html).html_safe %>
+			</div>
+			
+		</div>
+
+		<div class="row form-group">
+
+	      	<div class="col-md-3">
+				<strong>Content</strong>
+			</div>
+
+			<div class="col-md-9">
+				<%= Diffy::Diff.new(@revision['parent'].post_content, @revision['revision'].post_content, :include_plus_and_minus_in_html => true).to_s(:html_simple).html_safe %>
+   			</div>
+			
+		</div>
+
+		<div class="row form-group">
+
+	      	<div class="col-md-3">
+				&nbsp;
+			</div>
+
+			<div class="col-md-9">
+				<%= link_to restore_admin_revision_path(@revision['revision'].id), :class => 'btn btn-primary btn-block ' do %>
+					<i class="fa fa-magic"></i> Restore
+				<% end %>
+   			</div>
+			
+		</div>
+
+		<h2>More Revisions</h2>
+
+
+		<%= render :partial => 'autosave_table' %>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 
+
 
 <div class="row">
 
@@ -25,10 +126,11 @@
 </div>
 
 <%= link_to restore_admin_revision_path(@revision['revision'].id), :class => 'btn' do %>
-	<i class="icon-magic">&nbsp;Restore</i>
+	<i class="fa fa-magic">&nbsp;Restore</i>
 <% end %>
 
 <h4 class="title">All Revisions</h4>
 <%= render :partial => 'autosave_table' %>
 
 
+ -->

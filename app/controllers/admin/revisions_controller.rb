@@ -4,15 +4,15 @@ class Admin::RevisionsController < AdminController
 
 	def edit
 		# gets the individual post
-		post = Post.find(params[:id])
+		@post = Post.find(params[:id])
 
 		# the parent is the actual post that it is a revision of
-		parent = Post.find(post.parent_id)
+		parent = Post.find(@post.ancestry)
 
 		# it lists out all of the other revisions associated with the given post id
-		@revisions = Post.where(:ancestry => post.parent_id, :post_type => 'autosave').order('created_at desc')
+		@revisions = Post.where(:ancestry => @post.ancestry, :post_type => 'autosave').order('created_at desc')
 
-		@revision = { 'parent' => parent, 'revision' => post}
+		@revision = { 'parent' => parent, 'revision' => @post}
 	end
 	
 
