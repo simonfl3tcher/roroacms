@@ -3,7 +3,10 @@ class Admin::PagesController < AdminController
 	# displays all the "posts" with the post_type of "page". This is also set up 
 	# to take search parameters so you can search for an individual page itself.
 
+	add_breadcrumb "Pages", :admin_pages_path, :title => "Back to pages"
+
 	def index
+		@title = 'Pages'
 		@pages = Post.setup_and_search_posts params, 'page'
 	end
 
@@ -11,7 +14,12 @@ class Admin::PagesController < AdminController
 	# creates a new post object
 
 	def new
+		# add breadcrumb and set title
+		add_breadcrumb "Create New Page"
+		@title = 'Create New Page'
+
 		@categories = Post.get_cats
+
 		# get the systems tags
 		@tags = Post.get_tags
 	    @page = Post.new
@@ -46,6 +54,10 @@ class Admin::PagesController < AdminController
 	# gets and displays the post object with the necessary dependencies 
 
 	def edit 
+		# add breadcrumb and set title
+		add_breadcrumb "Edit Page" 
+		@title = 'Edit Page'
+
 		@edit = true
 		
 		# the system creates revisions every 2 mins. Gets these revisions and lists them out below the editor

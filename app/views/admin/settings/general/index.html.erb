@@ -1,16 +1,3 @@
-<div class="row">
-    <div class="col-md-12">
-        <!--breadcrumbs start -->
-        <ul class="breadcrumb">
-            <li><a href="#">Dashboard</a>
-            </li>
-            <li class="active">Settings</li>
-        </ul>
-        <!--breadcrumbs end -->
-       <h1 class="h1">Settings</h1>
-    </div>
-</div>
-
 <div class="row settingsArea">
 
   <div class="col-md-12">
@@ -264,10 +251,30 @@
 		                </div>
 		                <div class="tab-pane" id="user-groups">
 		                	<div class="form-group">
-		                		<%= abort list_controllers("admin").inspect %>
-		                    	<%= label_tag(:user_groups, "Admin Group", class: "col-sm-3 control-label") %>
+		                		<%= submit_tag "Save", :class => 'btn btn-small btn-primary pull-right' %>
+		                		<div class="clearfix"></div>
+		                	</div>
+
+		                	<div class="userGroupOptions">
+
+			                	<% @json.decode(Setting.get('user_groups')).each do |key, value| %>
+
+			                		<%= render :partial => 'admin/partials/user_group_view', :locals => {:key => key, :value => value } %>
+
+			                	<% end %>
+
+			                </div>
+
+							<div class="form-group">
+		                    	<label class="col-sm-3 control-label">&nbsp;</label>
 							    <div class="col-sm-6">
-							    	<%= select_tag '@allocation[song_id][]', options_from_collection_for_select(Post.where(:post_type => 'page', :disabled => 'N'), "id", "post_title"), { :multiple => true, :size =>10, :class => 'form-control' } %>
+							    	<div class="input-group">
+								      <input type="text" class="form-control" id="addGroupInput">
+								      <span class="input-group-btn">
+								        <button class="btn btn-primary addGroupInput" type="button"><i class="fa fa-plus" style="margin:0"></i></button>
+								      </span>
+								    </div><!-- /input-group -->
+							    	
 							    </div>
 								<div class="clearfix"></div>
 							</div>
@@ -279,4 +286,35 @@
 	<% end %>
 	</div>
 </div>
+
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+		$('body').on('keypress', "#addGroupInput", function(e){
+			$('#addGroupInput').val($('#addGroupInput').val().toLowerCase().replace(' ', '-'))
+			if (e.which == 13) {
+				e.preventDefault();
+				$('.addGroupInput').trigger('click');
+			}
+		});
+		$('body').on('click', '.addGroupInput', function(){
+			$.ajax({
+			  type: "POST",
+			  url: "/admin/settings/general/create_user_group",
+			  data: 'key=' + $('#addGroupInput').val(),
+			  dataType: "html",
+			  success: function(data) {
+			  	$('.userGroupOptions').append(data);
+			  	$('#addGroupInput').val('')
+			  }
+			});
+		});
+		$('body').on('click', '.removeUserGroup', function(){
+			if(confirm('Are you sure? Make sure update all users with this group')) {
+				$(this).closest('.form-group').remove();
+			}
+		});
+	});
+
+</script>
 		

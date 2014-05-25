@@ -1,17 +1,4 @@
 <div class="row">
-    <div class="col-md-12">
-        <!--breadcrumbs start -->
-        <ul class="breadcrumb">
-            <li><a href="#">Dashboard</a>
-            </li>
-            <li class="active">Revisions</li>
-        </ul>
-        <!--breadcrumbs end -->
-       <h2>Revision for "<%= link_to @revision['parent'].post_title, :controller => "admin/#{@revision['parent'].post_type}s", :action => "edit", :id => @revision['parent'].id %>" created on <%= @revision['revision'].created_at.strftime "%d %B, %Y at %H:%M" %></h2>
-    </div>
-</div>
-
-<div class="row">
   <div class="col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -98,39 +85,3 @@
     </div>
   </div>
 </div>
-<!-- 
-
-
-<div class="row">
-
-	<div class="span3">
-		<strong>Title</strong>
-	</div>
-
-	<div class="span9">
-		<%= @revision['revision'].post_title %>
-	</div>
-
-</div>
-
-<div class="row">
-
-	<div class="span3">
-		<strong>Content</strong>
-	</div>
-
-	<div class="span9">
-		<%= @revision['revision'].post_content.html_safe %>
-	</div>
-
-</div>
-
-<%= link_to restore_admin_revision_path(@revision['revision'].id), :class => 'btn' do %>
-	<i class="fa fa-magic">&nbsp;Restore</i>
-<% end %>
-
-<h4 class="title">All Revisions</h4>
-<%= render :partial => 'autosave_table' %>
-
-
- -->

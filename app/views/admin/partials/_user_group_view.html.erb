@@ -1,0 +1,21 @@
+<div class="form-group">
+	<%= label_tag(:user_groups, "#{@key.blank? ? key.capitalize : @key.capitalize}", class: "col-sm-3 control-label") %>
+    <div class="col-sm-5">
+    	<% if (!defined?(key) && @key == 'admin') || (@key.blank? && key == 'admin') %>
+	    	<% value.each do |f| %>
+	    		<%= hidden_field_tag "user_groups[#{@key.blank? ? key : @key}][]", f %>
+	    	<% end %>
+
+    		<%= select_tag "user_groups[#{@key.blank? ? key : @key}][]", options_for_select(list_controllers('admin'), defined?(value) ? value.map {|t| t} : ''), { :multiple => true, :size =>10, :class => 'form-control', :disabled => 'disabled' } %>
+		<% else %>
+	    	<%= select_tag "user_groups[#{@key.blank? ? key : @key}][]", options_for_select(list_controllers('admin'), defined?(value) ? value.map {|t| t} : ''), { :multiple => true, :size =>10, :class => 'form-control' } %>
+		<% end %>
+
+    </div>
+    <div class="col-sm-3">
+    	<% if (!defined?(key) && @key != 'admin') || (@key.blank? && key != 'admin') %>
+			<a href="javascript:;" class="removeUserGroup"><i class="fa fa-times fa-lg"></i> Remove Group</a>
+		<% end %>
+    </div>
+	<div class="clearfix"></div>
+</div>

@@ -168,8 +168,9 @@ module AdminRoroaHelper
 
 	def errors_for(model, attribute)
 	  if model.errors[attribute].present?
+	  	name = model.class.name.constantize.human_attribute_name(attribute)
 	    content_tag :span, :class => 'help-block' do
-	      attribute.to_s.capitalize + ' ' + model.errors[attribute].join(", ")
+	      name.to_s.capitalize + ' ' + model.errors[attribute].join(", ")
 	    end
 	  end
 	end
@@ -184,6 +185,59 @@ module AdminRoroaHelper
 			Admin.deal_with_profile_images admin, upload_user_images(params[:admin][:cover_picture], admin.username), 'cover_picture'
 		end 
 
+	end
+
+	def list_controllers dir
+		hash = Hash.new
+		controllers = list_controllers_raw(dir)
+
+		controllers.each do |f|
+
+			key = f.sub('app/controllers/admin/', '')
+			value = key.sub('_controller.rb', '')
+
+			next if value == 'dashboard'
+
+			case value
+				when 'settings/general'
+					value = 'Settings'
+				when 'terms'
+					value = 'Categories & Tags'
+				when 'posts'
+					value = 'Articles'
+				when 'administrators'
+					value = 'Users'
+				end
+
+			hash[ucwords(value)] = key.sub('_controller.rb', '')
+
+		end
+
+		hash.sort
+
+	end
+
+	def get_user_group key
+
+
+		if !Setting.get('user_groups').blank?
+
+			arr = ActiveSupport::JSON.decode(Setting.get('user_groups'))
+			if arr.has_key? key
+				arr[key]
+			else
+				Array.new
+			end
+
+		end
+	end
+
+	def check_controller_against_user key
+		get_user_group(current_user.access_level).include?(key)
+	end
+
+	def cp(path)
+	  "active" if current_page?(path)
 	end
 
 end

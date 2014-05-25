@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(:version => 20140506070332) do
     t.string   "username"
     t.string   "access_level"
     t.text     "avatar"
-    t.string   "inline_editing",         :limit => 1, :default => "Y"
     t.string   "overlord",               :limit => 1, :default => "Y"
     t.string   "encrypted_password",                  :default => "",  :null => false
     t.string   "reset_password_token"

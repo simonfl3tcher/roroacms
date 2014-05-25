@@ -14,7 +14,6 @@ class AddDeviseToAdmins < ActiveRecord::Migration
       t.string :avatar
       
       t.column :access_level, "ENUM('admin', 'editor')"
-      t.column :inline_editing, "ENUM('Y', 'N')", :default => 'Y'
       t.column :overlord, "ENUM('Y', 'N')", :default => 'Y'
 
       t.string :encrypted_password, null: false, default: ""
