@@ -10,3 +10,80 @@ en:
       previous: "&lsaquo; "
       next: " &rsaquo;"
       truncate: "..."
+  activerecord:
+    errors:
+      messages:
+      inclusion: "is not included in the list"
+      exclusion: "is reserved"
+      invalid: "is invalid"
+      confirmation: "doesn't match %{attribute}"
+      accepted: "must be accepted"
+      empty: "is required"
+      blank: "is required"
+      present: "must be blank"
+      taken: "is already being used"
+      too_long: "is too long (maximum is %{count} characters)"
+      too_short: "is too short (minimum is %{count} characters)"
+      wrong_length: "is the wrong length (should be %{count} characters)"
+      not_a_number: "is not a number"
+      not_an_integer: "must be an integer"
+      greater_than: "must be greater than %{count}"
+      greater_than_or_equal_to: "must be greater than or equal to %{count}"
+      equal_to: "must be equal to %{count}"
+      less_than: "must be less than %{count}"
+      less_than_or_equal_to: "must be less than or equal to %{count}"
+      other_than: "must be other than %{count}"
+      odd: "must be odd"
+      even: "must be even"
+    attributes:
+      admin:
+        email: 'Email address'
+        description: 'Author description'
+        first_name: 'First name'
+        last_name: 'Last name'
+        avatar: 'Profile picture'
+        access_level: 'Access'
+        usernmae: 'Username'
+        cover_picture: 'Cover image'
+      comment:
+        author: 'Author'
+        email: 'Email address'
+        website: 'Website'
+        comment: 'Comment'
+        comment_approved: 'Is comment approved?'
+        parent_id: 'Parent'
+        is_spam: 'Is spam?'
+      contact:
+        name: 'Name'
+        message: 'Message'
+        email: 'Email Address'
+        subject: 'Subject'
+      menu:
+        name: 'Name'
+        key: 'Key'
+      post:
+        admin_id: 'User'
+        post_slug: 'URL'
+        post_title: 'Title'
+        post_content: 'Content'
+        post_status: 'Status'
+        post_visible: 'Is invisible through the url?'
+        parent_id: 'Parent'
+        post_template: 'Template'
+        sort_order: 'Sort Order'
+        post_date: 'Published Date'
+        post_seo_title: 'Meta Title'
+        post_seo_description: 'Meta Description'
+        post_seo_is_disabled: 'Is disabled on this page'
+        post_seo_no_index: 'No Index'
+        post_seo_no_follow: 'No Follow'
+        disabled: 'Is disabled?'
+        post_image: 'Cover image'
+      term:
+        name: 'Name'
+        slug: 'Slug'
+        description: 'Description'
+      setting: 
+        setting_name: 'Name'
+        setting: 'Value'
+        type_of_setting: 'Type of setting'

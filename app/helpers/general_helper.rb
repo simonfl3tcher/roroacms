@@ -51,12 +51,16 @@ module GeneralHelper
 
 	# list controllers in given directory
 
-	def list_controllers dir = ""
+	def list_controllers_raw dir = ""
 		dir = dir + "/**/" if !dir.blank?
 		controller_list = Array.new
 		Dir["app/controllers**/#{dir}*.rb"].each do |file|
 		    controller_list.push(file.split('/').last.sub!("_controller.rb",""))
 		end
+	end
+
+	def ucwords str
+		return str.split(' ').select {|w| w.capitalize! || w }.join(' ');
 	end
 
 end

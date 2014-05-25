@@ -1,9 +1,13 @@
 class Admin::PostsController < AdminController
 
+	add_breadcrumb "Articles", :admin_posts_path, :title => "Back to articles"
+
 	# displays all the "posts" with the post_type of "page". This is also set up 
 	# to take search parameters so you can search for an individual page itself.
 
 	def index
+		# set title
+		@title = "Articles"
 		@posts = Post.setup_and_search_posts params, 'post'
 	end
 
@@ -12,6 +16,10 @@ class Admin::PostsController < AdminController
 	# that you can assign to the post.
 
 	def new
+		# add breadcrumb and set title
+		add_breadcrumb "Create New Article"
+		@title = "Create New Article"
+
 		# get the systems categories
 		@categories = Post.get_cats
 		# get the systems tags
@@ -53,6 +61,10 @@ class Admin::PostsController < AdminController
 	# gets and displays the post object with the necessary dependencies 
 
 	def edit 
+		# add breadcrumb and set title
+		add_breadcrumb "Edit Article" 
+		@title = "Edit Article"
+
 		@edit = true
 
 		# get categories and tags

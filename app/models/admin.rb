@@ -12,8 +12,6 @@ class Admin < ActiveRecord::Base
 	validates :password, length: { in: 6..128 }, on: :update, allow_blank: true
 
 	# general data that doesn't change very often
-
-	ACCESS_LEVELS = ["admin", "editor"]
 	GET_ADMINS = Admin.where('1+1=2').order('name asc')
 
 
@@ -64,6 +62,17 @@ class Admin < ActiveRecord::Base
 		p.save
 	end
 
+	def self.access_levels 
+
+		arr = Array.new
+		ActiveSupport::JSON.decode(Setting.get('user_groups')).each do |k,v|
+			arr << k
+		end
+
+		arr
+
+	end
+
 	# set the defaults for the admin
 
 	def deal_with_abnormalaties
@@ -81,7 +90,5 @@ class Admin < ActiveRecord::Base
 		end
 
 	end
-
-
 
 end 

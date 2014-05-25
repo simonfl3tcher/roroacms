@@ -95,7 +95,7 @@
           <div class="form-group">
             <%= f.label :access_level, :class => "col-sm-3 control-label"  %>
             <div class="col-sm-6">
-              <%= f.select :access_level, Admin::ACCESS_LEVELS,  { prompt: 'Select access level' }, { :class => "form-control" } %>
+              <%= f.select :access_level, Admin.access_levels,  { prompt: 'Select access level' }, { :class => "form-control" } %>
 
             </div>
             <div class="clearfix"></div>

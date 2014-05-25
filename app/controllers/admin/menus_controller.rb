@@ -1,5 +1,7 @@
 class Admin::MenusController < AdminController
 
+	add_breadcrumb "Menus", :admin_menus_path, :title => "Back to menus"
+
 	# include the helper in the view
 	helper AdminMenuHelper
 
@@ -7,6 +9,8 @@ class Admin::MenusController < AdminController
 	# for the form to create a new menu object if desired
 
 	def index
+		# set title
+		@title = 'Menus'
 		@menu = Menu.new
 		@menugroups = Menu.all
 	end
@@ -36,6 +40,10 @@ class Admin::MenusController < AdminController
 
 	def edit
 		@menu = Menu.find(params[:id])
+
+		# add breadcrumb and set title
+		@title = 'Edit "' +  @menu.name + '" Menu'
+		add_breadcrumb 'Edit "' +  @menu.name + '" Menu'
 	end
 
 

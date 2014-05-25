@@ -17,19 +17,6 @@ group :assets do
   gem "less-rails"
 end
 
-group :test, :development do
-
-	gem 'turn'
-	gem 'rspec-rails'
-	gem 'faker'
-	gem 'factory_girl_rails'
-	gem 'capybara'
-	gem 'rb-fsevent'
-	gem 'guard-rspec'
-	gem 'guard-livereload'
-	
-end
-
 gem 'activerecord-mysql-adapter'
 gem 'twitter-bootstrap-rails'
 gem 'aws-s3', :require => 'aws/s3'
@@ -39,3 +26,4 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'devise'
 gem 'diffy'
 gem 'differ'
+gem 'breadcrumbs_on_rails'

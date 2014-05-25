@@ -2,6 +2,7 @@ class Admin::RevisionsController < AdminController
 
 	# displays the revision post
 
+
 	def edit
 		# gets the individual post
 		@post = Post.find(params[:id])
@@ -13,6 +14,10 @@ class Admin::RevisionsController < AdminController
 		@revisions = Post.where(:ancestry => @post.ancestry, :post_type => 'autosave').order('created_at desc')
 
 		@revision = { 'parent' => parent, 'revision' => @post}
+		
+		# set title 
+		add_breadcrumb "Revisions"
+		@title = 'Revision for "' + @revision['revision'].post_title + '"'
 	end
 	
 
