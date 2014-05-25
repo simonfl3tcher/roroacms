@@ -52,13 +52,6 @@ Roroacms::Application.routes.draw do
 
     # end
 
-    # resources :banners do 
-    #   collection do
-    #       get 'categories'
-    #       post 'bulk_update'
-    #     end
-    # end
-
     resources :filebrowser do
         member {post 'upload'}
         collection do

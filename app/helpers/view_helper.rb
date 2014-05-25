@@ -350,16 +350,6 @@ module ViewHelper
 		render :template => "theme/#{current_theme}/search_form." + get_theme_ext  rescue nil
 	end
 
-
-	# Returns a hash of the records with the banner category key of the given value
-	# Params:
-	# +hash+:: a hash of both the key of the category and the limit to the amount of banners you want to return
-
-	def get_banners(hash)
-		Banner.where(terms: {slug: hash[:key]}).includes(:terms).limit(hash[:limit]).order('sort_order')
-	end
-
-
 	# Returns a list of the archives
 	# Params:
 	# +type+:: has to be either Y (year) or M (month)

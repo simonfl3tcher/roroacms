@@ -14,7 +14,7 @@ class Post < ActiveRecord::Base
     validates :post_title, :presence => true
     validates_uniqueness_of :post_slug, :scope => [:post_type]
     validates_format_of :post_slug, :with => /^[A-Za-z0-9-]*$/
-    validates :sort_order, :numericality => true
+    validates :sort_order, :numericality => true, :allow_blank => true
 
     scope :from_this_year, where("post_date > ? AND < ?", Time.now.beginning_of_year, Time.now.end_of_year)
 

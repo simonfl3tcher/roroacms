@@ -43,15 +43,6 @@ ActiveRecord::Schema.define(:version => 20140506070332) do
   add_index "admins", ["reset_password_token"], :name => "index_admins_on_reset_password_token", :unique => true
   add_index "admins", ["username"], :name => "unique_username", :unique => true
 
-  create_table "banners", :force => true do |t|
-    t.string   "name"
-    t.string   "image"
-    t.text     "description"
-    t.string   "sort_order"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
   create_table "comments", :force => true do |t|
     t.integer  "post_id"
     t.text     "author"
@@ -142,15 +133,6 @@ ActiveRecord::Schema.define(:version => 20140506070332) do
   end
 
   add_index "term_relationships", ["post_id"], :name => "post_id"
-
-  create_table "term_relationships_banners", :force => true do |t|
-    t.integer  "banner_id"
-    t.integer  "term_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "term_relationships_banners", ["banner_id"], :name => "post_id"
 
   create_table "terms", :force => true do |t|
     t.string   "name"
