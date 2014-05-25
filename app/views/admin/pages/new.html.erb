@@ -1,17 +1,3 @@
-<div class="row">
-    <div class="col-md-12">
-        <!--breadcrumbs start -->
-        <ul class="breadcrumb">
-            <li><a href="#">Dashboard</a>
-            </li>
-            <li><a href="">Pages</a></li>
-            <li class="active">Create New Page</li>
-        </ul>
-        <!--breadcrumbs end -->
-       <h1 class="h1">Create New Page</h1>
-    </div>
-</div>
-
 <!-- <%= render 'form' %> -->
 
 <div class="row settingsArea">
@@ -72,7 +58,7 @@
 								</div>
 
 								<div class="form-group">
-									<%= f.label :post_title, 'Title', :class => "col-sm-3 control-label"  %>
+									<%= f.label :post_title, :class => "col-sm-3 control-label"  %>
 									<div class="col-sm-6">
 										<%= f.text_field :post_title, size: 40, :class => "form-control" %>
 										<%= errors_for @page, :post_title %>
@@ -81,7 +67,7 @@
 								</div>
 
 								<div class="form-group">
-									<%= f.label :post_slug, 'URL', :class => "col-sm-3 control-label"  %>
+									<%= f.label :post_slug, :class => "col-sm-3 control-label"  %>
 									<div class="col-sm-6">
 										<div class="input-group">
 									      <span class="input-group-addon">
@@ -95,7 +81,7 @@
 								</div>
 
 								<div class="form-group">
-									<%= f.label :post_visible, 'Is invisible through the url?', :class => "col-sm-3 control-label"  %>
+									<%= f.label :post_visible, :class => "col-sm-3 control-label"  %>
 									<div class="col-sm-6">
 										<%= f.check_box :post_visible, {checked: false}, 'N', 'Y'  %>
 									</div>
@@ -103,7 +89,7 @@
 								</div>
 
 								<div class="form-group">
-									<%= f.label :status, 'Status', :class => "col-sm-3 control-label"  %>
+									<%= f.label :post_status, :class => "col-sm-3 control-label"  %>
 									<div class="col-sm-6">
 										<%= f.select :post_status, Post::POST_STATUS, {:selected => 'Draft'}, { :class => "form-control" }  %>
 										<%= errors_for @page, :post_status %>
@@ -112,16 +98,7 @@
 								</div>
 
 								<div class="form-group">
-									<%= f.label :parent_id, 'Parent', :class => "col-sm-3 control-label"  %>
-									<div class="col-sm-6">
-										<%= f.select :parent_id, Post.where(:post_type => 'page', :disabled => 'N').collect {|p| [ p.post_title, p.id ] }, { include_blank: 'None' }, { :class => "form-control" } %>
-										<%= errors_for @page, :parent_id %>
-									</div>
-									<div class="clearfix"></div>
-								</div>
-
-								<div class="form-group">
-									<%= f.label :parent_id, 'Parent', :class => "col-sm-3 control-label"  %>
+									<%= f.label :parent_id, :class => "col-sm-3 control-label"  %>
 									<div class="col-sm-6">
 										<%= f.select :parent_id, Post.where(:post_type => 'page', :disabled => 'N').collect {|p| [ p.post_title, p.id ] }, { include_blank: 'None' }, { :class => "form-control" } %>
 										<%= errors_for @page, :parent_id %>
@@ -132,7 +109,7 @@
 								<% if !get_template_dropdown(@page.post_template).blank? %>
 
 									<div class="form-group">
-										<%= f.label :post_template, 'Template', :class => "col-sm-3 control-label"  %>
+										<%= f.label :post_template, :class => "col-sm-3 control-label"  %>
 										<div class="col-sm-6">
 											<%= f.select :post_template, get_template_dropdown(@page.post_template), { include_blank: true }, { :class => "form-control" } %>
 											<%= errors_for @page, :post_template %>
@@ -143,7 +120,7 @@
 								<% end %>
 
 								<div class="form-group">
-									<%= f.label :sort_order, 'Sort Order', :class => "col-sm-3 control-label"  %>
+									<%= f.label :sort_order, :class => "col-sm-3 control-label"  %>
 									<div class="col-sm-6">
 										<%= f.text_field :sort_order, size: 5, :class => "form-control sort-input" %>
 										<%= errors_for @page, :sort_order %>
@@ -153,7 +130,7 @@
 
 
 								<div class="form-group">
-									<%= f.label :post_date, 'Published Date', :class => "col-sm-3 control-label"  %>
+									<%= f.label :post_date, :class => "col-sm-3 control-label"  %>
 									<div class="col-sm-6">
 										Date:-
 										<%= f.datetime_select :post_date, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => 'Time:- '}, :class => 'form-control' %>
@@ -201,7 +178,7 @@
 							<div class="tab-pane" id="seo">
 
 								<div class="form-group">
-									<%= f.label :post_seo_title, 'Meta Title', :class => "col-sm-3 control-label"  %>
+									<%= f.label :post_seo_title, :class => "col-sm-3 control-label"  %>
 									<div class="col-sm-6">
 										<%= f.text_field :post_seo_title, size: 40, :class => "form-control" %>
 										<%= errors_for @page, :post_seo_title %>
@@ -211,7 +188,7 @@
 								</div>
 
 								<div class="form-group">
-									<%= f.label :post_seo_description, 'Meta Description', :class => "col-sm-3 control-label"  %>
+									<%= f.label :post_seo_description, :class => "col-sm-3 control-label"  %>
 									<div class="col-sm-6">
 										<%= f.text_field :post_seo_description, size: 40, :class => "form-control" %>
 										<%= errors_for @page, :post_seo_description %>
@@ -221,7 +198,7 @@
 								</div>
 
 								<div class="form-group">
-									<%= f.label :post_seo_is_disabled, 'Is disabled on this page', :class => "col-sm-3 control-label"  %>
+									<%= f.label :post_seo_is_disabled, :class => "col-sm-3 control-label"  %>
 									<div class="col-sm-6">
 										<%= f.check_box :post_seo_is_disabled, {checked: false}, 'Y', 'N'  %>
 										<small>* if you want to leave these blank</small>
@@ -230,7 +207,7 @@
 								</div>
 
 								<div class="form-group">
-									<%= f.label :post_seo_no_index, 'No Index', :class => "col-sm-3 control-label"  %>
+									<%= f.label :post_seo_no_index, :class => "col-sm-3 control-label"  %>
 									<div class="col-sm-6">
 										<%= f.check_box :post_seo_no_index, {checked: false}, 'Y', 'N'  %>
 										<small>* prevents the page from being indexed by search engines</small>
@@ -239,7 +216,7 @@
 								</div>
 
 								<div class="form-group">
-									<%= f.label :post_seo_no_follow, 'No Follow', :class => "col-sm-3 control-label"  %>
+									<%= f.label :post_seo_no_follow, :class => "col-sm-3 control-label"  %>
 									<div class="col-sm-6">
 										<%= f.check_box :post_seo_no_follow, {checked: false}, 'Y', 'N'  %>
 										<small>* prevents the Googlebot from following links from this page</small>

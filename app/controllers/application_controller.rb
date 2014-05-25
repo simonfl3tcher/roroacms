@@ -83,18 +83,6 @@ class ApplicationController < ActionController::Base
   	redirect_to admin_login_path, error: "Not Authorized" if current_user.nil?
   end
 
-
-  # checks to see if the admin logged in has the necesary rights, if not it will redirect them with an error message
-
-  def authorize_admin_access
-    
-    if current_admin_access == 'editor'
-      flash[:error] = "Not authorized"
-      redirect_to admin_path
-    end
-
-  end
-
   # devise settings
 
   def after_sign_in_path_for(resource)
@@ -112,10 +100,10 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) do |u|
-      u.permit(:email, :password, :first_name, :last_name, :username, :access_level, :password_confirmation, :inline_editing, :description)
+      u.permit(:email, :password, :first_name, :last_name, :username, :access_level, :password_confirmation, :description)
     end
     devise_parameter_sanitizer.for(:account_update) do |u|
-      u.permit(:email, :password, :first_name, :last_name, :username, :access_level, :password_confirmation, :inline_editing, :description)
+      u.permit(:email, :password, :first_name, :last_name, :username, :access_level, :password_confirmation, :description)
     end
   end
 

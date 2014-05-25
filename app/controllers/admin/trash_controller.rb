@@ -1,5 +1,7 @@
 class Admin::TrashController < AdminController
 
+	add_breadcrumb "Trash", :admin_trash_path, :title => "Back to trash"
+
 	# the trash area saves any posts/pages that were moved to trash in the trash can.
 	# you can then decide if you want to remove these completely or reinstate them - put simply it is a fail
 	# safe so that you don't accidently delete something that you didn't want to delete
@@ -8,6 +10,9 @@ class Admin::TrashController < AdminController
 	before_filter :authorize_admin_access
 
 	def index 
+		# set title
+		@title = "Trash"
+		
 		# get all posts/pages that are in the trash area
 		@posts = Post.find(:all, :conditions => { :disabled => 'Y', :post_type => 'post' })
 		@pages = Post.find(:all, :conditions => { :disabled => 'Y', :post_type => 'page' })

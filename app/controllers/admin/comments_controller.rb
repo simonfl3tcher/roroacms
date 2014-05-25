@@ -1,8 +1,11 @@
 class Admin::CommentsController < AdminController
 
-	# list out all of the comments
+	add_breadcrumb "Comments", :admin_comments_path, :title => "Back to comments"
 
+	# list out all of the comments
 	def index 
+		# set title
+		@title = 'Comments'
 		@comments = Comment.setup_and_search params
 	end
 
@@ -10,6 +13,9 @@ class Admin::CommentsController < AdminController
 	# get and disply certain comment
 
 	def edit
+		# add breadcrumb and set title
+		@title = "Edit Comment"
+		add_breadcrumb 'Edit Comment'
 		@comment = Comment.find(params[:id])
 	end
 

@@ -111,6 +111,9 @@ Roroacms::Application.routes.draw do
     namespace :settings do
       resources :general do
         post :update_general
+        collection do 
+          post 'create_user_group'
+        end
       end
       resources :menu do 
         collection do 

@@ -27,6 +27,11 @@ var app = function() {
             if (!$('.sidebarRight').hasClass('.sidebar-toggle-right')) {
                 $('.sidebarRight').removeClass('sidebar-toggle-right');
                 $('.main-content-wrapper').removeClass('main-content-toggle-right');
+                if(getCookie('menu_contracted') == '') {
+                    createCookie('menu_contracted', 'true', 30);
+                } else {
+                    deleteCookie('menu_contracted');
+                }
             }
             $('.sidebar').toggleClass('sidebar-toggle');
             $('.main-content-wrapper').toggleClass('main-content-toggle-left');
@@ -40,6 +45,7 @@ var app = function() {
             if (!$('.sidebar').hasClass('.sidebar-toggle')) {
                 $('.sidebar').addClass('sidebar-toggle');
                 $('.main-content-wrapper').addClass('main-content-toggle-left');
+                console.log("in here2")
             }
             
             $('.sidebarRight').toggleClass('sidebar-toggle-right animated bounceInRight');
@@ -63,11 +69,12 @@ var app = function() {
 
     var menu = function() {
         $("#leftside-navigation .sub-menu > a").click(function(e) {
-            $("#leftside-navigation ul ul").slideUp();
+            $("#leftside-navigation ul ul").slideUp().prev().find('i.arrow').removeClass('fa-angle-down').addClass('fa-angle-right');
             if (!$(this).next().is(":visible")) {
                 $(this).next().slideDown();
+                $(this).find('i.arrow').removeClass('fa-angle-right').addClass('fa-angle-down');
             }
-              e.stopPropagation();
+            e.stopPropagation();
         });
     };
     
@@ -200,6 +207,38 @@ var app = function() {
         $('.slider-span').slider()
     };
 
+    var createCookie = function(name, value, days) {
+        var expires;
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toGMTString();
+        }
+        else {
+            expires = "";
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+
+    var getCookie = function(c_name) {
+        if (document.cookie.length > 0) {
+            c_start = document.cookie.indexOf(c_name + "=");
+            if (c_start != -1) {
+                c_start = c_start + c_name.length + 1;
+                c_end = document.cookie.indexOf(";", c_start);
+                if (c_end == -1) {
+                    c_end = document.cookie.length;
+                }
+                return unescape(document.cookie.substring(c_start, c_end));
+            }
+        }
+        return "";
+    }
+
+    var deleteCookie = function(name) {
+        createCookie(name,"",-1);
+    }
+
 
     //return functions
     return {
@@ -208,7 +247,9 @@ var app = function() {
         map: map,
         sliders: sliders,
         weather: weather,
-        morrisPie: morrisPie
+        morrisPie: morrisPie,
+        createCookie: createCookie,
+        getCookie: getCookie
 
     };
 }();
@@ -225,6 +266,8 @@ $(document).ready(function() {
     app.init();
 
     do_checkboxes();
+
+    $("#leftside-navigation .sub-menu.active > a").find('i.arrow').removeClass('fa-angle-right').addClass('fa-angle-down');
     
 
     $('#dtable').dataTable({

@@ -7,9 +7,13 @@ class Admin::AdministratorsController < AdminController
 	include MediaHelper
 	include AdminRoroaHelper
 
+	add_breadcrumb "Users", :admin_administrators_path, :title => "Back to users"
+
 	# show all of the admins for the system
 
 	def index
+		# set title
+		@title = 'Users'
 		@admins = Admin.setup_and_search params
 	end
 
@@ -18,6 +22,10 @@ class Admin::AdministratorsController < AdminController
 
 	def edit
 		@admin = Admin.find(params[:id])
+
+		# add breadcrumb and set title
+		@title = 'Profile - ' + @admin.first_name + ' ' + @admin.last_name
+		add_breadcrumb "Edit User"
 		
 		# action for the form as both edit/new are using the same form.
 		@action = 'update'
@@ -84,6 +92,10 @@ class Admin::AdministratorsController < AdminController
 	# create a new admin object
 
 	def new
+	    # add breadcrumb and set title
+	    @title = 'Profile'
+	    add_breadcrumb "Add New User"
+
 	    @admin = Admin.new
 	    @action = 'create'
 	end
@@ -119,7 +131,7 @@ class Admin::AdministratorsController < AdminController
 
 	def administrator_params
 		if !session[:admin_id].blank?
-			params.require(:admin).permit(:email, :password, :first_name, :last_name, :username, :access_level, :password_confirmation, :inline_editing, :description)
+			params.require(:admin).permit(:email, :password, :first_name, :last_name, :username, :access_level, :password_confirmation, :description)
 		end
 	end
 
