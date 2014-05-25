@@ -32,7 +32,7 @@ Setting.create :setting_name => 'aws_secret_access_key', :type_of_setting => 'AW
 Setting.create :setting_name => 'aws_bucket_name', :type_of_setting => 'AWS', :setting => ENV['aws_bucket_name']
 Setting.create :setting_name => 'pagination_per', :type_of_setting => 'G', :setting => ''
 Setting.create :setting_name => 'theme_folder', :type_of_setting => 'T', :setting => ENV['theme_folder']
-Setting.create :setting_name => 'user_groups', :type_of_setting => 'G', :setting => '{"admin":["posts","banners","terms","comments","media","menus","pages","revisions","settings/general","themes","trash","administrators","posts","banners","terms","comments","media","menus","pages","revisions","settings/general","themes","trash"]}'
+Setting.create :setting_name => 'user_groups', :type_of_setting => 'G', :setting => '{"admin":["posts","terms","comments","media","menus","pages","revisions","settings/general","themes","trash","administrators"]}'
 Admin.create :username => ENV['admin_username'], :password => ENV['admin_password'], :email => ENV['admin_email'], :access_level => 'admin', :first_name => '', :last_name => ''
 Post.create :post_title => 'Welcome to Roroa', :post_type => 'page', :post_slug => 'welcome-to-roroa', :structured_url => '/welcome-to-roroa', :post_date => Time.now.to_s(:db), :admin_id => '1', :post_content => '<p>{two_third}</p>
 
