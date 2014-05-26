@@ -1,22 +1,17 @@
-<% if @type == 'category' %>
-	<div class="title">
-		Post Category
-		  <%= link_to admin_posts_path, :class => 'btn btn-mini pull-right' do %>
-		    <i class="icon-arrow-left"></i>
-		  <% end %>   
-	</div>
-<% else %>
-	<div class="title">
-		Post Tag
-		<%= link_to admin_posts_path, :class => 'btn btn-mini pull-right' do %>
-		    <i class="icon-arrow-left"></i>
-	  <% end %>   
-	</div>
-<% end %>
+<div class="row">
 
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">&nbsp;</h3>
+				<div class="actions pull-right">
+					<i class="fa fa-chevron-down"></i>
+				</div>
+			</div>
+			<div class="panel-body">
+				<%= render :partial => 'form', :locals => {:edit => true, :type => @type} %>
+			</div>
+		</div>
+	</div>
 
-<% if @type == 'category' %>
-	<%= render :partial => 'form', :locals => {:edit => true} %>
-<% else %>
-	<%= render :partial => 'form_tag', :locals => {:edit => true} %>
-<% end %>
+</div>

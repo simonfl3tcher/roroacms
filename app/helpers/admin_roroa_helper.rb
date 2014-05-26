@@ -150,6 +150,10 @@ module AdminRoroaHelper
 
 	end
 
+	# get the last (#{limit}) comments
+	# Params:
+	# +limit+:: count of how many you would like to get
+
 	def latest_comments limit = 5
 		if !limit.blank?
 			Comment.where(:comment_approved => 'N').order("submitted_on DESC").first(limit)
@@ -158,13 +162,23 @@ module AdminRoroaHelper
 		end
 	end
 
+	# count how many records in given post type
+	# Params:
+	# +type+:: what type of post records you want to get the count for
+
 	def get_count_post type
 		Post.where(:post_type => type).count
 	end
 
+	# count all comments
 	def get_count_comments
 		Comment.all.count
 	end
+
+	# display errors inline to the input
+	# Params:
+	# +model+:: ActiveRecord model from form
+	# +attribute+:: the attribute that you want to check errors for
 
 	def errors_for(model, attribute)
 	  if model.errors[attribute].present?
@@ -174,6 +188,11 @@ module AdminRoroaHelper
 	    end
 	  end
 	end
+
+	# deals with the user images (profile/cover images)
+	# Params:
+	# +params+:: parameters
+	# +attribute+:: admin ActiveRecord object
 
 	def profile_images params, admin
 
@@ -187,7 +206,11 @@ module AdminRoroaHelper
 
 	end
 
-	def list_controllers dir
+	# lists all the controllers in the admin area and returns a formatted hash. This is used for the user group administration
+	# Params:
+	# +dir+:: directory that you want to list the controllers for
+
+	def list_controllers dir = 'admin'
 		hash = Hash.new
 		controllers = list_controllers_raw(dir)
 
@@ -217,8 +240,11 @@ module AdminRoroaHelper
 
 	end
 
-	def get_user_group key
+	# get user group data and return the value for the given key 
+	# Params:
+	# +key+:: user group name that is set in the admin panel
 
+	def get_user_group key
 
 		if !Setting.get('user_groups').blank?
 
@@ -232,12 +258,32 @@ module AdminRoroaHelper
 		end
 	end
 
+	# is the user allowed access to the given controller - this function runs in the background.
+	# Params:
+	# +key+:: controller name
+
 	def check_controller_against_user key
 		get_user_group(current_user.access_level).include?(key)
 	end
 
+	# checks to see if the given path is the current page/link
+	# Params:
+	# +path+:: rake path of the link you want to check
+
 	def cp(path)
 	  "active" if current_page?(path)
+	end
+
+	# .pluralize() but without the preceeding number
+	# Params:
+	# +count+:: how many 
+	# +noun+:: the word that you want to pluralize
+	# +text+:: the text you want to append to the returning word
+
+	def pluralize_without_count(count, noun, text = nil)
+	  if count != 0
+	    count == 1 ? "#{noun}#{text}" : "#{noun.pluralize}#{text}"
+	  end
 	end
 
 end
