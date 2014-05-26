@@ -50,6 +50,8 @@ module GeneralHelper
 	end
 
 	# list controllers in given directory
+	# Params:
+	# +dir+:: directory that you want to list all of the controllers from
 
 	def list_controllers_raw dir = ""
 		dir = dir + "/**/" if !dir.blank?
@@ -58,6 +60,10 @@ module GeneralHelper
 		    controller_list.push(file.split('/').last.sub!("_controller.rb",""))
 		end
 	end
+
+	# capitalizes all words in a string 
+	# Params:
+	# +str+:: the string
 
 	def ucwords str
 		return str.split(' ').select {|w| w.capitalize! || w }.join(' ');

@@ -11,7 +11,7 @@ class Post < ActiveRecord::Base
     has_many :terms, :through => :term_relationships
     has_many :child, :class_name => "Post", :foreign_key => "parent_id", conditions: "post_type != 'autosave'"
 
-    validates :post_title, :presence => true
+    validates :post_title, :post_slug, :presence => true
     validates_uniqueness_of :post_slug, :scope => [:post_type]
     validates_format_of :post_slug, :with => /^[A-Za-z0-9-]*$/
     validates :sort_order, :numericality => true, :allow_blank => true

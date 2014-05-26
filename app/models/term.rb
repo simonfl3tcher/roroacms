@@ -99,6 +99,8 @@ class Term < ActiveRecord::Base
 			self.slug = self.slug.gsub(' ', '-').downcase
 		end
 
+		self.structured_url = '/' + self.slug
+
   	end
 
   	# update the url in sub pages if the url changes 
