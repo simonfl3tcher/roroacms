@@ -1,11 +1,14 @@
 class Admin < ActiveRecord::Base
-	
+
+	# devise configuration
+	attr_accessor :login
 	devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 	
 	# relations and validations
 
 	has_many :posts
-	validates :username, presence: true, uniqueness: true
+	validates :username, presence: true
+	validates :username, :uniqueness => {:case_sensitive => false}
 	validates :access_level, presence: true
 
 	validates :password, length: { in: 6..128 }, on: :create
@@ -48,9 +51,19 @@ class Admin < ActiveRecord::Base
 		session[:username] = nil
 	end
 
-	def self.find_for_database_authentication(conditions={})
-	  self.where("username = ?", conditions[:email]).limit(1).first || self.where("email = ?", conditions[:email]).limit(1).first
-	end
+	# def self.find_for_database_authentication(conditions={})
+	#   self.where("username = ?", conditions[:email]).limit(1).first || self.where("email = ?", conditions[:email]).limit(1).first
+	# end
+
+	def self.find_first_by_auth_conditions(warden_conditions)
+      conditions = warden_conditions.dup
+      if login = conditions.delete(:login)
+        where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+      else
+        where(conditions).first
+      end
+    end
+
 
 	def self.find_record(login)
 		where(["username = :value OR email = :value", { :value => login }]).first
