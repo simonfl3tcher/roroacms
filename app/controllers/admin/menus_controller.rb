@@ -12,7 +12,6 @@ class Admin::MenusController < AdminController
 		# set title
 		@title = 'Menus'
 		@menu = Menu.new
-		@menugroups = Menu.all
 	end
 
 
@@ -43,8 +42,8 @@ class Admin::MenusController < AdminController
 		@menu = Menu.find(params[:id])
 
 		# add breadcrumb and set title
-		@title = 'Edit "' +  @menu.name + '" Menu'
 		add_breadcrumb 'Edit "' +  @menu.name + '" Menu'
+		@title = 'Edit "' +  @menu.name + '" Menu'
 	end
 
 
@@ -60,7 +59,7 @@ class Admin::MenusController < AdminController
 	# when you add an option to the menu this creates an edit form to allow you to edit the option straight away
 
 	def ajax_dropbox 
-		print render :partial => 'admin/partials/menu_dropdown'
+		print render :partial => 'admin/menus/partials/menu_dropdown'
 	end
 
 

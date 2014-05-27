@@ -9,6 +9,9 @@ class Term < ActiveRecord::Base
   	validates_format_of :slug, :with => /^[A-Za-z0-9-]*$/
   	validates_uniqueness_of :slug, :on => :create
 
+  	CATEGORIES = Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
+  	TAGS = Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy)
+
   	
   	def self.create(params)
 		taxonomy = params[:type_taxonomy]
@@ -152,10 +155,5 @@ class Term < ActiveRecord::Base
 			@category.destroy
 		end
 	end
-
-	def do_slug_update(id)
-		abort '1223'.inspect
-	end
-
 
 end

@@ -5,14 +5,13 @@ class Admin::Settings::GeneralController < AdminController
 	# This controller is used for the settings page. This simply relates to all of the settings that are set in the database
 
 	before_filter :authorize_admin_access
+	before_filter :set_json
 
 	def index 
 		@title = 'Settings'
-		@json = ActiveSupport::JSON
 	end
 
 	def create
-		json = ActiveSupport::JSON
 		redirect = params[:redirect]
 
 		# To do update this table we loop through the fields and update the key with the value. 
@@ -22,7 +21,7 @@ class Admin::Settings::GeneralController < AdminController
 
 		# loop through the param fields and update the key with the value
 		params.each do |key, value|
-			value = json.encode(value) if key == 'user_groups'
+			value = @json.encode(value) if key == 'user_groups'
 			set = Setting.where("setting_name = '#{key}'").update_all('setting' => value)
 		end
 
@@ -52,11 +51,14 @@ class Admin::Settings::GeneralController < AdminController
 
 	private 
 	
-
 	# Strong parameters
 
 	def settings_params
 		params.permit(:setting_name, :setting)
+	end
+
+	def set_json 
+		@json = ActiveSupport::JSON
 	end
 
 end

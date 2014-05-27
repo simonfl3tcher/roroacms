@@ -22,7 +22,7 @@
             </thead>
 
             <tbody>
-             <% @comments.each do |comment| %>
+             <% Comment.order('submitted_on desc').order('created_at desc').each do |comment| %>
               <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 
               <td class="hidden-xs"><%= check_box_tag 'comments[]', comment.id %></td>
@@ -80,10 +80,3 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-  
-  $(document).ready(function(){
-  });
-  
-</script>

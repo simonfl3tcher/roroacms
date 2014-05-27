@@ -14,7 +14,6 @@ class Admin::AdministratorsController < AdminController
 	def index
 		# set title
 		@title = 'Users'
-		@admins = Admin.setup_and_search params
 	end
 
 
@@ -61,20 +60,18 @@ class Admin::AdministratorsController < AdminController
 	    		admin_passed = @admin.update_attributes(administrator_params)
 	    	end
 
-	      if admin_passed
-
-	      	profile_images(params, @admin)
-	        
-	        format.html { redirect_to edit_admin_administrator_path(@admin), notice: 'Admin was successfully updated.' }
-	      else
-	      	@action = 'update'
-	        format.html { 
-	        	# add breadcrumb and set title
-				@title = 'Profile - ' + @admin.username
-				add_breadcrumb "Edit User"
-	        	render action: "edit" 
-	        }
-	      end
+			if admin_passed
+				profile_images(params, @admin)
+				format.html { redirect_to edit_admin_administrator_path(@admin), notice: 'Admin was successfully updated.' }
+			else
+				@action = 'update'
+				format.html { 
+					# add breadcrumb and set title
+					@title = 'Profile - ' + @admin.username
+					add_breadcrumb "Edit User"
+					render action: "edit" 
+				}
+			end
 
 	    end
 
@@ -98,8 +95,8 @@ class Admin::AdministratorsController < AdminController
 
 	def new
 	    # add breadcrumb and set title
-	    @title = 'Profile'
 	    add_breadcrumb "Add New User"
+	    @title = 'Profile'
 
 	    @admin = Admin.new
 	    @action = 'create'

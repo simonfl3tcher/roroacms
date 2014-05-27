@@ -7,13 +7,7 @@ class Admin::RevisionsController < AdminController
 		# gets the individual post
 		@post = Post.find(params[:id])
 
-		# the parent is the actual post that it is a revision of
-		parent = Post.find(@post.ancestry)
-
-		# it lists out all of the other revisions associated with the given post id
-		@revisions = Post.where(:ancestry => @post.ancestry, :post_type => 'autosave').order('created_at desc')
-
-		@revision = { 'parent' => parent, 'revision' => @post}
+		@revision = { 'parent' => Post.find(@post.ancestry), 'revision' => @post}
 		
 		# set title 
 		add_breadcrumb "Revisions"
@@ -24,9 +18,8 @@ class Admin::RevisionsController < AdminController
 	# restore the post to the given post data
 
 	def restore
-		post = Post.find(params[:id])
 		# do the restore
-		restore = Post.restore post
+		restore = Post.restore(Post.find(params[:id]))
 
 		# redirect to either the post or page area depending on what post_type the post has
 		if restore.post_type == 'page'

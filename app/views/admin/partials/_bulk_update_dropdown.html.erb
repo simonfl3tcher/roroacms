@@ -27,14 +27,6 @@
 <input type="hidden" name="to_do" />
 
 <script type='text/javascript'>
-    
-    setTimeout(function(){
-
-        $('body').on("click", 'ins', function(){ 
-            console.log("in here");
-        });
-
-    }, 1000);
 
     $('ul.dropdown-menu li a').bind('click', function(){
       $('input[name=to_do]').val($(this).attr('data-val'))
