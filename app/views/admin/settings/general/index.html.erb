@@ -12,7 +12,6 @@
 		            <ul class="nav nav-tabs">
 		                <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-cog"></i> General</a></li>
 		                <li><a href="#comment" data-toggle="tab"><i class="fa fa-comments"></i> Comments</a></li>
-		                <li><a href="#amazon" data-toggle="tab"><i class="fa fa-cloud-upload"></i> Amazon S3</a></li>
 		                <li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> Search Engine Optimisation</a></li>
 		                <li><a href="#user-groups" data-toggle="tab"><i class="fa fa-users"></i> User Groups</a></li>
 		            </ul>
@@ -123,29 +122,6 @@
 							</div>
 		                </div>
 
-		                <div class="tab-pane" id="amazon">
-		                    <div class="form-group">
-		                    	<%= label_tag(:aws_access_key_id, "Access Key ID", class: "col-sm-3 control-label") %>
-							    <div class="col-sm-6">
-							    	<%= text_field_tag(:aws_access_key_id, Setting.get('aws_access_key_id'), class: 'form-control') %>
-							    </div>
-								<div class="clearfix"></div>
-							</div>
-							<div class="form-group">
-		                    	<%= label_tag(:aws_secret_access_key, "Secret Access Key", class: "col-sm-3 control-label") %>
-							    <div class="col-sm-6">
-							    	<%= text_field_tag(:aws_secret_access_key, Setting.get('aws_secret_access_key'), class: 'form-control') %>
-							    </div>
-								<div class="clearfix"></div>
-							</div>
-							<div class="form-group">
-		                    	<%= label_tag(:aws_bucket_name, "Bucket Name", class: "col-sm-3 control-label") %>
-							    <div class="col-sm-6">
-							    	<%= text_field_tag(:aws_bucket_name, Setting.get('aws_bucket_name'), class: 'form-control') %>
-							    </div>
-								<div class="clearfix"></div>
-							</div>
-		                </div>
 		                <div class="tab-pane" id="seo">
 		                   <div class="form-group">
 		                    	<%= label_tag(:seo_site_title, "Website Title", class: "col-sm-3 control-label") %>

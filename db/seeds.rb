@@ -27,9 +27,6 @@ Setting.create :setting_name => 'site_url', :type_of_setting => 'G', :setting =>
 Setting.create :setting_name => 'display_url', :type_of_setting => 'G', :setting => ENV['display_url']
 Setting.create :setting_name => 'tag_slug', :type_of_setting => 'G', :setting => ENV['tag_slug']
 Setting.create :setting_name => 'site_email', :type_of_setting => 'G', :setting => ENV['admin_email']
-Setting.create :setting_name => 'aws_access_key_id', :type_of_setting => 'AWS', :setting => ENV['aws_access_key_id']
-Setting.create :setting_name => 'aws_secret_access_key', :type_of_setting => 'AWS', :setting => ENV['aws_secret_access_key']
-Setting.create :setting_name => 'aws_bucket_name', :type_of_setting => 'AWS', :setting => ENV['aws_bucket_name']
 Setting.create :setting_name => 'pagination_per', :type_of_setting => 'G', :setting => ''
 Setting.create :setting_name => 'theme_folder', :type_of_setting => 'T', :setting => ENV['theme_folder']
 Setting.create :setting_name => 'user_groups', :type_of_setting => 'G', :setting => '{"admin":["posts","terms","comments","media","menus","pages","revisions","settings/general","themes","trash","administrators"]}'

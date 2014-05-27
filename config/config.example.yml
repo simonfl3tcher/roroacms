@@ -8,9 +8,6 @@ site_title: One More roroacms website
 display_url: http://www.example.co.uk/
 tag_slug: tag
 admin_email: example@gmail.com
-admin_password: password
 admin_username: admin
-aws_access_key_id: AKIAI4VD2NT6NMGJLCOQT
-aws_secret_access_key: j7b4LQuOW3s5BEUUR4yCujWydsENYteiLsKL++x+h4
-aws_bucket_name: roroa
-theme_folder: roroa1
+admin_password: password
+theme_folder: roroa-bootstrap-3
