@@ -12,14 +12,6 @@ class Comment < ActiveRecord::Base
 
 	before_create :set_defaults
 
-	# get all the comments in the system - however if there is a search parameter 
-	# search the necessary fields for the given value
-
-	def self.setup_and_search(params)
-		comments = Comment.order('submitted_on desc').order('created_at desc').page(params[:page]).per(Setting.get_pagination_limit)
-		return comments
-	end
-
 	# The bootstrap for the bulk update function. It takes in the call
 	# and decides what function to call in order to get the correct output
 

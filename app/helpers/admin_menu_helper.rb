@@ -77,7 +77,7 @@ module AdminMenuHelper
 				@name = name
 
 				# add each block to the html variable
-				html += render :partial => 'admin/helper_partials/menu_list_loop' 
+				html += render :partial => 'admin/menus/partials/menu_list_loop' 
 
 			end
 		end
@@ -103,7 +103,7 @@ module AdminMenuHelper
 	def get_menu_groups(menu)
 		@id = menu.name.gsub(' ', '');
 		@menu = menu
-    	return render :partial => 'admin/helper_partials/menu_menu_groups' 
+    	return render :partial => 'admin/menus/partials/menu_menu_groups' 
 	end
 	
 

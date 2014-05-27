@@ -49,4 +49,29 @@ $(document).ready ->
     input.replaceWith(input.val('').clone(true))
     return
 
+  $("body").on "keypress", "#addAdditionalDataInput", (e) ->
+    $("#addAdditionalDataInput").val $("#addAdditionalDataInput").val().toLowerCase().replace(" ", "-")
+    if e.which is 13
+      e.preventDefault()
+      $(".addAdditionalDataInput").trigger "click"
+    return
+
+  $("body").on "click", ".addAdditionalDataInput", ->
+    $.ajax
+      type: "POST"
+      url: "/admin/posts/create_additional_data"
+      data: "key=" + $("#addAdditionalDataInput").val()
+      dataType: "html"
+      success: (data) ->
+        $(".additionalDataOptions").append data
+        $("#addAdditionalDataInput").val ""
+        return
+
+    return
+
+  $("body").on "click", ".removeAdditionalGroup", (e) ->
+    e.preventDefault()
+    $(this).closest(".form-group").remove()  if confirm("Are you sure?")
+    return
+
   return

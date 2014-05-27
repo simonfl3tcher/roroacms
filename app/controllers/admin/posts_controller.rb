@@ -20,10 +20,6 @@ class Admin::PostsController < AdminController
 		add_breadcrumb "Create New Article"
 		@title = "Create New Article"
 
-		# get the systems categories
-		@categories = Post.get_cats
-		# get the systems tags
-		@tags = Post.get_tags
 	    @post = Post.new
 	end
 
@@ -71,14 +67,6 @@ class Admin::PostsController < AdminController
 		@title = "Edit Article"
 
 		@edit = true
-
-		# get categories and tags
-		@categories = Post.get_cats
-		@tags = Post.get_tags
-
-		# the system creates revisions every 2 mins. Gets these revisions and lists them out below the editor
-		@revisions = Post.where(:ancestry => params[:id], :post_type => 'autosave').order('created_at desc')
-
 		@post = Post.find(params[:id])
 	end
 
@@ -153,6 +141,8 @@ class Admin::PostsController < AdminController
 	      format.html { redirect_to admin_posts_path, notice: notice }
 	    end
 	end
+
+	# used for an ajax call will take the key and return the necessary html for the view and return it
 
 	def create_additional_data
 		@key = params[:key]

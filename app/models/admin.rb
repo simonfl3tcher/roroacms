@@ -17,15 +17,6 @@ class Admin < ActiveRecord::Base
 	# general data that doesn't change very often
 	GET_ADMINS = Admin.where('1+1=2').order('name asc')
 
-
-	# get all the admins in the system - however if there is a search parameter 
-	# search the necessary fields for the given value
-
-	def self.setup_and_search(params)
-		admins = Admin.where('1+1=2').page(params[:page]).per(Setting.get_pagination_limit)
-		return admins
-	end
-
 	# set the session data for the admin to allow/restrict the necessary areas
 
 	def self.set_sessions(session, admin)
