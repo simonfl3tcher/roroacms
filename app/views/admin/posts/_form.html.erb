@@ -115,9 +115,9 @@
           <div class="accordion-inner">
               <div class="field">
 
-              <% if !@categories.blank? %>
+              <% if !Post.get_cats.blank? %>
               <ul>
-                <% @categories.each do |category| %>
+                <% Post.get_cats.each do |category| %>
                   
                     <li>
                       <%= check_box_tag 'category_ids[]', category.id, @post.terms.find_by_id(category.id) ? true : false %><%= label_tag category.name %>
@@ -142,9 +142,9 @@
         <div id="collapseTags" class="accordion-body collapse">
            <div class="accordion-inner">
               <div class="field">
-              <% if !@tags.blank? %>
+              <% if !Post.get_tags.blank? %>
                 <ul>
-                  <% @tags.each do |tag| %>
+                  <% Post.get_tags.each do |tag| %>
                       <li>
                         <%= check_box_tag 'tag_ids[]', tag.id, @post.terms.find_by_id(tag.id) ? true : false %><%= label_tag tag.name %>
                       </li>
@@ -192,15 +192,3 @@
   </div>
   <% end %>
 </div>
-
-<script type="text/javascript">
-
-  function returnImageFunction(image){
-    $('#post_post_image').val(image);
-    $('.imagePlaceholder').html('<img src="' + image + '"/>');
-    $('.imagePlaceholder').append('<a href="javascript:;" class="removeArticleImage"><i class="icon-remove"></i>&nbsp;Remove Article Image</a>');
-  }
-  
-</script>
-
-<%= javascript_include_tag 'admin/post/post' %>

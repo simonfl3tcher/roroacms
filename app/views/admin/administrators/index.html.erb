@@ -30,7 +30,7 @@
 					</thead>
 
 					<tbody>
-						<% @admins.each do |admin| %>
+						<% Admin.all.each do |admin| %>
 						<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 
 							<td>

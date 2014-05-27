@@ -219,8 +219,8 @@
 									<label class="col-sm-3 control-label">Categories</label>
 									<div class="col-sm-6">
 										
-										<% if !@categories.blank? %>
-					                        <%= select_tag 'category_ids[]', options_for_select(@categories.map {|c| [c.name, c.id]}, @page.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
+										<% if !Post.get_cats.blank? %>
+					                        <%= select_tag 'category_ids[]', options_for_select(Post.get_cats.map {|c| [c.name, c.id]}, @page.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
 						              	<% else %>
 							                <div style="text-align:center;">
 							                  <strong>No categories!</strong>
@@ -235,8 +235,8 @@
 									<label class="col-sm-3 control-label">Tags</label>
 									<div class="col-sm-6">
 										
-										<% if !@tags.blank? %>
-					                        <%= select_tag 'tag_ids[]', options_for_select(@tags.map {|c| [c.name, c.id]}, @page.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
+										<% if !Post.get_tags.blank? %>
+					                        <%= select_tag 'tag_ids[]', options_for_select(Post.get_tags.map {|c| [c.name, c.id]}, @page.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
 						              	<% else %>
 							                <div style="text-align:center;">
 							                  <strong>No tags!</strong>
@@ -277,35 +277,3 @@
 </div>
 
 <%= render 'admin/partials/markdown_modal' %>
-
-<script type="text/javascript">
-	
-	$(document).ready(function(){
-		$('body').on('keypress', "#addAdditionalDataInput", function(e){
-			$('#addAdditionalDataInput').val($('#addAdditionalDataInput').val().toLowerCase().replace(' ', '-'))
-			if (e.which == 13) {
-				e.preventDefault();
-				$('.addAdditionalDataInput').trigger('click');
-			}
-		});
-		$('body').on('click', '.addAdditionalDataInput', function(){
-			$.ajax({
-			  type: "POST",
-			  url: "/admin/posts/create_additional_data",
-			  data: 'key=' + $('#addAdditionalDataInput').val(),
-			  dataType: "html",
-			  success: function(data) {
-			  	$('.additionalDataOptions').append(data);
-			  	$('#addAdditionalDataInput').val('')
-			  }
-			});
-		});
-		$('body').on('click', '.removeAdditionalGroup', function(e){
-			e.preventDefault();
-			if(confirm('Are you sure?')) {
-				$(this).closest('.form-group').remove();
-			}
-		});
-	});
-
-</script>

@@ -147,15 +147,3 @@
   </div>
   <% end %>
 </div>
-
-<script type="text/javascript">
-
-  function returnImageFunction(image){
-    $('#post_post_image').val(image);
-    $('.imagePlaceholder').html('<img src="' + image + '"/>');
-    $('.imagePlaceholder').append('<a href="javascript:;" class="removeArticleImage"><i class="icon-remove"></i>&nbsp;Remove Article Image</a>');
-  }
-  
-</script>
-
-<%= javascript_include_tag 'admin/post/post' %>

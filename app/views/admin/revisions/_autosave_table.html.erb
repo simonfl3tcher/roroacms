@@ -1,4 +1,6 @@
-<% if @revisions.length > 0 %>
+<% 
+revisions = Post.where(:ancestry => @post.ancestry, :post_type => 'autosave').order('created_at desc')
+if revisions.length > 0 %>
 	<table class="table table-striped">
 		<thead>
 
@@ -7,7 +9,7 @@
 			<th>Action</th>
 
 		</thead>
-		<% @revisions.each do |d| %>
+		<% revisions.each do |d| %>
 		<tr <%= d.id == @revision['revision'].id ? 'class=success' : '' %>>
 			<td>Revision saved at <%= d.created_at.strftime "%d %B, %Y at %H:%M" %></td>
 			<td><%= (d.post_status.downcase == 'user-autosave' || d.post_type.downcase == 'page') ? d.admin.username : 'system' %></td>

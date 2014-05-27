@@ -6,7 +6,6 @@ class Admin::CommentsController < AdminController
 	def index 
 		# set title
 		@title = 'Comments'
-		@comments = Comment.setup_and_search params
 	end
 
 
@@ -14,8 +13,9 @@ class Admin::CommentsController < AdminController
 
 	def edit
 		# add breadcrumb and set title
-		@title = "Edit Comment"
 		add_breadcrumb 'Edit Comment'
+		@title = "Edit Comment"
+		
 		@comment = Comment.find(params[:id])
 	end
 

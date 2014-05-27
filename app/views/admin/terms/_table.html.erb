@@ -10,7 +10,7 @@
 	    <th class="center">Action</th>
 	  </tr>
 	</thead>
-	<% @terms.each do |term| %>
+	<% (@type == 'category' ? Term::CATEGORIES : Term::TAGS).each do |term| %>
 	  <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 
 	    <td class="hidden-xs"><%= check_box_tag 'categories[]', term.id %></td>

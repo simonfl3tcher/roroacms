@@ -30,11 +30,6 @@ class Post < ActiveRecord::Base
     def self.setup_and_search_posts(params, type)
         
         posts = Post.select('*').where("disabled ='N' and post_type = '#{type}'").order("COALESCE(ancestry, id), ancestry IS NOT NULL, id")
-
-        if type == 'post'
-          posts = posts.page(params[:page]).per(Setting.get_pagination_limit)
-        end
-
         posts
         
     end
