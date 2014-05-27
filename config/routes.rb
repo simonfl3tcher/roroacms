@@ -31,35 +31,6 @@ Roroacms::Application.routes.draw do
       end
 
     end 
-    resources :editor do
-
-      collection do 
-        put 'update_from_air'
-      end
-
-    end
-
-    # resources :media do
-
-    #   collection do
-    #     post 'delete_via_ajax'
-    #     post 'bulk_update'
-    #     post 'get_via_ajax'
-    #     post 'get_folder_list'
-    #     post 'multipleupload'
-    #     post 'rename_media'
-    #   end
-
-    # end
-
-    resources :filebrowser do
-        member {post 'upload'}
-        collection do
-          post 'upload'
-          post 'multipleupload'
-          get 'delete'
-        end
-    end
 
     resources :revisions do
         member {get 'restore'}
