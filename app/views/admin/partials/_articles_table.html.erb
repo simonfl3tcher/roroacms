@@ -2,18 +2,18 @@
   <table id="dtable" class="table table-striped table-bordered" cellspacing="0" width="100%">
   <thead>
     <tr>
-      <th class="checkboxth"><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
+      <th class="checkboxth hidden-xs"><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
       <th>Post Title</th>
-      <th>Published Date</th>
+      <th class="hidden-xs">Published Date</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
   <% @posts.each do |post| %>
     <tr class="<%= cycle('list_line_odd', 'list_line_even') %> <%= post.post_status == "Draft" ? 'draft' : '' %>">
 
-      <td><%= check_box_tag 'posts[]', post.id %></td>
+      <td class="hidden-xs"><%= check_box_tag 'posts[]', post.id %></td>
     	<td><%= post.post_title %><%= post.post_status == "Draft" ? ' - draft' : '' %></td>
-    	<td><%= post.post_date.strftime "%d-%m-%Y" %></td>
+    	<td class="hidden-xs"><%= post.post_date.strftime "%d-%m-%Y" %></td>
       <td class="center">
         <%= link_to edit_admin_post_path(post), :class => '' do %>
           <i class="fa fa-pencil"></i>
@@ -29,7 +29,9 @@
     </tr>
   <% end %>
   </table>
-  <hr>
-  <%= bulk_update_dropdown Hash['publish' => 'Publish', 'draft' => 'Draft', 'move_to_trash' => 'Move To Trash'] %>
+  <div class="hidden-xs">
+    <hr>
+    <%= bulk_update_dropdown Hash['publish' => 'Publish', 'draft' => 'Draft', 'move_to_trash' => 'Move To Trash'] %>
+  </div>
 
 <% end %>

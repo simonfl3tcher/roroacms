@@ -22,12 +22,7 @@ class Admin < ActiveRecord::Base
 	# search the necessary fields for the given value
 
 	def self.setup_and_search(params)
-		if params.has_key?(:search)
-			admins = Admin.where("email like ? or first_name like ? or last_name like ? or username like ?", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%").page(params[:page]).per(Setting.get_pagination_limit)
-		else 
-			admins = Admin.where('1+1=2').page(params[:page]).per(Setting.get_pagination_limit)
-		end
-		
+		admins = Admin.where('1+1=2').page(params[:page]).per(Setting.get_pagination_limit)
 		return admins
 	end
 

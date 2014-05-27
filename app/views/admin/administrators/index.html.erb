@@ -24,7 +24,7 @@
 					<thead>
 						<tr>
 							<th>Name</th>
-							<th>Email Address</th>
+							<th class="hidden-xs">Email Address</th>
 							<th>&nbsp;</th>
 						</tr>
 					</thead>
@@ -34,10 +34,10 @@
 						<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 
 							<td>
-								<img src="<%= admin.avatar %>" class="img-circle" width="35">&nbsp;
+								<img src="<%= admin.avatar %>" class="img-circle hidden-xs" width="35">&nbsp;
 								<%= admin.first_name + " " + admin.last_name %>
 							</td>
-							<td><%= admin.email %></td>
+							<td class="hidden-xs"><%= admin.email %></td>
 							<td class="center">
 								<% if admin.overlord != 'Y' || (admin.id.to_i == session[:admin_id].to_i) %>       
 								<%= link_to edit_admin_administrator_path(admin), :class => '' do %>

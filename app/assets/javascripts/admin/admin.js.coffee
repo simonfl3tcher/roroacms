@@ -28,18 +28,22 @@ $(document).ready ->
         formData += "&ck_content=" + encodeURIComponent(c)
         if $("input[name=\"_method\"]").length > 0
           $.post "/admin/posts/autosave_update", formData, (data) ->
-            $("#revisionsContainer").html data
-            return
+            if data != 'f'
+              $("#revisionsContainer, #revisions").html data
+              return
 
       return
     ), 120000
   
   # check all the closest checkboxes - used for the bulk update in the admin panel
-  $(".checkall").change ->
+  $("#dtable th .iCheck-helper").click ->
     checkboxes = $(this).closest("form").find(":checkbox")
-    checkboxes.attr "checked", $(this).is(":checked")
-    return
 
+    if $(this).parent().hasClass('checked')
+      $('tbody td input[type=checkbox]').iCheck('check');
+    else
+      $('tbody td input[type=checkbox]').iCheck('uncheck');
+    return
   
   # URL writer when writing the title of the page 
   $("#post_post_title").bind "change keyup", (->
@@ -48,6 +52,7 @@ $(document).ready ->
   )
 
   $(".chosen-select").chosen({width: "100%", placeholder_text_multiple: "Please start typing..."})
+  $(".editor").ghostDown();
   
   $.scrollUp()
   return

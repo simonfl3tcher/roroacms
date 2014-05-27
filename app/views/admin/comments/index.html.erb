@@ -12,12 +12,12 @@
           <table id="dtable" class="table table-striped table-bordered" cellspacing="0" width="100%">
             <thead>
               <tr>
-                <th class="checkboxth"><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
+                <th class="checkboxth hidden-xs"><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
                 <th>Article</th>
-                <th>Comment</th>
-                <th>Current Status</th>
+                <th class="hidden-xs">Comment</th>
+                <th class="hidden-xs">Current Status</th>
                 <th>Action</th>
-                <th>&nbsp;</th>
+                <th class="hidden-xs">&nbsp;</th>
               </tr>
             </thead>
 
@@ -25,18 +25,18 @@
              <% @comments.each do |comment| %>
               <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 
-              <td><%= check_box_tag 'comments[]', comment.id %></td>
+              <td class="hidden-xs"><%= check_box_tag 'comments[]', comment.id %></td>
               <td>
                 <%= link_to page_path(comment.post), :target => '_blank' do %>
                   <%= comment.post.post_title %>
                 <% end %>
              
               </td>
-              <td>
+              <td class="hidden-xs">
                 <small>Comment submitted on:- <%= comment.submitted_on.strftime "%d-%m-%Y"%></small><br />
                 <%= excerpt comment.comment, 50 %>
               </td>
-              <td>
+              <td class="hidden-xs">
 
                 <% if comment.comment_approved == 'Y' %>
                   Approved
@@ -58,7 +58,7 @@
                     <i class="fa fa-trash-o"></i>
                   <% end %>
                 </td>
-                <td class="center">
+                <td class="center hidden-xs">
                   <% if comment.comment_approved == 'Y' %>
                     <i class="fa fa-check-circle"></i>
                   <% elsif comment.comment_approved == 'N' %>
@@ -71,8 +71,10 @@
             <% end %>
             </tbody>
           </table>
-          <hr>
-          <%= bulk_update_dropdown Hash['unapprove' => 'Unapprove', 'approve' => 'Approve', 'mark_as_spam' => 'Mark as spam', 'destroy' => 'Destroy'] %>
+          <div class="hidden-xs">
+            <hr>
+            <%= bulk_update_dropdown Hash['unapprove' => 'Unapprove', 'approve' => 'Approve', 'mark_as_spam' => 'Mark as spam', 'destroy' => 'Destroy'] %>
+          </div>
         <% end %>
       </div>
     </div>

@@ -82,6 +82,7 @@ Roroacms::Application.routes.draw do
       collection do
         post 'bulk_update'
         post 'autosave_create'
+        post 'create_additional_data'
         put 'autosave_update'
       end
       member{ post 'update_from_air' }
