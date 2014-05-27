@@ -5,7 +5,7 @@ class Term < ActiveRecord::Base
 	has_many :term_relationships
 	has_many :posts, :through => :term_relationships
 	has_one :term_anatomy, :dependent => :destroy
-  	validates :name, :presence => true
+  	validates :name, :slug, :presence => true
   	validates_format_of :slug, :with => /^[A-Za-z0-9-]*$/
   	validates_uniqueness_of :slug, :on => :create
 

@@ -26,10 +26,11 @@ class Admin::MenusController < AdminController
 		  if @menu.save
 		    format.html { redirect_to edit_admin_menu_path(@menu), notice: 'Menu Group was successfully created.' }
 		  else
-
-		  	@menugroups = Menu.all
-		    format.html { render action: "index" }
-
+		    format.html { 
+			  	@menugroups = Menu.all
+			  	@title = 'Menus'
+		    	render action: "index" 
+		    }
 		  end
 
 		end

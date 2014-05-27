@@ -67,17 +67,7 @@ class Admin::TermsController < AdminController
 
 	def edit 
 		@category = Term.find(params[:id])
-
-		if @category.term_anatomy.taxonomy == 'category' 
-			add_breadcrumb "Categories", :admin_post_categories_path, :title => "Back to categories"
-			add_breadcrumb "Article Category"
-			@title = 'Article Category'
-		else
-			add_breadcrumb "Tags", :admin_post_tags_path, :title => "Back to tags"
-			add_breadcrumb "Article Tag"
-			@title = 'Article Tag'
-		end
-
+		@title = edit_title()
 		@type = @category.term_anatomy.taxonomy
 
 	end
@@ -99,10 +89,31 @@ class Admin::TermsController < AdminController
 			    Term.update_slug_for_subcategories(@category.id, old_url, true)
 				format.html { redirect_to edit_admin_term_path(@category), notice: "#{type} was successfully updated" }
 			else
-				format.html { render action: "edit" }
+				format.html { 
+					@title = edit_title()
+					render action: "edit" 
+				}
 			end
 
 	    end
+	end
+
+	# set the title and breadcrumbs for the edit screen
+
+	def edit_title
+
+		if @category.term_anatomy.taxonomy == 'category' 
+			add_breadcrumb "Categories", :admin_post_categories_path, :title => "Back to categories"
+			add_breadcrumb "Article Category"
+			@title = 'Article Category'
+		else
+			add_breadcrumb "Tags", :admin_post_tags_path, :title => "Back to tags"
+			add_breadcrumb "Article Tag"
+			@title = 'Article Tag'
+		end
+
+		return @title
+
 	end
 
 

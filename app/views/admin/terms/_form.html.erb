@@ -3,8 +3,9 @@
     <%= hidden_field_tag :type_taxonomy, @type %>
 
     <div class="form-group">
-      <%= f.label :name %>
+      <%= f.label :name, :class => 'control-label' %>
       <%= f.text_field :name, size: 40, :class => "form-control" %>
+      <%= errors_for @category, :name %>
     </div>
     <div class="form-group">
       <%= f.label :parent %>
@@ -15,8 +16,9 @@
       <% end %>
     </div>
     <div class="form-group">
-      <%= f.label :slug %>
+      <%= f.label :slug, :class => 'control-label' %>
       <%= f.text_field :slug, size: 40, :class => "form-control" %>
+      <%= errors_for @category, :slug %>
     </div>
     <div class="form-group">
       <%= label_tag 'Description' %>

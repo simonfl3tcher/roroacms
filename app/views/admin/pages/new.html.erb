@@ -15,22 +15,11 @@
 							<li><a href="#revisions" data-toggle="tab"><i class="fa fa-history"></i> History</a></li>
 							<li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> Search Engine Optimisation</a></li>
 							<li><a href="#categories" data-toggle="tab"><i class="fa fa-sitemap"></i> Tags &amp; Categories</a></li>
+							<li><a href="#supplements" data-toggle="tab"><i class="fa fa-paperclip"></i> Additional Data</a></li>
 						</ul>
 						<div class="tab-content">
+							<%= render :partial => 'admin/partials/submit_bar', :locals => { :post_record => @page }  %>
 							<div class="tab-pane active" id="general">
-
-								<div class="formToolbar"> 
-									<div class="btn-group pull-right">
-										<%= link_to admin_post_path(1), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-sm btn-danger pull-left' do %>
-											<i class="fa fa-trash-o"></i>Delete
-										<% end %> 
-										<%= link_to page_path(1), :class => 'btn btn-default btn-sm pull-left', :target => '_blank' do %>
-											<i class="fa fa-search"></i>View
-										<% end %>  
-										<button type="submit" class="btn btn-small btn-primary btn-sm pull-right"><i class="fa fa-check"></i>Save</button>
-									</div>
-									<div class="clearfix"></div>
-								</div>
 
 								<% if !@page.post_image.blank? %>
 
@@ -142,8 +131,7 @@
 							</div>
 							<div class="tab-pane" id="content">
 
-								<%= f.text_area :post_content, :class => 'ckeditor' %>
-<!-- 
+
 								<div class="features">
 									<section class="editor">
 										<div class="outer">
@@ -151,7 +139,7 @@
 												<section class="entry-markdown">
 													<header class="floatingheader">Markdown <a href="javascript:;" data-toggle="modal" data-target="#mdModal"><i class="fa fa-info-circle pull-right"></i></a></header>
 													<section class="entry-markdown-content">
-														<textarea id="entry-markdown">...</textarea>
+														<%= f.text_area :post_content, :value => '...', :id => "entry-markdown" %>
 													</section>
 												</section>
 												<section class="entry-preview active">
@@ -164,7 +152,7 @@
 										</div>
 									</section>
 								</div>
- -->
+
 
 							</div>
 
@@ -260,6 +248,26 @@
 								</div>
 
 							</div>
+							<div class="tab-pane" id="supplements">
+
+								<div class="additionalDataOptions">
+
+								</div>
+
+								<div class="form-group">
+			                    	<label class="col-sm-3 control-label">Key</label>
+								    <div class="col-sm-6">
+								    	<div class="input-group">
+									      <input type="text" class="form-control" id="addAdditionalDataInput">
+									      <span class="input-group-btn">
+									        <button class="btn btn-primary addAdditionalDataInput" type="button"><i class="fa fa-plus" style="margin:0"></i></button>
+									      </span>
+									    </div><!-- /input-group -->
+								    	
+								    </div>
+									<div class="clearfix"></div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -270,3 +278,34 @@
 
 <%= render 'admin/partials/markdown_modal' %>
 
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+		$('body').on('keypress', "#addAdditionalDataInput", function(e){
+			$('#addAdditionalDataInput').val($('#addAdditionalDataInput').val().toLowerCase().replace(' ', '-'))
+			if (e.which == 13) {
+				e.preventDefault();
+				$('.addAdditionalDataInput').trigger('click');
+			}
+		});
+		$('body').on('click', '.addAdditionalDataInput', function(){
+			$.ajax({
+			  type: "POST",
+			  url: "/admin/posts/create_additional_data",
+			  data: 'key=' + $('#addAdditionalDataInput').val(),
+			  dataType: "html",
+			  success: function(data) {
+			  	$('.additionalDataOptions').append(data);
+			  	$('#addAdditionalDataInput').val('')
+			  }
+			});
+		});
+		$('body').on('click', '.removeAdditionalGroup', function(e){
+			e.preventDefault();
+			if(confirm('Are you sure?')) {
+				$(this).closest('.form-group').remove();
+			}
+		});
+	});
+
+</script>

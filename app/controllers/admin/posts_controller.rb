@@ -51,7 +51,12 @@ class Admin::PostsController < AdminController
 		    format.html { redirect_to admin_posts_path, notice: 'Post was successfully created.' }
 
 		  else
-		    format.html { render action: "new" }
+		    format.html { 
+		    	# add breadcrumb and set title
+				add_breadcrumb "Create New Article"
+				@title = "Create New Article"
+		    	render action: "new" 
+		    }
 		  end
 
 		end
@@ -92,7 +97,12 @@ class Admin::PostsController < AdminController
 	        format.html { redirect_to edit_admin_post_path(@post), notice: 'Post was successfully updated.' }
 	      
 	      else
-	        format.html { render action: "edit" }
+	        format.html { 
+	        	# add breadcrumb and set title
+				add_breadcrumb "Edit Article" 
+				@title = "Edit Article"
+	        	render action: "edit" 
+	        }
 	      end
 
 	    end
@@ -115,17 +125,16 @@ class Admin::PostsController < AdminController
 
 
 	def autosave_update
-		@post = Post.new(post_params)
-		ret = Post.do_autosave params, @post
+		post = Post.new(post_params)
+		ret = Post.do_autosave params, post
 
 		if ret == 'passed'
 
-			@revisions = Post.where(:ancestry => params[:post][:id], :post_type => 'autosave').order('created_at desc')
-      		render :partial => "autosave_list"
-			return @return = "passed"
+			@post = Post.find(params[:post][:id])
+      		render :partial => "admin/partials/revision_tree"
 
 		else
-			return render :text => "failed" 
+			return render :text => "f" 
 		end
 
 	end
@@ -145,6 +154,11 @@ class Admin::PostsController < AdminController
 	    end
 	end
 
+	def create_additional_data
+		@key = params[:key]
+		print render :partial => 'admin/partials/post_additional_data_view'
+	end
+
 	private 
 
 
@@ -152,7 +166,7 @@ class Admin::PostsController < AdminController
 
 	def post_params
 		if !session[:admin_id].blank?	
-			params.require(:post).permit(:admin_id, :post_content, :post_date, :post_name, :parent_id, :post_slug, :post_status, :post_title, :post_image, :post_template, :post_type, :disabled, :post_seo_title, :post_seo_description, :post_seo_keywords, :post_seo_is_disabled, :post_seo_no_follow, :post_seo_no_index)
+			params.require(:post).permit(:admin_id, :post_content, :post_date, :post_name, :parent_id, :post_slug, :post_visible, :post_additional_data, :post_status, :post_title, :post_image, :post_template, :post_type, :disabled, :post_seo_title, :post_seo_description, :post_seo_keywords, :post_seo_is_disabled, :post_seo_no_follow, :post_seo_no_index)
 		end
 	end
 

@@ -8,6 +8,8 @@ var app = function() {
         menu();
         togglePanel();
         closePanel();
+        do_checkboxes();
+
     };
 
     var tooltips = function() {
@@ -239,6 +241,14 @@ var app = function() {
         createCookie(name,"",-1);
     }
 
+    var do_checkboxes = function(){
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_flat-grey',
+            radioClass: 'iradio_flat-grey'
+        });
+    }
+
+
 
     //return functions
     return {
@@ -249,32 +259,15 @@ var app = function() {
         weather: weather,
         morrisPie: morrisPie,
         createCookie: createCookie,
-        getCookie: getCookie
+        getCookie: getCookie,
+        do_checkboxes: do_checkboxes
 
     };
 }();
-
-var do_checkboxes = function(){
-    $('input').iCheck({
-        checkboxClass: 'icheckbox_flat-grey',
-        radioClass: 'iradio_flat-grey'
-    });
-}
-
 //Load global functions
 $(document).ready(function() {
     app.init();
 
-    do_checkboxes();
-
     $("#leftside-navigation .sub-menu.active > a").find('i.arrow').removeClass('fa-angle-right').addClass('fa-angle-down');
     
-
-    $('#dtable').dataTable({
-       "oLanguage": {
-         "sSearch": ""
-       }
-     });
-
-
 });

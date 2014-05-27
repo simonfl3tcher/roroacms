@@ -15,9 +15,9 @@
             <tr>
               <th>&nbsp;</th>
               <th>Theme Name</th>
-              <th>Description</th>
-              <th>Author</th>
-              <th>Version</th>
+              <th class="hidden-xs">Description</th>
+              <th class="hidden-xs">Author</th>
+              <th class="hidden-xs">Version</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -29,16 +29,16 @@
               <%= radio_button_tag  'theme', theme['foldername'], theme['foldername'] == @current ? true : false, :style => "position: absolute; opacity: 0;", :class => "icheck" %>
             </label>
           </td>
-          <td><span class="hhfr">Theme Name:-</span>
+          <td>
             <%= theme['name'] %>
           </td>
-          <td><span class="hhfr">Description:-</span>
+          <td class="hidden-xs">
             <%= theme['description'] %>
           </td>
-          <td><span class="hhfr">Author:-</span>
+          <td class="hidden-xs">
             <%= theme['author'] %>
           </td>
-          <td><span class="hhfr">Version:-</span>
+          <td class="hidden-xs">
             <%= theme['version'] %>
           </td>
             <td class="center">

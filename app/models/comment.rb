@@ -16,16 +16,7 @@ class Comment < ActiveRecord::Base
 	# search the necessary fields for the given value
 
 	def self.setup_and_search(params)
-		if params.has_key?(:search) && !params[:search].blank?
-			comments = Comment.where("(author like ? or email like ? or comment like ?) and comment_approved != 'S'", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%").order('submitted_on desc').page(params[:page]).per(Setting.get_pagination_limit)
-		else
-			comments = Comment.order('submitted_on desc').order('created_at desc').page(params[:page]).per(Setting.get_pagination_limit)
-		end
-
-		if params.has_key?(:filter) && params[:filter] != 'filter'
-			comments = Comment.where(:comment_approved => params[:filter]).order('created_at desc').page(params[:page]).per(Setting.get_pagination_limit)
-		end
-
+		comments = Comment.order('submitted_on desc').order('created_at desc').page(params[:page]).per(Setting.get_pagination_limit)
 		return comments
 	end
 

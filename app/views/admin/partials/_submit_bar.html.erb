@@ -1,0 +1,14 @@
+<div class="formToolbar"> 
+    <div class="btn-group pull-right"> 
+    	<% if defined?(post_record) && !post_record.id.blank? %>
+    		<%= link_to admin_post_path(post_record), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-sm btn-danger pull-left' do %>
+				<i class="fa fa-trash-o"></i>&nbsp;Delete
+			<% end %> 
+			<%= link_to page_path(post_record), :class => 'btn btn-default btn-sm pull-left hidden-xs', :target => '_blank' do %>
+				<i class="fa fa-search"></i>&nbsp;View
+			<% end %>  
+    	<% end %>
+      <button type="submit" class="btn btn-small btn-primary btn-sm pull-right"><i class="fa fa-check"></i>&nbsp;Save</button>
+    </div>
+    <div class="clearfix"></div>
+</div>

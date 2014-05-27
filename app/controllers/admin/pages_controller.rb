@@ -44,7 +44,12 @@ class Admin::PagesController < AdminController
 		  if @page.save
 		    format.html { redirect_to admin_pages_path, notice: 'Page was successfully created.' }
 		  else
-		    format.html { render action: "new" }
+		    format.html { 
+		    	# add breadcrumb and set title
+				add_breadcrumb "Create New Page"
+				@title = 'Create New Page'
+		    	render action: "new" 
+		    }
 		  end
 
 		end
@@ -56,7 +61,6 @@ class Admin::PagesController < AdminController
 	def edit 
 		# add breadcrumb and set title
 		add_breadcrumb "Edit Page" 
-		@title = 'Edit Page'
 
 		@edit = true
 		
@@ -64,6 +68,7 @@ class Admin::PagesController < AdminController
 		@revisions = Post.where(:ancestry => params[:id], :post_type => 'autosave').order('created_at desc')
 
 		@page = Post.find(params[:id])
+		@title = 'Edit "' + @page.post_title + '" Page'
 	end
 
 
@@ -93,7 +98,12 @@ class Admin::PagesController < AdminController
 	        format.html { redirect_to edit_admin_page_path(@page.id), notice: 'Page was successfully updated.' }
 
 	      else
-	        format.html { render action: "edit" }
+	        format.html { 
+	        	# add breadcrumb and set title
+				add_breadcrumb "Edit Page" 
+				@page.post_title.blank? ? @title = 'Edit Page' : @title = 'Edit "' + @page.post_title + '" Page'
+	        	render action: "edit" 
+	        }
 	      end
 
 	    end

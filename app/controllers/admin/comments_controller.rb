@@ -46,7 +46,13 @@ class Admin::CommentsController < AdminController
 	      if @comment.update_attributes(atts)
 	     	format.html { redirect_to edit_admin_comment_path(@comment), notice: 'Comment was successfully updated.' }
 	      else
-	        format.html { render action: "edit" }
+	        format.html { 
+	        	# add breadcrumb and set title
+	        	@title = "Edit Comment"
+				add_breadcrumb 'Edit Comment'
+				
+	        	render action: "edit" 
+	        }
 	      end
 
 	    end
