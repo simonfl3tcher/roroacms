@@ -23,6 +23,26 @@
 
     <%= csrf_meta_tags %>
 
+    <script type="text/javascript">
+
+      $(document).ready(function(){
+        $('#dtable').dataTable({
+          "bLengthChange": false,
+          "bInfo": false,
+          "iDisplayLength": <%= Setting.get('pagination_per') %>,
+          "oLanguage": {
+            "sSearch": ""
+          },
+          "bSort" : false,
+          fnInitComplete : function( oSettings, json ){
+           $("#dtable_paginate").detach().prependTo("#paginationWrapper");
+          }
+        });
+
+      })
+
+    </script>
+
   </head>
       <section id="container">
         <header id="header">

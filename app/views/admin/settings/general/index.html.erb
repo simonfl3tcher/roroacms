@@ -17,11 +17,8 @@
 		                <li><a href="#user-groups" data-toggle="tab"><i class="fa fa-users"></i> User Groups</a></li>
 		            </ul>
 		            <div class="tab-content">
+		            	<%= render :partial => 'admin/partials/submit_bar' %>
 		                <div class="tab-pane active" id="general">
-		                	<div class="form-group">
-		                		<%= submit_tag "Save", :class => 'btn btn-small btn-primary pull-right' %>
-		                		<div class="clearfix"></div>
-		                	</div>
 		                    <div class="form-group">
 		                    	<%= label_tag(:display_url, "Display URL", class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
@@ -39,7 +36,18 @@
 							<div class="form-group">
 								<%= label_tag(:pagination_per, "Pagination per page (Admin)", class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
-							    	<%= text_field_tag(:pagination_per, Setting.get('pagination_per'), class: 'form-control') %>
+							    	<label class="radio-inline">
+								      <%= radio_button(:pagination_per, nil, 10, :checked => Setting.get('pagination_per').to_i == 10 ? true : false) %> 10
+								    </label>
+								    <label class="radio-inline">
+								      <%= radio_button(:pagination_per, nil, 25, :checked => Setting.get('pagination_per').to_i == 25 ? true : false) %> 25
+								    </label>
+								    <label class="radio-inline">
+								      <%= radio_button(:pagination_per, nil, 50, :checked => Setting.get('pagination_per').to_i == 50 ? true : false) %> 50
+								    </label>
+								     <label class="radio-inline">
+								      <%= radio_button(:pagination_per, nil, 100, :checked => Setting.get('pagination_per').to_i == 100 ? true : false) %> 100
+								    </label>
 							    </div>
 								<div class="clearfix"></div>
 							</div>
@@ -88,10 +96,6 @@
 		                </div>
 		                <div class="tab-pane" id="comment">
 		                	<div class="form-group">
-		                		<%= submit_tag "Save", :class => 'btn btn-small btn-primary pull-right' %>
-		                		<div class="clearfix"></div>
-		                	</div>
-		                	<div class="form-group">
 		                		<%= label_tag(:article_comments, "Article Comments On?", class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<div class="">
@@ -120,10 +124,6 @@
 		                </div>
 
 		                <div class="tab-pane" id="amazon">
-							<div class="form-group">
-		                		<%= submit_tag "Save", :class => 'btn btn-small btn-primary pull-right' %>
-		                		<div class="clearfix"></div>
-		                	</div>
 		                    <div class="form-group">
 		                    	<%= label_tag(:aws_access_key_id, "Access Key ID", class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
@@ -147,10 +147,6 @@
 							</div>
 		                </div>
 		                <div class="tab-pane" id="seo">
-		                	<div class="form-group">
-		                		<%= submit_tag "Save", :class => 'btn btn-small btn-primary pull-right' %>
-		                		<div class="clearfix"></div>
-		                	</div>
 		                   <div class="form-group">
 		                    	<%= label_tag(:seo_site_title, "Website Title", class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
@@ -250,10 +246,6 @@
 							</div>
 		                </div>
 		                <div class="tab-pane" id="user-groups">
-		                	<div class="form-group">
-		                		<%= submit_tag "Save", :class => 'btn btn-small btn-primary pull-right' %>
-		                		<div class="clearfix"></div>
-		                	</div>
 
 		                	<div class="userGroupOptions">
 
@@ -309,7 +301,8 @@
 			  }
 			});
 		});
-		$('body').on('click', '.removeUserGroup', function(){
+		$('body').on('click', '.removeUserGroup', function(e){
+			e.preventDefault();
 			if(confirm('Are you sure? Make sure update all users with this group')) {
 				$(this).closest('.form-group').remove();
 			}

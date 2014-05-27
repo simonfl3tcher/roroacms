@@ -9,7 +9,7 @@
    @warningColorHover:lighten(@warningColor,5%); //light yellow
    @infoColor:#3598db; //blue
    @infoColorHover:lighten(@infoColor,5%); //light blue
-   @dangerColor:#e84c3d; //red
+   @dangerColor:#EB6154; //red
    @dangerColorHover:lighten(@dangerColor,5%); //light red
 
    //Rounded Borders
@@ -521,7 +521,7 @@ h3.underline {
 }
 
 table {
-    td.center {
+    td.center, th.center {
         text-align: center;
     }
 }
@@ -2660,6 +2660,9 @@ h3.timeline-title {
       a {
         border-left:none !important;
         padding-left: 22px;
+        i {
+          margin-right:10px;
+        }
 
       }
     }
@@ -2667,10 +2670,6 @@ h3.timeline-title {
 
   textarea {
     height:180px;
-  }
-
-  i {
-    margin-right:10px;
   }
 
   .panel-body {
@@ -2683,10 +2682,12 @@ h3.timeline-title {
   margin-right:10px;
 }
 
-.radio-inline:first-child, .checkbox-inline:first-child {
-  padding-left:0px;
+.radio-inline, .checkbox-inline {
+  margin-bottom:10px;
 }
-
+.radio-inline:first-child {
+  margin-left:10px;
+}
 select.form-control {
   margin-bottom:10px;
 }
@@ -3163,12 +3164,9 @@ ol.sortable .itemInformation {
   background-color: #FFFFFF;
   border-bottom: 1px solid #DDDDDD;
   height: 59px;
-  left: 0;
   padding: 10px 0;
-  position: absolute;
-  right: 0;
-  top: -20px;
   width: 100%;
+  margin-top:-20px;
   .btn {
     margin-top:7px;
   }
@@ -3176,7 +3174,7 @@ ol.sortable .itemInformation {
 
 .tab-content > .active {
    display: block;
-  padding-top: 69px;
+  padding-top: 20px;
   position: relative;
 }
 
@@ -3316,8 +3314,31 @@ h4.timelineSingle-title * {
 }
 
 .removeUserGroup {
-  margin-top:75px;
-  display: block;
+  margin-top:-10px;
+  border-top-left-radius:0px;
+  border-top-right-radius:0px;
+}
+
+.user-groups select {
+  border-bottom-left-radius:0px;
+  border-bottom-right-radius:0px;
+}
+
+.additional-data {
+  textarea {
+    border-bottom-left-radius:0px;
+    border-bottom-right-radius:0px;
+    resize: none;
+  }
+
+  .removeAdditionalGroup {
+    border-top-left-radius:0px;
+    border-top-right-radius:0px;
+  }
+}
+
+.view-all-revisions {
+  width:92%;
 }
 
 /* ==========================================================================
@@ -3328,7 +3349,49 @@ h4.timelineSingle-title * {
     #main-content .h1 {
         font-size: 35px;
     }
+    
 }
+
+@media only screen and (max-width: 767px) {
+    .settingsArea .tab-wrapper.tab-left > .nav-tabs > li {
+      min-width:62px;
+    }
+    .settingsArea .tab-wrapper.tab-left > .nav-tabs > li > a {
+      min-width: 60px;
+      width:100%;
+      text-align: center;
+      max-width: 0;
+      i {
+        margin-right:0px !important;
+      }
+    }
+
+    .main-content-wrapper #main-content .h1 {
+      font-size: 29px;
+    }
+
+    .timelineSingle-badge {
+      display: none;
+    }
+
+    .timelineSingle:before {
+      background:none;
+    }
+
+    .timelineSingle > li > .timelineSingle-panel:before, .timelineSingle > li > .timelineSingle-panel:after {
+      border:none;
+    }
+
+    .timelineSingle > li > .timelineSingle-panel {
+      width:100%;
+    }
+
+    .view-all-revisions {
+      width:100%;
+    }
+
+}
+
 @media only screen and (max-width: 660px) {
     #header {
         height:160px;

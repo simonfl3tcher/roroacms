@@ -28,17 +28,15 @@ class Post < ActiveRecord::Base
     # search the necessary fields for the given value
 
     def self.setup_and_search_posts(params, type)
-        if params.has_key?(:search) && !params[:search].blank?
-            posts = Post.where("(id LIKE ? or post_title LIKE ? or post_slug LIKE ?) and disabled = 'N' and post_type = ? and post_type != 'autosave'", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", type)
-        else
-            posts = Post.select('*').where("disabled ='N' and post_type = '#{type}'").order("COALESCE(ancestry, id), ancestry IS NOT NULL, id")
+        
+        posts = Post.select('*').where("disabled ='N' and post_type = '#{type}'").order("COALESCE(ancestry, id), ancestry IS NOT NULL, id")
 
-            if type == 'post'
-              posts = posts.page(params[:page]).per(Setting.get_pagination_limit)
-            end
+        if type == 'post'
+          posts = posts.page(params[:page]).per(Setting.get_pagination_limit)
         end
 
         posts
+        
     end
 
     # get all the tags for the system

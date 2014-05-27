@@ -28,7 +28,7 @@
 		                	<% @posts.each do |post| %>
 
 		                		<li class="list-group-item">
-			                        <%= check_box_tag 'posts[]', post.id %>&nbsp;<span for="checkbox"><%= post.post_title %><%= post.post_status == "Draft" ? ' - draft' : '' %> <small>(Published Date:- <%= post.post_date.strftime "%d-%m-%Y" %>)</small></span>
+			                        <%= check_box_tag 'posts[]', post.id %>&nbsp;<span for="checkbox"><%= post.post_title %><%= post.post_status == "Draft" ? ' - draft' : '' %> <small class="hidden-xs">(Published Date:- <%= post.post_date.strftime "%d-%m-%Y" %>)</small></span>
 			                    </li>
 
 		                	<% end %>
@@ -73,7 +73,7 @@
 		                	<% @pages.each do |page| %>
 
 		                		<li class="list-group-item">
-			                        <%= check_box_tag 'pages[]', page.id %>&nbsp;<span for="checkbox"><%= page.post_title %><%= page.post_status == "Draft" ? ' - draft' : '' %> <small>(Published Date:- <%= page.post_date.strftime "%d-%m-%Y" %>)</small></span>
+			                        <%= check_box_tag 'pages[]', page.id %>&nbsp;<span for="checkbox"><%= page.post_title %><%= page.post_status == "Draft" ? ' - draft' : '' %> <small class="hidden-xs">(Published Date:- <%= page.post_date.strftime "%d-%m-%Y" %>)</small></span>
 			                    </li>
 
 		                	<% end %>

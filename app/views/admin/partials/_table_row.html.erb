@@ -1,8 +1,8 @@
  <tr class="<%= cycle('list_line_odd', 'list_line_even') %> <%= @content.post_status == "Draft" ? 'draft' : '' %>">
 
-  <td><%= check_box_tag 'pages[]', @content.id %></td>
+  <td class="hidden-xs"><%= check_box_tag 'pages[]', @content.id %></td>
 	<td><%= ancestory_indent @content %><%= @content.post_title %><%= @content.post_status == "Draft" ? ' - draft' : '' %></td>
-	<td><%= @content.post_date.strftime "%d-%m-%Y" %></td>
+	<td class="hidden-xs"><%= @content.post_date.strftime "%d-%m-%Y" %></td>
   <td class="center">
       <%= link_to edit_admin_page_path(@content), :class => '' do %>
         <i class="fa fa-pencil"></i>

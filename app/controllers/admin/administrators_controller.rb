@@ -24,7 +24,7 @@ class Admin::AdministratorsController < AdminController
 		@admin = Admin.find(params[:id])
 
 		# add breadcrumb and set title
-		@title = 'Profile - ' + @admin.first_name + ' ' + @admin.last_name
+		@title = 'Profile - ' + @admin.username
 		add_breadcrumb "Edit User"
 		
 		# action for the form as both edit/new are using the same form.
@@ -68,7 +68,12 @@ class Admin::AdministratorsController < AdminController
 	        format.html { redirect_to edit_admin_administrator_path(@admin), notice: 'Admin was successfully updated.' }
 	      else
 	      	@action = 'update'
-	        format.html { render action: "edit" }
+	        format.html { 
+	        	# add breadcrumb and set title
+				@title = 'Profile - ' + @admin.username
+				add_breadcrumb "Edit User"
+	        	render action: "edit" 
+	        }
 	      end
 
 	    end
@@ -117,8 +122,14 @@ class Admin::AdministratorsController < AdminController
 		    format.html { redirect_to admin_administrators_path, notice: 'Admin was successfully created.' }
 
 		  else
-		  	@action = 'create'
-		    format.html { render action: "new" }
+		    format.html { 
+		    	# add breadcrumb and set title
+			    add_breadcrumb "Add New User"
+			    @title = 'Profile'
+			  	@action = 'create'
+
+		    	render action: "new" 
+		    }
 		  end
 
 		end
