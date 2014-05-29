@@ -49,7 +49,7 @@
       width: "100%",
       placeholder_text_multiple: "Please start typing..."
     });
-    $(".editor").ghostDown();
+    $('.contentReload').bind('click', function(e) {});
     $.scrollUp();
   });
 

@@ -26,8 +26,8 @@ var app = function() {
 
     var toggleMenuLeft = function() {
         $('#toggle-left').bind('click', function(e) {
-            if (!$('.sidebarRight').hasClass('.sidebar-toggle-right')) {
-                $('.sidebarRight').removeClass('sidebar-toggle-right');
+            if (!$('.sidebar-right').hasClass('.sidebar-toggle-right')) {
+                $('.sidebar-right').removeClass('sidebar-toggle-right');
                 $('.main-content-wrapper').removeClass('main-content-toggle-right');
                 if(getCookie('menu_contracted') == '') {
                     createCookie('menu_contracted', 'true', 30);
@@ -50,7 +50,7 @@ var app = function() {
                 console.log("in here2")
             }
             
-            $('.sidebarRight').toggleClass('sidebar-toggle-right animated bounceInRight');
+            $('.sidebar-right').toggleClass('sidebar-toggle-right animated bounceInRight');
             $('.main-content-wrapper').toggleClass('main-content-toggle-right');
 
             if ( $(window).width() < 660 ) {

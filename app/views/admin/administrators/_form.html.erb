@@ -11,7 +11,7 @@
 
           <% if !@admin.id.blank? %>
 
-            <div class="well wellBackground" style="background-image: url('<%= @admin.cover_picture %>');">
+            <div class="well well-background" style="background-image: url('<%= @admin.cover_picture %>');">
               <center>
                 <img src="<%= @admin.avatar %>" name="aboutme" width="140" height="140" class="img-circle">
                 <h3><%= @admin.username %></h3>
@@ -20,13 +20,13 @@
 
               <% if @admin.cover_picture.blank? %>
 
-                <a class="btn btn-xs btn-primary pull-right addProfileImage" href="javascript:;"><span class="fa fa-picture-o"></span> Change cover</a>
-                <a class="btn btn-xs btn-danger pull-right removeProfileImage hidden" href="javascript:;"><span class="fa fa-trash-o"></span> Remove cover</a>
+                <a class="btn btn-xs btn-primary pull-right add-profile-image" href="javascript:;"><span class="fa fa-picture-o"></span> Change cover</a>
+                <a class="btn btn-xs btn-danger pull-right remove-profile-image hidden" href="javascript:;"><span class="fa fa-trash-o"></span> Remove cover</a>
 
               <% else %>
 
-                <a class="btn btn-xs btn-primary pull-right addProfileImage hidden" href="javascript:;"><span class="fa fa-picture-o"></span> Change cover</a>
-                <a class="btn btn-xs btn-danger pull-right removeProfileImage" href="javascript:;"><span class="fa fa-trash-o"></span> Remove cover</a>
+                <a class="btn btn-xs btn-primary pull-right add-profile-image hidden" href="javascript:;"><span class="fa fa-picture-o"></span> Change cover</a>
+                <a class="btn btn-xs btn-danger pull-right remove-profile-image" href="javascript:;"><span class="fa fa-trash-o"></span> Remove cover</a>
 
               <% end %>
 
@@ -37,12 +37,12 @@
 
           <% else %>
 
-            <div class="well wellBackground">
+            <div class="well well-background">
               <center>
                 <img src="https://s3.amazonaws.com/roroa/default-user-icon-profile.png" name="aboutme" width="140" height="140" class="img-circle">
               </center>
-              <a style="margin:10px;" class="btn btn-xs btn-primary pull-right addProfileImage" href="javascript:;"><span class="fa fa-picture-o"></span> Change cover</a>
-              <a class="btn btn-xs btn-danger pull-right removeProfileImage hidden" href="javascript:;"><span class="fa fa-trash-o"></span> Remove cover</a>
+              <a style="margin:10px;" class="btn btn-xs btn-primary pull-right add-profile-image" href="javascript:;"><span class="fa fa-picture-o"></span> Change cover</a>
+              <a class="btn btn-xs btn-danger pull-right remove-profile-image hidden" href="javascript:;"><span class="fa fa-trash-o"></span> Remove cover</a>
               <%= hidden_field_tag :has_cover_image, ""  %>
               <%= f.file_field :cover_picture, :class => "" %>
             </div>

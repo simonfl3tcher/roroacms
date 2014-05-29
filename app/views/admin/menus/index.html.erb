@@ -1,4 +1,4 @@
-<div class="row settingsArea">
+<div class="row settings-area">
 
 	<div class="col-md-12">
 
@@ -18,7 +18,7 @@
 						</div>
 
 						<% Menu.all.each_with_index do |m, index| %>
-							<div class="tab-pane menuGroupDisplay" id="<%= m.key + '-' + index.to_s %>">
+							<div class="tab-pane menu-group-display" id="<%= m.key + '-' + index.to_s %>">
 								<%= get_menu_groups m %>
 							</div>
 						<% end %>
