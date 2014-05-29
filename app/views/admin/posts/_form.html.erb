@@ -2,7 +2,7 @@
     <%= form_for [:admin, @post] do |f| %>
       <div class="span9">
       <% if @post.errors.any? %>
-        <div id="error_explanation">
+        <div id="error-explanation">
           <h2><%= pluralize(@post.errors.count, "error") %> errors:</h2>
 
           <ul>
@@ -179,7 +179,7 @@
                       <img src="<%= @post.post_image %>" />
                       <a href="javascript:;" id="filebrowser" class="removeArticleImage"><i class="icon-remove"></i>&nbsp;Remove Article Image</a>
                   <% else %>
-                      <a href="javascript:;" class="addArticleImage"><i class="icon-plus"></i>&nbsp;Add Article Image</a>
+                      <a href="javascript:;" class="add-article-image"><i class="icon-plus"></i>&nbsp;Add Article Image</a>
                   <% end %>
 
                 </div>

@@ -52,7 +52,9 @@ $(document).ready ->
   )
 
   $(".chosen-select").chosen({width: "100%", placeholder_text_multiple: "Please start typing..."})
-  $(".editor").ghostDown();
+
+  $('.contentReload').bind 'click', (e) ->
+    # $(".editor").ghostDown();
   
   $.scrollUp()
   return

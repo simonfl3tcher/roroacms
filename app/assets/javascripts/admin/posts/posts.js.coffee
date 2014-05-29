@@ -16,34 +16,34 @@ readURL = (input) ->
   return
 
 $(document).ready ->
-  $("body").on "click", ".addArticleImage", (e) ->
+  $("body").on "click", ".add-article-image", (e) ->
     e.preventDefault()
-    $('#post_post_image').trigger('click');
+    $('#post-post-image').trigger('click');
     return
 
-  $("#post_post_image").change ->
+  $("#post-post-image").change ->
     readURL this
     return
 
 
-  $("body").on "click", ".addProfileImage", (e) ->
+  $("body").on "click", ".add-profile-image", (e) ->
     e.preventDefault()
-    $('#admin_cover_picture').trigger('click');
+    $('#admin-cover-picture').trigger('click');
     return
 
-  $("#admin_cover_picture").change ->
+  $("#admin-cover-picture").change ->
     readURL this
-    $('.addProfileImage').addClass('hidden')
-    $('.removeProfileImage').removeClass('hidden')
+    $('.add-profile-image').addClass('hidden')
+    $('.remove-profile-image').removeClass('hidden')
     return
 
-  $("body").on "click", ".removeProfileImage", (e) ->
+  $("body").on "click", ".remove-profile-image", (e) ->
     
-    input = $("#admin_cover_picture")
+    input = $("#admin-cover-picture")
 
     $(".well").attr("style", "")
     $(this).addClass('hidden')
-    $('.addProfileImage').removeClass('hidden')
+    $('.add-profile-image').removeClass('hidden')
     $(".well input[name=has_cover_image]").val('')
 
     input.replaceWith(input.val('').clone(true))
@@ -69,7 +69,7 @@ $(document).ready ->
 
     return
 
-  $("body").on "click", ".removeAdditionalGroup", (e) ->
+  $("body").on "click", ".remove-additional-group", (e) ->
     e.preventDefault()
     $(this).closest(".form-group").remove()  if confirm("Are you sure?")
     return
