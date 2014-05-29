@@ -3544,6 +3544,7 @@ window.CodeMirror = (function() {
   // FROMTEXTAREA
 
   CodeMirror.fromTextArea = function(textarea, options) {
+  	console.log(textarea)
     if (!options) options = {};
     options.value = textarea.value;
     if (!options.tabindex && textarea.tabindex)
@@ -5438,7 +5439,7 @@ window.CodeMirror = (function() {
         if (/\w/.test(str.charAt(i - 2)) && /[^\-?\.]/.test(str.charAt(i))) return true;
         if (i > 2 && /[\d\.,]/.test(str.charAt(i - 2)) && /[\d\.,]/.test(str.charAt(i))) return false;
       }
-      return /[~!#%&*)=+}\]|\"\.>,:;][({[<]|-[^\-?\.\u2010-\u201f\u2026]|\?[\w~`@#$%\^&*(_=+{[|><]|…[\w~`@#$%\^&*(_=+{[><]/.test(str.slice(i - 1, i + 1));
+      return /[~!#%&*)=+}\]|\"\.>,:;][({[<]|-[^\-?\.\u2010-\u201f\u2026]|\?[\w~`@#$%\^&*(_=+{[|><]|â€¦[\w~`@#$%\^&*(_=+{[><]/.test(str.slice(i - 1, i + 1));
     };
 
   var knownScrollbarWidth;
@@ -6287,9 +6288,9 @@ CodeMirror.defineMIME("text/x-markdown", "markdown");
 //
 // The full source distribution is at:
 //
-//        A A L
-//        T C A
-//        T K B
+//				A A L
+//				T C A
+//				T K B
 //
 //   <http://www.attacklab.net/>
 //

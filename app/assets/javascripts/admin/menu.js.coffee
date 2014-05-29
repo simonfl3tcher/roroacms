@@ -48,7 +48,7 @@ $(document).ready ->
     return
 
   # nestedSortable function instantiation
-  $("#menuSortableFields ol.sortable").nestedSortable
+  $("#menu-sortable-fields ol.sortable").nestedSortable
     items: "li"
     maxLevels: 3
 
@@ -60,7 +60,7 @@ $(document).ready ->
 
   # when clicking the plus/minu icon this will either show or edit the edit div
   $("ol.sortable").on "click", "i.handler", ->
-    container = $(" > .itemInformation", $(this).closest("li"))
+    container = $(" > .item-information", $(this).closest("li"))
     if container.hasClass("active")
       $(this).removeClass "fa-minus"
       $(this).addClass "fa-plus"
@@ -80,7 +80,7 @@ $(document).ready ->
     return
 
   # creating a menu option 
-  $("#menuForms form").bind "submit", (e) ->
+  $("#menu-forms form").bind "submit", (e) ->
     e.preventDefault()
     # generic variables
     type = $(this).attr("data-type")
@@ -110,14 +110,14 @@ $(document).ready ->
       on save of individual li option - this will serialize the data to the html so when you 
       save the actual menu it will take this data and send it to the server
   ###
-  $("ol.sortable").on "click", ".submitForm", ->
+  $("ol.sortable").on "click", ".submit-form", ->
     form_data = $(this).closest("form")
 
 
     $(this).closest("li").attr "data-data", form_data.serialize()
-    $(this).closest("li").find('> .dd-handle > .listNameOption').text(form_data.find('input[name=label]').val())
+    $(this).closest("li").find('> .dd-handle > .list-name-option').text(form_data.find('input[name=label]').val())
 
-    $(".updateMenu").trigger "click"
+    $(".update-menu").trigger "click"
 
     return
 
@@ -125,9 +125,9 @@ $(document).ready ->
       remove the option form the list. The form is not updated until you click the update function
       at which point it serializes the data without the option in.
   ###
-  $("#menuSortableFields").on "click", ".deleteOption", (e) ->
+  $("#menu-sortable-fields").on "click", ".delete-option", (e) ->
     e.preventDefault()
-    $(this).closest(".itemInformation").slideUp "slow"
+    $(this).closest(".item-information").slideUp "slow"
     li = $(this).closest("li").fadeOut("slow")
     setTimeout ((e) ->
       $(li).remove()

@@ -2,7 +2,7 @@
 	<%= label_tag(:additional_data, "#{@key.blank? ? key : @key}", class: "col-sm-3 control-label") %>
     <div class="col-sm-9">
 		<%= text_area_tag "additional_data[#{@key.blank? ? key : @key}][]", defined?(value) ? value : '', class: 'form-control' %>
-		<button class="btn btn-danger btn-sm btn-block removeAdditionalGroup"><i class="fa fa-times fa-lg"></i>&nbsp;Remove "<%= @key.blank? ? key : @key %>" field</button>
+		<button class="btn btn-danger btn-sm btn-block remove-additional-group"><i class="fa fa-times fa-lg"></i>&nbsp;Remove "<%= @key.blank? ? key : @key %>" field</button>
     </div>
 	<div class="clearfix"></div>
 </div>

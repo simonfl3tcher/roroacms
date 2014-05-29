@@ -1,4 +1,4 @@
-<ul class="timelineSingle">
+<ul class="timeline-single">
 
     <% 
     @revisions = Post.where(:ancestry => 1, :post_type => 'autosave').order('created_at desc')
@@ -9,16 +9,16 @@
       <li>
 
         <% if f.post_status.downcase == 'user-autosave' || f.post_type.downcase == 'page' %>
-          <div class="timelineSingle-badge"><i class="fa fa-user"></i></div>
+          <div class="timeline-single-badge"><i class="fa fa-user"></i></div>
         <% else %>
-          <div class="timelineSingle-badge danger"><i class="fa fa-save"></i></div>
+          <div class="timeline-single-badge danger"><i class="fa fa-save"></i></div>
         <% end %>
         
-        <div class="timelineSingle-panel">
+        <div class="timeline-single-panel">
 
-          <div class="timelineSingle-heading">
+          <div class="timeline-single-heading">
             <% if (f.post_title != (@revisions[index+1].blank? ? "\r\n" : @revisions[index+1].post_title)) %>
-            <h4 class="timelineSingle-title">
+            <h4 class="timeline-single-title">
               <label>Post Title:</label>
               <%= Differ.diff_by_word(f.post_title, @revisions[index+1].blank? ? "\r\n" : @revisions[index+1].post_title).format_as(:html).html_safe %>
             </h4>
@@ -32,7 +32,7 @@
 
           </div>
 
-          <div class="timelineSingle-body">
+          <div class="timeline-single-body">
             <% if (f.post_content != (@revisions[index+1].blank? ? "\r\n" : @revisions[index+1].post_content)) %>
               <label>Content:</label>
               <%= Diffy::Diff.new("#{f.post_content.to_s}", @revisions[index+1].blank? ? "\r\n" : "#{@revisions[index+1].post_content.to_s}", :include_plus_and_minus_in_html => true).to_s(:html_simple).html_safe %>

@@ -1,4 +1,4 @@
-<div class="formToolbar"> 
+<div class="form-toolbar"> 
     <div class="btn-group pull-right"> 
     	<% if defined?(post_record) && !post_record.id.blank? %>
     		<%= link_to admin_post_path(post_record), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-sm btn-danger pull-left' do %>

@@ -9,7 +9,7 @@ module CommentsHelper
 		html = ''
 
 		if content.errors.any?
-			html = "<div id='error_explanation'>
+			html = "<div id='error-explanation'>
 			<h2>Invalid:</h2><ul>"
 			content.errors.full_messages.each do |msg| 
 			html += "<li>#{msg}</li>"
