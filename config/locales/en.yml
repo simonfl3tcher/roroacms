@@ -33,8 +33,40 @@ en:
         title: "Users"
         breadcrumb_title: "Back to users"
       comments:
+        edit:
+          title: "Edit Comment"
+          breadcrumb: "Edit Comment"
+        update:
+          flash:
+            success: "Comment was successfully updated"
+        destroy:
+          flash:
+            success: "Comment has been successfully deleted"
+        bulk_update:
+          flash:
+            nothing_to_do: "I had nothing to do"
+            success: "Comments were successfully %{func}"
+        mark_as_spam:
+          flash:
+            success: "Comment was successfully marked as spam"
         title: "Comments"
         breadcrumb_title: "Back to comments"
+      dashboard:
+      menus:
+        new:
+        create:
+          flash: 
+            success: "Menu Group was successfully created"
+        edit:
+          breadcrumb: "Edit %{menu_name} Menu"
+          title: "Edit %{menu_name} Menu"
+        edit:
+        update:
+        destroy:
+          flash:
+            success: "Menu group successfully deleted"
+        title: "Menus"
+        breadcrumb_title: "Back to menus"
   views:
     pagination:
       first: "&laquo; "
