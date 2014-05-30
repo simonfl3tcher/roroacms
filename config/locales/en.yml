@@ -100,8 +100,16 @@ en:
           flash:
             success: "Post was successfully updated"
         destroy:
+          flash:
+            success: "Post was successfully put into trash can"
         title: "Articles"
         breadcrumb_title: "Back to articles"
+      revisions:
+        restore:
+          flash:
+            notice: "%{post_type} was successfully restored"
+        title: 'Revision for "%{post_title}"'
+        breadcrumb_title: "Revisions"
   views:
     pagination:
       first: "&laquo; "

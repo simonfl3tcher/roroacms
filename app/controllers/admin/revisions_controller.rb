@@ -10,8 +10,8 @@ class Admin::RevisionsController < AdminController
 		@revision = { 'parent' => Post.find(@post.ancestry), 'revision' => @post}
 		
 		# set title 
-		add_breadcrumb "Revisions"
-		@title = 'Revision for "' + @revision['revision'].post_title + '"'
+		add_breadcrumb I18n.t("controllers.admin.revisions.breadcrumb_title")
+		@title = I18n.t("controllers.admin.revisions.title", post_title: @revision['revision'].post_title)
 	end
 	
 
@@ -22,11 +22,7 @@ class Admin::RevisionsController < AdminController
 		restore = Post.restore(Post.find(params[:id]))
 
 		# redirect to either the post or page area depending on what post_type the post has
-		if restore.post_type == 'page'
-			redirect_to edit_admin_page_path(restore.id), notice: 'Page was successfully restored.'
-		else
-			redirect_to edit_admin_post_path(restore.id), notice: 'Post was successfully restored.'
-		end
+		redirect_to edit_admin_page_path(restore.id), notice: I18n.t("controllers.admin.revisions.restore.flash.notice", post_type: restore.post_type.capitalize)
 	end
 
 end
