@@ -1,6 +1,6 @@
-class Notifier < ActionMailer::Base
+class Emailer < ActionMailer::Base
   
-  default from: Setting.get('site_email')
+  default from: Setting.get('smtp_domain')
   
   class MailSettingsInterceptor
     def self.delivering_email(message)

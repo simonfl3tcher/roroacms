@@ -7,13 +7,13 @@ class Admin::AdministratorsController < AdminController
 	include MediaHelper
 	include AdminRoroaHelper
 
-	add_breadcrumb "Users", :admin_administrators_path, :title => "Back to users"
+	add_breadcrumb I18n.t("controllers.admin.administrators.title"), :admin_administrators_path, :title => I18n.t("controllers.admin.administrators.breadcrumb_title")
 
 	# show all of the admins for the system
 
 	def index
 		# set title
-		@title = 'Users'
+		@title = I18n.t("controllers.admin.administrators.title")
 	end
 
 
@@ -23,8 +23,8 @@ class Admin::AdministratorsController < AdminController
 		@admin = Admin.find(params[:id])
 
 		# add breadcrumb and set title
-		@title = 'Profile - ' + @admin.username
-		add_breadcrumb "Edit User"
+		@title = I18n.t("controllers.admin.administrators.edit.title", username: @admin.username)
+		add_breadcrumb I18n.t("controllers.admin.administrators.edit.breadcrumb")
 		
 		# action for the form as both edit/new are using the same form.
 		@action = 'update'
@@ -34,7 +34,7 @@ class Admin::AdministratorsController < AdminController
 			
 			respond_to do |format|
 				
-				flash[:error] = "You are unable to edit the superuser administrator"
+				flash[:error] = I18n.t("controllers.admin.administrators.edit.flash.error")
 			 	format.html { redirect_to admin_administrators_path }
 		    
 		    end
@@ -62,13 +62,13 @@ class Admin::AdministratorsController < AdminController
 
 			if admin_passed
 				profile_images(params, @admin)
-				format.html { redirect_to edit_admin_administrator_path(@admin), notice: 'Admin was successfully updated.' }
+				format.html { redirect_to edit_admin_administrator_path(@admin), notice: I18n.t("controllers.admin.administrators.update.flash.success") }
 			else
 				@action = 'update'
 				format.html { 
 					# add breadcrumb and set title
-					@title = 'Profile - ' + @admin.username
-					add_breadcrumb "Edit User"
+					@title = I18n.t("controllers.admin.administrators.edit.title", username: @admin.username)
+					add_breadcrumb I18n.t("controllers.admin.administrators.edit.breadcrumb")
 					render action: "edit" 
 				}
 			end
@@ -86,7 +86,7 @@ class Admin::AdministratorsController < AdminController
 	    @admin.destroy
 
 	    respond_to do |format|
-	      format.html { redirect_to admin_administrators_path, notice: 'Admin was successfully deleted.' }
+	      format.html { redirect_to admin_administrators_path, notice: I18n.t("controllers.admin.administrators.destroy.flash.success") }
 	    end
 	end
 
@@ -95,8 +95,8 @@ class Admin::AdministratorsController < AdminController
 
 	def new
 	    # add breadcrumb and set title
-	    add_breadcrumb "Add New User"
-	    @title = 'Profile'
+	    add_breadcrumb I18n.t("controllers.admin.administrators.new.breadcrumb")
+	    @title = I18n.t("controllers.admin.administrators.new.title")
 
 	    @admin = Admin.new
 	    @action = 'create'
@@ -114,15 +114,15 @@ class Admin::AdministratorsController < AdminController
 		  if @admin.save
 
 		  	profile_images(params, @admin)
-		  	Notifier.profile(@admin).deliver
+		  	Emailer.profile(@admin).deliver
 
 		    format.html { redirect_to admin_administrators_path, notice: 'Admin was successfully created.' }
 
 		  else
 		    format.html { 
 		    	# add breadcrumb and set title
-			    add_breadcrumb "Add New User"
-			    @title = 'Profile'
+			    add_breadcrumb I18n.t("controllers.admin.administrators.new.breadcrumb")
+			    @title = I18n.t("controllers.admin.administrators.new.title")
 			  	@action = 'create'
 
 		    	render action: "new" 
