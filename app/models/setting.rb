@@ -16,4 +16,13 @@ class Setting < ActiveRecord::Base
 		return Setting.get('pagination_per_fe').to_i
 	end
 
+	def self.mail_settings
+		{:address       => Setting.get('smtp_address'),
+        :domain         => Setting.get('smtp_domain'),
+        :port           => Setting.get('smtp_port'),
+        :user_name      => Setting.get('smtp_username'),
+        :password       => Setting.get('smtp_password'),
+        :authentication => Setting.get('smtp_authentication').to_sy,}
+	end
+
 end
