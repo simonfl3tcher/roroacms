@@ -10,7 +10,7 @@ class AdminController < ApplicationController
 	include GeneralHelper
 	include AdminRoroaHelper
 
-	add_breadcrumb "Dashboard", :admin_path, :title => "Back to the dashboard"
+	add_breadcrumb I18n.t("controllers.admin.misc.dashboard_title"), :admin_path, :title => I18n.t("controllers.admin.misc.dashboard_breadcrumb_title")
 
 
 	before_filter :authorize_admin
@@ -26,7 +26,7 @@ class AdminController < ApplicationController
 	def authorize_admin_access
 		
 		if !check_controller_against_user(params[:controller].sub('admin/', '')) && params[:controller] != 'admin/dashboard'
-			flash[:error] = "You do not have the necessary access level to view this"
+			flash[:error] = I18n.t("controllers.admin.misc.authorize_admin_access_error")
 			redirect_to admin_path
 		end
 

@@ -80,7 +80,7 @@ class ApplicationController < ActionController::Base
   # checks if the admin is logged in before anything else
 
   def authorize_admin
-  	redirect_to admin_login_path, error: "Not Authorized" if current_user.nil?
+  	redirect_to admin_login_path, error: I18n.t("controllers.application.unauthorized") if current_user.nil?
   end
 
   # devise settings
