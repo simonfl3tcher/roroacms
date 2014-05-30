@@ -1,13 +1,13 @@
 class Admin::ThemesController < AdminController
 
 	include AdminRoroaHelper
-	add_breadcrumb "Themes", :admin_themes_path, :title => "Back to themes"
+	add_breadcrumb I18n.t("controllers.admin.themes.title"), :admin_themes_path, :title => I18n.t("controllers.admin.themes.breadcrumb_title")
 	
 	# lists all the avalible themes
 
 	def index 
 		# set title
-		@title = "Themes"
+		@title = I18n.t("controllers.admin.themes.title")
 		
 		# finds the current theme that is set in the admin panel
 		@current = Setting.get('theme_folder')
@@ -21,7 +21,7 @@ class Admin::ThemesController < AdminController
 		Setting.where("setting_name = 'theme_folder'").update_all('setting' => params[:theme])
 
 		respond_to do |format|
-			format.html { redirect_to admin_themes_path, notice:  "Theme used was updated. Please restart the server for the theme to fully install." }
+			format.html { redirect_to admin_themes_path, notice: I18n.t("controllers.admin.themes.create.flash.success") }
 		end
 	end
 	
@@ -33,7 +33,7 @@ class Admin::ThemesController < AdminController
 		destory_theme params[:id]
 		
 		respond_to do |format|
-			format.html { redirect_to admin_themes_path, notice:  "Theme successfully was deleted" }
+			format.html { redirect_to admin_themes_path, notice: I18n.t("controllers.admin.themes.destroy.flash.success") }
 		end
 	end
 
