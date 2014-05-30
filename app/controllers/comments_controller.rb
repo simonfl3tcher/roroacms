@@ -16,7 +16,7 @@ class CommentsController < ApplicationController
 
 			respond_to do |format|
 			  if @comment.save
-			  	Notifier.comment(@comment).deliver
+			  	Emailer.comment(@comment).deliver
 			    format.html { redirect_to "#{session[:return_to]}#commentsArea", notice: comments_success_message }
 			  else
 
@@ -24,6 +24,8 @@ class CommentsController < ApplicationController
 
 			  end
 			end
+		else
+			render :inline => 'Something went wrong. Please contact the system administrator.'
 		end
 	end
 
