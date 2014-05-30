@@ -241,7 +241,7 @@ module RoutingHelper
 
 		# add the necessary breadcrumbs
 		add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
-		add_breadcrumb "#{@content.post_title}", "/#{@content.post_name}", :title => "Back to #{@content.post_title}"
+		add_breadcrumb "#{@content.post_title}", "/#{@content.post_title}", :title => "Back to #{@content.post_title}"
 
 		# render the single template
 		render_template 'article'

@@ -11,6 +11,7 @@
 		        <div class="tab-wrapper tab-left ">
 		            <ul class="nav nav-tabs">
 		                <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-cog"></i> General</a></li>
+		                <li><a href="#email" data-toggle="tab"><i class="fa fa-envelope-o"></i> Email Configuration</a></li>
 		                <li><a href="#comment" data-toggle="tab"><i class="fa fa-comments"></i> Comments</a></li>
 		                <li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> Search Engine Optimisation</a></li>
 		                <li><a href="#user-groups" data-toggle="tab"><i class="fa fa-users"></i> User Groups</a></li>
@@ -92,6 +93,69 @@
 			
 							    </div>
 							</div>
+		                </div>
+		                <div class="tab-pane active" id="email">
+
+		                	<div class="form-group">
+								<%= label_tag(:smtp_username, "Server E-mail Address", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:smtp_username, Setting.get('smtp_username'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+
+							<div class="form-group">
+								<%= label_tag(:smtp_password, "SMTP password", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<%= password_field_tag(:smtp_password, Setting.get('smtp_password'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+
+							<div class="form-group">
+								<%= label_tag(:smtp_address, "SMTP Host", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:smtp_address, Setting.get('smtp_address'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+
+							<div class="form-group">
+								<%= label_tag(:smtp_domain, "SMTP Domain", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:smtp_domain, Setting.get('smtp_domain'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+
+							<div class="form-group">
+								<%= label_tag(:smtp_port, "SMTP Port", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<%= text_field_tag(:smtp_port, Setting.get('smtp_port'), class: 'form-control') %>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+
+							<div class="form-group">
+								<%= label_tag(:smtp_authentication, "SMTP Authentication", class: "col-sm-3 control-label") %>
+							    <div class="col-sm-6">
+							    	<div class="">
+									    <label class="radio-inline">
+									      <%= radio_button(:smtp_authentication, nil, "plain", :checked => Setting.get('smtp_authentication') == 'plain' ? true : false) %> Plain
+									    </label>
+									    <label class="radio-inline">
+									    	<%= radio_button(:smtp_authentication, nil, "login", :checked => Setting.get('smtp_authentication') == 'login' ? true : false) %> Login
+									    </label>
+									    <label class="radio-inline">
+									    	<%= radio_button(:smtp_authentication, nil, "cram_md5", :checked => Setting.get('smtp_authentication') == 'cram_md5' ? true : false) %> Cram MD5
+									    </label>
+									  </div>
+							    </div>
+								<div class="clearfix"></div>
+							</div>
+
+
+
 		                </div>
 		                <div class="tab-pane" id="comment">
 		                	<div class="form-group">
