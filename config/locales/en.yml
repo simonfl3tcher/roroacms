@@ -86,6 +86,22 @@ en:
             success: "Page was successfully put into trash can"
         title: "Pages"
         breadcrumb_title: "Back to pages"
+      posts:
+        new:
+          breadcrumb: "Create New Article"
+          tite: "Create New Article"
+        create:
+          flash:
+            success: "Post was successfully created"
+        edit:
+          breadcrumb: "Edit Article"
+          title: "Edit Article"
+        update:
+          flash:
+            success: "Post was successfully updated"
+        destroy:
+        title: "Articles"
+        breadcrumb_title: "Back to articles"
   views:
     pagination:
       first: "&laquo; "
