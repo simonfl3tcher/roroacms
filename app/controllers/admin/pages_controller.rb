@@ -3,10 +3,10 @@ class Admin::PagesController < AdminController
 	# displays all the "posts" with the post_type of "page". This is also set up 
 	# to take search parameters so you can search for an individual page itself.
 
-	add_breadcrumb "Pages", :admin_pages_path, :title => "Back to pages"
+	add_breadcrumb I18n.t("controllers.admin.pages.title"), :admin_pages_path, :title => I18n.t("controllers.admin.pages.breadcrumb_title")
 
 	def index
-		@title = 'Pages'
+		@title = I18n.t("controllers.admin.pages.title")
 		@pages = Post.setup_and_search_posts params, 'page'
 	end
 
@@ -15,8 +15,8 @@ class Admin::PagesController < AdminController
 
 	def new
 		# add breadcrumb and set title
-		add_breadcrumb "Create New Page"
-		@title = 'Create New Page'
+		add_breadcrumb I18n.t("controllers.admin.pages.new.breadcrumb")
+		@title = I18n.t("controllers.admin.pages.new.title")
 
 	    @page = Post.new
 	end
@@ -38,12 +38,12 @@ class Admin::PagesController < AdminController
 		respond_to do |format|
 
 		  if @page.save
-		    format.html { redirect_to admin_pages_path, notice: 'Page was successfully created.' }
+		    format.html { redirect_to admin_pages_path, notice: I18n.t("controllers.admin.pages.create.flash.success") }
 		  else
 		    format.html { 
 		    	# add breadcrumb and set title
-				add_breadcrumb "Create New Page"
-				@title = 'Create New Page'
+				add_breadcrumb I18n.t("controllers.admin.pages.new.breadcrumb")
+				@title = I18n.t("controllers.admin.pages.new.title")
 		    	render action: "new" 
 		    }
 		  end
@@ -60,8 +60,8 @@ class Admin::PagesController < AdminController
 		@page = Post.find(params[:id])
 
 		# add breadcrumb and set title
-		add_breadcrumb "Edit Page" 
-		@title = 'Edit "' + @page.post_title + '" Page'
+		add_breadcrumb I18n.t("controllers.admin.pages.edit.breadcrumb")
+		@title = I18n.t("controllers.admin.pages.edit.title", post_title: @page.post_title)
 	end
 
 
@@ -88,13 +88,13 @@ class Admin::PagesController < AdminController
 
 	      	Post.create_user_backup_record(update_check) if !update_check.blank?
 
-	        format.html { redirect_to edit_admin_page_path(@page.id), notice: 'Page was successfully updated.' }
+	        format.html { redirect_to edit_admin_page_path(@page.id), notice: I18n.t("controllers.admin.pages.update.flash.success") }
 
 	      else
 	        format.html { 
 	        	# add breadcrumb and set title
-				add_breadcrumb "Edit Page" 
-				@page.post_title.blank? ? @title = 'Edit Page' : @title = 'Edit "' + @page.post_title + '" Page'
+				add_breadcrumb I18n.t("controllers.admin.pages.edit.breadcrumb")
+				@page.post_title.blank? ? I18n.t("controllers.admin.pages.edit.title_blank") : I18n.t("controllers.admin.pages.edit.title", post_title: @page.post_title)
 	        	render action: "edit" 
 	        }
 	      end
@@ -108,7 +108,7 @@ class Admin::PagesController < AdminController
 	def destroy
 	    Post.disable_post params[:id]
 	    respond_to do |format|
-	      format.html { redirect_to admin_pages_path, notice: 'Page was successfully put into trash can.' }
+	      format.html { redirect_to admin_pages_path, notice: I18n.t("controllers.admin.pages.destroy.flash.success") }
 	    end
 	end
 
