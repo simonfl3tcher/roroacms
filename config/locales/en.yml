@@ -67,6 +67,25 @@ en:
             success: "Menu group successfully deleted"
         title: "Menus"
         breadcrumb_title: "Back to menus"
+      pages:
+        new:
+          breadcrumb: "Create New Page"
+          title: "Create New Page"
+        create:
+          flash:
+            success: "Page was successfully created"
+        edit:
+          breadcrumb: "Edit Page"
+          title: 'Edit "%{post_title}" Page'
+        update:
+          title_blank: "Edit Page"
+          flash:
+            success: "Page was successfully updated"
+        destroy:
+          flash:
+            success: "Page was successfully put into trash can"
+        title: "Pages"
+        breadcrumb_title: "Back to pages"
   views:
     pagination:
       first: "&laquo; "
