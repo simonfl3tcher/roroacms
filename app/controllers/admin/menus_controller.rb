@@ -1,6 +1,6 @@
 class Admin::MenusController < AdminController
 
-	add_breadcrumb "Menus", :admin_menus_path, :title => "Back to menus"
+	add_breadcrumb I18n.t("controllers.admin.menus.title"), :admin_menus_path, :title => I18n.t("controllers.admin.menus.breadcrumb_title")
 
 	# include the helper in the view
 	helper AdminMenuHelper
@@ -10,7 +10,7 @@ class Admin::MenusController < AdminController
 
 	def index
 		# set title
-		@title = 'Menus'
+		@title = I18n.t("controllers.admin.menus.title")
 		@menu = Menu.new
 	end
 
@@ -23,11 +23,11 @@ class Admin::MenusController < AdminController
 		respond_to do |format|
 
 		  if @menu.save
-		    format.html { redirect_to edit_admin_menu_path(@menu), notice: 'Menu Group was successfully created.' }
+		    format.html { redirect_to edit_admin_menu_path(@menu), notice: I18n.t("controllers.admin.menus.create.flash.success")}
 		  else
 		    format.html { 
 			  	@menugroups = Menu.all
-			  	@title = 'Menus'
+			  	@title = I18n.t("controllers.admin.menus.title")
 		    	render action: "index" 
 		    }
 		  end
@@ -42,8 +42,8 @@ class Admin::MenusController < AdminController
 		@menu = Menu.find(params[:id])
 
 		# add breadcrumb and set title
-		add_breadcrumb 'Edit "' +  @menu.name + '" Menu'
-		@title = 'Edit "' +  @menu.name + '" Menu'
+		add_breadcrumb I18n.t("controllers.admin.menus.edit.breadcrumb", menu_name: @menu.name)
+		@title = I18n.t("controllers.admin.menus.edit.title", menu_name: @menu.name)
 	end
 
 
@@ -71,7 +71,7 @@ class Admin::MenusController < AdminController
 	    @menu.destroy
 
 	    respond_to do |format|
-	      format.html { redirect_to admin_menus_path, notice: "Menu group successfully deleted." }
+	      format.html { redirect_to admin_menus_path, notice: I18n.t("controllers.admin.menus.destroy.flash.success") }
 	    end
 	end
 
