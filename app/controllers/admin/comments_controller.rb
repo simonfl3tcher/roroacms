@@ -1,11 +1,11 @@
 class Admin::CommentsController < AdminController
 
-	add_breadcrumb "Comments", :admin_comments_path, :title => "Back to comments"
+	add_breadcrumb I18n.t("controllers.admin.comments.title"), :admin_comments_path, :title => I18n.t("controllers.admin.comments.breadcrumb")
 
 	# list out all of the comments
 	def index 
 		# set title
-		@title = 'Comments'
+		@title = I18n.t("controllers.admin.comments.title")
 	end
 
 
@@ -13,8 +13,8 @@ class Admin::CommentsController < AdminController
 
 	def edit
 		# add breadcrumb and set title
-		add_breadcrumb 'Edit Comment'
-		@title = "Edit Comment"
+		add_breadcrumb I18n.t("controllers.admin.comments.edit.breadcrumb")
+		@title = I18n.t("controllers.admin.comments.edit.title")
 		
 		@comment = Comment.find(params[:id])
 	end
@@ -27,7 +27,7 @@ class Admin::CommentsController < AdminController
 	    @comment.destroy
 
 	    respond_to do |format|
-	      format.html { redirect_to admin_comments_path, notice: 'Comment has been successfully deleted.' }
+	      format.html { redirect_to admin_comments_path, notice: I18n.t("controllers.admin.comments.destroy.flash.success") }
 	    end
 
 	end
@@ -44,12 +44,12 @@ class Admin::CommentsController < AdminController
 	    respond_to do |format|
 
 	      if @comment.update_attributes(atts)
-	     	format.html { redirect_to edit_admin_comment_path(@comment), notice: 'Comment was successfully updated.' }
+	     	format.html { redirect_to edit_admin_comment_path(@comment), notice: I18n.t("controllers.admin.comments.update.flash.success") }
 	      else
 	        format.html { 
 	        	# add breadcrumb and set title
-	        	@title = "Edit Comment"
-				add_breadcrumb 'Edit Comment'
+	        	add_breadcrumb I18n.t("controllers.admin.comments.edit.breadcrumb")
+				@title = I18n.t("controllers.admin.comments.edit.title")
 				
 	        	render action: "edit" 
 	        }
@@ -70,7 +70,7 @@ class Admin::CommentsController < AdminController
 		func = Comment.bulk_update params
 
 		respond_to do |format|
-	      format.html { redirect_to admin_comments_path, notice: func == 'ntd' ? "I had nothing to do" : "Comments were successfully #{func}" }
+	      format.html { redirect_to admin_comments_path, notice: func == 'ntd' ? I18n.t("controllers.admin.comments.bulk_update.flash.nothing_to_do") :  I18n.t("controllers.admin.comments.bulk_update.flash.success", func: func) }
 	    end
 
 	end
@@ -84,7 +84,7 @@ class Admin::CommentsController < AdminController
 		comment.comment_approved = "S"
 		respond_to do |format|
 			if comment.save
-				format.html { redirect_to admin_comments_path, notice: 'Comment was successfully marked as spam' }
+				format.html { redirect_to admin_comments_path, notice: I18n.t("controllers.admin.comments.mark_as_spam.flash.success") }
 			else
 				format.html { render action: "index" }
 			end

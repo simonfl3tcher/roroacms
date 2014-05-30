@@ -32,6 +32,9 @@ en:
             success: "Admin was successfully deleted"
         title: "Users"
         breadcrumb_title: "Back to users"
+      comments:
+        title: "Comments"
+        breadcrumb_title: "Back to comments"
   views:
     pagination:
       first: "&laquo; "
