@@ -136,6 +136,24 @@ en:
             breadcrumb: "Tags"
             breadcrumb_title: "Back to tags"
             title: "Article Tag"
+      themes:
+        create:
+          flash:
+            success: "Theme used was updated - please restart the server for the theme to fully install"
+        destroy:
+          flash:
+            success: "Theme successfully was deleted"
+        title: "Themes"
+        breadcrumb_title: "Back to themes"
+      trash:
+        empty_posts:
+          flash:
+            success: "All %{type}s were removed from the trash can"
+        destroy:
+          flash:
+            success: "This record was successfully destroyed"
+        title: "Trash"
+        breadcrumb_title: "Back to trash"
   views:
     pagination:
       first: "&laquo; "
