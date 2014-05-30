@@ -1,6 +1,6 @@
 class Admin::TrashController < AdminController
 
-	add_breadcrumb "Trash", :admin_trash_path, :title => "Back to trash"
+	add_breadcrumb I18n.t("controllers.admin.trash.title"), :admin_trash_path, :title => I18n.t("controllers.admin.trash.breadcrumb_title")
 
 	# the trash area saves any posts/pages that were moved to trash in the trash can.
 	# you can then decide if you want to remove these completely or reinstate them - put simply it is a fail
@@ -11,7 +11,7 @@ class Admin::TrashController < AdminController
 
 	def index 
 		# set title
-		@title = "Trash"
+		@title = I18n.t("controllers.admin.trash.title")
 		
 		# get all posts/pages that are in the trash area
 		@posts = Post.find(:all, :conditions => { :disabled => 'Y', :post_type => 'post' })
@@ -22,10 +22,10 @@ class Admin::TrashController < AdminController
 	# remvove all of the posts/pages in the trash area in one go
 
 	def empty_posts 
-		@type = params[:format]
-		Post.where(:disabled => 'Y', :post_type => @type).destroy_all
+		type = params[:format]
+		Post.where(:disabled => 'Y', :post_type => type).destroy_all
 		
-		redirect_to admin_trash_path, notice: "All #{@type}s were removed from the trash can."
+		redirect_to admin_trash_path, notice: I18n.t("controllers.admin.trash.empty_posts.flash.success", type: type)
 	end
 	
 
@@ -35,7 +35,7 @@ class Admin::TrashController < AdminController
 	    @post = Post.find(params[:id])
 	    @post.destroy
 
-	   	redirect_to admin_trash_path, notice: "This record was successfully destroyed."
+	   	redirect_to admin_trash_path, notice: I18n.t("controllers.admin.trash.destroy.flash.success")
 	end
 
 
