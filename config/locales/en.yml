@@ -110,6 +110,32 @@ en:
             notice: "%{post_type} was successfully restored"
         title: 'Revision for "%{post_title}"'
         breadcrumb_title: "Revisions"
+      terms:
+        categories:
+          title: "Categories"
+          breadcrumb_title: "Back to categories"
+        tags:
+          title: "Tags"
+          breadcrumb_title: "Back to tags"
+        create:
+          flash:
+            success: "%{term} was successfully created"
+            error: "Please make sure the slug is unique"
+        update:
+          flash:
+            success: "%{term} was successfully updated"
+        destroy:
+          flash:
+            success: "Successfully deleted"
+        edit_title:
+          category:
+            breadcrumb: "Categories"
+            breadcrumb_title: "Back to categories"
+            title: "Article Category"
+          tag:
+            breadcrumb: "Tags"
+            breadcrumb_title: "Back to tags"
+            title: "Article Tag"
   views:
     pagination:
       first: "&laquo; "

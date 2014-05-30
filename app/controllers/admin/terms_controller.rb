@@ -4,8 +4,8 @@ class Admin::TermsController < AdminController
 
 	def categories
 		# add breadcrumb and set title
-		add_breadcrumb "Categories", :admin_post_categories_path, :title => "Back to categories"
-		@title = "Categories"
+		add_breadcrumb I18n.t("controllers.admin.terms.categories.title"), :admin_post_categories_path, :title => I18n.t("controllers.admin.terms.categories.breadcrumb_title")
+		@title = I18n.t("controllers.admin.terms.categories.title")
 		@type = 'category'
 
 		# render view template as it is the same as the tag view
@@ -17,8 +17,8 @@ class Admin::TermsController < AdminController
 
 	def tags
 		# add breadcrumb and set title
-		add_breadcrumb "Tags", :admin_post_tags_path, :title => "Back to tags"
-		@title = "Tags"
+		add_breadcrumb I18n.t("controllers.admin.terms.tags.title"), :admin_post_tags_path, :title => I18n.t("controllers.admin.terms.tags.breadcrumb_title")
+		@title = I18n.t("controllers.admin.terms.tags.title")
 		@type = 'tag'
 		# render view template as it is the same as the category view
 		render 'view'
@@ -39,11 +39,11 @@ class Admin::TermsController < AdminController
 
 		  	@term_anatomy = @category.create_term_anatomy(:taxonomy => params[:type_taxonomy])
 		  	Term.update_slug_for_subcategories(@category.id, @category.structured_url, true)
-		    format.html { redirect_to send(Term.get_redirect_url(params)), notice: "#{Term.get_type_of_term(params)} was successfully created." }
+		    format.html { redirect_to send(Term.get_redirect_url(params)), notice: I18n.t("controllers.admin.terms.create.flash.success", term: Term.get_type_of_term(params)) }
 
 		  else
 
-		  	flash[:error] = 'Please make sure the slug is unique.'
+		  	flash[:error] = I18n.t("controllers.admin.terms.create.flash.error")
 		    format.html { redirect_to send(Term.get_redirect_url(params)) }
 
 		  end
@@ -73,7 +73,7 @@ class Admin::TermsController < AdminController
 	    	# deal with abnormalaties - update the structure url 
 			if @category.update_attributes(term_params)
 			    Term.update_slug_for_subcategories(@category.id, old_url, true)
-				format.html { redirect_to edit_admin_term_path(@category), notice: "#{Term.get_type_of_term(params)} was successfully updated" }
+				format.html { redirect_to edit_admin_term_path(@category), notice: I18n.t("controllers.admin.terms.update.flash.success", term: Term.get_type_of_term(params)) }
 			else
 				format.html { 
 					@title = edit_title()
@@ -89,13 +89,13 @@ class Admin::TermsController < AdminController
 	def edit_title
 
 		if @category.term_anatomy.taxonomy == 'category' 
-			add_breadcrumb "Categories", :admin_post_categories_path, :title => "Back to categories"
-			add_breadcrumb "Article Category"
-			@title = 'Article Category'
+			add_breadcrumb I18n.t("controllers.admin.terms.edit_title.category.breadcrumb"), :admin_post_categories_path, :title => I18n.t("controllers.admin.terms.edit_title.category.breadcrumb_title")
+			add_breadcrumb I18n.t("controllers.admin.terms.edit_title.category.title")
+			@title = I18n.t("controllers.admin.terms.edit_title.category.title")
 		else
-			add_breadcrumb "Tags", :admin_post_tags_path, :title => "Back to tags"
-			add_breadcrumb "Article Tag"
-			@title = 'Article Tag'
+			add_breadcrumb I18n.t("controllers.admin.terms.edit_title.tag.breadcrumb"), :admin_post_tags_path, :title => I18n.t("controllers.admin.terms.edit_title.tag.breadcrumb_title")
+			add_breadcrumb I18n.t("controllers.admin.terms.edit_title.tag.title")
+			@title = I18n.t("controllers.admin.terms.edit_title.tag.title")
 		end
 
 		return @title
@@ -113,7 +113,7 @@ class Admin::TermsController < AdminController
 	    @term.destroy
 
 	    respond_to do |format|
-	      format.html { redirect_to "#{session[:return_to]}", notice: "Successfully deleted" }
+	      format.html { redirect_to "#{session[:return_to]}", notice: I18n.t("controllers.admin.terms.destroy.flash.success") }
 	    end
 	end
 
