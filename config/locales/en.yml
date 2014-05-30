@@ -4,7 +4,22 @@
 en:
   hello: "Hello world"
   controllers:
+    pages:
+      dynamic_page:
+        breadcrumb_title: "Home"
+      contact_form:
+        flash:
+          success: "Your message has been sent successfully thank you"
+          error: "You missed out some required fields please try again"
+    comments:
+      create:
+        error: "Something went wrong. Please contact the system administrator"
     admin:
+      misc:
+        dashboard_title: "Dashboard"
+        dashboard_breadcrumb_title: "Back to dashboard"
+        authorize_admin_access_error: "You do not have the necessary access level to view this"
+        unauthorized: "Not Authorized"
       settings:
         general:
           create:

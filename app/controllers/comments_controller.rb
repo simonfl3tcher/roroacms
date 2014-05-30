@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
 			  end
 			end
 		else
-			render :inline => 'Something went wrong. Please contact the system administrator.'
+			render :inline =>  I18n.t("controllers.comments.create.error")
 		end
 	end
 

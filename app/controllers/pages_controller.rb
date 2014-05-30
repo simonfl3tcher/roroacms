@@ -31,7 +31,7 @@ class PagesController < ApplicationController
  	# route_dynamic_page function will take the url and search for the correct data to display
 
 	def dynamic_page
-		add_breadcrumb "Home", :root_path, :title => "Home"
+		add_breadcrumb I18n.t("controllers.pages.dynamic_page.breadcrumb_title"), :root_path, :title => I18n.t("controllers.pages.dynamic_page.breadcrumb_title")
 		route_dynamic_page params
 	end
 	
@@ -47,9 +47,9 @@ class PagesController < ApplicationController
 		  
 		  if @message.save
 		  	EmailContactFormWorker.perform_async(@message.id)
-		    format.html { redirect_to "#{session[:return_to]}", notice: "Your message has been sent successfully thank you." }
+		    format.html { redirect_to "#{session[:return_to]}", notice: I18n.t("controllers.pages.contact_form.flash.success") }
 		  else
-		  	flash[:error] = 'You missed out some required fields. Please try again.'
+		  	flash[:error] = I18n.t("controllers.pages.contact_form.flash.error")
 		    format.html { redirect_to "#{session[:return_to]}" }
 		  end
 		  
