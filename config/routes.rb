@@ -7,7 +7,7 @@ Roroacms::Application.routes.draw do
     get "admin/logout", :to => "devise/sessions#destroy"
   end
 
-  resources :pages,  only: [:index, :show, :dynamic_page, :contact_form]
+  resources :pages,  only: [:index, :show, :dynamic_page]
   resources :comments
 
   post 'email', to: 'pages#contact_form'

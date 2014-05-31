@@ -20,7 +20,7 @@ class Setting < ActiveRecord::Base
 		{ 
 			:address 	=> Setting.get('smtp_address'), 
 			:domain 	=> Setting.get('smtp_domain'), 
-			:port 		=> Setting.get('smtp_port').blank? '25' : Setting.get('smtp_port'), 
+			:port 		=> Setting.get('smtp_port').blank? ? '25' : Setting.get('smtp_port'), 
 			:user_name 	=> Setting.get('smtp_username'), 
 			:password 	=> Setting.get('smtp_password'),
 			:authentication => Setting.get('smtp_authentication').to_sym

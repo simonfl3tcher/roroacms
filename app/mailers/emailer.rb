@@ -24,13 +24,5 @@ class Emailer < ActionMailer::Base
 
     mail to: Setting.get('site_email')
   end
-
-  # sends an email to the admin email address (set in the admin panel)
-  # when someone sends an email via the contact form
-
-  def contact_form params
-    @params = params
-    mail to: Setting.get('site_email')
-  end
   
 end
