@@ -26,6 +26,7 @@ class PagesController < ApplicationController
  	def show
  		redirect_to show_url params
  	end
+ 	
 
  	# if the url has segments the application will run through the dynamic_page method.
  	# route_dynamic_page function will take the url and search for the correct data to display

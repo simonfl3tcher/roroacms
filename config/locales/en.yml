@@ -4,6 +4,8 @@
 en:
   hello: "Hello world"
   controllers:
+    application:
+      unauthorized: "Not Authorized"
     pages:
       dynamic_page:
         breadcrumb_title: "Home"
@@ -19,7 +21,6 @@ en:
         dashboard_title: "Dashboard"
         dashboard_breadcrumb_title: "Back to dashboard"
         authorize_admin_access_error: "You do not have the necessary access level to view this"
-        unauthorized: "Not Authorized"
       settings:
         general:
           create:

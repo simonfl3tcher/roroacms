@@ -24,8 +24,8 @@ class Admin::ThemesController < AdminController
 			format.html { redirect_to admin_themes_path, notice: I18n.t("controllers.admin.themes.create.flash.success") }
 		end
 	end
-	
 
+	
 	# remove the theme from the theme folder stopping any future usage.
 
 	def destroy
