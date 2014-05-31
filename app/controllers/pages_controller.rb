@@ -26,7 +26,7 @@ class PagesController < ApplicationController
  	def show
  		redirect_to show_url params
  	end
- 	
+
 
  	# if the url has segments the application will run through the dynamic_page method.
  	# route_dynamic_page function will take the url and search for the correct data to display
@@ -36,31 +36,4 @@ class PagesController < ApplicationController
 		route_dynamic_page params
 	end
 	
-
-	# contact_form is used for the contact form displayed on the contact page. This will take the params
-	# save and send and email with the details to the admin email address that is set in the admin panel
-
-	def contact_form
-		@message = ContactForm.new(contact_form_params)
-		session[:return_to] = request.referer
-		
-		respond_to do |format|
-		  
-		  if @message.save
-		  	EmailContactFormWorker.perform_async(@message.id)
-		    format.html { redirect_to "#{session[:return_to]}", notice: I18n.t("controllers.pages.contact_form.flash.success") }
-		  else
-		  	flash[:error] = I18n.t("controllers.pages.contact_form.flash.error")
-		    format.html { redirect_to "#{session[:return_to]}" }
-		  end
-		  
-		end
-	end
-
-	# strong parameters
-
-	def contact_form_params
-	    params.permit(:name, :email, :subject, :message)
-	end
-
 end
