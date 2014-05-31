@@ -18,20 +18,7 @@ class Admin::CommentsController < AdminController
 		
 		@comment = Comment.find(params[:id])
 	end
-
-
-	# delete the comment
-
-	def destroy
- 		@comment = Comment.find(params[:id])
-	    @comment.destroy
-
-	    respond_to do |format|
-	      format.html { redirect_to admin_comments_path, notice: I18n.t("controllers.admin.comments.destroy.flash.success") }
-	    end
-
-	end
-
+	
 
 	# update the comment. You are able to update everything about the comment as an admin
 
@@ -56,6 +43,19 @@ class Admin::CommentsController < AdminController
 	      end
 
 	    end
+	end
+
+
+	# delete the comment
+
+	def destroy
+ 		@comment = Comment.find(params[:id])
+	    @comment.destroy
+
+	    respond_to do |format|
+	      format.html { redirect_to admin_comments_path, notice: I18n.t("controllers.admin.comments.destroy.flash.success") }
+	    end
+
 	end
 
 

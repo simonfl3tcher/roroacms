@@ -23,21 +23,22 @@ class ApplicationController < ActionController::Base
     render( :template => "theme/#{current_theme}/error_404", :layout => true, :status => :not_found) if File.exists?("app/views/theme/#{current_theme}/error_404.html.erb")
   end
 
+
   # Get the current theme being used by the application
 
   def current_theme 
     @theme_folder = Setting.get('theme_folder')
   end 
-
   helper_method :current_theme
+
 
   # theme extension 
 
   def get_theme_ext 
     theme_yaml('view_extension')
   end
-
   helper_method :get_theme_ext
+
 
   # Return the current user data
 
@@ -49,6 +50,7 @@ class ApplicationController < ActionController::Base
     end
   end
   helper_method :current_user
+
   
   # globalize allows access to all of the given content from anywhere
 
@@ -62,6 +64,7 @@ class ApplicationController < ActionController::Base
   def current_admin
   	@current_admin ||= current_user if !current_user.blank?
   end
+
 
   # Returns the current access that is granted to the logged in admin. Allowing you to restrict necessary areas to certain types of user
   # currently there are only two user types (admin or editor)
@@ -83,6 +86,7 @@ class ApplicationController < ActionController::Base
   	redirect_to admin_login_path, error: I18n.t("controllers.application.unauthorized") if current_user.nil?
   end
 
+
   # devise settings
 
   def after_sign_in_path_for(resource)
@@ -91,10 +95,12 @@ class ApplicationController < ActionController::Base
     admin_path
   end
 
+
   def after_sign_out_path_for(resource_or_scope)
     Admin.destroy_session session
     admin_login_index_path
   end
+
 
   protected
 

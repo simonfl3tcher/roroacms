@@ -15,6 +15,48 @@ class Admin::AdministratorsController < AdminController
 		# set title
 		@title = I18n.t("controllers.admin.administrators.title")
 	end
+	
+
+	# create a new admin object
+
+	def new
+	    # add breadcrumb and set title
+	    add_breadcrumb I18n.t("controllers.admin.administrators.new.breadcrumb")
+	    @title = I18n.t("controllers.admin.administrators.new.title")
+
+	    @admin = Admin.new
+	    @action = 'create'
+	end
+
+
+	# actually create the new admin with the given param data
+
+	def create
+		@admin = Admin.new(administrator_params)
+		@admin.deal_with_abnormalaties
+
+		respond_to do |format|
+		  
+		  if @admin.save
+
+		  	profile_images(params, @admin)
+		  	Emailer.profile(@admin).deliver
+
+		    format.html { redirect_to admin_administrators_path, notice: 'Admin was successfully created.' }
+
+		  else
+		    format.html { 
+		    	# add breadcrumb and set title
+			    add_breadcrumb I18n.t("controllers.admin.administrators.new.breadcrumb")
+			    @title = I18n.t("controllers.admin.administrators.new.title")
+			  	@action = 'create'
+
+		    	render action: "new" 
+		    }
+		  end
+
+		end
+	end
 
 
 	# get and disply certain admin
@@ -89,50 +131,8 @@ class Admin::AdministratorsController < AdminController
 	      format.html { redirect_to admin_administrators_path, notice: I18n.t("controllers.admin.administrators.destroy.flash.success") }
 	    end
 	end
-
-
-	# create a new admin object
-
-	def new
-	    # add breadcrumb and set title
-	    add_breadcrumb I18n.t("controllers.admin.administrators.new.breadcrumb")
-	    @title = I18n.t("controllers.admin.administrators.new.title")
-
-	    @admin = Admin.new
-	    @action = 'create'
-	end
-
-
-	# actually create the new admin with the given param data
-
-	def create
-		@admin = Admin.new(administrator_params)
-		@admin.deal_with_abnormalaties
-
-		respond_to do |format|
-		  
-		  if @admin.save
-
-		  	profile_images(params, @admin)
-		  	Emailer.profile(@admin).deliver
-
-		    format.html { redirect_to admin_administrators_path, notice: 'Admin was successfully created.' }
-
-		  else
-		    format.html { 
-		    	# add breadcrumb and set title
-			    add_breadcrumb I18n.t("controllers.admin.administrators.new.breadcrumb")
-			    @title = I18n.t("controllers.admin.administrators.new.title")
-			  	@action = 'create'
-
-		    	render action: "new" 
-		    }
-		  end
-
-		end
-	end
 	
-	
+
 	private
 
 	# Strong parameters

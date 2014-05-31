@@ -6,9 +6,8 @@ var responsive_app = function() {
 
   var respond = function() {
     if($(window).width() < 768) {
-      $('.settingsarea .nav-tabs a:not([data-textref])').each(function(){
+      $('.settings-area .nav-tabs a:not([data-textref])').each(function(){
         var text = $(this).text().replace(' ', '');
-        console.log(text)
         $(this).attr('data-textref', text);
         $(this).html($(this).html().replace(/&amp;/, "&").replace(text, ''));
       });
