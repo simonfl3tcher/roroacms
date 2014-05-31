@@ -84,24 +84,6 @@ class Admin::TermsController < AdminController
 	    end
 	end
 
-	# set the title and breadcrumbs for the edit screen
-
-	def edit_title
-
-		if @category.term_anatomy.taxonomy == 'category' 
-			add_breadcrumb I18n.t("controllers.admin.terms.edit_title.category.breadcrumb"), :admin_post_categories_path, :title => I18n.t("controllers.admin.terms.edit_title.category.breadcrumb_title")
-			add_breadcrumb I18n.t("controllers.admin.terms.edit_title.category.title")
-			@title = I18n.t("controllers.admin.terms.edit_title.category.title")
-		else
-			add_breadcrumb I18n.t("controllers.admin.terms.edit_title.tag.breadcrumb"), :admin_post_tags_path, :title => I18n.t("controllers.admin.terms.edit_title.tag.breadcrumb_title")
-			add_breadcrumb I18n.t("controllers.admin.terms.edit_title.tag.title")
-			@title = I18n.t("controllers.admin.terms.edit_title.tag.title")
-		end
-
-		return @title
-
-	end
-
 
 	# delete the term
 
@@ -132,6 +114,25 @@ class Admin::TermsController < AdminController
 	end
 
 	private 
+
+	# set the title and breadcrumbs for the edit screen
+
+	def edit_title
+
+		if @category.term_anatomy.taxonomy == 'category' 
+			add_breadcrumb I18n.t("controllers.admin.terms.edit_title.category.breadcrumb"), :admin_post_categories_path, :title => I18n.t("controllers.admin.terms.edit_title.category.breadcrumb_title")
+			add_breadcrumb I18n.t("controllers.admin.terms.edit_title.category.title")
+			@title = I18n.t("controllers.admin.terms.edit_title.category.title")
+		else
+			add_breadcrumb I18n.t("controllers.admin.terms.edit_title.tag.breadcrumb"), :admin_post_tags_path, :title => I18n.t("controllers.admin.terms.edit_title.tag.breadcrumb_title")
+			add_breadcrumb I18n.t("controllers.admin.terms.edit_title.tag.title")
+			@title = I18n.t("controllers.admin.terms.edit_title.tag.title")
+		end
+
+		return @title
+
+	end
+	
 	
 	# Strong parameter
 

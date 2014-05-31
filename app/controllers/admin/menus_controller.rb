@@ -45,6 +45,19 @@ class Admin::MenusController < AdminController
 		add_breadcrumb I18n.t("controllers.admin.menus.edit.breadcrumb", menu_name: @menu.name)
 		@title = I18n.t("controllers.admin.menus.edit.title", menu_name: @menu.name)
 	end
+	
+
+	# deletes the whole menu. Although there is a delete button on each menu option this just removes it from the list 
+	# which is then interpreted when you save the menu as a whole.
+
+	def destroy 
+		@menu = Menu.find(params[:id])
+	    @menu.destroy
+
+	    respond_to do |format|
+	      format.html { redirect_to admin_menus_path, notice: I18n.t("controllers.admin.menus.destroy.flash.success") }
+	    end
+	end
 
 
 	# saves the menu on the fly via ajax. This usually gets called if there is any change to the menu object
@@ -62,18 +75,6 @@ class Admin::MenusController < AdminController
 		print render :partial => 'admin/menus/partials/menu_dropdown'
 	end
 
-
-	# deletes the whole menu. Although there is a delete button on each menu option this just removes it from the list 
-	# which is then interpreted when you save the menu as a whole.
-
-	def destroy 
-		@menu = Menu.find(params[:id])
-	    @menu.destroy
-
-	    respond_to do |format|
-	      format.html { redirect_to admin_menus_path, notice: I18n.t("controllers.admin.menus.destroy.flash.success") }
-	    end
-	end
 
 	private 
 	

@@ -28,6 +28,7 @@ class CommentsController < ApplicationController
 			render :inline =>  I18n.t("controllers.comments.create.error")
 		end
 	end
+	
 
 	private
 
