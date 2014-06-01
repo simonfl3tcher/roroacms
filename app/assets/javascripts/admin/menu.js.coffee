@@ -19,7 +19,7 @@ $(document).ready ->
   
   # create a success message when you save the menu
   do_alert = ->
-    $( "#main-content .row > .col-md-12 .alertWarpper"  ).html "<div class=\"alert alert-success\"><button data-dismiss=\"alert\" class=\"close\" type=\"button\">x</button><strong>Success!</strong> Menu was successfully updated.</div>"
+    $( "#main-content .row > .col-md-12 .alert-wrapper"  ).html "<div class=\"alert alert-success\"><button data-dismiss=\"alert\" class=\"close\" type=\"button\">x</button><strong>" + I18n.t('javascript.menu.do_alert.success') + "!</strong> " + I18n.t('javascript.menu.do_alert.success_message') + "</div>"
     
     # scroll to the message when created
     $("html,body").animate
@@ -53,7 +53,8 @@ $(document).ready ->
     maxLevels: 3
 
   # Save button 
-  $(".updateMenu").bind "click", (e) ->
+  $(".update-menu").bind "click", (e) ->
+    console.log('23132')
     do_update_function()
     do_alert()
     return

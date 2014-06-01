@@ -186,12 +186,13 @@
         <section class="main-content-wrapper <%= !cookies[:menu_contracted].blank? ? 'main-content-toggle-left' : '' %>">
             <section id="main-content">
                 <%= theme_exists %>
-                <%= get_notifications %>
                 <% if !current_page?(admin_path) %>
                   <div class="row">
                       <div class="col-md-12">
                           <%= render_breadcrumbs '' %>
                          <h1 class="h1"><%= defined?(@title) ? @title : 'No Title' %></h1>
+                         <div class="clearfix"></div>
+                         <div class="alert-wrapper"><%= get_notifications %></div>
                       </div>
                   </div>
                 <% end %>

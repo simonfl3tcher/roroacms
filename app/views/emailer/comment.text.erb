@@ -1,13 +1,13 @@
-Hi there, 
+<%= I18n.t("mailers.emailer.generic.greeting") %>
 
-There has been a new comment made against the post - <%= @comment.post.post_title %>
+<%= I18n.t("mailers.emailer.comment.line_one", post_title: @comment.post.post_title) %>
 
-The details of the comment are below:- 
+<%= I18n.t("mailers.emailer.comment.line_two") %>
 
-Author:- <%= @comment.author %>
+<%= I18n.t("mailers.emailer.comment.line_three") %> <%= @comment.author %>
 
-Email Address:- <%= @comment.email %>
+<%= I18n.t("mailers.emailer.comment.line_four") %> <%= @comment.email %>
 
-Comment:- " <%= @comment.comment%> "
+<%= I18n.t("mailers.emailer.comment.line_five") %> " <%= @comment.comment%> "
 
-Please login to Roroa to moderate the comment.
+<%= I18n.t("mailers.emailer.comment.line_six") %>
