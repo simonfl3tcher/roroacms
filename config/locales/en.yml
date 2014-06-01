@@ -67,7 +67,6 @@ en:
             success: "Comment was successfully marked as spam"
         title: "Comments"
         breadcrumb_title: "Back to comments"
-      dashboard:
       menus:
         new:
         create:
@@ -76,7 +75,6 @@ en:
         edit:
           breadcrumb: "Edit %{menu_name} Menu"
           title: "Edit %{menu_name} Menu"
-        edit:
         update:
         destroy:
           flash:
@@ -177,6 +175,32 @@ en:
       previous: "&lsaquo; "
       next: " &rsaquo;"
       truncate: "..."
+  mailers:
+    emailer:
+      generic:
+        greeting: "Hi"
+      profile:
+        line_one: "A new administrator has been created - %{username}"
+        line_two: "Please login to Roroa to see the details."
+      comment:
+        line_one: "There has been a new comment made against the post - %{post_title}"
+        line_two: "The details of the comment are below:-"
+        line_three: "Author:-"
+        line_four: "Email Address:-"
+        line_five: "Comment:-"
+        line_six: "Please login to Roroa to moderate the comment."
+  javascript:
+    menu:
+      do_alert:
+        success: "Success"
+        success_message: "Menu was successfully updated"
+    settings:
+      are_you_sure: "Are you sure? Make sure update all users with this group"
+    posts:
+      are_you_sure: "Are you sure?"
+    admin:
+      chosen:
+        placeholder: "Please start typing..."
   activerecord:
     errors:
       messages:

@@ -9,7 +9,7 @@
 //
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
-//= require ckeditor-jquery
+//= require i18n/translations
 //= require ../../../../vendor/assets/javascripts/admin/jquery-1.10.2.min.js
 //= require ../../../../vendor/assets/javascripts/admin/jquery-ui-1.10.4.min.js
 //= require ../../../../vendor/assets/javascripts/admin/datatables/js/jquery.datatables.js

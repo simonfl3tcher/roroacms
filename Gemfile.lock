@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/fnando/i18n-js
+  revision: 1c412409377ee6c005573eeb0f288545414d9011
+  specs:
+    i18n-js (3.0.0.rc5)
+      i18n (~> 0.6)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -170,6 +177,7 @@ DEPENDENCIES
   differ
   diffy
   haml
+  i18n-js!
   jquery-rails
   kaminari
   less-rails

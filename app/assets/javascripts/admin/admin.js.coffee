@@ -51,7 +51,7 @@ $(document).ready ->
     return
   )
 
-  $(".chosen-select").chosen({width: "100%", placeholder_text_multiple: "Please start typing..."})
+  $(".chosen-select").chosen({width: "100%", placeholder_text_multiple: I18n.t('javascript.admin.chosen.placeholder')})
 
   $('.contentReload').bind 'click', (e) ->
     # $(".editor").ghostDown();
