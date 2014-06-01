@@ -21,7 +21,7 @@ $(document).ready ->
 
   $("body").on "click", ".remove-user-group", (e) ->
     e.preventDefault()
-    $(this).closest(".form-group").remove()  if confirm("Are you sure? Make sure update all users with this group")
+    $(this).closest(".form-group").remove()  if confirm(I18n.t('javascript.settings.are_you_sure'))
     return
 
   return

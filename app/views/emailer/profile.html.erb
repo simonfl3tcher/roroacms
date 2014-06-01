@@ -1,5 +1,5 @@
-<p>Hi there,</p>
+<p><%= I18n.t("mailers.emailer.generic.greeting") %></p>
 
-<p>A new administrator has been created - <%= @admin.username %></p>
+<p><%= I18n.t("mailers.emailer.profile.line_one", username: @admin.username) %></p>
 
-<p>Please login to Roroa to see the details</p>
+<p><%= I18n.t("mailers.emailer.profile.line_two") %></p>

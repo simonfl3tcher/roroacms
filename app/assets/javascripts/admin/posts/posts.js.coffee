@@ -71,7 +71,7 @@ $(document).ready ->
 
   $("body").on "click", ".remove-additional-group", (e) ->
     e.preventDefault()
-    $(this).closest(".form-group").remove()  if confirm("Are you sure?")
+    $(this).closest(".form-group").remove()  if confirm( I18n.t('javascript.posts.are_you_sure') )
     return
 
   return
