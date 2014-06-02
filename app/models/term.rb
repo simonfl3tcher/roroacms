@@ -23,13 +23,13 @@ class Term < ActiveRecord::Base
 
   		taxonomy = params[:type_taxonomy]
 		if taxonomy == 'category'
-			redirect_url = "admin_post_categories_path"
+			redirect_url = "admin_article_categories_path"
 			type = "Category"
 		elsif taxonomy == 'banner'
 			redirect_url = "categories_admin_banners_path"
 			type = "Banner category"
 		else
-			redirect_url = "admin_post_tags_path"
+			redirect_url = "admin_article_tags_path"
 			type = "Tag"
 		end
 
@@ -70,12 +70,12 @@ class Term < ActiveRecord::Base
 
 			if params[:type_taxonomy] == 'category'
 
-				redirect_url = "admin_post_categories_path"
+				redirect_url = "admin_article_categories_path"
 				type = "Categories"
 
 			else
 
-				redirect_url = "admin_post_tags_path"
+				redirect_url = "admin_article_tags_path"
 				type = "Tags"
 
 			end

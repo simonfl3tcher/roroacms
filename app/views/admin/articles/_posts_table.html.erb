@@ -8,13 +8,13 @@
 	<td><%= p.post_date.strftime "%d-%m-%Y" %></td>
   <td>
     <div class="btn-group">
-      <%= link_to edit_admin_post_path(p), :class => 'btn btn-small' do %>
+      <%= link_to edit_admin_article_path(p), :class => 'btn btn-small' do %>
         <i class="icon-pencil"></i>
       <% end %>        
       <%= link_to page_path(p), :class => 'btn btn-small', :target => "_blank" do %>
         <i class="icon-search"></i>
       <% end %>        
-      <%= link_to admin_post_path(p), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-small' do %>
+      <%= link_to admin_article_path(p), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-small' do %>
         <i class="icon-trash"></i>
       <% end %>
     </div>

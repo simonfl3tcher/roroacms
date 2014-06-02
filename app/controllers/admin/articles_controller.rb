@@ -1,13 +1,13 @@
-class Admin::PostsController < AdminController
+class Admin::ArticlesController < AdminController
 
-	add_breadcrumb I18n.t("controllers.admin.posts.title"), :admin_posts_path, :title => I18n.t("controllers.admin.posts.breadcrumb_title")
+	add_breadcrumb I18n.t("controllers.admin.articles.title"), :admin_articles_path, :title => I18n.t("controllers.admin.articles.breadcrumb_title")
 
 	# displays all the "posts" with the post_type of "page". This is also set up 
 	# to take search parameters so you can search for an individual page itself.
 
 	def index
 		# set title
-		@title = I18n.t("controllers.admin.posts.title")
+		@title = I18n.t("controllers.admin.articles.title")
 		@posts = Post.setup_and_search_posts params, 'post'
 	end
 
@@ -17,8 +17,8 @@ class Admin::PostsController < AdminController
 
 	def new
 		# add breadcrumb and set title
-		add_breadcrumb I18n.t("controllers.admin.posts.new.breadcrumb")
-		@title = I18n.t("controllers.admin.posts.new.title")
+		add_breadcrumb I18n.t("controllers.admin.articles.new.breadcrumb")
+		@title = I18n.t("controllers.admin.articles.new.title")
 
 	    @post = Post.new
 	end
@@ -44,13 +44,13 @@ class Admin::PostsController < AdminController
 		  	# assigns and unassigns categories and tags to an individual posts
 			Post.deal_with_categories @post, params[:category_ids], params[:tag_ids]
 
-		    format.html { redirect_to admin_posts_path, notice: I18n.t("controllers.admin.posts.create.flash.success") }
+		    format.html { redirect_to admin_articles_path, notice: I18n.t("controllers.admin.articles.create.flash.success") }
 
 		  else
 		    format.html { 
 		    	# add breadcrumb and set title
-				add_breadcrumb I18n.t("controllers.admin.posts.new.breadcrumb")
-				@title = I18n.t("controllers.admin.posts.new.title")
+				add_breadcrumb I18n.t("controllers.admin.articles.new.breadcrumb")
+				@title = I18n.t("controllers.admin.articles.new.title")
 		    	render action: "new" 
 		    }
 		  end
@@ -63,8 +63,8 @@ class Admin::PostsController < AdminController
 
 	def edit 
 		# add breadcrumb and set title
-		add_breadcrumb I18n.t("controllers.admin.posts.edit.breadcrumb")
-		@title = I18n.t("controllers.admin.posts.edit.title")
+		add_breadcrumb I18n.t("controllers.admin.articles.edit.breadcrumb")
+		@title = I18n.t("controllers.admin.articles.edit.title")
 
 		@edit = true
 		@post = Post.find(params[:id])
@@ -82,13 +82,13 @@ class Admin::PostsController < AdminController
 	      	
 	      	# assigns and unassigns categories and tags to an individual posts
 	      	Post.deal_with_categories @post, params[:category_ids], params[:tag_ids], true
-	        format.html { redirect_to edit_admin_post_path(@post), notice: I18n.t("controllers.admin.posts.update.flash.success") }
+	        format.html { redirect_to edit_admin_article_path(@post), notice: I18n.t("controllers.admin.articles.update.flash.success") }
 	      
 	      else
 	        format.html { 
 	        	# add breadcrumb and set title
-				add_breadcrumb I18n.t("controllers.admin.posts.edit.breadcrumb")
-				@title = I18n.t("controllers.admin.posts.edit.title")
+				add_breadcrumb I18n.t("controllers.admin.articles.edit.breadcrumb")
+				@title = I18n.t("controllers.admin.articles.edit.title")
 	        	render action: "edit" 
 	        }
 	      end
@@ -103,7 +103,7 @@ class Admin::PostsController < AdminController
 	    Post.disable_post params[:id]
 
 	    respond_to do |format|
-	      format.html { redirect_to admin_posts_path, notice: I18n.t("controllers.admin.posts.destroy.flash.success") }
+	      format.html { redirect_to admin_articles_path, notice: I18n.t("controllers.admin.articles.destroy.flash.success") }
 	    end
 	end
 
@@ -138,7 +138,7 @@ class Admin::PostsController < AdminController
 		notice = Post.bulk_update params, 'posts'
 
 		respond_to do |format|
-	      format.html { redirect_to admin_posts_path, notice: notice }
+	      format.html { redirect_to admin_articles_path, notice: notice }
 	    end
 	end
 

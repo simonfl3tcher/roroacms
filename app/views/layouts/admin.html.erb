@@ -97,8 +97,8 @@
                         <i class="fa fa-dashboard"></i><span>Dashboard</span>
                       <% end %>
                     </li>
-                    <% if check_controller_against_user('pages') || check_controller_against_user('posts') || check_controller_against_user('terms') %>
-                      <li class="sub-menu <%= cp(admin_pages_path) %> <%= cp(new_admin_page_path) %> <%= cp(admin_posts_path) %> <%= cp(new_admin_post_path) %> <%= cp(admin_post_categories_path) %> <%= cp(admin_post_tags_path) %>">
+                    <% if check_controller_against_user('pages') || check_controller_against_user('articles') || check_controller_against_user('terms') %>
+                      <li class="sub-menu <%= cp(admin_pages_path) %> <%= cp(new_admin_page_path) %> <%= cp(admin_articles_path) %> <%= cp(new_admin_article_path) %> <%= cp(admin_article_categories_path) %> <%= cp(admin_article_tags_path) %>">
                           <a href="javascript:void(0);"><i class="fa fa-file"></i><span>Content</span><i class="arrow fa fa-angle-right pull-right"></i></a>
                           <ul>
                             <% if check_controller_against_user('pages') %>
@@ -106,13 +106,13 @@
                               <li class="<%= cp(new_admin_page_path) %>"><%= link_to 'Add New Page', new_admin_page_path %></li>
                             <% end %>
                             <li class="divider"></li>
-                            <% if check_controller_against_user('posts') %>
-                              <li class="<%= cp(admin_posts_path) %>"><%= link_to 'Articles', admin_posts_path %></li>
-                              <li class="<%= cp(new_admin_post_path) %>"><%= link_to 'Add New Article', new_admin_post_path %></li>
+                            <% if check_controller_against_user('articles') %>
+                              <li class="<%= cp(admin_articles_path) %>"><%= link_to 'Articles', admin_articles_path %></li>
+                              <li class="<%= cp(new_admin_article_path) %>"><%= link_to 'Add New Article', new_admin_article_path %></li>
                             <% end %>
                             <% if check_controller_against_user('terms') %>
-                              <li class="<%= cp(admin_post_categories_path) %>"><%= link_to 'Categories', admin_post_categories_path %></li>
-                              <li class="<%= cp(admin_post_tags_path) %>"><%= link_to 'Tags', admin_post_tags_path %></li>
+                              <li class="<%= cp(admin_article_categories_path) %>"><%= link_to 'Categories', admin_article_categories_path %></li>
+                              <li class="<%= cp(admin_article_tags_path) %>"><%= link_to 'Tags', admin_article_tags_path %></li>
                             <% end %>
                           </ul>
                       </li>
@@ -135,7 +135,7 @@
                         <% end %>
                       </li>
                     <% end %>
-                    <% if (Setting.find_by_setting_name('article_comment_type')[:setting] == 'R' && Setting.find_by_setting_name('article_comments')[:setting] == 'Y') && check_controller_against_user('comments') %>
+                    <% if (Setting.get('article_comment_type') == 'R' && Setting.get('article_comments') == 'Y') && check_controller_against_user('comments') %>
                        <li class="<%= cp(admin_comments_path) %>">
                         <%= link_to admin_comments_path do %>
                           <i class="fa fa-comments"></i><span>Comments</span>
@@ -164,7 +164,7 @@
                     <% if check_controller_against_user('trash') %>
 
                         <li class="<%= cp(admin_trash_index_path) %>">
-                          <%= link_to admin_trash_index_path do %>
+                          <%= link_to admin_trash_path do %>
                             <i class="fa fa-trash-o"></i><span>Trash</span>
                           <% end %>
                         </li>
