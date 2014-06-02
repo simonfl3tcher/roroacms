@@ -15,13 +15,13 @@
     	<td><%= post.post_title %><%= post.post_status == "Draft" ? ' - draft' : '' %></td>
     	<td class="hidden-xs"><%= post.post_date.strftime "%d-%m-%Y" %></td>
       <td class="center">
-        <%= link_to edit_admin_post_path(post), :class => '' do %>
+        <%= link_to edit_admin_article_path(post), :class => '' do %>
           <i class="fa fa-pencil"></i>
         <% end %>        
         <%= link_to page_path(post), :class => '', :target => "_blank" do %>
           <i class="fa fa-search"></i>
         <% end %>     
-        <%= link_to admin_post_path(post), method: :delete, data: { confirm: 'Are you sure?' }, :class => '' do %>
+        <%= link_to admin_article_path(post), method: :delete, data: { confirm: 'Are you sure?' }, :class => '' do %>
           <i class="fa -trash-o"></i>
         <% end %>
       </td>

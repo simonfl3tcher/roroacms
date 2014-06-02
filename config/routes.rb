@@ -15,11 +15,9 @@ Roroacms::Application.routes.draw do
   
   namespace :admin do
     get '', to: 'dashboard#index'
-    get 'login', to: 'login#new', as: 'login'
     get 'trash', to: 'trash#index', as: 'trash'
-    get 'logout', to: 'login#destroy', as: 'logout'
-    get 'posts/categories', to: 'terms#categories', as: 'post_categories'
-    get 'posts/tags', to: 'terms#tags', as: 'post_tags'
+    get 'article/categories', to: 'terms#categories', as: 'article_categories'
+    get 'article/tags', to: 'terms#tags', as: 'article_tags'
     
     resources :login, :users, :administrators, :themes
 
@@ -49,7 +47,7 @@ Roroacms::Application.routes.draw do
       end
     end
 
-    resources :posts do
+    resources :articles do
       collection do
         post 'bulk_update'
         post 'autosave_create'
@@ -68,26 +66,18 @@ Roroacms::Application.routes.draw do
 
     resources :trash do
       collection do
-        get 'empty_posts'
+        get 'empty_articles'
         post 'deal_with_form'
       end
     end
 
-    namespace :settings do
-      resources :general do
-        post :update_general
-        collection do 
-          post 'create_user_group'
-        end
-      end
-      resources :menu do 
-        collection do 
-
-          post 'sort'
-
-        end
+    resources :settings do
+      post :update_general
+      collection do 
+        post 'create_user_group'
       end
     end
+
   end 
 
   root to: 'pages#index'

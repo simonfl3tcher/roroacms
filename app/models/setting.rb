@@ -1,10 +1,15 @@
 class Setting < ActiveRecord::Base
 
+	validate :validate_required
+
+
 	# get a certain settings value
 
 	def self.get(setting_name)
-		return Setting.find_by_setting_name(setting_name)[:setting]
+		@reference ||= filter_settings
+		return @reference[setting_name]
 	end
+
 
 	# get pagination setting for models
 
@@ -12,9 +17,32 @@ class Setting < ActiveRecord::Base
 		return Setting.get('pagination_per').to_i
 	end
 
+
 	def self.get_pagination_limit_fe
 		return Setting.get('pagination_per_fe').to_i
 	end
+
+
+	# create a hash of the details for easy access via the get function
+
+	def self.filter_settings()
+		h = {}
+		Setting.all.each do |f|
+			h[f.setting_name] = f.setting
+		end
+		h
+	end
+
+
+	# reload the settings instance variable - this is used on the settings update function
+
+	def self.reload_settings
+		@reference = filter_settings
+	end
+
+
+	# build and return a hash of the SMTP settings via the settings in the admin panel.
+	# this stops you having to change the settings in the config file and having to reload the application.
 
 	def self.mail_settings
 		{ 
@@ -25,6 +53,11 @@ class Setting < ActiveRecord::Base
 			:password 	=> Setting.get('smtp_password'),
 			:authentication => Setting.get('smtp_authentication').to_sym
 		}
+	end
+
+	# validate and throw error on required fields
+	def validate_required
+	  abort self.inspect
 	end
 
 end

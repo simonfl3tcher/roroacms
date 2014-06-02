@@ -7,6 +7,15 @@ $(document).ready ->
     $("#menu_key").val $(this).val().toLowerCase().split(" ").join("-")
     return
 
+  $(".checkall").change ->
+    checkboxes = $(this).closest("form").find(":checkbox")
+    checkboxes.attr "checked", $(this).is(":checked")
+    return
+
+  $.ajaxSetup beforeSend: (xhr) ->
+    xhr.setRequestHeader "X-CSRF-Token", $("meta[name=\"csrf-token\"]").attr("content")
+    return
+
   
   # submit the closest form on click of the updatepost class
   $(".updatepost").bind "click", (e) ->
@@ -56,5 +65,4 @@ $(document).ready ->
   $('.contentReload').bind 'click', (e) ->
     # $(".editor").ghostDown();
   
-  $.scrollUp()
   return

@@ -1,6 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-    	<h3 class="panel-title"><i class='fa fa-link pull-left'></i>&nbsp;Link</h3>
+    	<h3 class="panel-title"><i class='fa fa-link pull-left'></i>&nbsp;<%= I18n.t("views.admin.menus.partials.menu_content_accordion.link") %></h3>
 		<div class="actions pull-right">
 			<i class="fa fa-chevron-down"></i>
 		</div>
@@ -11,7 +11,7 @@
       		<input type="hidden" name="type" value="page" />
       		<div class="form-group">
 				<select name="linkto" class="mod form-control">
-					<option value="">Select an option</option>
+					<option value=""><%= I18n.t("views.admin.menus.partials.menu_content_accordion.select_an_option") %></option>
 					<optgroup label="Pages">
 						<% Post.where(:post_type => 'page', :disabled => 'N').each do |opt| %>
 							<option value="<%= opt.id %>" data-type="page"><%= opt.post_title %></option>
@@ -46,19 +46,19 @@
 				<input name="class" type="text" placeholder="Class" class="form-control">
 			</div>
 
-			<label>Target</label>
+			<label><%= I18n.t("views.admin.menus.partials.menu_content_accordion.target") %></label>
 			<div class="form-group">
 				<div class="radio-inline">
-					<input type="radio" value="sw" name="target" checked="checked">Same Window
+					<input type="radio" value="sw" name="target" checked="checked"><%= I18n.t("views.admin.menus.partials.menu_content_accordion.same_window") %>
 				</div>
 				<div class="radio-inline">
-					<input type="radio" value="nt" name="target">New Tab
+					<input type="radio" value="nt" name="target"><%= I18n.t("views.admin.menus.partials.menu_content_accordion.new_tab") %>
 				</div>
 			</div>
 
 			<div class='formSepUpp'>
 				<button type="submit" class='btn btn-sm btn-primary pull-left'> 
-				    <i class="fa fa-plus"></i>&nbsp; Add Link
+				    <i class="fa fa-plus"></i>&nbsp; <%= I18n.t("views.admin.menus.partials.menu_content_accordion.add_link") %>
 				  </button>
 			</div>
 

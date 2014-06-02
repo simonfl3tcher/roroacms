@@ -100,7 +100,7 @@ en:
             success: "Page was successfully put into trash can"
         title: "Pages"
         breadcrumb_title: "Back to pages"
-      posts:
+      articles:
         new:
           breadcrumb: "Create New Article"
           tite: "Create New Article"
@@ -216,6 +216,62 @@ en:
       previous: "&lsaquo; "
       next: " &rsaquo;"
       truncate: "..."
+    admin:
+      generic:
+        confirm: "Are you sure?"
+        bulk_update_options:
+          unapprove: "Unapprove"
+          approve: "Approve"
+          mark_as_spam: "Mark as spam"
+          destroy: "Destroy"
+      administrators:
+        form:
+          profile: "Profile"
+          cover: "Change cover"
+          remove_cover: "Remove cover"
+          select_access_level: "Select access level"
+        index:
+          add_new_user: "Add New User"
+          name: "Name"
+          email_address: "Email Address"
+          confirm: "Are you sure?"
+      comments:
+        form:
+          comment: "Comment"
+          radio_1: "Approved"
+          radio_2: "Pending"
+          radio_3: "Spam"
+          datetime_separator: "Time:- "
+          date: "Date:- "
+        index:
+          article: "Article"
+          comment: "Comment"
+          status: "Current Status"
+          action: "Action"
+          approved: "Approved"
+          unapproved: "Unapproved"
+          spam: "Spam"
+          comment_submitted_on: "Comment submitted on:- "
+      dashboard:
+        pages: "Pages"
+        articles: "Articles"
+        comments: "Comments"
+        administrators: "Administrators"
+        quick_links: "Quick Links"
+        settings: "Settings"
+        menus: "Menus"
+        trash: "Trash"
+        latest_5_comments: "Latest 5 Comments"
+      menus:
+        partials:
+          menu_content_accordion:
+            link: "Link"
+            select_an_option: "Select an option"
+            target: "Target"
+            same_window: "Same Window"
+            new_tab: "New Tab"
+            add_link: "Add Link"
+
   mailers:
     emailer:
       generic:
@@ -319,51 +375,3 @@ en:
         setting_name: 'Name'
         setting: 'Value'
         type_of_setting: 'Type of setting'
-
-views:
-  admin:
-    generic:
-      confirm: "Are you sure?"
-      bulk_update_options:
-        unapprove: "Unapprove"
-        approve: "Approve"
-        mark_as_spam: "Mark as spam"
-        destroy: "Destroy"
-    administrators:
-      form:
-        profile: "Profile"
-        cover: "Change cover"
-        remove_cover: "Remove cover"
-        select_access_level: "Select access level"
-      index:
-        add_new_user: "Add New User"
-        name: "Name"
-        email_address: "Email Address"
-        confirm: "Are you sure?"
-    comments:
-      form:
-        comment: "Comment"
-        radio_1: "Approved"
-        radio_2: "Pending"
-        radio_3: "Spam"
-        datetime_separator: "Time:- "
-        date: "Date:- "
-      index:
-        article: "Article"
-        comment: "Comment"
-        status: "Current Status"
-        action: "Action"
-        approved: "Approved"
-        unapproved: "Unapproved"
-        spam: "Spam"
-        comment_submitted_on: "Comment submitted on:- "
-      dashboard:
-        pages: "Pages"
-        articles: "Articles"
-        comments: "Comments"
-        administrators: "Administrators"
-        quick_links: "Quick Links"
-        settings: "Settings"
-        menus: "Menus"
-        trash: "Trash"
-        latest_5_comments: "Latest 5 Comments"
