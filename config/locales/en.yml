@@ -168,6 +168,47 @@ en:
             success: "This record was successfully destroyed"
         title: "Trash"
         breadcrumb_title: "Back to trash"
+  helpers:
+    admin_roroa_helper:
+      theme_exists:
+        warning: "Warning"
+        message: "The current theme being used does not exist"
+    comments_helper:
+      comments_success_message: "Comment was successfully posted. Awaiting Review"
+    general_helper:
+      check_theme_folder:
+        message: "There is no theme.yml file included in the theme"
+    media_helper:
+      media_create:
+        success: "Folder was successfully created"
+        fail: "Couldn't create folder"
+    routing_helper:
+      generic:
+        back_to: "Back to %{word}"
+        home: "Home"
+        search: "Search"
+      render_template:
+        template_error: "You have to have page.html.erb tempalte included in your theme"
+    view_helper:
+      generic:
+        flash:
+          success: "Success"
+          error: "Error"
+      display_comments_loop:
+        response: "responses to"
+      get_date_name_by_number:
+        date_1: "Jan"
+        date_2: "Feb"
+        date_3: "Mar"
+        date_4: "Apr"
+        date_5: "May"
+        date_6: "Jun"
+        date_7: "Jul"
+        date_8: "Aug"
+        date_9: "Sep"
+        date_10: "Oct"
+        date_11: "Nov"
+        date_12: "Dec"
   views:
     pagination:
       first: "&laquo; "
@@ -278,3 +319,51 @@ en:
         setting_name: 'Name'
         setting: 'Value'
         type_of_setting: 'Type of setting'
+
+views:
+  admin:
+    generic:
+      confirm: "Are you sure?"
+      bulk_update_options:
+        unapprove: "Unapprove"
+        approve: "Approve"
+        mark_as_spam: "Mark as spam"
+        destroy: "Destroy"
+    administrators:
+      form:
+        profile: "Profile"
+        cover: "Change cover"
+        remove_cover: "Remove cover"
+        select_access_level: "Select access level"
+      index:
+        add_new_user: "Add New User"
+        name: "Name"
+        email_address: "Email Address"
+        confirm: "Are you sure?"
+    comments:
+      form:
+        comment: "Comment"
+        radio_1: "Approved"
+        radio_2: "Pending"
+        radio_3: "Spam"
+        datetime_separator: "Time:- "
+        date: "Date:- "
+      index:
+        article: "Article"
+        comment: "Comment"
+        status: "Current Status"
+        action: "Action"
+        approved: "Approved"
+        unapproved: "Unapproved"
+        spam: "Spam"
+        comment_submitted_on: "Comment submitted on:- "
+      dashboard:
+        pages: "Pages"
+        articles: "Articles"
+        comments: "Comments"
+        administrators: "Administrators"
+        quick_links: "Quick Links"
+        settings: "Settings"
+        menus: "Menus"
+        trash: "Trash"
+        latest_5_comments: "Latest 5 Comments"

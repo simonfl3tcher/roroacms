@@ -21,7 +21,7 @@ module MenuHelper
 
 	# returns the count of the children within the lft and rgt values
 	# Params:
-	# +value+:: the current record that you want to check against
+	# +m+:: the current record that you want to check against
 
 	def descendants_count(m)
       return (m.rgt - m.lft - 1)/2

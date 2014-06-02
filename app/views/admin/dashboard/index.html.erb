@@ -4,7 +4,7 @@
           <div class="dashboard-tile detail tile-red">
               <div class="content">
                   <h1 class="text-left timer"><%= get_count_post('page') %></h1>
-                  <p>Pages</p>
+                  <p><%= I18n.t("views.admin.dashboard.pages") %></p>
               </div>
               <div class="icon"><i class="fa fa-files-o"></i>
               </div>
@@ -14,7 +14,7 @@
           <div class="dashboard-tile detail tile-turquoise">
               <div class="content">
                   <h1 class="text-left timer"><%= get_count_post('post') %></h1>
-                  <p>Articles</p>
+                  <p><%= I18n.t("views.admin.dashboard.articles") %></p>
               </div>
               <div class="icon"><i class="fa fa-file-text-o"></i>
               </div>
@@ -24,7 +24,7 @@
           <div class="dashboard-tile detail tile-blue">
               <div class="content">
                   <h1 class="text-left timer"><%= get_count_comments %></h1>
-                  <p>Comments</p>
+                  <p><%= I18n.t("views.admin.dashboard.comments") %></p>
               </div>
               <div class="icon"><i class="fa fa fa-comments"></i>
               </div>
@@ -36,7 +36,7 @@
       <div class="col-md-6">
           <div class="panel panel-default">
               <div class="panel-heading">
-                  <h3 class="panel-title">Quick Links</h3>
+                  <h3 class="panel-title"><%= I18n.t("views.admin.dashboard.quick_links") %></h3>
                   <div class="actions pull-right">
                       <i class="fa fa-chevron-down"></i>
                   </div>
@@ -47,19 +47,19 @@
                       <div class="col-md-4 col-sm-6">
                         <%= link_to admin_pages_path, :class => 'shortcut' do %>
                           <i class="fa fa-file fa-4x"></i>
-                          <span class="shortcut-label">Pages</span>
+                          <span class="shortcut-label"><%= I18n.t("views.admin.dashboard.pages") %></span>
                         <% end %>
                       </div>
                       <div class="col-md-4 col-sm-6">
                         <%= link_to admin_posts_path, :class => 'shortcut' do %>
                           <i class="fa fa-file-o fa-4x"></i>
-                          <span class="shortcut-label">Articles</span>
+                          <span class="shortcut-label"><%= I18n.t("views.admin.dashboard.articles") %></span>
                         <% end %>
                       </div>
                       <div class="col-md-4 col-sm-6">
                         <%= link_to admin_administrators_path, :class => 'shortcut' do %>
                           <i class="fa fa-user fa-4x"></i>
-                          <span class="shortcut-label">Administrators</span>
+                          <span class="shortcut-label"><%= I18n.t("views.admin.dashboard.administrators") %></span>
                         <% end %>
                       </div>
                   </div>
@@ -68,19 +68,19 @@
                     <div class="col-md-4 col-sm-6">
                       <%= link_to admin_settings_general_index_path, :class => 'shortcut' do %>
                         <i class="fa fa-cogs fa-4x"></i>
-                        <span class="shortcut-label">Settings</span>
+                        <span class="shortcut-label"><%= I18n.t("views.admin.dashboard.settings") %></span>
                       <% end %>
                     </div>
                     <div class="col-md-4 col-sm-6">
                       <%= link_to admin_menus_path, :class => 'shortcut' do %>
                         <i class="fa fa-list fa-4x"></i>
-                        <span class="shortcut-label">Menus</span>
+                        <span class="shortcut-label"><%= I18n.t("views.admin.dashboard.menus") %></span>
                       <% end %>
                     </div>
                     <div class="col-md-4 col-sm-6">
                       <%= link_to admin_trash_index_path, :class => 'shortcut' do %>
                         <i class="fa fa-trash-o fa-4x"></i>
-                        <span class="shortcut-label">Trash</span>
+                        <span class="shortcut-label"><%= I18n.t("views.admin.dashboard.trash") %></span>
                       <% end %>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
       <div class="col-md-6 comments">
           <div class="panel panel-default">
               <div class="panel-heading">
-                  <h3 class="panel-title">Latest 5 Comments</h3>
+                  <h3 class="panel-title"><%= I18n.t("views.admin.dashboard.latest_5_comments") %></h3>
                   <div class="actions pull-right">
                       <i class="fa fa-chevron-down"></i>
                   </div>
@@ -110,7 +110,7 @@
                              <%= link_to mark_as_spam_admin_comment_path(comment) do %>
                               <i class="fa fa-fire"></i>
                             <% end %>              
-                            <%= link_to admin_comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                            <%= link_to admin_comment_path(comment), method: :delete, data: { confirm: I18n.t("views.admin.generic.confirm") } do %>
                               <i class="fa fa-trash-o"></i>
                             <% end %>
                           </div>
