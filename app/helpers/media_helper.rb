@@ -36,9 +36,9 @@ module MediaHelper
 	def media_create(params, url = '') 
 		begin
           AWS::S3::S3Object.store(url + "#{params[:create_dir]}/", url + "#{params[:create_dir]}/", BUCKET, :access => :public_read, :content_type => 'binary/octet-stream')
-          render :text => 'Folder was successfully created.' 
+          render :text => I18n.t("helpers.media_helper.media_create.success")
         rescue
-          render :text => "Couldn't create folder"
+          render :text => I18n.t("helpers.media_helper.media_create.fail")
         end
 	end
 

@@ -3,7 +3,7 @@
   <div class="panel-body">
     <div class="tab-wrapper tab-left ">
       <ul class="nav nav-tabs">
-        <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-comment"></i> Comment</a></li>
+        <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-comment"></i> <%= I18n.t("views.admin.comments.form.comment") %></a></li>
       </ul>
       <div class="tab-content">
         <%= render :partial => 'admin/partials/submit_bar' %>
@@ -12,7 +12,7 @@
           <div class="form-group">
             <%= f.label :author, :class => "col-sm-3 control-label"  %>
             <div class="col-sm-6">
-              <%= f.text_field :author, size: 40, :placeholder => 'Author', :class => "form-control" %>
+              <%= f.text_field :author, size: 40, :class => "form-control" %>
               <%= errors_for @comment, :author %>
             </div>
             <div class="clearfix"></div>
@@ -21,7 +21,7 @@
           <div class="form-group">
             <%= f.label :email, :class => "col-sm-3 control-label"  %>
             <div class="col-sm-6">
-              <%= f.text_field :email, size: 40, :placeholder => 'Email Address', :class => "form-control" %>
+              <%= f.text_field :email, size: 40, :class => "form-control" %>
               <%= errors_for @comment, :email %>
             </div>
             <div class="clearfix"></div>
@@ -30,7 +30,7 @@
           <div class="form-group">
             <%= f.label :website, :class => "col-sm-3 control-label"  %>
             <div class="col-sm-6">
-              <%= f.text_field :website, size: 40, :placeholder => 'Email Address', :class => "form-control" %>
+              <%= f.text_field :website, size: 40, :class => "form-control" %>
             </div>
             <div class="clearfix"></div>
           </div>
@@ -40,13 +40,13 @@
               <div class="col-sm-6">
                 <div class="">
                   <label class="radio-inline">
-                    <%= f.radio_button :comment_approved, "Y", :checked => @comment.comment_approved == 'Y' ? true : false %>Approved
+                    <%= f.radio_button :comment_approved, "Y", :checked => @comment.comment_approved == 'Y' ? true : false %><%= I18n.t("views.admin.comments.form.radio_1") %>
                   </label>
                   <label class="radio-inline">
-                    <%= f.radio_button :comment_approved, "N", :checked => @comment.comment_approved == 'N' ? true : false %>Pending
+                    <%= f.radio_button :comment_approved, "N", :checked => @comment.comment_approved == 'N' ? true : false %><%= I18n.t("views.admin.comments.form.radio_2") %>
                   </label>
                   <label class="radio-inline">
-                    <%= f.radio_button :comment_approved, "S", :checked => @comment.comment_approved == 'S' ? true : false %>Spam
+                    <%= f.radio_button :comment_approved, "S", :checked => @comment.comment_approved == 'S' ? true : false %><%= I18n.t("views.admin.comments.form.radio_3") %>
                   </label>
                 </div>
               </div>
@@ -56,8 +56,8 @@
           <div class="form-group">
             <%= f.label :submitted_on, :class => "col-sm-3 control-label"  %>
             <div class="col-sm-6">
-              Date:-
-              <%= f.datetime_select :submitted_on, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => 'Time:- '}, :class => 'form-control' %>
+              <%= I18n.t("views.admin.comments.form.date") %>
+              <%= f.datetime_select :submitted_on, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => I18n.t("views.admin.comments.form.datetime_separator") }, :class => 'form-control' %>
             </div>
             <div class="clearfix"></div>
           </div>

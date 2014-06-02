@@ -13,8 +13,8 @@ module RoutingHelper
 			gloalize Post.where("(post_title LIKE :p or post_slug LIKE :p2 or post_content LIKE :p3) and (post_type != 'autosave') AND (post_date <= NOW())", {:p => "%#{params[:search]}%", :p2 => "%#{params[:search]}%", :p3 => "%#{params[:search]}%"}).page(params[:page]).per(Setting.get('pagination_per_fe'))
 			
 			# add breadcrumbs to the hash
-			add_breadcrumb "Home", :root_path, :title => "Home"
-			add_breadcrumb "Search", "/"
+			add_breadcrumb I18n.t("helpers.routing_helper.generic.home"), :root_path, :title => I18n.t("helpers.routing_helper.generic.home")
+			add_breadcrumb I18n.t("helpers.routing_helper.generic.search"), "/"
 
 			# template Hierarchy
 			do_hierarchy_templating('search')
@@ -190,14 +190,14 @@ module RoutingHelper
 				gloalize Post.joins('LEFT JOIN term_relationships ON term_relationships.post_id = posts.id').where("(post_status = 'Published' AND post_date <= NOW() AND disabled = 'N') and term_relationships.term_id = ?", term).order('post_date DESC').page(params[:page]).per(Setting.get('pagination_per_fe'))
 				
 				# add the breadcrumbs
-				add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
+				add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => I18n.t("helpers.routing_helper.generic.back_to", word: article_url.capitalize)
 				segments.each do |f|
 					term = Term.find_by_slug(f)
 					if term.blank?
 						render_404 and return
 					end
 					type_url = term.term_anatomy.taxonomy == 'tag' ? tag_slug : category_url
-					add_breadcrumb "#{term.name.capitalize}", "/#{article_url}/#{type_url}#{term.structured_url}", :title => "Back to #{term.name.capitalize}"
+					add_breadcrumb "#{term.name.capitalize}", "/#{article_url}/#{type_url}#{term.structured_url}", :title => I18n.t("helpers.routing_helper.generic.back_to", word: term.name.capitalize)
 				end
 
 				do_hierarchy_templating('category')
@@ -207,7 +207,7 @@ module RoutingHelper
 		else 
 
 			# add article homepage
-			add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
+			add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => I18n.t("helpers.routing_helper.generic.back_to", word: article_url.capitalize)
 			gloalize Post.where("#{status} and post_type ='post' and disabled = 'N'").order('post_date DESC').page(params[:page]).per(Setting.get('pagination_per_fe'))
 			
 			# template Hierarchy
@@ -240,8 +240,8 @@ module RoutingHelper
 		@new_comment = Comment.new
 
 		# add the necessary breadcrumbs
-		add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
-		add_breadcrumb "#{@content.post_title}", "/#{@content.post_title}", :title => "Back to #{@content.post_title}"
+		add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => I18n.t("helpers.routing_helper.generic.back_to", word: article_url.capitalize)
+		add_breadcrumb "#{@content.post_title}", "/#{@content.post_title}", :title => I18n.t("helpers.routing_helper.generic.back_to", word: @content.post_title)
 
 		# render the single template
 		render_template 'article'
@@ -257,10 +257,10 @@ module RoutingHelper
 	def render_archive(segments, article_url)
 
 		# add the breadcrumb
-		add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => "Back to #{article_url.capitalize}"
+		add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => I18n.t("helpers.routing_helper.generic.back_to", word: article_url.capitalize)
 		
 		# add for year as minimum
-		add_breadcrumb "#{segments[1]}", "/#{article_url}/#{segments[1]}", :title => "Back to #{segments[1]}"
+		add_breadcrumb "#{segments[1]}", "/#{article_url}/#{segments[1]}", :title => I18n.t("helpers.routing_helper.generic.back_to", word: segments[1])
 		
 		# build SQL variable
 		build_sql = Post.where("(disabled = 'N' AND post_status = 'Published') AND post_type = 'Post' AND (YEAR(post_date) = ?)", segments[1])
@@ -270,14 +270,14 @@ module RoutingHelper
 			#  add to SQL query
 			build_sql = build_sql.where("MONTH(post_date) = ?", segments[2])
 			# add the breadcrumbs
-			add_breadcrumb "#{get_date_name_by_number(segments[2].to_i)}", "/#{article_url}/#{segments[1]}/#{segments[2]}", :title => "Back to #{segments[2]}"
+			add_breadcrumb "#{get_date_name_by_number(segments[2].to_i)}", "/#{article_url}/#{segments[1]}/#{segments[2]}", :title => I18n.t("helpers.routing_helper.generic.back_to", word: segments[2])
 		end
 
 		if !segments[3].blank?
 			#  add to SQL query
 			build_sql = build_sql.where("DAY(post_date) = ?", segments[3])
 			# add the breadcrumbs
-			# add_breadcrumb "#{segments[3]}", "/#{article_url}/#{segments[1]}/#{segments[2]}/#{segments[3]}", :title => "Back to #{segments[3]}"
+			add_breadcrumb "#{segments[3]}", "/#{article_url}/#{segments[1]}/#{segments[2]}/#{segments[3]}", :title => I18n.t("helpers.routing_helper.generic.back_to", word: segments[3])
 		end
 
 
@@ -355,7 +355,7 @@ module RoutingHelper
 					# if not use the page.html.erb template which has to be included in the theme
 					render :template => "theme/#{current_theme}/page." + get_theme_ext
 				else 
-					render :inline => 'You have to have page.html.erb tempalte included in your theme'
+					render :inline => I18n.t("helpers.routing_helper.render_template.template_error")
 				end
 
 			end
@@ -369,7 +369,7 @@ module RoutingHelper
 				# if not use the page.html.erb template which has to be included in the theme
 				render :template => "theme/#{current_theme}/page." + get_theme_ext
 			else 
-				render :inline => 'You have to have page.html.erb tempalte included in your theme'
+				render :inline => I18n.t("helpers.routing_helper.render_template.template_error")
 			end
 
 		end	
