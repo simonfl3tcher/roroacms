@@ -90,10 +90,10 @@ class Admin::CommentsController < AdminController
 			end
 		end
 	end
+	
 
 	private
 	
-
 	# Strong parameters
 
 	def comments_params

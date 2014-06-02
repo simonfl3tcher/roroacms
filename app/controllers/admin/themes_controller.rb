@@ -3,6 +3,7 @@ class Admin::ThemesController < AdminController
 	include AdminRoroaHelper
 	add_breadcrumb I18n.t("controllers.admin.themes.title"), :admin_themes_path, :title => I18n.t("controllers.admin.themes.breadcrumb_title")
 	
+	
 	# lists all the avalible themes
 
 	def index 

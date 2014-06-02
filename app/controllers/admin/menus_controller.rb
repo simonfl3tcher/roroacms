@@ -77,7 +77,6 @@ class Admin::MenusController < AdminController
 
 
 	private 
-	
 
 	# Strong parameters
 
