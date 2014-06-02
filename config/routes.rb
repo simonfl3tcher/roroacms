@@ -9,9 +9,6 @@ Roroacms::Application.routes.draw do
 
   resources :pages,  only: [:index, :show, :dynamic_page]
   resources :comments
-
-  post 'email', to: 'pages#contact_form'
-
   
   namespace :admin do
     get '', to: 'dashboard#index'
