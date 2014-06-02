@@ -243,10 +243,10 @@ module ViewHelper
 
 	def get_notifications
 		if flash[:notice]
-	    	html = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert'>x</button><strong>Success!</strong> #{flash[:notice]}</div>"
+	    	html = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert'>x</button><strong>" + I18n.t("helpers.view_helper.generic.flash.success") + "!</strong> #{flash[:notice]}</div>"
 	    	render :inline => html.html_safe
 	    elsif flash[:error]
-	    	html = "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>x</button><strong>Error!</strong> #{flash[:error]}</div>"
+	    	html = "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>x</button><strong>" + I18n.t("helpers.view_helper.generic.flash.error") + "!</strong> #{flash[:error]}</div>"
 	    	render :inline => html.html_safe
 	    end
 	end
@@ -295,7 +295,7 @@ module ViewHelper
 		end
 
 		if comments.count > 0 
-			html = "<h3 id='comments-title'>#{comments.count} responses to #{display_title}</h3>"
+			html = "<h3 id='comments-title'>#{comments.count}" + I18n.t("helpers.view_helper.display_comments_loop.response") + " #{display_title}</h3>"
 		end
 		
 		html = nested_comments return_comments.arrange(:order => 'created_at ASC')
@@ -316,7 +316,7 @@ module ViewHelper
 			unless @admin.blank?
 					html = "<div id='author-info'>
 					<div id='author-description'>
-						<h2>About #{@admin.first_name} #{@admin.last_name}</h2>
+						<h2>#{@admin.first_name} #{@admin.last_name}</h2>
 						<p>#{@admin.description}</p>						
 					</div>
 				</div>"
@@ -586,18 +586,18 @@ module ViewHelper
 
 	def get_date_name_by_number(s)
         case s
-            when  1 then "Jan"
-            when  2 then "Feb"
-            when  3 then "Mar"
-            when  4 then "Apr"
-            when  5 then "May"
-            when  6 then "Jun"
-            when  7 then "Jul"
-            when  8 then "Aug"
-            when  9 then "Sep"
-            when 10 then "Oct"
-            when 11 then "Nov" 
-            when 12 then "Dec"
+            when  1 then I18n.t("helpers.view_helper.get_date_name_by_number.date_1")
+            when  2 then I18n.t("helpers.view_helper.get_date_name_by_number.date_2")
+            when  3 then I18n.t("helpers.view_helper.get_date_name_by_number.date_3")
+            when  4 then I18n.t("helpers.view_helper.get_date_name_by_number.date_4")
+            when  5 then I18n.t("helpers.view_helper.get_date_name_by_number.date_5")
+            when  6 then I18n.t("helpers.view_helper.get_date_name_by_number.date_6")
+            when  7 then I18n.t("helpers.view_helper.get_date_name_by_number.date_7")
+            when  8 then I18n.t("helpers.view_helper.get_date_name_by_number.date_8")
+            when  9 then I18n.t("helpers.view_helper.get_date_name_by_number.date_9")
+            when 10 then I18n.t("helpers.view_helper.get_date_name_by_number.date_10")
+            when 11 then I18n.t("helpers.view_helper.get_date_name_by_number.date_11") 
+            when 12 then I18n.t("helpers.view_helper.get_date_name_by_number.date_12")
         end
 	end
 

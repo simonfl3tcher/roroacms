@@ -144,7 +144,7 @@ module AdminRoroaHelper
 		current_theme = Setting.get('theme_folder')
 
 		if !Dir.exists?("app/views/theme/#{current_theme}/")
-			html = "<div class='alert alert-danger'><strong>Warning!</strong> The current theme being used does not exist!</div>"
+			html = "<div class='alert alert-danger'><strong>" + I18n.t("helpers.admin_roroa_helper.theme_exists.warning") + "!</strong>" + I18n.t("helpers.admin_roroa_helper.theme_exists.message") + "!</div>"
 	    	render :inline => html.html_safe
 		end
 

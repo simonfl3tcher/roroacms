@@ -13,10 +13,10 @@
             <thead>
               <tr>
                 <th class="checkboxth hidden-xs"><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
-                <th>Article</th>
-                <th class="hidden-xs">Comment</th>
-                <th class="hidden-xs">Current Status</th>
-                <th>Action</th>
+                <th><%= I18n.t("views.admin.comments.index.article") %></th>
+                <th class="hidden-xs"><%= I18n.t("views.admin.comments.index.comment") %></th>
+                <th class="hidden-xs"><%= I18n.t("views.admin.comments.index.status") %></th>
+                <th><%= I18n.t("views.admin.comments.index.action") %></th>
                 <th class="hidden-xs">&nbsp;</th>
               </tr>
             </thead>
@@ -33,17 +33,17 @@
              
               </td>
               <td class="hidden-xs">
-                <small>Comment submitted on:- <%= comment.submitted_on.strftime "%d-%m-%Y"%></small><br />
+                <small><%= I18n.t("views.admin.comments.index.comment_submitted_on") %> <%= comment.submitted_on.strftime "%d-%m-%Y"%></small><br />
                 <%= excerpt comment.comment, 50 %>
               </td>
               <td class="hidden-xs">
 
                 <% if comment.comment_approved == 'Y' %>
-                  Approved
+                  <%= I18n.t("views.admin.comments.index.approved") %>
                 <% elsif comment.comment_approved == 'S' %>
-                  Spam
+                  <%= I18n.t("views.admin.comments.index.spam") %>
                 <% else %>
-                  Unapproved
+                  <%= I18n.t("views.admin.comments.index.unapproved") %>
                 <% end %>
                 
               </td>
@@ -54,7 +54,7 @@
                    <%= link_to mark_as_spam_admin_comment_path(comment), :class => '' do %>
                     <i class="fa fa-fire"></i>
                   <% end %>              
-                  <%= link_to admin_comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' }, :class => '' do %>
+                  <%= link_to admin_comment_path(comment), method: :delete, data: { confirm: I18n.t("views.admin.generic.confirm") }, :class => '' do %>
                     <i class="fa fa-trash-o"></i>
                   <% end %>
                 </td>
@@ -73,7 +73,7 @@
           </table>
           <div class="hidden-xs">
             <hr>
-            <%= bulk_update_dropdown Hash['unapprove' => 'Unapprove', 'approve' => 'Approve', 'mark_as_spam' => 'Mark as spam', 'destroy' => 'Destroy'] %>
+            <%= bulk_update_dropdown Hash['unapprove' => I18n.t("views.admin.generic.bulk_update_options.unapprove"), 'approve' => I18n.t("views.admin.generic.bulk_update_options.approve"), 'mark_as_spam' => I18n.t("views.admin.generic.bulk_update_options.mark_as_spam"), 'destroy' => I18n.t("views.admin.generic.bulk_update_options.destroy")] %>
           </div>
         <% end %>
       </div>

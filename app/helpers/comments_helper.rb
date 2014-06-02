@@ -25,7 +25,7 @@ module CommentsHelper
 	# returns a success message if the comment has been saved successfully
 
 	def comments_success_message
-		html = '<div class="success">Comment was successfully posted. Awaiting Review</div>'.html_safe
+		html = '<div class="success">' + I18n.t("helpers.comments_helper.comments_success_message") + '</div>'.html_safe
 	end
 	
 
