@@ -1,10 +1,9 @@
-class Admin::Settings::GeneralController < AdminController
+class Admin::SettingsController < AdminController
 
 	add_breadcrumb I18n.t("controllers.admin.settings.general.title"), :admin_settings_general_index_path, :title => I18n.t("controllers.admin.settings.general.breadcrumb_title")
 
 	# This controller is used for the settings page. This simply relates to all of the settings that are set in the database
 
-	before_filter :authorize_admin_access
 	before_filter :set_json
 
 	def index 
@@ -25,9 +24,10 @@ class Admin::Settings::GeneralController < AdminController
 			set = Setting.where("setting_name = '#{key}'").update_all('setting' => value)
 		end
 
-		redirect_url = "admin_settings_#{redirect}_index_path"
+		redirect_url = "admin_settings_path"
 
 		respond_to do |format|
+			Setting.reload_settings
 			format.html { redirect_to send(redirect_url), notice: I18n.t("controllers.admin.settings.general.create.flash.success") }
 		end
 	end

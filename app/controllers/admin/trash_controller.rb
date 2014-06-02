@@ -6,9 +6,6 @@ class Admin::TrashController < AdminController
 	# you can then decide if you want to remove these completely or reinstate them - put simply it is a fail
 	# safe so that you don't accidently delete something that you didn't want to delete
 
-	# check if the admin is allowed to access this area
-	before_filter :authorize_admin_access
-
 	def index 
 		# set title
 		@title = I18n.t("controllers.admin.trash.title")

@@ -24,7 +24,7 @@ class AdminController < ApplicationController
 	# checks to see if the admin logged in has the necesary rights, if not it will redirect them with an error message
 
 	def authorize_admin_access
-		
+		Setting.reload_settings
 		if !check_controller_against_user(params[:controller].sub('admin/', '')) && params[:controller] != 'admin/dashboard'
 			flash[:error] = I18n.t("controllers.admin.misc.authorize_admin_access_error")
 			redirect_to admin_path
