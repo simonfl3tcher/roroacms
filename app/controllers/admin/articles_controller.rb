@@ -111,7 +111,6 @@ class Admin::ArticlesController < AdminController
 	# is called via an ajax call on BOTH post/page this saves the current state post every 2 mins
 	# and saves it as a "autosave" these posts are then displayed as revisions underneath the post editor
 
-
 	def autosave_update
 		post = Post.new(post_params)
 		ret = Post.do_autosave params, post
@@ -142,6 +141,7 @@ class Admin::ArticlesController < AdminController
 	    end
 	end
 
+
 	# used for an ajax call will take the key and return the necessary html for the view and return it
 
 	def create_additional_data
@@ -149,8 +149,8 @@ class Admin::ArticlesController < AdminController
 		print render :partial => 'admin/partials/post_additional_data_view'
 	end
 
-	private 
 
+	private 
 
 	# Strong parameters
 

@@ -112,6 +112,7 @@ class Admin::TermsController < AdminController
 	      format.html { redirect_to send(redirect_url), notice: notice }
 	    end
 	end
+	
 
 	private 
 
