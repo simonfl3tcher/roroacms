@@ -36,7 +36,7 @@ $(document).ready ->
           c = CKEDITOR.instances[instance].getData()
         formData += "&ck_content=" + encodeURIComponent(c)
         if $("input[name=\"_method\"]").length > 0
-          $.post "/admin/posts/autosave_update", formData, (data) ->
+          $.post "/admin/articles/autosave_update", formData, (data) ->
             if data != 'f'
               $("#revisionsContainer, #revisions").html data
               return

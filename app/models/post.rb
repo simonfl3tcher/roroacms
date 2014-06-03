@@ -141,6 +141,20 @@ class Post < ActiveRecord::Base
 
     end
 
+    # filter/format the additional fields and add the data to the post_additional_data field of the record.
+
+    def additional_data(data)
+
+        if !data.blank?
+            data.each do |key, value|
+                if value.count < 2
+                    data[key.to_sym] = value[0]
+                end
+            end
+            self.post_additional_data = ActiveSupport::JSON.encode(data)
+        end
+    end
+
     # creates a revision record of the post
 
     def self.do_autosave(params, post)

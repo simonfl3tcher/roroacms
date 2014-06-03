@@ -286,4 +286,30 @@ module AdminRoroaHelper
 	  end
 	end
 
+	# displays the additional data on the page form
+	# Params:
+	# +data+:: data to loop through and display 
+	# +key_exists+:: this is used to define if the data is a hash or an array if it is an array this should be set to false
+	# +key+:: if it is an array then it needs to use its parent key, this is provided via this vairable
+
+	def addition_data_loop(data, keys_exist = true, key = nil)
+		string = ''
+		if keys_exist
+			data.each do |key, value|
+				if value.is_a?(Array)
+					string += addition_data_loop(value, false, key)
+				else
+					string += (render :partial => 'admin/partials/post_additional_data_view', :locals => {:key => key, :value => value })
+				end
+			end
+		else
+			data.each do |value|
+				string += (render :partial => 'admin/partials/post_additional_data_view', :locals => {:key => key, :value => value })
+			end
+		end
+
+		string.html_safe
+
+	end
+
 end

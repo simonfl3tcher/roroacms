@@ -1,8 +1,5 @@
 class Setting < ActiveRecord::Base
 
-	validate :validate_required
-
-
 	# get a certain settings value
 
 	def self.get(setting_name)
@@ -53,11 +50,6 @@ class Setting < ActiveRecord::Base
 			:password 	=> Setting.get('smtp_password'),
 			:authentication => Setting.get('smtp_authentication').to_sym
 		}
-	end
-
-	# validate and throw error on required fields
-	def validate_required
-	  abort self.inspect
 	end
 
 end
