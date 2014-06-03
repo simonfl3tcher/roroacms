@@ -4,7 +4,6 @@ class Admin::SettingsController < AdminController
 
 	# This controller is used for the settings page. This simply relates to all of the settings that are set in the database
 
-	before_filter :set_json
 
 	def index 
 		@title = I18n.t("controllers.admin.settings.general.title")
@@ -55,11 +54,6 @@ class Admin::SettingsController < AdminController
 
 	def settings_params
 		params.permit(:setting_name, :setting)
-	end
-	
-
-	def set_json 
-		@json = ActiveSupport::JSON
 	end
 
 end

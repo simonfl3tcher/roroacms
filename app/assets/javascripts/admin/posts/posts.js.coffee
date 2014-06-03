@@ -50,7 +50,7 @@ $(document).ready ->
     return
 
   $("body").on "keypress", "#addAdditionalDataInput", (e) ->
-    $("#addAdditionalDataInput").val $("#addAdditionalDataInput").val().toLowerCase().replace(" ", "-")
+    $("#addAdditionalDataInput").val $("#addAdditionalDataInput").val().toLowerCase().replace(" ", "-").replace(/[^a-zA-Z0-9_-]/g,'')
     if e.which is 13
       e.preventDefault()
       $(".addAdditionalDataInput").trigger "click"
@@ -59,7 +59,7 @@ $(document).ready ->
   $("body").on "click", ".addAdditionalDataInput", ->
     $.ajax
       type: "POST"
-      url: "/admin/posts/create_additional_data"
+      url: "/admin/articles/create_additional_data"
       data: "key=" + $("#addAdditionalDataInput").val()
       dataType: "html"
       success: (data) ->

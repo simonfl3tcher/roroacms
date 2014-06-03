@@ -34,6 +34,7 @@ class Admin::PagesController < AdminController
 		# - structured url
 
 		@page.deal_with_abnormalaties
+		@page.additional_data(params[:additional_data]) if !params[:additional_data].blank?
 
 		respond_to do |format|
 
