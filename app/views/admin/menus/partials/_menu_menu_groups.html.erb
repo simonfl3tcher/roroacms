@@ -5,14 +5,14 @@
     </div>
 	<hr>
 	<div class="pull-left">
-		<small>key:- <%= @menu.key %></small>
+		<small><%= I18n.t("views.admin.menus.partials.menu_dropdown.key") %> <%= @menu.key %></small>
 	</div>
 	<div class='btn-group pull-right'>
 		<a class='btn btn-sm btn-default' href='/admin/menus/<%= @menu.id %>/edit'>
-			<i class='fa fa-pencil'></i>&nbsp;edit
+			<i class='fa fa-pencil'></i>&nbsp;<%= I18n.t("views.admin.menus.generic..edit") %>
 		</a>
-		<a rel='nofollow' data-method='delete' data-confirm='Are you sure?' class='btn btn-sm btn-danger' href='/admin/menus/<%= @menu.id %>'>
-			<i class='fa fa-trash-o'></i>&nbsp;delete
+		<a rel='nofollow' data-method='delete' data-confirm='<%= I18n.t("views.admin.generic.confirm") %>' class='btn btn-sm btn-danger' href='/admin/menus/<%= @menu.id %>'>
+			<i class='fa fa-trash-o'></i>&nbsp;<%= I18n.t("views.admin.menus.generic.delete") %>
 		</a>
 	</div>
 

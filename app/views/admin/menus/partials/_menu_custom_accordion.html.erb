@@ -1,6 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-    	<h3 class="panel-title"><i class='fa fa-external-link pull-left'></i>&nbsp;Custom Link</h3>
+    	<h3 class="panel-title"><i class='fa fa-external-link pull-left'></i>&nbsp;<%= I18n.t("views.admin.menus.partials.menu_accordion.custom_link") %></h3>
 		<div class="actions pull-right">
 			<i class="fa fa-chevron-down"></i>
 		</div>
@@ -10,7 +10,7 @@
     	<form action='' method='post' data-type='custom'>
 	    	<input type='hidden' name='type' value='custom' />
 	    	<div class="form-group">
-	    		<input type='text' name='customlink' placeholder='http://...' class="form-control" />
+	    		<input type='text' name='customlink' placeholder='<%= I18n.t("views.admin.menus.partials.menu_accordion.custom_placeholder") %>' class="form-control" />
 	    	</div>
 	    	<div class="form-group">
 	    		<input name='label' type='text' placeholder='Label' class="form-control">
@@ -18,19 +18,19 @@
 	    	<div class="form-group">
 				<input name='class' type='text' placeholder='Class' class="form-control">
 			</div>
-			<label>Target</label>
+			<label><%= I18n.t("views.admin.menus.generic.target") %></label>
 			<div class="form-group">
 				<div class="radio-inline">
-					<input type="radio" value="sw" name="target" checked="checked">Same Window
+					<input type="radio" value="sw" name="target" checked="checked"><%= I18n.t("views.admin.menus.generic.same_windo") %>
 				</div>
 				<div class="radio-inline">
-					<input type="radio" value="nt" name="target">New Tab
+					<input type="radio" value="nt" name="target"><%= I18n.t("views.admin.menus.generic.new_tab") %>
 				</div>
 			</div>
 
 			<div class='formSepUpp'>
 				<button type='submit' class='btn btn-sm btn-primary pull-left'> 
-				    <i class='fa fa-plus'></i>&nbsp; Add Link
+				    <i class='fa fa-plus'></i>&nbsp; <%= I18n.t("views.admin.menus.generic.add_link") %>
 				  </button>
 			</div>
 	   	</form>

@@ -10,6 +10,7 @@ class Admin::SettingsController < AdminController
 		@title = I18n.t("controllers.admin.settings.general.title")
 	end
 
+
 	def create
 		redirect = params[:redirect]
 
@@ -27,18 +28,18 @@ class Admin::SettingsController < AdminController
 		redirect_url = "admin_settings_path"
 
 		respond_to do |format|
-			Setting.reload_settings
 			format.html { redirect_to send(redirect_url), notice: I18n.t("controllers.admin.settings.general.create.flash.success") }
 		end
 	end
+
 
 	def create_user_group
 		@key = params[:key]
 		print render :partial => 'admin/partials/user_group_view'
 	end
 
-	private
 
+	private
 
 	# removes any unnecessary param field ready for the loop in the create function 
 
@@ -49,13 +50,13 @@ class Admin::SettingsController < AdminController
 		params.delete :redirect
 	end
 
-	private 
 	
 	# Strong parameters
 
 	def settings_params
 		params.permit(:setting_name, :setting)
 	end
+	
 
 	def set_json 
 		@json = ActiveSupport::JSON
