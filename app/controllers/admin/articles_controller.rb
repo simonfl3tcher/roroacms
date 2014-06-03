@@ -145,7 +145,7 @@ class Admin::ArticlesController < AdminController
 	# used for an ajax call will take the key and return the necessary html for the view and return it
 
 	def create_additional_data
-		@key = params[:key]
+		@key = params[:key].gsub(/[^0-9A-Za-z_-]/, '')
 		print render :partial => 'admin/partials/post_additional_data_view'
 	end
 

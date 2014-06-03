@@ -225,7 +225,7 @@ module ViewHelper
 
 	def get_the_permalink(post)
 
-		post = Post.find(post) if post.is_a? Integer 
+		post = Post.find(post) if post.is_a?(Integer)
 
 		article_url = Setting.get('articles_slug')
 		site_url = Setting.get('site_url')
@@ -236,6 +236,23 @@ module ViewHelper
 			render :inline => "#{site_url}#{post.post_slug}"
 		end
 
+	end
+
+	# Gets all the additional data for the current post by default. You can play around by given
+	# different variables to get almost evey combination that you would want
+	# Params:
+	# +key+:: if you want to get additional data with a certain key then please provide the key
+	# +post+:: if you want to get the additional data of a different post then you can provide the post id
+
+
+	def get_additional_data(key = nil, post = nil)
+		post = post.is_a?(Integer) ? Post.find(post) : @content.post_additional_data
+		data = @json.decode(post)
+		if key.blank?
+			data
+		else
+			data[key]
+		end
 	end
 
 

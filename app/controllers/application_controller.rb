@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
+  before_filter :set_json
 
   
   require 'ext/string'
@@ -77,6 +78,12 @@ class ApplicationController < ActionController::Base
     else
       return false;
     end
+  end
+
+  # json encode/decode object variable - this is set here because it is used through out helpers/models/controllers
+
+  def set_json 
+    @json = ActiveSupport::JSON
   end
 
 
