@@ -219,11 +219,21 @@ en:
     admin:
       generic:
         confirm: "Are you sure?"
+        save: "Save"
+        by: "by"
+        words: "words"
+        preview: "Preview"
+        says: "says"
+        reply: "Reply"
         bulk_update_options:
+          button_title: "Bulk Action"
           unapprove: "Unapprove"
           approve: "Approve"
           mark_as_spam: "Mark as spam"
           destroy: "Destroy"
+          publish: "Publish"
+          draft: "Draft"
+          move_to_trash: "Move to trash"
       administrators:
         form:
           profile: "Profile"
@@ -263,14 +273,77 @@ en:
         trash: "Trash"
         latest_5_comments: "Latest 5 Comments"
       menus:
+        generic:
+          update: "Update"
+          remove: "Remove"
+          key: "Key:-"
+          edit: "edit"
+          delete: "delete"
+          target: "Target"
+          same_window: "Same Window"
+          new_tab: "New Tab"
+          add_link: "Add Link"
+        index:
+          new_menu: "New Menu"
         partials:
-          menu_content_accordion:
+          menu_accordion:
             link: "Link"
+            custom_link: "Custom Link"
+            custom_placeholder: "http://..."
             select_an_option: "Select an option"
-            target: "Target"
-            same_window: "Same Window"
-            new_tab: "New Tab"
-            add_link: "Add Link"
+          menu_dropdown:
+            options: "Options"
+            placeholder_1: "http://..."
+            placeholder_2: "Label"
+            placeholder_3: "Class"
+        menu_group:
+          add_menu_group: "Add menu group"
+      pages:
+        autosave: 
+          revisions: "Revisions"
+        autosave_list:
+          revisions_saved_at: "Revision saved at"
+          no_revisions: "There is no revision records saved against this article"
+        index:
+          add_new_page: "Add New Page"
+          no_pages: "You currently have no pages"
+        new:
+          tabs:
+            general: "General"
+            content: "Content"
+            history: "History"
+            search_engine_optimisation: "Search Engine Optimisation"
+            tags_and_categories: "Tags & Categories"
+            additional: "Additional Data"
+          tab_content:
+            change_cover: "Change cover"
+            date: "Date:- "
+            time: "Time:- "
+            markdown: "Markdown"
+            seo:
+              seo_title_content: "* The contents of this tag are generally shown as the title in search results (and of course in the user's browser)"
+              seo_description_content: "* This tag provides a short description of the page. In some situations this description is used as a part of the snippet shown in the search results"
+              seo_disabled_content: "* if you want to leave meta blank"
+              seo_no_index_content: "* prevents the page from being indexed by search engines"
+              seo_no_follow_content: "* prevents the Googlebot from following links from this page"
+            categories:
+              categories: "Categories"
+              tags: "Tags"
+              no_categories: "No categories"
+              no_tags: "No tags"
+            additional:
+              key: "Key"
+      partials:
+        articles_table:
+          post_title: "Post Title"
+          published_date: "Published Date"
+          draft: " - draft"
+        markdown_modal:
+          title: "Markdown Basics"
+          table_heading_1: "End Result"
+          table_heading_2: "How to"
+          h1: "H1"
+          h2: ""
 
   mailers:
     emailer:

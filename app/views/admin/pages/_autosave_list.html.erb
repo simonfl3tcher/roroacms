@@ -2,12 +2,12 @@
           	
   	<% @revisions.each do |d| %>
   		<%= link_to edit_admin_revision_path(d) do %>
-  			<li>Revision saved at <%= d.created_at.strftime "%d %B, %Y at %H:%M" %> by <%= d.admin.username %></li>
+  			<li><%= I18n.t("views.admin.pages.autosave_list.revisions_saved_at") %> <%= d.created_at.strftime "%d %B, %Y at %H:%M" %> <%= I18n.t("views.admin.generic.by") %> <%= d.admin.username %></li>
         <% end %>  
   	<% end %>
 
 <% else %>
 
-	There is no revisions records saved against this article
+	<%= I18n.t("views.admin.pages.autosave_list.no_revisions") %>
 
 <% end %>
