@@ -5,7 +5,7 @@ class Admin::CommentsController < AdminController
 	# list out all of the comments
 	def index 
 		# set title
-		@title = I18n.t("controllers.admin.comments.title")
+		set_title(I18n.t("controllers.admin.comments.title"))
 	end
 
 
@@ -14,7 +14,7 @@ class Admin::CommentsController < AdminController
 	def edit
 		# add breadcrumb and set title
 		add_breadcrumb I18n.t("controllers.admin.comments.edit.breadcrumb")
-		@title = I18n.t("controllers.admin.comments.edit.title")
+		set_title(I18n.t("controllers.admin.comments.edit.title"))
 		
 		@comment = Comment.find(params[:id])
 	end
@@ -35,9 +35,7 @@ class Admin::CommentsController < AdminController
 	      else
 	        format.html { 
 	        	# add breadcrumb and set title
-	        	add_breadcrumb I18n.t("controllers.admin.comments.edit.breadcrumb")
-				@title = I18n.t("controllers.admin.comments.edit.title")
-				
+	        	add_breadcrumb I18n.t("controllers.admin.comments.edit.breadcrumb")				
 	        	render action: "edit" 
 	        }
 	      end

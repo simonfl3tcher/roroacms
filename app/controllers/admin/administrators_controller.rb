@@ -13,7 +13,7 @@ class Admin::AdministratorsController < AdminController
 
 	def index
 		# set title
-		@title = I18n.t("controllers.admin.administrators.title")
+		set_title(I18n.t("controllers.admin.administrators.title"))
 	end
 	
 
@@ -22,7 +22,7 @@ class Admin::AdministratorsController < AdminController
 	def new
 	    # add breadcrumb and set title
 	    add_breadcrumb I18n.t("controllers.admin.administrators.new.breadcrumb")
-	    @title = I18n.t("controllers.admin.administrators.new.title")
+	    set_title(I18n.t("controllers.admin.administrators.new.title"))
 
 	    @admin = Admin.new
 	    @action = 'create'
@@ -48,7 +48,6 @@ class Admin::AdministratorsController < AdminController
 		    format.html { 
 		    	# add breadcrumb and set title
 			    add_breadcrumb I18n.t("controllers.admin.administrators.new.breadcrumb")
-			    @title = I18n.t("controllers.admin.administrators.new.title")
 			  	@action = 'create'
 
 		    	render action: "new" 
@@ -65,7 +64,7 @@ class Admin::AdministratorsController < AdminController
 		@admin = Admin.find(params[:id])
 
 		# add breadcrumb and set title
-		@title = I18n.t("controllers.admin.administrators.edit.title", username: @admin.username)
+		set_title(I18n.t("controllers.admin.administrators.edit.title", username: @admin.username))
 		add_breadcrumb I18n.t("controllers.admin.administrators.edit.breadcrumb")
 		
 		# action for the form as both edit/new are using the same form.
@@ -109,7 +108,6 @@ class Admin::AdministratorsController < AdminController
 				@action = 'update'
 				format.html { 
 					# add breadcrumb and set title
-					@title = I18n.t("controllers.admin.administrators.edit.title", username: @admin.username)
 					add_breadcrumb I18n.t("controllers.admin.administrators.edit.breadcrumb")
 					render action: "edit" 
 				}

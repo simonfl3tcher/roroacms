@@ -2,6 +2,8 @@ class AdminController < ApplicationController
 
 	# AdminController extends the ApplicationController 
 	# but also includes any admin specific helpers and changes the general layout
+	before_filter :load_title
+	after_filter :save_title
 	require 'differ'
 
 	helper GeneralHelper
@@ -30,6 +32,18 @@ class AdminController < ApplicationController
 			redirect_to admin_path
 		end
 
+	end
+
+	def set_title str = ''
+		@title = str
+	end
+
+	def load_title 
+		@title = session[:title] || ''
+	end
+	
+	def save_title
+		session[:title] = @title
 	end
 
 end
