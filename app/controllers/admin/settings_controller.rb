@@ -6,7 +6,7 @@ class Admin::SettingsController < AdminController
 
 
 	def index 
-		@title = I18n.t("controllers.admin.settings.general.title")
+		set_title(I18n.t("controllers.admin.settings.general.title"))
 	end
 
 

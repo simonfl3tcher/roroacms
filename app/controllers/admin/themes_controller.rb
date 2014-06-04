@@ -8,7 +8,7 @@ class Admin::ThemesController < AdminController
 
 	def index 
 		# set title
-		@title = I18n.t("controllers.admin.themes.title")
+		set_title(I18n.t("controllers.admin.themes.title"))
 		
 		# finds the current theme that is set in the admin panel
 		@current = Setting.get('theme_folder')

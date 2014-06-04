@@ -11,7 +11,7 @@ class Admin::RevisionsController < AdminController
 		
 		# set title 
 		add_breadcrumb I18n.t("controllers.admin.revisions.breadcrumb_title")
-		@title = I18n.t("controllers.admin.revisions.title", post_title: @revision['revision'].post_title)
+		set_title(I18n.t("controllers.admin.revisions.title", post_title: @revision['revision'].post_title))
 	end
 	
 
