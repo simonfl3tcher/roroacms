@@ -6,7 +6,7 @@ class Admin::PagesController < AdminController
 	add_breadcrumb I18n.t("controllers.admin.pages.title"), :admin_pages_path, :title => I18n.t("controllers.admin.pages.breadcrumb_title")
 
 	def index
-		@title = I18n.t("controllers.admin.pages.title")
+		set_title(I18n.t("controllers.admin.pages.title"))
 		@pages = Post.setup_and_search_posts params, 'page'
 	end
 
@@ -16,7 +16,7 @@ class Admin::PagesController < AdminController
 	def new
 		# add breadcrumb and set title
 		add_breadcrumb I18n.t("controllers.admin.pages.new.breadcrumb")
-		@title = I18n.t("controllers.admin.pages.new.title")
+		set_title(I18n.t("controllers.admin.pages.new.title"))
 
 	    @page = Post.new
 	end
@@ -44,7 +44,6 @@ class Admin::PagesController < AdminController
 		    format.html { 
 		    	# add breadcrumb and set title
 				add_breadcrumb I18n.t("controllers.admin.pages.new.breadcrumb")
-				@title = I18n.t("controllers.admin.pages.new.title")
 		    	render action: "new" 
 		    }
 		  end
@@ -62,7 +61,7 @@ class Admin::PagesController < AdminController
 
 		# add breadcrumb and set title
 		add_breadcrumb I18n.t("controllers.admin.pages.edit.breadcrumb")
-		@title = I18n.t("controllers.admin.pages.edit.title", post_title: @page.post_title)
+		set_title(I18n.t("controllers.admin.pages.edit.title", post_title: @page.post_title))
 	end
 
 

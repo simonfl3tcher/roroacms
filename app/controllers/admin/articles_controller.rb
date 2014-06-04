@@ -7,7 +7,7 @@ class Admin::ArticlesController < AdminController
 
 	def index
 		# set title
-		@title = I18n.t("controllers.admin.articles.title")
+		set_title(I18n.t("controllers.admin.articles.title"))
 		@posts = Post.setup_and_search_posts params, 'post'
 	end
 
@@ -18,7 +18,7 @@ class Admin::ArticlesController < AdminController
 	def new
 		# add breadcrumb and set title
 		add_breadcrumb I18n.t("controllers.admin.articles.new.breadcrumb")
-		@title = I18n.t("controllers.admin.articles.new.title")
+		set_title(I18n.t("controllers.admin.articles.new.title"))
 
 	    @post = Post.new
 	end
@@ -50,7 +50,6 @@ class Admin::ArticlesController < AdminController
 		    format.html { 
 		    	# add breadcrumb and set title
 				add_breadcrumb I18n.t("controllers.admin.articles.new.breadcrumb")
-				@title = I18n.t("controllers.admin.articles.new.title")
 		    	render action: "new" 
 		    }
 		  end
@@ -64,7 +63,7 @@ class Admin::ArticlesController < AdminController
 	def edit 
 		# add breadcrumb and set title
 		add_breadcrumb I18n.t("controllers.admin.articles.edit.breadcrumb")
-		@title = I18n.t("controllers.admin.articles.edit.title")
+		set_title(I18n.t("controllers.admin.articles.edit.title"))
 
 		@edit = true
 		@post = Post.find(params[:id])
@@ -88,7 +87,6 @@ class Admin::ArticlesController < AdminController
 	        format.html { 
 	        	# add breadcrumb and set title
 				add_breadcrumb I18n.t("controllers.admin.articles.edit.breadcrumb")
-				@title = I18n.t("controllers.admin.articles.edit.title")
 	        	render action: "edit" 
 	        }
 	      end

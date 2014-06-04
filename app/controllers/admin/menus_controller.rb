@@ -10,7 +10,7 @@ class Admin::MenusController < AdminController
 
 	def index
 		# set title
-		@title = I18n.t("controllers.admin.menus.title")
+		set_title(I18n.t("controllers.admin.menus.title"))
 		@menu = Menu.new
 	end
 
@@ -27,7 +27,6 @@ class Admin::MenusController < AdminController
 		  else
 		    format.html { 
 			  	@menugroups = Menu.all
-			  	@title = I18n.t("controllers.admin.menus.title")
 		    	render action: "index" 
 		    }
 		  end
@@ -43,7 +42,7 @@ class Admin::MenusController < AdminController
 
 		# add breadcrumb and set title
 		add_breadcrumb I18n.t("controllers.admin.menus.edit.breadcrumb", menu_name: @menu.name)
-		@title = I18n.t("controllers.admin.menus.edit.title", menu_name: @menu.name)
+		set_title(I18n.t("controllers.admin.menus.edit.title", menu_name: @menu.name))
 	end
 	
 

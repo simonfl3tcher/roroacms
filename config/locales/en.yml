@@ -73,8 +73,8 @@ en:
           flash: 
             success: "Menu Group was successfully created"
         edit:
-          breadcrumb: "Edit %{menu_name} Menu"
-          title: "Edit %{menu_name} Menu"
+          breadcrumb: 'Edit "%{menu_name}" Menu'
+          title: 'Edit "%{menu_name}" Menu'
         update:
         destroy:
           flash:
