@@ -103,7 +103,7 @@ en:
       articles:
         new:
           breadcrumb: "Create New Article"
-          tite: "Create New Article"
+          title: "Create New Article"
         create:
           flash:
             success: "Post was successfully created"

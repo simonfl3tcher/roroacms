@@ -62,7 +62,8 @@ $(document).ready ->
 
   $(".chosen-select").chosen({width: "100%", placeholder_text_multiple: I18n.t('javascript.admin.chosen.placeholder')})
 
-  $('.contentReload').bind 'click', (e) ->
-    # $(".editor").ghostDown();
-  
+  content = $("#post_post_content").html()
+  $(".editor").ghostDown();
+  $('.CodeMirror-code').html('<pre>' + content + '</pre>')
+
   return
