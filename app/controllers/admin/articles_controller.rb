@@ -5,6 +5,8 @@ class Admin::ArticlesController < AdminController
 	# displays all the "posts" with the post_type of "page". This is also set up 
 	# to take search parameters so you can search for an individual page itself.
 
+	before_filter :set_post_type
+
 	def index
 		# set title
 		set_title(I18n.t("controllers.admin.articles.title"))
@@ -20,14 +22,15 @@ class Admin::ArticlesController < AdminController
 		add_breadcrumb I18n.t("controllers.admin.articles.new.breadcrumb")
 		set_title(I18n.t("controllers.admin.articles.new.title"))
 
-	    @post = Post.new
+	    @record = Post.new
+	    @action = 'create'
 	end
 
 
 	# create the post object
 
 	def create
-		@post = Post.new(post_params)
+		@record = Post.new(post_params)
 
 		# simply does some checks and updates so the data is correct when entering the data
 		# the things it checks/updates are:-
@@ -35,14 +38,15 @@ class Admin::ArticlesController < AdminController
 		# - post status
 		# - structured url
 
-		@post.deal_with_abnormalaties
+		@record.deal_with_abnormalaties
+		@record.additional_data(params[:additional_data]) if !params[:additional_data].blank?
 
 		respond_to do |format|
 		  
-		  if @post.save
+		  if @record.save
 
 		  	# assigns and unassigns categories and tags to an individual posts
-			Post.deal_with_categories @post, params[:category_ids], params[:tag_ids]
+			Post.deal_with_categories @record, params[:category_ids], params[:tag_ids]
 
 		    format.html { redirect_to admin_articles_path, notice: I18n.t("controllers.admin.articles.create.flash.success") }
 
@@ -50,6 +54,7 @@ class Admin::ArticlesController < AdminController
 		    format.html { 
 		    	# add breadcrumb and set title
 				add_breadcrumb I18n.t("controllers.admin.articles.new.breadcrumb")
+				@action = 'create'
 		    	render action: "new" 
 		    }
 		  end
@@ -66,27 +71,30 @@ class Admin::ArticlesController < AdminController
 		set_title(I18n.t("controllers.admin.articles.edit.title"))
 
 		@edit = true
-		@post = Post.find(params[:id])
+		@action = 'update'
+		@record = Post.find(params[:id])
 	end
 
 
 	# updates the post object with the updates params
 
 	def update
-	    @post = Post.find(params[:id])
+	    @record = Post.find(params[:id])
+	    @record.additional_data(params[:additional_data]) if !params[:additional_data].blank?
 
 	    respond_to do |format|
 	      
-	      if @post.update_attributes(post_params)
+	      if @record.update_attributes(post_params)
 	      	
 	      	# assigns and unassigns categories and tags to an individual posts
-	      	Post.deal_with_categories @post, params[:category_ids], params[:tag_ids], true
-	        format.html { redirect_to edit_admin_article_path(@post), notice: I18n.t("controllers.admin.articles.update.flash.success") }
+	      	Post.deal_with_categories @record, params[:category_ids], params[:tag_ids], true
+	        format.html { redirect_to edit_admin_article_path(@record), notice: I18n.t("controllers.admin.articles.update.flash.success") }
 	      
 	      else
 	        format.html { 
 	        	# add breadcrumb and set title
 				add_breadcrumb I18n.t("controllers.admin.articles.edit.breadcrumb")
+				@action = 'update'
 	        	render action: "edit" 
 	        }
 	      end
@@ -115,7 +123,7 @@ class Admin::ArticlesController < AdminController
 
 		if ret == 'passed'
 
-			@post = Post.find(params[:post][:id])
+			@record = Post.find(params[:post][:id])
       		render :partial => "admin/partials/revision_tree"
 
 		else
@@ -148,14 +156,19 @@ class Admin::ArticlesController < AdminController
 	end
 
 
+
 	private 
 
 	# Strong parameters
 
 	def post_params
 		if !session[:admin_id].blank?	
-			params.require(:post).permit(:admin_id, :post_content, :post_date, :post_name, :parent_id, :post_slug, :post_visible, :post_additional_data, :post_status, :post_title, :post_image, :post_template, :post_type, :disabled, :post_seo_title, :post_seo_description, :post_seo_keywords, :post_seo_is_disabled, :post_seo_no_follow, :post_seo_no_index)
+			params.require(:post).permit(:admin_id, :post_content, :post_date, :post_name, :parent_id, :post_slug, :sort_order, :post_visible, :post_additional_data, :post_status, :post_title, :post_image, :post_template, :post_type, :disabled, :post_seo_title, :post_seo_description, :post_seo_keywords, :post_seo_is_disabled, :post_seo_no_follow, :post_seo_no_index)
 		end
+	end
+
+	def set_post_type 
+		@post_type ||= 'post'
 	end
 
 end

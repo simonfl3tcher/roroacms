@@ -3544,7 +3544,6 @@ window.CodeMirror = (function() {
   // FROMTEXTAREA
 
   CodeMirror.fromTextArea = function(textarea, options) {
-  	console.log(textarea)
     if (!options) options = {};
     options.value = textarea.value;
     if (!options.tabindex && textarea.tabindex)
