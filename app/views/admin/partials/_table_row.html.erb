@@ -1,7 +1,7 @@
  <tr class="<%= cycle('list_line_odd', 'list_line_even') %> <%= @content.post_status == "Draft" ? 'draft' : '' %>">
 
   <td class="hidden-xs"><%= check_box_tag 'pages[]', @content.id %></td>
-	<td><%= ancestory_indent @content %><%= @content.post_title %><%= @content.post_status == "Draft" ? ' - draft' : '' %></td>
+	<td><%= ancestory_indent @content %><%= @content.post_title %><%= @content.post_status == "Draft" ? ' ' + I18n.t("views.admin.partials.articles_table.draft") : '' %></td>
 	<td class="hidden-xs"><%= @content.post_date.strftime "%d-%m-%Y" %></td>
   <td class="center">
       <%= link_to edit_admin_page_path(@content), :class => '' do %>
@@ -10,7 +10,7 @@
      <%= link_to page_path(@content), :class => '', :target => "_blank" do %>
         <i class="fa fa-search"></i>
       <% end %> 
-      <%= link_to admin_page_path(@content), method: :delete, data: { confirm: 'Are you sure?' }, :class => '' do %>
+      <%= link_to admin_page_path(@content), method: :delete, data: { confirm: I18n.t("views.admin.generic.confirm") }, :class => '' do %>
         <i class="fa fa-trash-o"></i>
       <% end %>
   </td>
