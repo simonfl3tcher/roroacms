@@ -12,13 +12,13 @@
       	<div class="row form-group">
 
 	      	<div class="col-md-3">
-				<strong>Keycode</strong>
+				<strong><%= I18n.t("views.admin.partials.revisions.edit.keycode") %></strong>
 			</div>
 
 			<div class="col-md-9">
 				
-				<span class="keycode green"></span> What will be added<br />
-				<span class="keycode red"></span> What will be removed
+				<span class="keycode green"></span> <%= I18n.t("views.admin.partials.revisions.edit.added") %><br />
+				<span class="keycode red"></span> <%= I18n.t("views.admin.partials.revisions.edit.removed") %>
 
 			</div>
 
@@ -29,7 +29,7 @@
       	<div class="row form-group">
 
 	      	<div class="col-md-3">
-				<strong>Title</strong>
+				<strong><%= I18n.t("views.admin.partials.revisions.edit.title") %></strong>
 			</div>
 
 			<div class="col-md-9">
@@ -41,7 +41,7 @@
 		<div class="row form-group">
 
 	      	<div class="col-md-3">
-				<strong>Post Slug</strong>
+				<strong><%= I18n.t("views.admin.partials.revisions.edit.post_slug") %></strong>
 			</div>
 
 			<div class="col-md-9">
@@ -53,7 +53,7 @@
 		<div class="row form-group">
 
 	      	<div class="col-md-3">
-				<strong>Content</strong>
+				<strong><%= I18n.t("views.admin.partials.revisions.edit.content") %></strong>
 			</div>
 
 			<div class="col-md-9">
@@ -70,13 +70,13 @@
 
 			<div class="col-md-9">
 				<%= link_to restore_admin_revision_path(@revision['revision'].id), :class => 'btn btn-primary btn-block ' do %>
-					<i class="fa fa-magic"></i> Restore
+					<i class="fa fa-magic"></i> <%= I18n.t("views.admin.partials.revisions.edit.restore") %>
 				<% end %>
    			</div>
 			
 		</div>
 
-		<h2>More Revisions</h2>
+		<h2><%= I18n.t("views.admin.partials.revisions.edit.more_revisions") %></h2>
 
 
 		<%= render :partial => 'autosave_table' %>

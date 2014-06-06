@@ -232,6 +232,8 @@ en:
         articles: "Articles"
         pages: "Pages"
         back: "Back"
+        here: "here"
+        system: "system"
         bulk_update_options:
           button_title: "Bulk Action"
           unapprove: "Unapprove"
@@ -351,7 +353,7 @@ en:
           table_heading_1: "End Result"
           table_heading_2: "How to"
           h1: "H1"
-          h2_how: "# Heading"
+          h1_how: "# Heading"
           h2: "H2"
           h2_how: "## Heading"
           h3: "H3"
@@ -369,13 +371,13 @@ en:
           list: "List"
           list_how: "* item"
           content: "For further Markdown syntax reference please see"
-          here: "here"
         pages_table:
           page_title: "Page Title"
           published_date: "Published Date"
         post_additional_data_view: 
           remove: 'Remove "%{key}" field'
         revision_tree:
+          no_revisions: "There are no revisions"
           post_title: "Post Title:"
           url: "URL:"
           content: "Content:"
