@@ -89,7 +89,7 @@
 							<div class="form-group">
 								<%= label_tag(:home_page, I18n.t("views.admin.partials.settings.tab_content.home_page"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
-							    	<%= select_tag :home_page, options_for_select(Post.where(:post_type => 'page').collect {|p| [ p.post_title, p.id ] }, Setting.get('home_page')), prompt: 'Select a homepage', class: 'form-control' %>
+							    	<%= select_tag :home_page, options_for_select(Post.where(:post_type => 'page').collect {|p| [ p.post_title, p.id ] }, Setting.get('home_page')), prompt: I18n.t("views.admin.generic.select_homepage"), class: 'form-control' %>
 			
 							    </div>
 							</div>
@@ -141,13 +141,13 @@
 							    <div class="col-sm-6">
 							    	<div class="">
 									    <label class="radio-inline">
-									      <%= radio_button(:smtp_authentication, nil, "plain", :checked => Setting.get('smtp_authentication') == 'plain' ? true : false) %> Plain
+									      <%= radio_button(:smtp_authentication, nil, "plain", :checked => Setting.get('smtp_authentication') == 'plain' ? true : false) %> <%= I18n.t("views.admin.partials.settings.tab_content.plain") %>
 									    </label>
 									    <label class="radio-inline">
-									    	<%= radio_button(:smtp_authentication, nil, "login", :checked => Setting.get('smtp_authentication') == 'login' ? true : false) %> Login
+									    	<%= radio_button(:smtp_authentication, nil, "login", :checked => Setting.get('smtp_authentication') == 'login' ? true : false) %> <%= I18n.t("views.admin.partials.settings.tab_content.login") %>
 									    </label>
 									    <label class="radio-inline">
-									    	<%= radio_button(:smtp_authentication, nil, "cram_md5", :checked => Setting.get('smtp_authentication') == 'cram_md5' ? true : false) %> Cram MD5
+									    	<%= radio_button(:smtp_authentication, nil, "cram_md5", :checked => Setting.get('smtp_authentication') == 'cram_md5' ? true : false) %> <%= I18n.t("views.admin.partials.settings.tab_content.cram") %>
 									    </label>
 									  </div>
 							    </div>
@@ -175,10 +175,10 @@
 							    <div class="col-sm-6">
 							    	<div class="">
 									    <label class="radio-inline">
-									      <%= radio_button(:article_comment_type, nil, "R", :checked => Setting.get('article_comment_type') == 'R' ? true : false) %> System Comments
+									      <%= radio_button(:article_comment_type, nil, "R", :checked => Setting.get('article_comment_type') == 'R' ? true : false) %> <%= I18n.t("views.admin.partials.settings.tab_content.system_comments") %>
 									    </label>
 									    <label class="radio-inline">
-									    	<%= radio_button(:article_comment_type, nil, "F", :checked => Setting.get('article_comment_type') == 'F' ? true : false) %> Facebook Comments
+									    	<%= radio_button(:article_comment_type, nil, "F", :checked => Setting.get('article_comment_type') == 'F' ? true : false) %> <%= I18n.t("views.admin.partials.settings.tab_content.facebook_comments") %>
 									    </label>
 									  </div>
 							    </div>

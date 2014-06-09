@@ -234,6 +234,7 @@ en:
         back: "Back"
         here: "here"
         system: "system"
+        select_homepage: "Select a homepage"
         bulk_update_options:
           button_title: "Bulk Action"
           unapprove: "Unapprove"
@@ -437,6 +438,11 @@ en:
           seo_no_index_categories: "No index categories"
           seo_no_index_archives: "No index archives"
           seo_autogenerate_descriptions: "Autogenerate Decriptions"
+          plain: "Plain"
+          login: "Login"
+          cram: "Cram MD5"
+          system_comments: "System Comments"
+          facebook_comments: "Facebook Comments"
       terms:
         table:
           name: "Name"
