@@ -5,9 +5,9 @@
 	<thead>
 	  <tr>
 	    <th class="hidden-xs"><%= check_box_tag 'all', 'all', false, :class => 'check_all' %></th>
-	    <th>Name</th>
-	    <th class="hidden-xs">Slug</th>
-	    <th class="center">Action</th>
+	    <th><%= I18n.t("views.admin.terms.table.name") %></th>
+	    <th class="hidden-xs"><%= I18n.t("views.admin.terms.table.slug") %></th>
+	    <th class="center"><%= I18n.t("views.admin.terms.table.action") %></th>
 	  </tr>
 	</thead>
 	<% (@type == 'category' ? Term::CATEGORIES : Term::TAGS).each do |term| %>
@@ -21,7 +21,7 @@
 	        <%= link_to edit_admin_term_path(term) do %>
 	          <i class="fa fa-pencil"></i>
 	        <% end %>        
-	        <%= link_to admin_term_path(term), method: :delete, data: { confirm: 'Are you sure?' } do %>
+	        <%= link_to admin_term_path(term), method: :delete, data: { confirm: I18n.t("views.admin.generic.confirm") } do %>
 	          <i class="fa fa-trash-o"></i>
 	        <% end %>
 	      </div>
@@ -31,6 +31,6 @@
 	</table>
 	<div class="hidden-xs">
 		<hr>
-		<%= bulk_update_dropdown Hash['destroy' => 'Delete'] %>
+		<%= bulk_update_dropdown Hash['destroy' => I18n.t("views.admin.generic.bulk_update_options.destroy")] %>
 	</div>
 <% end %>
