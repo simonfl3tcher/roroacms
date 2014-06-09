@@ -14,11 +14,11 @@
           <thead>
             <tr>
               <th>&nbsp;</th>
-              <th>Theme Name</th>
-              <th class="hidden-xs">Description</th>
-              <th class="hidden-xs">Author</th>
-              <th class="hidden-xs">Version</th>
-              <th>Action</th>
+              <th><%= I18n.t("views.admin.themes.index.theme") %></th>
+              <th class="hidden-xs"><%= I18n.t("views.admin.themes.index.description") %></th>
+              <th class="hidden-xs"><%= I18n.t("views.admin.themes.index.author") %></th>
+              <th class="hidden-xs"><%= I18n.t("views.admin.themes.index.version") %></th>
+              <th>&nbsp;</th>
             </tr>
           </thead>
         <% get_theme_options.each do |theme| %>
@@ -43,7 +43,7 @@
           </td>
             <td class="center">
                 <% if theme['foldername'] != @current %> 
-                  <%= link_to "/admin/themes/#{theme['foldername']}", method: :delete, data: { confirm: 'Are you sure?' }, :class => '' do %>       
+                  <%= link_to "/admin/themes/#{theme['foldername']}", method: :delete, data: { confirm:  I18n.t("views.admin.generic.confirm") }, :class => '' do %>       
                     <i class="fa fa-trash-o"></i>
                   <% end %>
                 <% end %>
@@ -58,7 +58,7 @@
         <div class="formSepUpp">
 
             <div class="field">
-              <%= submit_tag "Update", :class => 'btn btn-small btn-primary' %>
+              <%= submit_tag I18n.t("views.admin.generic.update"), :class => 'btn btn-small btn-primary' %>
             </div>
           </div>
       <% end %>
