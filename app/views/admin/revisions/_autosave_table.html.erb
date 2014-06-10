@@ -1,6 +1,7 @@
 <% 
 revisions = Post.where(:ancestry => @post.ancestry, :post_type => 'autosave').order('created_at desc')
 if revisions.length > 0 %>
+
 	<table class="table table-striped">
 		<thead>
 
@@ -10,23 +11,24 @@ if revisions.length > 0 %>
 
 		</thead>
 		<% revisions.each do |d| %>
-		<tr <%= d.id == @revision['revision'].id ? 'class=success' : '' %>>
-			<td><%= I18n.t("views.admin.partials.revisions.autosave_table.revision_saved_at", date: d.created_at.strftime "%d %B, %Y at %H:%M") %></td>
-			<td><%= (d.post_status.downcase == 'user-autosave' || d.post_type.downcase == 'page') ? d.admin.username : I18n.t("views.admin.generic.system") %></td>
-			<td>
-				<div class="btn-group">
-		          <%= link_to restore_admin_revision_path(d) do %>
-		            <i class="fa fa-magic"></i>
-		          <% end %>        
-		          <%= link_to edit_admin_revision_path(d) do %>
-		            <i class="fa fa-search"></i>
-		          <% end %>
-		        </div>
-			</td>
-		</tr>
+			<tr <%= d.id == @revision['revision'].id ? 'class=success' : '' %>>
+				<td><%= I18n.t("views.admin.partials.revisions.autosave_table.revision_saved_at", date: d.created_at.strftime "%d %B, %Y at %H:%M") %></td>
+				<td><%= (d.post_status.downcase == 'user-autosave' || d.post_type.downcase == 'page') ? d.admin.username : I18n.t("views.admin.generic.system") %></td>
+				<td>
+					<div class="btn-group">
+			          <%= link_to restore_admin_revision_path(d) do %>
+			            <i class="fa fa-magic"></i>
+			          <% end %>        
+			          <%= link_to edit_admin_revision_path(d) do %>
+			            <i class="fa fa-search"></i>
+			          <% end %>
+			        </div>
+				</td>
+			</tr>
 		<% end %>
 
 	</table>
+
 <% else %>
 	
 	<p><%= I18n.t("views.admin.partials.revisions.autosave_table.only_revision") %></p>

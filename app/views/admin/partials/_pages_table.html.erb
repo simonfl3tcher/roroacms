@@ -13,7 +13,9 @@
   </table>
   <hr>
   <div class="hidden-xs">
-    <%= bulk_update_dropdown Hash['publish' => I18n.t("views.admin.generic.bulk_update_options.publish"), 'draft' => I18n.t("views.admin.generic.bulk_update_options.draft"), 'move_to_trash' => I18n.t("views.admin.generic.bulk_update_options.move_to_trash")] %>
+    <%= bulk_update_dropdown Hash['publish' => I18n.t("views.admin.generic.bulk_update_options.publish"), 
+                                  'draft' => I18n.t("views.admin.generic.bulk_update_options.draft"), 
+                                  'move_to_trash' => I18n.t("views.admin.generic.bulk_update_options.move_to_trash")] %>
   </div>
   <div id="paginationWrapper"></div>
 

@@ -7,12 +7,12 @@
     <strong class="text-center"><%= I18n.t("views.admin.partials.revision_tree.no_revisions") %></strong>
   </div>
 
-
 <% else %>
 
   <ul class="timeline-single">
 
-      <% @revisions = (Post.where(:id => @record.id) + Post.where(:ancestry => 1, :post_type => 'autosave').order('created_at desc')) if @revisions.first.post_status.downcase == 'user-autosave'
+      <% 
+      @revisions = (Post.where(:id => @record.id) + Post.where(:ancestry => 1, :post_type => 'autosave').order('created_at desc')) if @revisions.first.post_status.downcase == 'user-autosave'
       @revisions.each_with_index do |f, index| %>
 
         <% break if index == 5 %>
