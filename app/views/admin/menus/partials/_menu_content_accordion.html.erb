@@ -24,7 +24,7 @@
 						<% end %>
 		            </optgroup>
 		            <optgroup label="<%= Setting.get('articles_slug').capitalize %>">
-		            	<option value="news" data-type="<%= Setting.get('articles_slug').downcase %>"> <%= Setting.get('articles_slug').capitalize %> Page</option>
+		            	<option value="news" data-type="<%= Setting.get('articles_slug').downcase %>"> <%= Setting.get('articles_slug').capitalize %> <%= I18n.t("views.admin.generic.page") %></option>
 		            </optgroup>
 		            <optgroup label="Categories">
 		                <% Post::POST_CATEGORIES.each do |opt| %>
@@ -40,10 +40,10 @@
 			</div>
 
 			<div class="form-group">
-				<input name="label" type="text" placeholder="Label" class="form-control">
+				<input name="label" type="text" placeholder="<%= I18n.t("views.admin.menus.partials.menu_dropdown.placeholder_2") %>" class="form-control">
 			</div>
 			<div class="form-group">
-				<input name="class" type="text" placeholder="Class" class="form-control">
+				<input name="class" type="text" placeholder="<%= I18n.t("views.admin.menus.partials.menu_dropdown.placeholder_3") %>" class="form-control">
 			</div>
 
 			<label><%= I18n.t("views.admin.menus.generic.target") %></label>
