@@ -1,19 +1,19 @@
     <div class="dd" id="nestable">
-	    <ol class='sortable connect dd-list' data-menuid='<%= @menu.id %>'>
-	    	<%= menu_list_loop @menu.id %>
-	    </ol>
+    	<ol class='sortable connect dd-list' data-menuid='<%= @menu.id %>'>
+    		<%= menu_list_loop @menu.id %>
+    	</ol>
     </div>
-	<hr>
-	<div class="pull-left">
-		<small><%= I18n.t("views.admin.menus.partials.menu_dropdown.key") %> <%= @menu.key %></small>
-	</div>
-	<div class='btn-group pull-right'>
-		<a class='btn btn-sm btn-default' href='/admin/menus/<%= @menu.id %>/edit'>
-			<i class='fa fa-pencil'></i>&nbsp;<%= I18n.t("views.admin.menus.generic..edit") %>
-		</a>
-		<a rel='nofollow' data-method='delete' data-confirm='<%= I18n.t("views.admin.generic.confirm") %>' class='btn btn-sm btn-danger' href='/admin/menus/<%= @menu.id %>'>
-			<i class='fa fa-trash-o'></i>&nbsp;<%= I18n.t("views.admin.menus.generic.delete") %>
-		</a>
-	</div>
+    <hr>
+    <div class="pull-left">
+    	<small><%= I18n.t("views.admin.menus.partials.menu_dropdown.key") %> <%= @menu.key %></small>
+    </div>
+    <div class='btn-group pull-right'>
+    	<a class='btn btn-sm btn-default' href='/admin/menus/<%= @menu.id %>/edit'>
+    		<i class='fa fa-pencil'></i>&nbsp;<%= I18n.t("views.admin.menus.generic..edit") %>
+    	</a>
+    	<a rel='nofollow' data-method='delete' data-confirm='<%= I18n.t("views.admin.generic.confirm") %>' class='btn btn-sm btn-danger' href='/admin/menus/<%= @menu.id %>'>
+    		<i class='fa fa-trash-o'></i>&nbsp;<%= I18n.t("views.admin.menus.generic.delete") %>
+    	</a>
+    </div>
 
-	<div class='clearfix'></div>
+    <div class='clearfix'></div>

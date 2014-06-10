@@ -13,15 +13,15 @@
 	    		<input type='text' name='customlink' placeholder='<%= I18n.t("views.admin.menus.partials.menu_accordion.custom_placeholder") %>' class="form-control" />
 	    	</div>
 	    	<div class="form-group">
-	    		<input name='label' type='text' placeholder='Label' class="form-control">
+	    		<input name='label' type='text' placeholder='<%= I18n.t("views.admin.menus.partials.menu_dropdown.placeholder_2") %>' class="form-control">
 	    	</div>
 	    	<div class="form-group">
-				<input name='class' type='text' placeholder='Class' class="form-control">
+				<input name='class' type='text' placeholder='<%= I18n.t("views.admin.menus.partials.menu_dropdown.placeholder_3") %>' class="form-control">
 			</div>
 			<label><%= I18n.t("views.admin.menus.generic.target") %></label>
 			<div class="form-group">
 				<div class="radio-inline">
-					<input type="radio" value="sw" name="target" checked="checked"><%= I18n.t("views.admin.menus.generic.same_windo") %>
+					<input type="radio" value="sw" name="target" checked="checked"><%= I18n.t("views.admin.menus.generic.same_window") %>
 				</div>
 				<div class="radio-inline">
 					<input type="radio" value="nt" name="target"><%= I18n.t("views.admin.menus.generic.new_tab") %>

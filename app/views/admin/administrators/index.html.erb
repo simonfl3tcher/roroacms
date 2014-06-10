@@ -40,12 +40,12 @@
 							<td class="hidden-xs"><%= admin.email %></td>
 							<td class="center">
 								<% if admin.overlord != 'Y' || (admin.id.to_i == session[:admin_id].to_i) %>       
-								<%= link_to edit_admin_administrator_path(admin), :class => '' do %>
-								<i class="fa fa-pencil"></i>
-								<% end %> 
-								<%= link_to admin_administrator_path(admin), method: :delete, data: { confirm: I18n.t("views.admin.administrators.index.confirm") }, :class => '' do %>
-								<i class="fa fa-trash-o"></i>
-								<% end %>
+									<%= link_to edit_admin_administrator_path(admin), :class => '' do %>
+										<i class="fa fa-pencil"></i>
+									<% end %> 
+									<%= link_to admin_administrator_path(admin), method: :delete, data: { confirm: I18n.t("views.admin.administrators.index.confirm") }, :class => '' do %>
+										<i class="fa fa-trash-o"></i>
+									<% end %>
 								<% end %>
 							</td>
 						</tr>
