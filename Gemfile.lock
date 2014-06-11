@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/FortAwesome/font-awesome-sass
+  revision: 4f1814052ae2dda823ecd3ad771e661dfaea2a3c
+  specs:
+    font-awesome-sass (4.1.0)
+      sass (~> 3.2)
+
+GIT
   remote: https://github.com/fnando/i18n-js
   revision: 1c412409377ee6c005573eeb0f288545414d9011
   specs:
@@ -97,7 +104,7 @@ GEM
     mime-types (1.21)
     multi_json (1.7.7)
     mysql (2.9.1)
-    mysql2 (0.3.11)
+    mysql2 (0.3.15)
     orm_adapter (0.4.0)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -176,6 +183,7 @@ DEPENDENCIES
   devise
   differ
   diffy
+  font-awesome-sass!
   haml
   i18n-js!
   jquery-rails

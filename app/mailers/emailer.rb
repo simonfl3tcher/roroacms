@@ -1,5 +1,5 @@
 class Emailer < ActionMailer::Base
-  
+  add_template_helper(AdminRoroaHelper)  
   default from: Setting.get('smtp_domain')
   
   class MailSettingsInterceptor

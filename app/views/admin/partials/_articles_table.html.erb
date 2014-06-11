@@ -1,5 +1,7 @@
+<%= render partial: 'admin/partials/table_header', locals: {path: new_admin_page_path, name: I18n.t("views.admin.pages.index.add_new_page") } %>
+
 <%= form_tag site_url("admin/posts/bulk_update") do %>
-  <table id="dtable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+  <table id="dtable" class="table table-hover" cellspacing="0" width="100%">
   <thead>
     <tr>
       <th class="checkboxth hidden-xs"><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
@@ -15,15 +17,17 @@
     	<td><%= post.post_title %><%= post.post_status == "Draft" ? I18n.t("views.admin.partials.articles_table.draft") : '' %></td>
     	<td class="hidden-xs"><%= post.post_date.strftime "%d-%m-%Y" %></td>
       <td class="center">
-        <%= link_to edit_admin_article_path(post), :class => '' do %>
-          <i class="fa fa-pencil"></i>
-        <% end %>        
-        <%= link_to page_path(post), :class => '', :target => "_blank" do %>
-          <i class="fa fa-search"></i>
-        <% end %>     
-        <%= link_to admin_article_path(post), method: :delete, data: { confirm: I18n.t("views.admin.generic.confirm") }, :class => '' do %>
-          <i class="fa -trash-o"></i>
-        <% end %>
+        <div class="btn-group pull-right">
+          <%= link_to edit_admin_article_path(post), :class => 'btn btn-xs btn-default' do %>
+            <i class="fa fa-pencil"></i>
+          <% end %>        
+          <%= link_to page_path(post), :class => 'btn btn-xs btn-default', :target => "_blank" do %>
+            <i class="fa fa-search"></i>
+          <% end %>     
+          <%= link_to admin_article_path(post), method: :delete, data: { confirm: I18n.t("views.admin.generic.confirm") }, :class => 'btn btn-xs btn-danger' do %>
+            <i class="fa fa-trash-o"></i>
+          <% end %>
+        </div>
       </td>
 
     </tr>
@@ -33,5 +37,6 @@
     <hr>
     <%= bulk_update_dropdown Hash['publish' => I18n.t("views.admin.generic.bulk_update_options.publish"), 'draft' => I18n.t("views.admin.generic.bulk_update_options.draft"), 'move_to_trash' => I18n.t("views.admin.generic.bulk_update_options.move_to_trash")] %>
   </div>
+  <div id="paginationWrapper"></div>
 
 <% end %>

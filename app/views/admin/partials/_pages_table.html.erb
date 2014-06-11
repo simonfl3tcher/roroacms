@@ -1,6 +1,8 @@
+<%= render partial: 'admin/partials/table_header', locals: {path: new_admin_page_path, name: I18n.t("views.admin.pages.index.add_new_page") } %>
+
 <%= form_tag site_url("admin/pages/bulk_update") do %>
 
-  <table id="dtable" class="table table-striped"  width="100%">
+  <table id="dtable" class="table table-hover"  width="100%">
     <thead>
       <tr>
         <th class="checkboxth hidden-xs"><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>

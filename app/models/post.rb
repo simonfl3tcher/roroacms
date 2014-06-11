@@ -280,7 +280,6 @@ class Post < ActiveRecord::Base
 
         parent.post_content = post.post_content
         parent.post_date = post.post_date
-        parent.post_name = post.post_name
         parent.post_slug = post.post_slug
         parent.post_title = post.post_title
         parent.disabled = post.disabled

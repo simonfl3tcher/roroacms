@@ -170,7 +170,6 @@ module MediaHelper
 
 	private
 
-
 	# delete all with the prefix of the given prefix
 	# Params:
 	# +prefix+:: string to the file name that you want to store the file

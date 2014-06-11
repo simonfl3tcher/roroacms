@@ -17,7 +17,5 @@ module AdminUiHelper
 	    html += '<i class="icon-arrow-left"></i>'
 	   	html.html_safe
 	end
-
 	
-
 end
