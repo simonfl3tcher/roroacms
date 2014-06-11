@@ -121,20 +121,21 @@ module AdminRoroaHelper
 
 	# returns the site url + an extention if you give it one
 	# Params:
-	# +ext+:: extension to add on to the end of the site url
+	# +str+:: extension to add on to the end of the site url
 
-	def site_url(ext)
+	def site_url(str = nil)
+		url = Setting.get('site_url')
 		
-		# if you do not give ext anything it will just return the standard site url
+		if !str.blank? && str[0,1] == '/'
+			str = str[1..-1]
+		end
 
-		if ext 
-			base_url = Setting.get('site_url')	
-			return "#{base_url}#{url}"
-		else 
-			return Setting.get('site_url')		
-		end 
+		if !url.blank? && url[-1, 1] != '/'
+			url = url + '/'
+		end
 
-	end 
+		return "#{url}#{str}"
+	end
 	
 
 	# checks if the current theme being used actually exists. If not it will return an error message to the user
@@ -309,6 +310,21 @@ module AdminRoroaHelper
 		end
 
 		string.html_safe
+
+	end
+
+	# decides the bootstrap column length depending on the records
+	# Params:
+	# +posts+:: first set of records
+	# +pages+:: second set of records
+
+	def respond_to_trash posts, pages 
+
+		if !posts.blank? && pages.blank?
+			'6'
+		else
+			'12'
+		end
 
 	end
 

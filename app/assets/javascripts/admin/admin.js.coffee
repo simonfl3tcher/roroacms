@@ -1,4 +1,5 @@
 $(document).ready ->
+  settings = $('.js-settings')
   $("#term_name").bind "change keyup", ->
     $("#term_slug").val $(this).val().replace(/[^a-zA-Z0-9 -]/g, "").toLowerCase().split(" ").join("-")
     return
@@ -22,7 +23,6 @@ $(document).ready ->
     $("body").find("form").submit()
     e.preventDefault()
     return
-
   
   # This is the ajax call for the autosave when on pages 
   if $("#post_post_title").length > 0
@@ -45,10 +45,8 @@ $(document).ready ->
     ), 120000
   
   # check all the closest checkboxes - used for the bulk update in the admin panel
-  $("#dtable th .iCheck-helper").click ->
-    checkboxes = $(this).closest("form").find(":checkbox")
-
-    if $(this).parent().hasClass('checked')
+  $("body").on 'ifChecked ifUnchecked', 'th #check_all', (event) ->
+    if (event.type == 'ifChecked')
       $('tbody td input[type=checkbox]').iCheck('check');
     else
       $('tbody td input[type=checkbox]').iCheck('uncheck');
@@ -65,5 +63,23 @@ $(document).ready ->
   content = $("#post_post_content").html()
   $(".editor").ghostDown();
   $('.CodeMirror-code').html('<pre>' + content + '</pre>')
+  $("[rel='tooltip']").tooltip();
+
+  dTable = $("#dtable").dataTable
+    bLengthChange: false
+    bInfo: false
+    iDisplayLength: parseInt(settings.attr('data-pagination-limit'))
+    oLanguage:
+      sSearch: ""
+      sEmptyTable: "You have no comments!"
+
+    bSort: false
+    fnInitComplete: (oSettings, json) ->
+      $("#dtable_paginate").detach().prependTo "#paginationWrapper"
+      return
+
+  $("#tableFilter").keyup ->
+    dTable.fnFilter $(this).val()
+    return
 
   return

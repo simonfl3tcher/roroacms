@@ -54,7 +54,6 @@ $(document).ready ->
 
   # Save button 
   $(".update-menu").bind "click", (e) ->
-    console.log('23132')
     do_update_function()
     do_alert()
     return

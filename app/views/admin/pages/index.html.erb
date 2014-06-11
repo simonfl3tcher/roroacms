@@ -1,16 +1,4 @@
 <div class="row">
-
-  <div class="col-md-12">
-
-    <%= link_to new_admin_page_path do %>
-      <button class="pull-right btn btn-small btn-primary"><span class="fa fa-plus"></span>&nbsp;<%= I18n.t("views.admin.pages.index.add_new_page") %></button>
-    <% end %>
-
-  </div>
-
-</div>
-
-<div class="row">
   <div class="col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -20,16 +8,7 @@
         </div>
       </div>
       <div class="panel-body">
-        <% if @pages.blank? %>
-          <div class="col-md-12" style="text-align:center;">
-            <span style="margin-top:100px; margin-bottom:100px; font-size:25px; display:block; "><%= I18n.t("views.admin.pages.index.no_pages") %></span>
-          </div>
-
-        <% else %>
-          
           <%= render 'admin/partials/pages_table' %>
-
-        <% end %>
       </div>
     </div>
   </div>

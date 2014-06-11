@@ -1,7 +1,7 @@
 <div class='item-information'>
 
 	<form action='' method='post' data-type='custom'>
-		<div class="row">
+		<div class="">
 			<div class='col-md-6'>
 				<label><%= I18n.t("views.admin.menus.partials.menu_dropdown.options") %></label><br />
 
@@ -29,11 +29,11 @@
 			<div class='col-md-6'>
 				<label><%= I18n.t("views.admin.menus.generic.target") %></label><br />
 				<div class="form-group">
-					<div class="radio-inline">
+					<div class="radio-inline">1
 						<input name='target' type='radio' value='sw' <%= check_for_checked("sw", params['target'].to_s) %>><%= I18n.t("views.admin.menus.generic.same_window") %>
 					</div>
 					<div class="radio-inline">
-						<input name='target' type='radio' value='nt' <%=  check_for_checked("nt", params['target'].to_s) %>><%= I18n.t("views.admin.menus.generic.new_tab") %>
+						<input name='target' type='radio' value='nt' <%=  check_for_checked("nt", params['target'].to_s) %>><%= I18n.t("views.admin.menus.generic.same_window") %>
 					</div>
 				</div>
 			</div>
