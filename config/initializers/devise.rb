@@ -254,3 +254,7 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 end
+
+Devise::Mailer.class_eval do
+  helper :admin_roroa # include "MailerHelper", adjust to suit your needs
+end

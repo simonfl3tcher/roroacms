@@ -146,6 +146,8 @@ class Admin::PagesController < AdminController
 		end
 	end
 
+	# used for the form to set the type of post as the form is used for both articles and pages 
+
 	def set_post_type 
 		@post_type ||= 'page'
 	end

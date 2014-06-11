@@ -42,7 +42,6 @@ app = do ->
       unless $(".sidebar").hasClass(".sidebar-toggle")
         $(".sidebar").addClass "sidebar-toggle"
         $(".main-content-wrapper").addClass "main-content-toggle-left"
-        console.log "in here2"
       $(".sidebar-right").toggleClass "sidebar-toggle-right animated bounceInRight"
       $(".main-content-wrapper").toggleClass "main-content-toggle-right"
       if $(window).width() < 660
@@ -255,10 +254,78 @@ app = do ->
   morrisPie: morrisPie
   createCookie: createCookie
   getCookie: getCookie
+  deleteCookie: deleteCookie
   do_checkboxes: do_checkboxes
+
+responsive_app = do ->
+  init = ->
+    respond()
+    return
+
+  expand = ->
+    console.log $(".settings-area")
+    if not $(".settings-area").hasClass('manual-shrink')
+      $('.tab-wrapper').parent().removeAttr('id')
+      $(".settings-area .nav-tabs a[data-textref]").each ->
+        # add text back in
+        $(this).html $(this).html() + " " + $(this).attr("data-textref")
+        $(this).removeAttr "data-textref"
+        return
+
+  shrink = ->
+    $('.tab-wrapper').parent().attr('id', 'collapsed_tabs')
+    $(".settings-area .nav-tabs a:not([data-textref])").each ->
+      text = $(this).text().replace(" ", "")
+      $(this).attr "data-textref", text
+      $(this).html $(this).html().replace(/&amp;/, "&").replace(text, "")
+      return
+
+  respond = ->
+    if app.getCookie("internal_menu_contracted") is "true"
+      shrink()
+      console.log "in here"
+    else if $(window).width() < 860 && $(window).width() > 767
+      $('.entry-markdown').addClass('active')
+      expand()
+    else if $(window).width() < 768
+      shrink()
+    else if $(window).width() > 768
+      expand()
+
+    return
+
+  init: init
+  respond: respond
+  shrink: shrink
+  expand: expand
+  
 
 #Load global functions
 $(document).ready ->
+  
+
   app.init()
   $("#leftside-navigation .sub-menu.active > a").find("i.arrow").removeClass("fa-angle-right").addClass "fa-angle-down"
+  
+  $('#paginationWrapper').on 'click', (e) ->
+    $('#check_all').trigger('ifUnchecked').iCheck('uncheck');
+    setTimeout (->
+      app.do_checkboxes()
+    ), 5
+
+  responsive_app.init()
+  
+  $('.shrink').bind 'click', ->
+    if $('#collapsed_tabs').length > 0
+      $(".settings-area").removeClass('manual-shrink') 
+      app.deleteCookie("internal_menu_contracted")
+      responsive_app.expand()
+    else
+      $('.settings-area').addClass('manual-shrink')
+      app.createCookie("internal_menu_contracted", "true", 30)
+      responsive_app.shrink()
+  $(window).resize ->
+    responsive_app.respond()
+    return
+
   return

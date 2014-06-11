@@ -1,4 +1,4 @@
-<%= form_for [:admin, @category = Term.new] do |f| %>
+<%= form_for [:admin, @category ||= Term.new] do |f| %>
 
     <%= hidden_field_tag :type_taxonomy, @type %>
 

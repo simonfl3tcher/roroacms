@@ -15,36 +15,14 @@
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-
-
     <%= stylesheet_link_tag "admin/application", :media => "all" %>
     <%= javascript_include_tag 'admin/application' %>
 
     <%= csrf_meta_tags %>
 
-    <script type="text/javascript">
-
-      $(document).ready(function(){
-        $('#dtable').dataTable({
-          "bLengthChange": false,
-          "bInfo": false,
-          "iDisplayLength": <%= Setting.get('pagination_per') %>,
-          "oLanguage": {
-            "sSearch": ""
-          },
-          "bSort" : false,
-          fnInitComplete : function( oSettings, json ){
-           $("#dtable_paginate").detach().prependTo("#paginationWrapper");
-          }
-        });
-
-      })
-
-    </script>
-
   </head>
   <body>
+      <div class="js-settings" data-pagination-limit="<%= Setting.get('pagination_per') %>"></div>
       <section id="container">
         <header id="header">
             <!--logo start-->
@@ -70,7 +48,7 @@
                         <ul class="dropdown-menu animated fadeInDown">
                             <li class="userDetails">
                                 <img src="<%= current_user.avatar %>" class="img-circle" width="50">
-                                <span><%= current_user.first_name + ' ' + current_user.last_name %><small><%= current_user.username %> - admin</small></span>
+                                <span><%= current_user.first_name + ' ' + current_user.last_name %><small><%= current_user.username %> - <%= current_user.access_level %></small></span>
                             </li>
                             <li class="divide"></li>
                             <li>
@@ -151,10 +129,10 @@
                       </li>
                     <% end %>
                     
-                    <% if check_controller_against_user('settings/general') %>
+                    <% if check_controller_against_user('settings') %>
 
-                      <li class="<%= cp(admin_settings_general_index_path) %>">
-                        <%= link_to admin_settings_general_index_path do %>
+                      <li class="<%= cp(admin_settings_path) %>">
+                        <%= link_to admin_settings_path do %>
                           <i class="fa fa-cogs"></i><span>Settings</span>
                         <% end %>
                       </li>

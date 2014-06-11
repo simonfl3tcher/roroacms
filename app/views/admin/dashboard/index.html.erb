@@ -1,7 +1,7 @@
 <div class="dashboard">
   <div class="row hidden-xs">
       <div class="col-md-4 col-sm-6">
-          <div class="dashboard-tile detail tile-red">
+          <div class="dashboard-tile detail tile-turquoise">
               <div class="content">
                   <h1 class="text-left timer"><%= get_count_post('page') %></h1>
                   <p><%= I18n.t("views.admin.dashboard.pages") %></p>
@@ -21,7 +21,7 @@
           </div>
       </div>
       <div class="col-md-4 col-sm-6">
-          <div class="dashboard-tile detail tile-blue">
+          <div class="dashboard-tile detail tile-turquoise">
               <div class="content">
                   <h1 class="text-left timer"><%= get_count_comments %></h1>
                   <p><%= I18n.t("views.admin.dashboard.comments") %></p>
@@ -32,8 +32,10 @@
       </div>
   </div>
 
+  <% size = latest_comments.blank? ? '12' : '6' %>
+
   <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-<%= size %>">
           <div class="panel panel-default">
               <div class="panel-heading">
                   <h3 class="panel-title"><%= I18n.t("views.admin.dashboard.quick_links") %></h3>
@@ -66,7 +68,7 @@
 
                   <div class=" shortcuts">
                     <div class="col-md-4 col-sm-6">
-                      <%= link_to admin_settings_general_index_path, :class => 'shortcut' do %>
+                      <%= link_to admin_settings_path, :class => 'shortcut' do %>
                         <i class="fa fa-cogs fa-4x"></i>
                         <span class="shortcut-label"><%= I18n.t("views.admin.dashboard.settings") %></span>
                       <% end %>
@@ -87,40 +89,44 @@
               </div>
           </div>
       </div>
-      <div class="col-md-6 comments">
-          <div class="panel panel-default">
-              <div class="panel-heading">
-                  <h3 class="panel-title"><%= I18n.t("views.admin.dashboard.latest_5_comments") %></h3>
-                  <div class="actions pull-right">
-                      <i class="fa fa-chevron-down"></i>
-                  </div>
-              </div>
-              <div class="panel-body">
-                  <ul class="list-group">
-                    <% latest_comments.each do |comment| %>
-                      <li class="list-group-item">
-                          <div class="pull-left">
-                            <strong><%= comment.author %></strong><br />
-                            <small><%= excerpt(comment.comment, 50) %></small>
-                          </div>
-                          <div class="pull-right action-buttons">
-                            <%= link_to edit_admin_comment_path(comment) do %>
-                              <i class="fa fa-pencil"></i>
-                            <% end %>
-                             <%= link_to mark_as_spam_admin_comment_path(comment) do %>
-                              <i class="fa fa-fire"></i>
-                            <% end %>              
-                            <%= link_to admin_comment_path(comment), method: :delete, data: { confirm: I18n.t("views.admin.generic.confirm") } do %>
-                              <i class="fa fa-trash-o"></i>
-                            <% end %>
-                          </div>
-                          <div class="clearfix"></div>
-                      </li>
+      <% if !latest_comments.blank? %>
+        <div class="col-md-<%= size %> comments">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><%= I18n.t("views.admin.dashboard.latest_5_comments") %></h3>
+                    <div class="actions pull-right">
+                        <i class="fa fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                      <% latest_comments.each do |comment| %>
+                        <li class="list-group-item">
+                            <div class="pull-left">
+                              <strong><%= comment.author %></strong><br />
+                              <small><%= excerpt(comment.comment, 50) %></small>
+                            </div>
+                            <div class="pull-right action-buttons">
+                              <div class="btn-group pull-right">
+                                <%= link_to edit_admin_comment_path(comment), :class => 'btn btn-xs btn-default' do %>
+                                  <i class="fa fa-pencil"></i>
+                                <% end %>
+                                 <%= link_to mark_as_spam_admin_comment_path(comment), :class => 'btn btn-xs btn-default' do %>
+                                  <i class="fa fa-fire"></i>
+                                <% end %>              
+                                <%= link_to admin_comment_path(comment), method: :delete, data: { confirm: I18n.t("views.admin.generic.confirm") }, :class => 'btn btn-xs btn-danger' do %>
+                                  <i class="fa fa-trash-o"></i>
+                                <% end %>
+                              </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </li>
 
-                    <% end %>
-                  </ul>
-              </div>
-          </div>
-      </div>
+                      <% end %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+      <% end %>
   </div>
 </div>

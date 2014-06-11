@@ -69,14 +69,17 @@
 			</div>
 
 			<div class="col-md-9">
-				<%= link_to restore_admin_revision_path(@revision['revision'].id), :class => 'btn btn-primary btn-block ' do %>
+				<%= link_to restore_admin_revision_path(@revision['revision'].id), :class => 'btn btn-primary btn-sm btn-block ' do %>
 					<i class="fa fa-magic"></i> Restore
 				<% end %>
    			</div>
 			
 		</div>
 
-		<h2>More Revisions</h2>
+		<br />
+
+		<h3 class="thin">More Revisions</h3>
+		<hr>
 
 
 		<%= render :partial => 'autosave_table' %>

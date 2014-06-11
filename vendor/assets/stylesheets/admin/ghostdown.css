@@ -386,6 +386,9 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 	box-shadow: rgba(0,0,0,0.1) 0 -2px 3px inset;
 	padding: 10px 0;
 }
+.entry-preview {
+	display: none !important;
+}
 .features .editor .entry-markdown .floatingheader a, .features .editor .entry-preview .floatingheader a {
 	color: #fff
 }
@@ -501,7 +504,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 }
 @media (max-width: 860px), (max-width: 860px) {
 .features .editor .CodeMirror-lines {
-	padding: 25px 0 30px 0
+	/*padding: 25px 0 30px 0*/
 }
 }
 @media (max-width: 400px), (max-width: 400px) {

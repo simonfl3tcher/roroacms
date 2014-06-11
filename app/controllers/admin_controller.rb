@@ -31,8 +31,13 @@ class AdminController < ApplicationController
 			flash[:error] = I18n.t("controllers.admin.misc.authorize_admin_access_error")
 			redirect_to admin_path
 		end
-
 	end
+
+	# functions used to set the title instance variable in an admin controller
+
+	# Updates and Sets the title instance variable
+	# Params:
+	# +str+:: title
 
 	def set_title str = ''
 		@title = str

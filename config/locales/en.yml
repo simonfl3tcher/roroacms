@@ -242,7 +242,7 @@ en:
           select_access_level: "Select access level"
         index:
           add_new_user: "Add New User"
-          name: "Name"
+          username: "Username"
           email_address: "Email Address"
           confirm: "Are you sure?"
       comments:

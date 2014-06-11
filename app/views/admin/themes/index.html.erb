@@ -9,7 +9,7 @@
         </div>
       </div>
       <div class="panel-body">
-        <%= form_tag(site_url('admin/themes/')) do %>
+        <%= form_tag(admin_themes_path) do %>
           <table class="table table-hover table_vam">
           <thead>
             <tr>
@@ -18,7 +18,7 @@
               <th class="hidden-xs">Description</th>
               <th class="hidden-xs">Author</th>
               <th class="hidden-xs">Version</th>
-              <th>Action</th>
+              <th>&nbsp;</th>
             </tr>
           </thead>
         <% get_theme_options.each do |theme| %>
@@ -43,7 +43,7 @@
           </td>
             <td class="center">
                 <% if theme['foldername'] != @current %> 
-                  <%= link_to "/admin/themes/#{theme['foldername']}", method: :delete, data: { confirm: 'Are you sure?' }, :class => '' do %>       
+                  <%= link_to "/admin/themes/#{theme['foldername']}", method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-xs btn-danger pull-right' do %>       
                     <i class="fa fa-trash-o"></i>
                   <% end %>
                 <% end %>
@@ -55,10 +55,10 @@
 
         <hr>
 
-        <div class="formSepUpp">
+          <div class="formSepUpp">
 
             <div class="field">
-              <%= submit_tag "Update", :class => 'btn btn-small btn-primary' %>
+              <button type="submit" class="btn btn-block btn-sm btn-primary"><i class="fa fa-refresh"></i>&nbsp;Update Theme</button>
             </div>
           </div>
       <% end %>

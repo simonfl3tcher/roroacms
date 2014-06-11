@@ -9,15 +9,14 @@
       </div>
       <div class="panel-body">
         <%= form_tag site_url("admin/comments/bulk_update") do %>
-          <table id="dtable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+          <table id="dtable" class="table table-hover" cellspacing="0" width="100%">
             <thead>
               <tr>
                 <th class="checkboxth hidden-xs"><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
                 <th><%= I18n.t("views.admin.comments.index.article") %></th>
                 <th class="hidden-xs"><%= I18n.t("views.admin.comments.index.comment") %></th>
-                <th class="hidden-xs"><%= I18n.t("views.admin.comments.index.status") %></th>
-                <th><%= I18n.t("views.admin.comments.index.action") %></th>
-                <th class="hidden-xs">&nbsp;</th>
+                <th class="hidden-xs center"><%= I18n.t("views.admin.comments.index.status") %></th>
+                <th>&nbsp;</th>
               </tr>
             </thead>
 
@@ -36,7 +35,7 @@
                 <small><%= I18n.t("views.admin.comments.index.comment_submitted_on") %> <%= comment.submitted_on.strftime "%d-%m-%Y"%></small><br />
                 <%= excerpt comment.comment, 50 %>
               </td>
-              <td class="hidden-xs">
+              <td class="hidden-xs center">
 
                 <% if comment.comment_approved == 'Y' %>
                   <%= I18n.t("views.admin.comments.index.approved") %>
@@ -48,25 +47,19 @@
                 
               </td>
                 <td class="center">
-                  <%= link_to edit_admin_comment_path(comment), :class => '' do %>
-                    <i class="fa fa-pencil"></i>
-                  <% end %>
-                   <%= link_to mark_as_spam_admin_comment_path(comment), :class => '' do %>
-                    <i class="fa fa-fire"></i>
-                  <% end %>              
-                  <%= link_to admin_comment_path(comment), method: :delete, data: { confirm: I18n.t("views.admin.generic.confirm") }, :class => '' do %>
-                    <i class="fa fa-trash-o"></i>
-                  <% end %>
+                  <div class="btn-group pull-right">
+                    <%= link_to edit_admin_comment_path(comment), :class => 'btn btn-xs btn-default' do %>
+                      <i class="fa fa-pencil"></i>
+                    <% end %>
+                     <%= link_to mark_as_spam_admin_comment_path(comment), :class => 'btn btn-xs btn-default' do %>
+                      <i class="fa fa-fire"></i>
+                    <% end %>              
+                    <%= link_to admin_comment_path(comment), method: :delete, data: { confirm: I18n.t("views.admin.generic.confirm") }, :class => 'btn btn-xs btn-danger' do %>
+                      <i class="fa fa-trash-o"></i>
+                    <% end %>
+                  </div>
                 </td>
-                <td class="center hidden-xs">
-                  <% if comment.comment_approved == 'Y' %>
-                    <i class="fa fa-check-circle"></i>
-                  <% elsif comment.comment_approved == 'N' %>
-                    <i class="fa fa-clock-o"></i>
-                  <% else %>
-                    <i class="fa fa-fire"></i>
-                  <% end %>
-                </td>
+                
               </tr>
             <% end %>
             </tbody>
