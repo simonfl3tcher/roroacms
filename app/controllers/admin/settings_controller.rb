@@ -5,6 +5,7 @@ class Admin::SettingsController < AdminController
 	# This controller is used for the settings page. This simply relates to all of the settings that are set in the database
 
 	def index 
+		Setting.reload_settings
 		set_title(I18n.t("controllers.admin.settings.general.title"))
 	end
 

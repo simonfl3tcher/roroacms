@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140506070332) do
+ActiveRecord::Schema.define(:version => 20140531095408) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                               :default => "",  :null => false
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20140506070332) do
     t.string   "username"
     t.string   "access_level"
     t.text     "avatar"
+    t.text     "cover_picture"
     t.string   "overlord",               :limit => 1, :default => "Y"
     t.string   "encrypted_password",                  :default => "",  :null => false
     t.string   "reset_password_token"
@@ -60,13 +61,6 @@ ActiveRecord::Schema.define(:version => 20140506070332) do
 
   add_index "comments", ["ancestry"], :name => "index_comments_on_ancestry"
 
-  create_table "contact_forms", :force => true do |t|
-    t.string "name",    :default => "", :null => false
-    t.text   "message",                 :null => false
-    t.string "email",   :default => "", :null => false
-    t.string "subject", :default => "", :null => false
-  end
-
   create_table "menu_options", :force => true do |t|
     t.integer "menu_id"
     t.integer "option_id"
@@ -86,24 +80,25 @@ ActiveRecord::Schema.define(:version => 20140506070332) do
   create_table "posts", :force => true do |t|
     t.integer  "admin_id"
     t.datetime "post_date"
-    t.text     "post_content",         :limit => 2147483647
+    t.text     "post_content"
     t.text     "post_title"
     t.text     "post_image"
     t.string   "post_status"
     t.string   "post_template"
-    t.string   "post_name"
     t.integer  "parent_id"
     t.string   "post_type"
     t.text     "post_slug"
-    t.string   "post_visible",                               :default => "Y"
-    t.datetime "created_at",                                                  :null => false
-    t.datetime "updated_at",                                                  :null => false
-    t.string   "disabled",             :limit => 1,          :default => "N"
+    t.string   "post_visible",                      :default => "Y"
+    t.text     "post_additional_data"
+    t.integer  "sort_order"
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
+    t.string   "disabled",             :limit => 1, :default => "N"
     t.string   "post_seo_title"
     t.text     "post_seo_description"
-    t.string   "post_seo_is_disabled",                       :default => "N"
-    t.string   "post_seo_no_index",                          :default => "N"
-    t.string   "post_seo_no_follow",                         :default => "N"
+    t.string   "post_seo_is_disabled",              :default => "N"
+    t.string   "post_seo_no_index",                 :default => "N"
+    t.string   "post_seo_no_follow",                :default => "N"
     t.string   "ancestry"
     t.text     "structured_url"
   end

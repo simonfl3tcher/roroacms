@@ -187,8 +187,8 @@ module SeoHelper
 		title = "seo_#{type}_title"
 		description = "seo_#{type}_description"
 
-		headtags = "<title>#{Setting.get('title').first.setting}</title>\n"
-		headtags += "<meta name=\"description\" content=\"#{Setting.where('description').first.setting}\" />\n"
+		headtags = "<title>#{Setting.get('title')}</title>\n"
+		headtags += "<meta name=\"description\" content=\"#{Setting.where('description')}\" />\n"
 		headtags += "#{get_additional_headers}\n"
 		headtags += "#{get_google_analytics}\n"
 		headtags += "#{canonical_urls}"

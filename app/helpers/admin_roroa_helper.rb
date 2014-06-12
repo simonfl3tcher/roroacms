@@ -249,7 +249,9 @@ module AdminRoroaHelper
 
 		if !Setting.get('user_groups').blank?
 
-			arr = ActiveSupport::JSON.decode(Setting.get('user_groups'))
+			arr = ActiveSupport::JSON.decode(Setting.get('user_groups').gsub("\\", ''))
+
+
 			if arr.has_key? key
 				arr[key]
 			else
