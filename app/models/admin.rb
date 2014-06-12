@@ -15,7 +15,7 @@ class Admin < ActiveRecord::Base
 	validates :password, length: { in: 6..128 }, on: :update, allow_blank: true
 
 	# general data that doesn't change very often
-	GET_ADMINS = Admin.where('1+1=2').order('name asc')
+	GET_ADMINS = Admin.all
 
 	# set the session data for the admin to allow/restrict the necessary areas
 
@@ -64,6 +64,7 @@ class Admin < ActiveRecord::Base
 	def self.access_levels 
 
 		arr = Array.new
+
 		ActiveSupport::JSON.decode(Setting.get('user_groups')).each do |k,v|
 			arr << k
 		end

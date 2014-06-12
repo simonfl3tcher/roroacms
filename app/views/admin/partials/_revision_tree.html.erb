@@ -1,5 +1,5 @@
 
-<% @revisions = Post.where(:ancestry => @record.id, :post_type => 'autosave').order('created_at desc') %>
+<% @revisions = Post.where(:ancestry => @record.id.to_s, :post_type => 'autosave').order('created_at desc') %>
 
 <% if @revisions.blank? %>
 

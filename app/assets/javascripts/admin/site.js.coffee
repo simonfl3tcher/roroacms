@@ -283,7 +283,8 @@ responsive_app = do ->
   respond = ->
     if app.getCookie("internal_menu_contracted") is "true"
       shrink()
-      console.log "in here"
+      if $(window).width() < 860 && $(window).width() > 767
+        $('.entry-markdown').addClass('active')
     else if $(window).width() < 860 && $(window).width() > 767
       $('.entry-markdown').addClass('active')
       expand()

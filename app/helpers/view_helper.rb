@@ -377,7 +377,7 @@ module ViewHelper
 		if type == 'Y'
 
 			# variables and data
-			@posts = Post.where(:post_type => 'post', :post_status => 'Published', :disabled => 'N').uniq.pluck("EXTRACT(YEAR FROM post_date)")
+			@posts = Post.where(:post_type => 'post', :post_status => 'Published', :disabled => 'N').uniq.pluck("EXTRACT(year FROM post_date)")
 			article_url = Setting.get('articles_slug') 
 			category_url = Setting.get('category_slug')
 				
@@ -391,7 +391,7 @@ module ViewHelper
 		elsif type == 'M'
 			
 			# variables and data
-			@posts = Post.where("(post_type = 'post' && post_status = 'Published' && disabled = 'N') && post_date <= CURDATE()").uniq.pluck("EXTRACT(YEAR FROM post_date)")
+			@posts = Post.where("(post_type = 'post' AND post_status = 'Published' AND disabled = 'N') AND post_date <= CURRENT_TIMESTAMP").uniq.pluck("EXTRACT(year FROM post_date)")
 			article_url = Setting.get('articles_slug')
 			category_url = Setting.get('category_slug')
 
@@ -400,7 +400,7 @@ module ViewHelper
 			mon = {}		
 			
 			@posts.each do |f|
-				lp["#{f}"] = Post.where("YEAR(post_date) = #{f}  AND (post_type = 'post' && disabled = 'N' && post_status = 'Published' && post_date <= CURDATE())").uniq.pluck("EXTRACT(MONTH FROM post_date)")
+				lp["#{f}"] = Post.where("EXTRACT(year from post_date) = #{f}  AND (post_type = 'post' AND disabled = 'N' AND post_status = 'Published' AND post_date <= CURRENT_TIMESTAMP)").uniq.pluck("EXTRACT(MONTH FROM post_date)")
 			end
 
 			lp.each do |k, i|
@@ -633,7 +633,7 @@ module ViewHelper
 	# +how_many+:: how many records you want to return
 
 	def get_latest_article(how_many = 1)
-		Post.where("post_type ='post' AND disabled = 'N' AND post_status = 'Published' AND post_date AND post_date <= CURDATE()").order('post_date DESC').limit(how_many)
+		Post.where("post_type ='post' AND disabled = 'N' AND post_status = 'Published' AND (post_date <= CURRENT_TIMESTAMP)").order('post_date DESC').limit(how_many)
 	end
 
 

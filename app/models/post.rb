@@ -16,7 +16,7 @@ class Post < ActiveRecord::Base
     validates_format_of :post_slug, :with => /^[A-Za-z0-9-]*$/
     validates :sort_order, :numericality => true, :allow_blank => true
 
-    scope :from_this_year, where("post_date > ? AND < ?", Time.now.beginning_of_year, Time.now.end_of_year)
+    scope :from_this_year, where("post_date > ? AND post_date < ?", Time.now.beginning_of_year, Time.now.end_of_year)
 
     # general data that doesn't change very often
 
@@ -29,7 +29,7 @@ class Post < ActiveRecord::Base
 
     def self.setup_and_search_posts(params, type)
         
-        posts = Post.select('*').where("disabled ='N' and post_type = '#{type}'").order("COALESCE(ancestry, id), ancestry IS NOT NULL, id")
+        posts = Post.select('*').where("disabled ='N' and post_type = '#{type}'").order("ancestry")
         posts
         
     end
@@ -161,7 +161,7 @@ class Post < ActiveRecord::Base
 
 
         parent = Post.find(params[:post][:id])
-        @autosave_records = Post.where("ancestry = ? and post_type = 'autosave' and post_status = 'Autosave'", parent.id).order("created_at DESC")
+        @autosave_records = Post.where("ancestry = ? AND post_type = 'autosave' AND post_status = 'Autosave'", parent.id).order("created_at DESC")
         post.post_content = params[:ck_content]
 
         if (remove_uncessary(post) != remove_uncessary(parent)) && (remove_uncessary(post) != remove_uncessary(@autosave_records.first))

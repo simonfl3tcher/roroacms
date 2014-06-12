@@ -4,7 +4,7 @@ class Setting < ActiveRecord::Base
 
 	def self.get(setting_name)
 		@reference ||= filter_settings
-		return @reference[setting_name]
+		return setting_name == 'user_groups' ? @reference[setting_name].gsub("\\", '') : @reference[setting_name]
 	end
 
 

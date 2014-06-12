@@ -10,7 +10,7 @@ module RoutingHelper
 		if defined?(params[:search]) && !params[:search].blank?
 
 			# make the content avalible to the view
-			gloalize Post.where("(post_title LIKE :p or post_slug LIKE :p2 or post_content LIKE :p3) and (post_type != 'autosave') AND (post_date <= NOW())", {:p => "%#{params[:search]}%", :p2 => "%#{params[:search]}%", :p3 => "%#{params[:search]}%"}).page(params[:page]).per(Setting.get('pagination_per_fe'))
+			gloalize Post.where("(post_title LIKE :p or post_slug LIKE :p2 or post_content LIKE :p3) AND (post_type != 'autosave') AND (post_date <= CURRENT_TIMESTAMP)", {:p => "%#{params[:search]}%", :p2 => "%#{params[:search]}%", :p3 => "%#{params[:search]}%"}).page(params[:page]).per(Setting.get('pagination_per_fe'))
 			
 			# add breadcrumbs to the hash
 			add_breadcrumb I18n.t("helpers.routing_helper.generic.home"), :root_path, :title => I18n.t("helpers.routing_helper.generic.home")
@@ -72,7 +72,7 @@ module RoutingHelper
 		category_url = Setting.get('category_slug')	
 		tag_url = Setting.get('tag_slug')
 
-		status = "(post_status = 'Published' AND post_date <= NOW() AND disabled = 'N')"
+		status = "(post_status = 'Published' AND post_date <= CURRENT_TIMESTAMP AND disabled = 'N')"
 
 		# is it a article post or a page post
 
@@ -102,7 +102,7 @@ module RoutingHelper
 		category_url = Setting.get('category_slug')	
 		tag_url = Setting.get('tag_slug')
 
-		status = "(post_status = 'Published' AND post_date <= NOW() AND disabled = 'N')"
+		status = "(post_status = 'Published' AND post_date <= CURRENT_TIMESTAMP AND disabled = 'N')"
 
 		# is it a article post or a page post
 		if segments[0] == article_url
@@ -187,7 +187,7 @@ module RoutingHelper
 				term = Term.where(:structured_url => '/' + segments.join('/')).first
 
 				# do a search for the content
-				gloalize Post.joins('LEFT JOIN term_relationships ON term_relationships.post_id = posts.id').where("(post_status = 'Published' AND post_date <= NOW() AND disabled = 'N') and term_relationships.term_id = ?", term).order('post_date DESC').page(params[:page]).per(Setting.get('pagination_per_fe'))
+				gloalize Post.joins('LEFT JOIN term_relationships ON term_relationships.post_id = posts.id').where("(post_status = 'Published' AND post_date <= CURRENT_TIMESTAMP AND disabled = 'N') and term_relationships.term_id = ?", term).order('post_date DESC').page(params[:page]).per(Setting.get('pagination_per_fe'))
 				
 				# add the breadcrumbs
 				add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => I18n.t("helpers.routing_helper.generic.back_to", word: article_url.capitalize)
@@ -263,19 +263,19 @@ module RoutingHelper
 		add_breadcrumb "#{segments[1]}", "/#{article_url}/#{segments[1]}", :title => I18n.t("helpers.routing_helper.generic.back_to", word: segments[1])
 		
 		# build SQL variable
-		build_sql = Post.where("(disabled = 'N' AND post_status = 'Published') AND post_type = 'Post' AND (YEAR(post_date) = ?)", segments[1])
+		build_sql = Post.where("(disabled = 'N' AND post_status = 'Published') AND post_type = 'Post' AND (EXTRACT(year from post_date) = ?)", segments[1])
 
 
 		if !segments[2].blank?
 			#  add to SQL query
-			build_sql = build_sql.where("MONTH(post_date) = ?", segments[2])
+			build_sql = build_sql.where("EXTRACT(month from post_date) = ?", segments[2])
 			# add the breadcrumbs
 			add_breadcrumb "#{get_date_name_by_number(segments[2].to_i)}", "/#{article_url}/#{segments[1]}/#{segments[2]}", :title => I18n.t("helpers.routing_helper.generic.back_to", word: segments[2])
 		end
 
 		if !segments[3].blank?
 			#  add to SQL query
-			build_sql = build_sql.where("DAY(post_date) = ?", segments[3])
+			build_sql = build_sql.where("EXTRACT(day from post_date) = ?", segments[3])
 			# add the breadcrumbs
 			add_breadcrumb "#{segments[3]}", "/#{article_url}/#{segments[1]}/#{segments[2]}/#{segments[3]}", :title => I18n.t("helpers.routing_helper.generic.back_to", word: segments[3])
 		end

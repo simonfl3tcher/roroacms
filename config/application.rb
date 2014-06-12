@@ -21,7 +21,7 @@ module Roroacms
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
     #config.active_record.whitelist_attributes = false
-
+    config.active_record.schema_format = :ruby
     # Enable the asset pipeline
     config.assets.enabled = true
     
@@ -40,11 +40,11 @@ module Roroacms
     end
 
     require 'active_record'
-    require 'mysql2'
+    require 'pg'
     DB = YAML.load_file("#{Rails.root}/config/database.yml")
 
     ActiveRecord::Base.establish_connection(
-      adapter:  'mysql2',
+      adapter:  'postgresql',
       database: DB[Rails.env]['database'],
       username: DB[Rails.env]['username'],
       password: DB[Rails.env]['password'],
