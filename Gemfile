@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "1.9.3"
 
 gem 'rails', '3.2.11'
-gem 'mysql2'
+gem 'pg'
 gem 'ckeditor_rails'
 gem "strong_parameters"
 gem 'kaminari'
@@ -17,7 +17,8 @@ group :assets do
   gem "less-rails"
 end
 
-gem 'activerecord-mysql-adapter'
+# gem 'activerecord-mysql-adapter'
+gem 'activerecord-postgresql-adapter'
 gem 'twitter-bootstrap-rails'
 gem 'aws-s3', :require => 'aws/s3'
 gem 'jquery-rails'
