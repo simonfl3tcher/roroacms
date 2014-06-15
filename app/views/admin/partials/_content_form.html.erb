@@ -88,7 +88,7 @@
           <div class="form-group">
            <%= f.label :post_author, :class => "col-sm-3 control-label"  %>
            <div class="col-sm-6">
-             <%= f.select :admin_id, Admin.all.collect {|p| [ p.username, p.id ] }, { prompt: 'Select a Author' }, { :class => "form-control" } %>
+             <%= f.select :admin_id, Admin::GET_ADMINS.collect {|p| [ p.username, p.id ] }, { prompt: 'Select a Author' }, { :class => "form-control" } %>
            </div>
            <div class="clearfix"></div>
          </div>

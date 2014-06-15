@@ -7,7 +7,7 @@
 				<div class="tab-wrapper tab-left ">
 					<ul class="nav nav-tabs">
 						<li class="active"><a href="#new" data-toggle="tab"><i class="fa fa-plus"></i> <%= I18n.t("views.admin.menus.index.new_menu") %></a></li>
-						<% Menu.all.each_with_index do |m, index| %>
+						<% @all_menus.each_with_index do |m, index| %>
 							<li><a href="#<%= m.key + '-' + index.to_s %>" data-toggle="tab"><i class="fa fa-list"></i> <%= m.name %></a></li>
 						<% end %>
 					</ul>
@@ -19,7 +19,7 @@
 							<%= render 'menu_form' %>
 						</div>
 
-						<% Menu.all.each_with_index do |m, index| %>
+						<% @all_menus.each_with_index do |m, index| %>
 							<div class="tab-pane menu-group-display" id="<%= m.key + '-' + index.to_s %>">
 								<%= get_menu_groups m %>
 							</div>

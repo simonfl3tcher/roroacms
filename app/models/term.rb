@@ -9,8 +9,8 @@ class Term < ActiveRecord::Base
   	validates_format_of :slug, :with => /\A[A-Za-z0-9-]*\z/
   	validates_uniqueness_of :slug, :on => :create
 
-  	CATEGORIES = Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
-  	TAGS = Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy)
+  	CATEGORIES = Term.includes(:term_anatomy).where(term_anatomies: {taxonomy: 'category'}).order('name asc')
+  	TAGS = Term.includes(:term_anatomy).where(term_anatomies: {taxonomy: 'tag'}).order('name asc')
 
   	
   	def self.create(params)

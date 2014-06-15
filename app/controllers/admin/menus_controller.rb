@@ -12,6 +12,7 @@ class Admin::MenusController < AdminController
 		# set title
 		set_title(I18n.t("controllers.admin.menus.title"))
 		@menu = Menu.new
+		@all_menus = Menu.all
 	end
 
 

@@ -61,7 +61,7 @@ class Admin::AdministratorsController < AdminController
 	# get and disply certain admin
 
 	def edit
-		@admin = Admin.find(params[:id])
+		@admin = current_admin.id == params[:id].to_i ? @current_admin : Admin.find(params[:id])
 
 		# add breadcrumb and set title
 		set_title(I18n.t("controllers.admin.administrators.edit.title", username: @admin.username))

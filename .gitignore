@@ -12,6 +12,7 @@ capybara-*.html
 /config/database.yml
 /config/config.yml
 /config/initializers/secret_token.rb
+/config/initializers/bullet.rb
 /public/*
 .project
 .DS_Store

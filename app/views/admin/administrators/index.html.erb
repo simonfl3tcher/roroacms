@@ -20,7 +20,7 @@
 					</thead>
 
 					<tbody>
-						<% Admin.all.each do |admin| %>
+						<% Admin::GET_ADMINS.each do |admin| %>
 						<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 							<td>
 								<img src="<%= admin.avatar %>" class="img-circle hidden-xs" width="35">&nbsp;

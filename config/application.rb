@@ -29,6 +29,9 @@ module Roroacms
     config.assets.version = '1.0'
     config.action_controller.include_all_helpers = true
     config.i18n.default_locale = :en
+    I18n.enforce_available_locales = true
+
+    ENV = YAML.load_file("#{Rails.root}/config/config.yml")
 
     config.to_prepare do
       Devise::SessionsController.layout "login"

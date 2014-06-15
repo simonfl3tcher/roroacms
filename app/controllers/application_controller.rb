@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
 
   def current_user 
     if !session["warden.user.admin.key"].blank?
-      Admin.find(session["warden.user.admin.key"][0][0])
+      @current_admin ||= Admin.find(session["warden.user.admin.key"][0][0])
     else
       nil
     end

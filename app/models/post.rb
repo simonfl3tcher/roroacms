@@ -21,8 +21,8 @@ class Post < ActiveRecord::Base
     # general data that doesn't change very often
 
     POST_STATUS = ["Published", "Draft", "Disabled"]
-    POST_TAGS = Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy)
-    POST_CATEGORIES = Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
+    POST_TAGS ||= Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy)
+    POST_CATEGORIES ||= Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
 
     # get all the posts/pages in the system - however if there is a search parameter 
     # search the necessary fields for the given value

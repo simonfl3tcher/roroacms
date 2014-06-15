@@ -78,8 +78,7 @@ module AdminRoroaHelper
 	# returns boolean as to wether the logged in user is the complete overlord of the system
 
 	def is_overlord?
-		admin = Admin.find(current_user.id)
-		admin.overlord == 'Y' ? true : false
+		current_user.overlord == 'Y' ? true : false
 	end
 
 
