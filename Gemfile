@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby "1.9.3"
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.16'
 gem 'pg'
 gem 'ckeditor_rails'
 gem "strong_parameters"
@@ -30,3 +30,4 @@ gem 'breadcrumbs_on_rails'
 gem 'i18n-js', :git => 'https://github.com/fnando/i18n-js'
 gem 'font-awesome-sass', :git => 'https://github.com/FortAwesome/font-awesome-sass'
 gem 'brakeman'
+gem 'tilt', '1.3.7'

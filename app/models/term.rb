@@ -6,7 +6,7 @@ class Term < ActiveRecord::Base
 	has_many :posts, :through => :term_relationships
 	has_one :term_anatomy, :dependent => :destroy
   	validates :name, :slug, :presence => true
-  	validates_format_of :slug, :with => /^[A-Za-z0-9-]*$/
+  	validates_format_of :slug, :with => /\A[A-Za-z0-9-]*\z/
   	validates_uniqueness_of :slug, :on => :create
 
   	CATEGORIES = Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
@@ -21,19 +21,21 @@ class Term < ActiveRecord::Base
 
   	def self.get_redirect_url(params)
 
-  		taxonomy = params[:type_taxonomy]
-		if taxonomy == 'category'
-			redirect_url = "admin_article_categories_path"
-			type = "Category"
-		elsif taxonomy == 'banner'
-			redirect_url = "categories_admin_banners_path"
-			type = "Banner category"
-		else
-			redirect_url = "admin_article_tags_path"
-			type = "Tag"
-		end
+  		if !params[:type_taxonomy].blank?
+	  		taxonomy = params[:type_taxonomy]
+			
+			if taxonomy == 'category'
+				redirect_url = "/admin/article/categories"
+				type = "Category"
+			else
+				redirect_url = "/admin/article/tags"
+				type = "Tag"
+			end
 
-		redirect_url
+			redirect_url
+		else
+			"/admin"
+		end
 
   	end
 

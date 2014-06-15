@@ -33,18 +33,19 @@ class Admin::TermsController < AdminController
 		# deal with any abnormalaties which just makes sure there are "-" instead of spaces within the slug
 		@category.deal_with_abnormalaties
 
+		redirect_url = Term.get_redirect_url(params)
 		respond_to do |format|
 
 		  if @category.save
 
 		  	@term_anatomy = @category.create_term_anatomy(:taxonomy => params[:type_taxonomy])
 		  	Term.update_slug_for_subcategories(@category.id, @category.structured_url, true)
-		    format.html { redirect_to send(Term.get_redirect_url(params)), notice: I18n.t("controllers.admin.terms.create.flash.success", term: Term.get_type_of_term(params)) }
+		    format.html { redirect_to URI.parse(redirect_url).path, only_path: true, notice: I18n.t("controllers.admin.terms.create.flash.success", term: Term.get_type_of_term(params)) }
 
 		  else
 
 		  	flash[:error] = I18n.t("controllers.admin.terms.create.flash.error")
-		    format.html { redirect_to send(Term.get_redirect_url(params)) }
+		    format.html { redirect_to URI.parse(redirect_url).path, only_path: true }
 
 		  end
 
@@ -105,10 +106,10 @@ class Admin::TermsController < AdminController
 
 	def bulk_update
 		notice = Term.bulk_update params
-		redirect_url = Term.get_redirect_url params
+		redirect_url = Term.get_redirect_url(params)
 
 		respond_to do |format|
-	      format.html { redirect_to send(redirect_url), notice: notice }
+	      format.html { redirect_to URI.parse(redirect_url).path, only_path: true, notice: notice }
 	    end
 	end
 	

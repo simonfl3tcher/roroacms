@@ -13,7 +13,7 @@ class Post < ActiveRecord::Base
 
     validates :post_title, :post_slug, :presence => true
     validates_uniqueness_of :post_slug, :scope => [:post_type]
-    validates_format_of :post_slug, :with => /^[A-Za-z0-9-]*$/
+    validates_format_of :post_slug, :with => /\A[A-Za-z0-9-]*\z/
     validates :sort_order, :numericality => true, :allow_blank => true
 
     scope :from_this_year, where("post_date > ? AND post_date < ?", Time.now.beginning_of_year, Time.now.end_of_year)
@@ -28,8 +28,8 @@ class Post < ActiveRecord::Base
     # search the necessary fields for the given value
 
     def self.setup_and_search_posts(params, type)
-        
-        posts = Post.select('*').where("disabled ='N' and post_type = '#{type}'").order("ancestry")
+        type = type == 'page' ? 'page' : 'post'
+        posts = Post.select('*').where("disabled ='N' and post_type = ?", type).order("ancestry")
         posts
         
     end
