@@ -11,6 +11,7 @@ capybara-*.html
 /tmp/*
 /config/database.yml
 /config/config.yml
+/config/initializers/secret_token.rb
 /public/*
 .project
 .DS_Store
