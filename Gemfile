@@ -17,7 +17,6 @@ group :assets do
   gem "less-rails"
 end
 
-# gem 'activerecord-mysql-adapter'
 gem 'activerecord-postgresql-adapter'
 gem 'twitter-bootstrap-rails'
 gem 'aws-s3', :require => 'aws/s3'
@@ -30,3 +29,4 @@ gem 'differ'
 gem 'breadcrumbs_on_rails'
 gem 'i18n-js', :git => 'https://github.com/fnando/i18n-js'
 gem 'font-awesome-sass', :git => 'https://github.com/FortAwesome/font-awesome-sass'
+gem 'brakeman'
