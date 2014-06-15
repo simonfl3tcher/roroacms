@@ -32,7 +32,7 @@
              
               </td>
               <td class="hidden-xs">
-                <small><%= I18n.t("views.admin.comments.index.comment_submitted_on") %> <%= comment.submitted_on.strftime "%d-%m-%Y"%></small><br />
+                <small><%= I18n.t("views.admin.comments.index.comment_submitted_on") %> <%= comment.submitted_on.strftime "%d-%m-%Y" %></small><br />
                 <%= excerpt comment.comment, 50 %>
               </td>
               <td class="hidden-xs center">
@@ -66,7 +66,10 @@
           </table>
           <div class="hidden-xs">
             <hr>
-            <%= bulk_update_dropdown Hash['unapprove' => I18n.t("views.admin.generic.bulk_update_options.unapprove"), 'approve' => I18n.t("views.admin.generic.bulk_update_options.approve"), 'mark_as_spam' => I18n.t("views.admin.generic.bulk_update_options.mark_as_spam"), 'destroy' => I18n.t("views.admin.generic.bulk_update_options.destroy")] %>
+            <%= bulk_update_dropdown Hash['unapprove' => I18n.t("views.admin.generic.bulk_update_options.unapprove"),
+                                          'approve' => I18n.t("views.admin.generic.bulk_update_options.approve"), 
+                                          'mark_as_spam' => I18n.t("views.admin.generic.bulk_update_options.mark_as_spam"), 
+                                          'destroy' => I18n.t("views.admin.generic.bulk_update_options.destroy")] %>
           </div>
         <% end %>
       </div>

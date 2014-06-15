@@ -14,3 +14,4 @@ capybara-*.html
 /public/*
 .project
 .DS_Store
+brakeman.html

@@ -1,5 +1,7 @@
 module ShortcodeHelper
 
+	#  -------- CURRENTLY UNUSED -------- #
+
 	# prepares the content for visual display by replacing shortcodes with the html equivalent
 	# Params:
 	# +c+:: is optional, but if you choose to pass it data this has to be a singular post object. 

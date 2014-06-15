@@ -427,6 +427,7 @@ module ViewHelper
 	# +sub_only+:: show only the sub categories of the current category
 	
 	def get_categories sub_only = false
+		
 		segments = params[:slug].split('/')
 		category_url = Setting.get('category_slug')
 		# variables and data
