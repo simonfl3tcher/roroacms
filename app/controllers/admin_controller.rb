@@ -18,10 +18,6 @@ class AdminController < ApplicationController
 	before_filter :authorize_admin_access
   	layout "admin" 
 
-  	def configure_permitted_parameters
-	  devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:first_name, :last_name, :username, :access_level, :avatar, :access_level, :overlord) }
-	end
-
 
 	# checks to see if the admin logged in has the necesary rights, if not it will redirect them with an error message
 

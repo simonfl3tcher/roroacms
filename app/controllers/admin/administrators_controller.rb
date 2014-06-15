@@ -42,7 +42,7 @@ class Admin::AdministratorsController < AdminController
 		  	profile_images(params, @admin)
 		  	Emailer.profile(@admin).deliver
 
-		    format.html { redirect_to admin_administrators_path, notice: 'Admin was successfully created.' }
+		    format.html { redirect_to admin_administrators_path, notice: I18n.t("controllers.admin.administrators.create.flash.success") }
 
 		  else
 		    format.html { 

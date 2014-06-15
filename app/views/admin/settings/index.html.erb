@@ -10,31 +10,31 @@
 		    <div class="panel-body">
 		        <div class="tab-wrapper tab-left ">
 		            <ul class="nav nav-tabs">
-		                <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-cog"></i> General</a></li>
-		                <li><a href="#email" data-toggle="tab"><i class="fa fa-envelope-o"></i> Email Configuration</a></li>
-		                <li><a href="#comment" data-toggle="tab"><i class="fa fa-comments"></i> Comments</a></li>
-		                <li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> Search Engine Optimisation</a></li>
-		                <li><a href="#user-groups" data-toggle="tab"><i class="fa fa-users"></i> User Groups</a></li>
+		                <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-cog"></i> <%= I18n.t("views.admin.partials.settings.tabs.general") %></a></li>
+		                <li><a href="#email" data-toggle="tab"><i class="fa fa-envelope-o"></i> <%= I18n.t("views.admin.partials.settings.tabs.email_config") %></a></li>
+		                <li><a href="#comment" data-toggle="tab"><i class="fa fa-comments"></i> <%= I18n.t("views.admin.partials.settings.tabs.comments") %></a></li>
+		                <li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> <%= I18n.t("views.admin.partials.settings.tabs.search_engine_optimisation") %></a></li>
+		                <li><a href="#user-groups" data-toggle="tab"><i class="fa fa-users"></i> <%= I18n.t("views.admin.partials.settings.tabs.user_groups") %></a></li>
 		            </ul>
 		            <div class="tab-content">
 		            	<%= render :partial => 'admin/partials/submit_bar' %>
 		                <div class="tab-pane active" id="general">
 		                    <div class="form-group">
-		                    	<%= label_tag(:display_url, "Display URL", class: "col-sm-3 control-label") %>
+		                    	<%= label_tag(:display_url, I18n.t("views.admin.partials.settings.tab_content.display_url"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= text_field_tag(:display_url, Setting.get('display_url'), class: 'form-control') %>
 							    </div>
 								<div class="clearfix"></div>
 							</div>
 							<div class="form-group">
-								<%= label_tag(:site_url, "Site URL", class: "col-sm-3 control-label") %>
+								<%= label_tag(:site_url, I18n.t("views.admin.partials.settings.tab_content.site_url"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= text_field_tag(:site_url, Setting.get('site_url'), class: 'form-control') %>
 							    </div>
 								<div class="clearfix"></div>
 							</div>
 							<div class="form-group">
-								<%= label_tag(:pagination_per, "Pagination per page (Admin)", class: "col-sm-3 control-label") %>
+								<%= label_tag(:pagination_per, I18n.t("views.admin.partials.settings.tab_content.pagination_per"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<label class="radio-inline">
 								      <%= radio_button(:pagination_per, nil, 10, :checked => Setting.get('pagination_per').to_i == 10 ? true : false) %> 10
@@ -52,44 +52,44 @@
 								<div class="clearfix"></div>
 							</div>
 							<div class="form-group">
-								<%= label_tag(:pagination_per_fe, "Pagination per page (Theme)", class: "col-sm-3 control-label") %>
+								<%= label_tag(:pagination_per_fe, I18n.t("views.admin.partials.settings.tab_content.pagination_per_fe"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= text_field_tag(:pagination_per_fe, Setting.get('pagination_per_fe'), class: 'form-control') %>
 							    </div>
 								<div class="clearfix"></div>
 							</div>
 							<div class="form-group">
-								<%= label_tag(:site_email, "Site Email Address", class: "col-sm-3 control-label") %>
+								<%= label_tag(:site_email, I18n.t("views.admin.partials.settings.tab_content.site_email"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= text_field_tag(:site_email, Setting.get('site_email'), class: 'form-control') %>
 							    </div>
 								<div class="clearfix"></div>
 							</div>
 							<div class="form-group">
-								<%= label_tag(:articles_slug, "Articles Slug", class: "col-sm-3 control-label") %>
+								<%= label_tag(:articles_slug, I18n.t("views.admin.partials.settings.tab_content.articles_slug"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= text_field_tag(:articles_slug, Setting.get('articles_slug'), class: 'form-control') %>
 							    </div>
 								<div class="clearfix"></div>
 							</div>
 							<div class="form-group">
-								<%= label_tag(:category_slug, "Category Slug", class: "col-sm-3 control-label") %>
+								<%= label_tag(:category_slug, I18n.t("views.admin.partials.settings.tab_content.category_slug"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= text_field_tag(:category_slug, Setting.get('category_slug'), class: 'form-control') %>
 							    </div>
 								<div class="clearfix"></div>
 							</div>
 							<div class="form-group">
-								<%= label_tag(:tag_slug, "Tag Slug", class: "col-sm-3 control-label") %>
+								<%= label_tag(:tag_slug, I18n.t("views.admin.partials.settings.tab_content.tag_slug"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= text_field_tag(:tag_slug, Setting.get('tag_slug'), class: 'form-control') %>
 							    </div>
 								<div class="clearfix"></div>
 							</div>
 							<div class="form-group">
-								<%= label_tag(:home_page, "Home Page", class: "col-sm-3 control-label") %>
+								<%= label_tag(:home_page, I18n.t("views.admin.partials.settings.tab_content.home_page"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
-							    	<%= select_tag :home_page, options_for_select(Post.where(:post_type => 'page').collect {|p| [ p.post_title, p.id ] }, Setting.get('home_page')), prompt: 'Select a homepage', class: 'form-control' %>
+							    	<%= select_tag :home_page, options_for_select(Post.where(:post_type => 'page').collect {|p| [ p.post_title, p.id ] }, Setting.get('home_page')), prompt: I18n.t("views.admin.generic.select_homepage"), class: 'form-control' %>
 			
 							    </div>
 							</div>
@@ -97,7 +97,7 @@
 		                <div class="tab-pane" id="email">
 
 		                	<div class="form-group">
-								<%= label_tag(:smtp_username, "Server E-mail Address", class: "col-sm-3 control-label") %>
+								<%= label_tag(:smtp_username, I18n.t("views.admin.partials.settings.tab_content.smtp_username"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= text_field_tag(:smtp_username, Setting.get('smtp_username'), class: 'form-control') %>
 							    </div>
@@ -105,7 +105,7 @@
 							</div>
 
 							<div class="form-group">
-								<%= label_tag(:smtp_password, "SMTP password", class: "col-sm-3 control-label") %>
+								<%= label_tag(:smtp_password, I18n.t("views.admin.partials.settings.tab_content.smtp_password"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= password_field_tag(:smtp_password, Setting.get('smtp_password'), class: 'form-control') %>
 							    </div>
@@ -113,7 +113,7 @@
 							</div>
 
 							<div class="form-group">
-								<%= label_tag(:smtp_address, "SMTP Host", class: "col-sm-3 control-label") %>
+								<%= label_tag(:smtp_address, I18n.t("views.admin.partials.settings.tab_content.smtp_address"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= text_field_tag(:smtp_address, Setting.get('smtp_address'), class: 'form-control') %>
 							    </div>
@@ -121,7 +121,7 @@
 							</div>
 
 							<div class="form-group">
-								<%= label_tag(:smtp_domain, "SMTP Domain", class: "col-sm-3 control-label") %>
+								<%= label_tag(:smtp_domain, I18n.t("views.admin.partials.settings.tab_content.smtp_domain"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= text_field_tag(:smtp_domain, Setting.get('smtp_domain'), class: 'form-control') %>
 							    </div>
@@ -129,7 +129,7 @@
 							</div>
 
 							<div class="form-group">
-								<%= label_tag(:smtp_port, "SMTP Port", class: "col-sm-3 control-label") %>
+								<%= label_tag(:smtp_port, I18n.t("views.admin.partials.settings.tab_content.smtp_port"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= text_field_tag(:smtp_port, Setting.get('smtp_port'), class: 'form-control') %>
 							    </div>
@@ -137,17 +137,17 @@
 							</div>
 
 							<div class="form-group">
-								<%= label_tag(:smtp_authentication, "SMTP Authentication", class: "col-sm-3 control-label") %>
+								<%= label_tag(:smtp_authentication, I18n.t("views.admin.partials.settings.tab_content.smtp_authentication"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<div class="">
 									    <label class="radio-inline">
-									      <%= radio_button(:smtp_authentication, nil, "plain", :checked => Setting.get('smtp_authentication') == 'plain' ? true : false) %> Plain
+									      <%= radio_button(:smtp_authentication, nil, "plain", :checked => Setting.get('smtp_authentication') == 'plain' ? true : false) %> <%= I18n.t("views.admin.partials.settings.tab_content.plain") %>
 									    </label>
 									    <label class="radio-inline">
-									    	<%= radio_button(:smtp_authentication, nil, "login", :checked => Setting.get('smtp_authentication') == 'login' ? true : false) %> Login
+									    	<%= radio_button(:smtp_authentication, nil, "login", :checked => Setting.get('smtp_authentication') == 'login' ? true : false) %> <%= I18n.t("views.admin.partials.settings.tab_content.login") %>
 									    </label>
 									    <label class="radio-inline">
-									    	<%= radio_button(:smtp_authentication, nil, "cram_md5", :checked => Setting.get('smtp_authentication') == 'cram_md5' ? true : false) %> Cram MD5
+									    	<%= radio_button(:smtp_authentication, nil, "cram_md5", :checked => Setting.get('smtp_authentication') == 'cram_md5' ? true : false) %> <%= I18n.t("views.admin.partials.settings.tab_content.cram") %>
 									    </label>
 									  </div>
 							    </div>
@@ -159,7 +159,7 @@
 		                </div>
 		                <div class="tab-pane" id="comment">
 		                	<div class="form-group">
-		                		<%= label_tag(:article_comments, "Article Comments On?", class: "col-sm-3 control-label") %>
+		                		<%= label_tag(:article_comments, I18n.t("views.admin.partials.settings.tab_content.article_comments"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<div class="">
 									    <label class="radio-inline">
@@ -171,14 +171,14 @@
 								<div class="clearfix"></div>
 							</div>
 							<div class="form-group">
-								<%= label_tag(:article_comment_type, "Article Comment type", class: "col-sm-3 control-label") %>
+								<%= label_tag(:article_comment_type, I18n.t("views.admin.partials.settings.tab_content.article_comment_type"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<div class="">
 									    <label class="radio-inline">
-									      <%= radio_button(:article_comment_type, nil, "R", :checked => Setting.get('article_comment_type') == 'R' ? true : false) %> System Comments
+									      <%= radio_button(:article_comment_type, nil, "R", :checked => Setting.get('article_comment_type') == 'R' ? true : false) %> <%= I18n.t("views.admin.partials.settings.tab_content.system_comments") %>
 									    </label>
 									    <label class="radio-inline">
-									    	<%= radio_button(:article_comment_type, nil, "F", :checked => Setting.get('article_comment_type') == 'F' ? true : false) %> Facebook Comments
+									    	<%= radio_button(:article_comment_type, nil, "F", :checked => Setting.get('article_comment_type') == 'F' ? true : false) %> <%= I18n.t("views.admin.partials.settings.tab_content.facebook_comments") %>
 									    </label>
 									  </div>
 							    </div>
@@ -188,42 +188,42 @@
 
 		                <div class="tab-pane" id="seo">
 		                   <div class="form-group">
-		                    	<%= label_tag(:seo_site_title, "Website Title", class: "col-sm-3 control-label") %>
+		                    	<%= label_tag(:seo_site_title, I18n.t("views.admin.partials.settings.tab_content.seo_site_title"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= text_field_tag(:seo_site_title, Setting.get('seo_site_title'), class: 'form-control') %>
 							    </div>
 								<div class="clearfix"></div>
 							</div>
 							<div class="form-group">
-		                    	<%= label_tag(:seo_home_title, "Home Title", class: "col-sm-3 control-label") %>
+		                    	<%= label_tag(:seo_home_title, I18n.t("views.admin.partials.settings.tab_content.seo_home_title"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= text_field_tag(:seo_home_title, Setting.get('seo_home_title'), class: 'form-control') %>
 							    </div>
 								<div class="clearfix"></div>
 							</div>
 							<div class="form-group">
-		                    	<%= label_tag(:seo_home_description, "Home Description", class: "col-sm-3 control-label") %>
+		                    	<%= label_tag(:seo_home_description, I18n.t("views.admin.partials.settings.tab_content.seo_home_description"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= text_area_tag(:seo_home_description, Setting.get('seo_home_description'), class: 'form-control') %>
 							    </div>
 								<div class="clearfix"></div>
 							</div>
 							<div class="form-group">
-		                    	<%= label_tag(:seo_404_title, "404 Title", class: "col-sm-3 control-label") %>
+		                    	<%= label_tag(:seo_404_title, I18n.t("views.admin.partials.settings.tab_content.seo_404_title"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= text_field_tag(:seo_404_title, Setting.get('seo_404_title'), class: 'form-control') %>
 							    </div>
 								<div class="clearfix"></div>
 							</div>
 							<div class="form-group">
-		                    	<%= label_tag(:seo_404_description, "404 Description", class: "col-sm-3 control-label") %>
+		                    	<%= label_tag(:seo_404_description, I18n.t("views.admin.partials.settings.tab_content.seo_404_description"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= text_area_tag(:seo_404_description, Setting.get('seo_404_description'), class: 'form-control') %>
 							    </div>
 								<div class="clearfix"></div>
 							</div>
 							<div class="form-group">
-		                    	<%= label_tag(:seo_google_analytics_code, "Google Analytics ID", class: "col-sm-3 control-label") %>
+		                    	<%= label_tag(:seo_google_analytics_code, I18n.t("views.admin.partials.settings.tab_content.seo_google_analytics_code"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<%= text_field_tag(:seo_google_analytics_code, Setting.get('seo_google_analytics_code'), class: 'form-control') %>
 							    </div>
@@ -232,7 +232,7 @@
 
 							<div class="form-group">
 								<%= hidden_field_tag :seo_rewrite_titles, 'N' %>
-		                    	<%= label_tag(:seo_rewrite_titles, "Rewrite Titles", class: "col-sm-3 control-label") %>
+		                    	<%= label_tag(:seo_rewrite_titles, I18n.t("views.admin.partials.settings.tab_content.seo_rewrite_titles"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<label class="radio-inline">
 							    		<%= check_box_tag :seo_rewrite_titles, 'Y', Setting.get('seo_rewrite_titles') == 'Y' ? true : false %>
@@ -243,7 +243,7 @@
 
 							<div class="form-group">
 								<%= hidden_field_tag :seo_no_index_categories, 'N' %>
-		                    	<%= label_tag(:seo_no_index_categories, "No index categories", class: "col-sm-3 control-label") %>
+		                    	<%= label_tag(:seo_no_index_categories, I18n.t("views.admin.partials.settings.tab_content.seo_no_index_categories"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<label class="radio-inline">
 							    		<%= check_box_tag :seo_no_index_categories, 'Y', Setting.get('seo_no_index_categories') == 'Y' ? true : false %>
@@ -254,18 +254,7 @@
 
 							<div class="form-group">
 								<%= hidden_field_tag :seo_no_index_archives, 'N' %>
-		                    	<%= label_tag(:seo_no_index_archives, "No index archives", class: "col-sm-3 control-label") %>
-							    <div class="col-sm-6">
-							    	<label class="radio-inline">
-							    		<%= check_box_tag :seo_no_index_archives, 'Y', Setting.get('seo_no_index_archives') == 'Y' ? true : false %>
-							    	</label>
-							    </div>
-								<div class="clearfix"></div>
-							</div>
-
-							<div class="form-group">
-								<%= hidden_field_tag :seo_no_index_archives, 'N' %>
-		                    	<%= label_tag(:seo_no_index_archives, "No index archives", class: "col-sm-3 control-label") %>
+		                    	<%= label_tag(:seo_no_index_archives, I18n.t("views.admin.partials.settings.tab_content.seo_no_index_archives"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<label class="radio-inline">
 							    		<%= check_box_tag :seo_no_index_archives, 'Y', Setting.get('seo_no_index_archives') == 'Y' ? true : false %>
@@ -276,7 +265,7 @@
 
 							<div class="form-group">
 								<%= hidden_field_tag :seo_autogenerate_descriptions, 'N' %>
-		                    	<%= label_tag(:seo_autogenerate_descriptions, "Autogenerate Decriptions", class: "col-sm-3 control-label") %>
+		                    	<%= label_tag(:seo_autogenerate_descriptions, I18n.t("views.admin.partials.settings.tab_content.seo_autogenerate_descriptions"), class: "col-sm-3 control-label") %>
 							    <div class="col-sm-6">
 							    	<label class="radio-inline">
 							    		<%= check_box_tag :seo_autogenerate_descriptions, 'Y', Setting.get('seo_autogenerate_descriptions') == 'Y' ? true : false %>

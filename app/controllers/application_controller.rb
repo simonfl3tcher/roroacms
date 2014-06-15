@@ -97,7 +97,7 @@ class ApplicationController < ActionController::Base
   # devise settings
 
   def after_sign_in_path_for(resource)
-    sign_in_url = url_for(:action => 'new', :controller => 'sessions', :only_path => false, :protocol => 'http')
+    sign_in_url = url_for(:action => 'new', :controller => 'sessions', :only_path => false)
     Admin.set_sessions(session, current_user)
     admin_path
   end

@@ -1,5 +1,4 @@
 <div class="row">
-
   <div class="col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -18,7 +17,7 @@
         <% if (@type == 'category' ? Term::CATEGORIES : Term::TAGS).blank? %>
 			  
 			  <div class="span8" style="text-align:center;">
-			    <strong style="margin-top:100px; font-size:25px; display:block; ">You currently have no article <%= pluralize_without_count(2, @type) %></strong>
+			    <strong style="margin-top:100px; font-size:25px; display:block; "><%= I18n.t("views.admin.terms.view.have_no", type: pluralize_without_count(2, @type)) %></strong>
 			  </div>
 
 			<% else %>
@@ -32,5 +31,4 @@
       </div>
     </div>
   </div>
-
 </div>
