@@ -209,6 +209,33 @@ en:
         date_10: "Oct"
         date_11: "Nov"
         date_12: "Dec"
+  models:
+    trash:
+      deal_with_form: 
+        no_records_to_reinstate: "There were no records to reinstate"
+        recrords_reinstated: "These records was successfully reinstated"
+        no_records_to_delete: "There were no records to delete"
+        records_deleted: "These records was successfully deleted"
+        nothing_was_done: "Nothing was done"
+    term:
+      generic:
+        tag: "Tag"
+        category: "Category"
+        tags: "Tags"
+        categories: "Categories"
+      bulk_update:
+        deleted: "%{type} were successfully deleted"
+        nothing: "Nothing was done"
+    post:
+      do_autosave:
+        passed: "passed"
+        failed: "failed"
+        nothing: "nothing changed"
+      bulk_update:
+        published_successfully: "%{type} were successfully published"
+        draft_successfully: "%{type} were successfully set to draft"
+        trash_successfully: "%{type} were successfully moved to trash"
+        nothing: "Nothing was done"
   views:
     pagination:
       first: "&laquo; "
