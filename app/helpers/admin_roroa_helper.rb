@@ -183,8 +183,21 @@ module AdminRoroaHelper
 	def errors_for(model, attribute)
 	  if model.errors[attribute].present?
 	  	name = model.class.name.constantize.human_attribute_name(attribute)
-	    content_tag :span, :class => 'help-block' do
+	    content_tag :span, :class => 'help-block error' do
 	      name.to_s.capitalize + ' ' + model.errors[attribute].join(", ")
+	    end
+	  end
+	end
+
+	# display errors inline to the input specifically for setting ares
+	# Params:
+	# +model+:: ActiveRecord model from form
+	# +attribute+:: the attribute that you want to check errors for
+
+	def setting_errors_for(model, attribute)
+	  if !model[:errors].blank? && model[:errors][attribute.to_sym].present?
+	    content_tag :span, :class => 'help-block error' do
+	       I18n.t("views.admin.settings.tab_content.#{attribute.to_s}").downcase.capitalize + ' ' + I18n.t("activerecord.errors.messages.empty")
 	    end
 	  end
 	end

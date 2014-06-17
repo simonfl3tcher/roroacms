@@ -1,10 +1,14 @@
 class Setting < ActiveRecord::Base
-
+	
 	# get a certain settings value
 
 	def self.get(setting_name)
 		@reference ||= filter_settings
 		return setting_name == 'user_groups' ? @reference[setting_name].gsub("\\", '') : @reference[setting_name]
+	end
+
+	def self.get_all
+		@reference
 	end
 
 
@@ -22,12 +26,32 @@ class Setting < ActiveRecord::Base
 
 	# create a hash of the details for easy access via the get function
 
-	def self.filter_settings()
+	def self.filter_settings
 		h = {}
 		Setting.all.each do |f|
 			h[f.setting_name] = f.setting
 		end
 		h
+	end
+
+	def self.manual_validation(params)
+
+		validate_arr = [:articles_slug, :category_slug, :tag_slug, :smtp_username, :smtp_password, :smtp_authentication]
+		errors = {}
+		validate_arr.each do |f|
+			if defined?(params[f.to_s]) && params[f.to_s].blank?
+				errors[f.to_sym] = "#{f} cannot be blank"
+			end
+		end
+		errors
+	end
+
+	def self.save(params)
+
+		params.each do |key, value|
+			value = ActiveSupport::JSON.encode(value) if key == 'user_groups'
+			set = Setting.where("setting_name = ?", key).update_all('setting' => value)
+		end
 	end
 
 

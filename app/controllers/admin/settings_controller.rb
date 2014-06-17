@@ -6,6 +6,7 @@ class Admin::SettingsController < AdminController
 
 	def index 
 		Setting.reload_settings
+		@settings = Setting.get_all
 		set_title(I18n.t("controllers.admin.settings.general.title"))
 	end
 
@@ -19,16 +20,25 @@ class Admin::SettingsController < AdminController
 
 
 		# loop through the param fields and update the key with the value
-		params.each do |key, value|
-			value = @json.encode(value) if key == 'user_groups'
-			set = Setting.where("setting_name = '#{key}'").update_all('setting' => value)
-		end
-
-		redirect_url = "admin_settings_path"
+		validation = Setting.manual_validation(params)
 
 		respond_to do |format|
-			format.html { redirect_to send(redirect_url), notice: I18n.t("controllers.admin.settings.general.create.flash.success") }
+			if validation.blank?
+				Setting.save(params)
+				format.html { redirect_to admin_settings_path, notice: I18n.t("controllers.admin.settings.general.create.flash.success") }
+			else
+				format.html { 
+		        	# add breadcrumb and set title
+		        	@settings = params
+		        	@settings['errors'] = validation
+		        	@settings['user_groups'] = @json.encode(@settings['user_groups'])
+		        	add_breadcrumb I18n.t("controllers.admin.comments.edit.breadcrumb")				
+		        	render action: "index" 
+		        }
+			end
 		end
+
+
 	end
 
 
