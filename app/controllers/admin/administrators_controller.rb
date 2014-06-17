@@ -102,6 +102,7 @@ class Admin::AdministratorsController < AdminController
 	    	end
 
 			if admin_passed
+				clear_cache
 				profile_images(params, @admin)
 				format.html { redirect_to edit_admin_administrator_path(@admin), notice: I18n.t("controllers.admin.administrators.update.flash.success") }
 			else

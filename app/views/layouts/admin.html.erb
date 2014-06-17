@@ -23,11 +23,12 @@
   </head>
   <body>
       <div class="js-settings" data-pagination-limit="<%= Setting.get('pagination_per') %>"></div>
-      <section id="container">
+    <section id="container">
+      <% cache('admin_header') do %>
         <header id="header">
             <!--logo start-->
             <div class="brand">
-                <a href="<%= site_url('admin') %>" class="logo"><span>Roroa</span>cms</a>
+                <a href="javascript:;" class="logo"><span>Roroa</span>cms</a>
             </div>
             <!--logo end-->
             <div class="toggle-navigation toggle-left">
@@ -39,35 +40,16 @@
             <div class="user-nav">
                 <ul>
                     <li class="profile-photo">
-                        <img src="<%= current_user.avatar %>" class="img-circle" width="35">
-                    </li>
-                    <li class="dropdown settings">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="dropdown-menu animated fadeInDown">
-                            <li class="userDetails">
-                                <img src="<%= current_user.avatar %>" class="img-circle" width="50">
-                                <span><%= current_user.first_name + ' ' + current_user.last_name %><small><%= current_user.username %> - admin</small></span>
-                            </li>
-                            <li class="divide"></li>
-                            <li>
-                              <%= link_to edit_admin_administrator_path(session[:admin_id]) do %>
-                                <i class="fa fa-user"></i> <%= I18n.t("views.admin.layouts.admin.navigation.profile") %>
-                              <% end %>
-                            </li>
-                            <li>
-                              <%= link_to admin_logout_path do %>
-                                <i class="fa fa-power-off"></i> <%= I18n.t("views.admin.layouts.admin.navigation.logout") %>
-                              <% end %>
-                            </li>
-                        </ul>
+                        <%= link_to edit_admin_administrator_path(session[:admin_id]) do %>
+                          <img src="<%= current_user.avatar %>" class="img-circle" width="35">
+                        <% end %>
                     </li>
                 </ul>
             </div>
-        </header>
+          </header>
+        <% end %>
         <!--sidebar left start-->
-        <aside class="sidebar <%= !cookies[:menu_contracted].blank? ? 'sidebar-toggle' : '' %>">
+          <aside class="sidebar <%= !cookies[:menu_contracted].blank? ? 'sidebar-toggle' : '' %>">
             <div id="leftside-navigation" class="nano">
                 <ul class="nano-content">
                     <li class="<%= cp(admin_path) %>">
@@ -135,10 +117,10 @@
                       </li>
                     <% end %>
                     
-                    <% if check_controller_against_user('settings/general') %>
+                    <% if check_controller_against_user('settings') %>
 
-                      <li class="<%= cp(admin_settings_general_index_path) %>">
-                        <%= link_to admin_settings_general_index_path do %>
+                      <li class="<%= cp(admin_settings_path) %>">
+                        <%= link_to admin_settings_path do %>
                           <i class="fa fa-cogs"></i><span><%= I18n.t("views.admin.layouts.admin.navigation.settings") %></span>
                         <% end %>
                       </li>
@@ -163,8 +145,8 @@
 
                 </ul>
             </div>
+          </aside>
 
-        </aside>
         <section class="main-content-wrapper <%= !cookies[:menu_contracted].blank? ? 'main-content-toggle-left' : '' %>">
             <section id="main-content">
                 <%= theme_exists %>
@@ -177,6 +159,8 @@
                          <div class="alert-wrapper"><%= get_notifications %></div>
                       </div>
                   </div>
+                <% else %>
+                  <div class="alert-wrapper"><%= get_notifications %></div>
                 <% end %>
 
                 <%= yield %>

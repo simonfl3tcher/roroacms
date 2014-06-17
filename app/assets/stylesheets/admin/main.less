@@ -116,6 +116,7 @@ h3.underline {
            text-transform: uppercase;
            padding: 23px 0 0 57px;
            display: inline-block;
+           cursor: default;
        }
        & .logo span {
            font-weight: 700;
@@ -156,10 +157,23 @@ h3.underline {
             vertical-align: middle;
             font-size: 15px;
         }
-         &  .user-nav ul li .profile-photo {
+         &  .user-nav ul li.profile-photo {
             display: inline-block;
             overflow: hidden;
             vertical-align: middle;
+            margin-right:15px;
+            -webkit-transition: all 1s ease;
+            -moz-transition: all 1s ease;
+            -o-transition: all 1s ease;
+            -ms-transition: all 1s ease;
+            transition: all 1s ease;
+            &:hover {
+              transform:scale(1.1);
+              -ms-transform:scale(1.1); /* IE 9 */
+              -moz-transform:scale(1.1); /* Firefox */
+              -webkit-transform:scale(1.1); /* Safari and Chrome */
+              -o-transform:scale(1.1); /* Opera */
+            }
         }
          &  .user-nav ul li.dropdown.messages .dropdown-menu {
             width: 350px;

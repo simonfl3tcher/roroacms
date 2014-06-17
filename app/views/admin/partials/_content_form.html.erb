@@ -9,7 +9,7 @@
         <li><a class="contentReload" href="#content" data-toggle="tab"><i class="fa fa-desktop"></i> <%= I18n.t("views.admin.pages.new.tabs.content") %></a></li>
         <li><a href="#revisions" data-toggle="tab"><i class="fa fa-history"></i> <%= I18n.t("views.admin.pages.new.tabs.history") %></a></li>
         <li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> <%= I18n.t("views.admin.pages.new.tabs.search_engine_optimisation") %></a></li>
-        <% if @record.post_type == 'post' %>
+        <% if @post_type == 'post' %>
           <li><a href="#categories" data-toggle="tab"><i class="fa fa-sitemap"></i> <%= I18n.t("views.admin.pages.new.tabs.tags_and_categories") %></a></li>
         <% end %>
         <li><a href="#additional" data-toggle="tab"><i class="fa fa-paperclip"></i> <%= I18n.t("views.admin.pages.new.tabs.additional") %></a></li>
@@ -220,15 +220,15 @@
         </div>
 
       </div>
-      <% if @record.post_type == 'post' %>
+      <% if @post_type == 'post' %>
       <div class="tab-pane" id="categories">
 
         <div class="form-group">
           <label class="col-sm-3 control-label"><%= I18n.t("views.admin.pages.new.tab_content.categories.categories") %></label>
           <div class="col-sm-6">
 
-            <% if !Post.get_cats.blank? %>
-            <%= select_tag 'category_ids[]', options_for_select(Post.get_cats.map {|c| [c.name, c.id]}, @record.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
+            <% if !Post::POST_CATEGORIES.blank? %>
+            <%= select_tag 'category_ids[]', options_for_select(Post::POST_CATEGORIES.map {|c| [c.name, c.id]}, @record.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
             <% else %>
             <div style="text-align:center;">
               <strong><%= I18n.t("views.admin.pages.new.tab_content.categories.no_categories") %></strong>
@@ -243,8 +243,8 @@
           <label class="col-sm-3 control-label"><%= I18n.t("views.admin.pages.new.tab_content.categories.tags") %></label>
           <div class="col-sm-6">
 
-            <% if !Post.get_tags.blank? %>
-            <%= select_tag 'tag_ids[]', options_for_select(Post.get_tags.map {|c| [c.name, c.id]}, @record.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
+            <% if !Post::POST_TAGS.blank? %>
+            <%= select_tag 'tag_ids[]', options_for_select(Post::POST_TAGS.map {|c| [c.name, c.id]}, @record.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
             <% else %>
             <div style="text-align:center;">
              <strong><%= I18n.t("views.admin.pages.new.tab_content.categories.no_tags") %></strong>

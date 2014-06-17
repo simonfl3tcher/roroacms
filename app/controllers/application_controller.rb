@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   helper GeneralHelper
   include GeneralHelper
   include ViewHelper
-
+  
   private
 
   # Override the generic 404 page to use the 404 in the theme directory
@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
   # Return the current user logged in as admin data
 
   def current_admin
-  	@current_admin ||= current_user if !current_user.blank?
+  	@current_admin ||= current_user
   end
 
 
@@ -71,8 +71,6 @@ class ApplicationController < ActionController::Base
   # currently there are only two user types (admin or editor)
 
   def current_admin_access
-    @current_admin = current_user if !current_user.blank?
-
     if !@current_admin.nil?
       return @current_admin.access_level
     else
@@ -100,12 +98,6 @@ class ApplicationController < ActionController::Base
     sign_in_url = url_for(:action => 'new', :controller => 'sessions', :only_path => false)
     Admin.set_sessions(session, current_user)
     admin_path
-  end
-
-
-  def after_sign_out_path_for(resource_or_scope)
-    Admin.destroy_session session
-    admin_login_index_path
   end
 
 

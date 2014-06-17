@@ -263,7 +263,6 @@ responsive_app = do ->
     return
 
   expand = ->
-    console.log $(".settings-area")
     if not $(".settings-area").hasClass('manual-shrink')
       $('.tab-wrapper').parent().removeAttr('id')
       $(".settings-area .nav-tabs a[data-textref]").each ->

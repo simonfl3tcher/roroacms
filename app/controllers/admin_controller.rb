@@ -24,9 +24,14 @@ class AdminController < ApplicationController
 	def authorize_admin_access
 		Setting.reload_settings
 		if !check_controller_against_user(params[:controller].sub('admin/', '')) && params[:controller] != 'admin/dashboard'
-			flash[:error] = I18n.t("controllers.admin.misc.authorize_admin_access_error")
-			redirect_to admin_path
+			redirect_to admin_path, flash: { error: I18n.t("controllers.admin.misc.authorize_admin_access_error") }
 		end
+	end
+
+	def after_sign_out_path_for(resource_or_scope)
+		clear_cache
+		Admin.destroy_session session
+		admin_login_index_path
 	end
 
 	# functions used to set the title instance variable in an admin controller

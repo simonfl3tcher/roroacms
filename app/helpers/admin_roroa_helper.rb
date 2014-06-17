@@ -263,7 +263,6 @@ module AdminRoroaHelper
 
 			arr = ActiveSupport::JSON.decode(Setting.get('user_groups').gsub("\\", ''))
 
-
 			if arr.has_key? key
 				arr[key]
 			else
@@ -340,6 +339,12 @@ module AdminRoroaHelper
 			'12'
 		end
 
+	end
+
+	def clear_cache
+		expire_fragment('admin_header')
+		expire_fragment('admin_quick_links')
+		expire_fragment('admin_submit_bar_toggle')
 	end
 
 end

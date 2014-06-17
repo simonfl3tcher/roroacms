@@ -20,6 +20,9 @@ gem 'differ'
 gem 'breadcrumbs_on_rails'
 gem 'brakeman'
 gem 'tilt', '1.3.7'
+gem 'bullet', group: :development
+gem 'rack-mini-profiler', group: :development
+gem 'thin'
 
 # assets
 gem 'sass-rails',   '~> 3.2.3'

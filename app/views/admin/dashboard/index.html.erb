@@ -36,6 +36,7 @@
 
   <div class="row">
       <div class="col-md-<%= size %>">
+        <% cache('admin_quick_links') do %>
           <div class="panel panel-default">
               <div class="panel-heading">
                   <h3 class="panel-title"><%= I18n.t("views.admin.dashboard.quick_links") %></h3>
@@ -88,6 +89,7 @@
                 </div>
               </div>
           </div>
+        <% end %>
       </div>
       <% if !@comments.blank? %>
         <div class="col-md-<%= size %> comments">
