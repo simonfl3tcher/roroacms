@@ -26,10 +26,10 @@ class Term < ActiveRecord::Base
 			
 			if taxonomy == 'category'
 				redirect_url = "/admin/article/categories"
-				type = "Category"
+				type = I18n.t("models.term.generic.category") # are these actually needed?
 			else
 				redirect_url = "/admin/article/tags"
-				type = "Tag"
+				type = I18n.t("models.term.generic.tag") # are these actually needed?
 			end
 
 			redirect_url
@@ -46,11 +46,9 @@ class Term < ActiveRecord::Base
 	    taxonomy = params[:type_taxonomy]
 		
 		if taxonomy == 'category'
-			type = "Category"
-		elsif taxonomy == 'banner'
-			type = "Banner category"
+			type = I18n.t("models.term.generic.category")
 		else
-			type = "Tag"
+			type = I18n.t("models.term.generic.tag")
 		end
 
 		return type
@@ -73,21 +71,21 @@ class Term < ActiveRecord::Base
 			if params[:type_taxonomy] == 'category'
 
 				redirect_url = "admin_article_categories_path"
-				type = "Categories"
+				type = I18n.t("models.term.generic.categories")
 
 			else
 
 				redirect_url = "admin_article_tags_path"
-				type = "Tags"
+				type = I18n.t("models.term.generic.tags")
 
 			end
 
 			case action.downcase 
 				when "destroy"
 					bulk_update_move_to_trash params[:categories]
-				    return "#{type} were successfully deleted" 
+				    return I18n.t("models.term.bulk_update.deleted", type: type)
 				else
-				    return 'Nothing was done'
+				    return I18n.t("models.term.bulk_update.nothing")
 			end
 		end
 

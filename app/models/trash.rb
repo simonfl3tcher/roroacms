@@ -18,11 +18,11 @@ class Trash < ActiveRecord::Base
 					reinstate_posts params[:pages]
 				else
 					# return a message for the user
-					return "There were no records to reinstate."
+					return I18n.t("models.trash.deal_with_form.no_records_to_reinstate")
 				end
 
 				# return a message for the user
-				return "These records was successfully reinstated."
+				return I18n.t("models.trash.deal_with_form.recrords_reinstated")
 
 			when "destroy"
 
@@ -32,15 +32,15 @@ class Trash < ActiveRecord::Base
 					delete_posts params[:pages]
 				else
 					# return a message for the user
-					return "There were no records to delete."
+					return I18n.t("models.trash.deal_with_form.no_records_to_delete")
 				end
 				
 				# return a message for the user
-				return  "These records was successfully deleted."
+				return  I18n.t("models.trash.deal_with_form.records_deleted")
 
 			else
 				# return a message for the user
-				return "Nothing was done"
+				return I18n.t("models.trash.deal_with_form.nothing_was_done")
 
 		end
 

@@ -312,17 +312,17 @@ class Post < ActiveRecord::Base
 
             when "publish"
                 bulk_update_publish act
-                return "#{type.capitalize} were successfully published"
+                return I18n.t("models.post.bulk_update.published_successfully", type: type.capitalize)
             when "draft"
                 bulk_update_draft act
-                return "#{type.capitalize} were successfully set to draft"
+                return I18n.t("models.post.bulk_update.draft_successfully", type: type.capitalize)
             when "move_to_trash"
                 bulk_update_move_to_trash act
-                return "#{type.capitalize} were successfully moved to trash"
+                return I18n.t("models.post.bulk_update.trash_successfully", type: type.capitalize)
             else
 
             respond_to do |format|
-                return 'Nothing was done'
+                return I18n.t("models.post.bulk_update.nothing")
             end
         end
 
