@@ -2,7 +2,6 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
   controllers:
     application:
       unauthorized: "Not Authorized"
@@ -60,7 +59,7 @@ en:
             success: "Comment has been successfully deleted"
         bulk_update:
           flash:
-            nothing_to_do: "I had nothing to do"
+            nothing_to_do: "Nothing to do"
             success: "Comments were successfully %{func}"
         mark_as_spam:
           flash:
@@ -403,7 +402,7 @@ en:
           list_how: "* item"
           content: "For further Markdown syntax reference please see"
         pages_table:
-          page_title: "Page Title"
+          page_title: "Page Title:"
           published_date: "Published Date"
         post_additional_data_view: 
           remove: 'Remove "%{key}" field'

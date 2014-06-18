@@ -24,7 +24,7 @@
                     <% if devise_mapping.rememberable? %>
 	                    <br />
                     	<div class="help-block">
-						      <%= f.check_box :remember_me %> <small>Remember me</small>
+						      <%= f.check_box :remember_me %> <small><%= t('.remember_me', :default => "Remember me") %></small>
 						</div>
 					<% end %>
                 </div>
@@ -32,7 +32,7 @@
             </div>
             <div class="form-group">
                <div class="col-md-12">
-	               	<%= f.submit "Sign in", :class => 'btn btn-primary btn-block' %>
+	               	<%= f.submit t('.sign_in', :default => "Sign in"), :class => 'btn btn-primary btn-block' %>
                 </div>
             </div>
 
