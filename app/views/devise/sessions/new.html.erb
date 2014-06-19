@@ -12,19 +12,19 @@
 	        <%= devise_error_messages! %>
             <div class="form-group">
                 <div class="col-md-12">
-                	<%= f.text_field :login, autofocus: true, :placeholder => "Email / Username", :class => "form-control", :id => "email" %>
+                	<%= f.text_field :login, autofocus: true, :placeholder => t('.placeholder_email'), :class => "form-control", :id => "email" %>
                     <i class="fa fa-user"></i>
                 </div>
                 <div class="clearfix"></div>
             </div>
             <div class="form-group">
                <div class="col-md-12">
-	               	<%= f.password_field :password, autocomplete: "off", :placeholder => "Password", :class => "form-control", :id => "password" %>
+	               	<%= f.password_field :password, autocomplete: "off", :placeholder => t('.placeholder_password'), :class => "form-control", :id => "password" %>
                     <i class="fa fa-lock"></i>
                     <% if devise_mapping.rememberable? %>
 	                    <br />
                     	<div class="help-block">
-						      <%= f.check_box :remember_me %> <small><%= t('.remember_me', :default => "Remember me") %></small>
+						      <%= f.check_box :remember_me %> <small><%= t('.remember_me') %></small>
 						</div>
 					<% end %>
                 </div>
@@ -32,7 +32,7 @@
             </div>
             <div class="form-group">
                <div class="col-md-12">
-	               	<%= f.submit t('.sign_in', :default => "Sign in"), :class => 'btn btn-primary btn-block' %>
+	               	<%= f.submit t('.sign_in'), :class => 'btn btn-primary btn-block' %>
                 </div>
             </div>
 

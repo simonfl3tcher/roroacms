@@ -44,6 +44,7 @@ en:
       new:
         forgot_your_password: "Forgot your password?"
         send_me_reset_password_instructions: "Send me reset password instructions"
+        placeholder: "Email / Username"
       edit:
         change_your_password: "Change your password"
         new_password: "New password"
@@ -76,6 +77,8 @@ en:
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."
       new:
+        placeholder_email: "Email / Username"
+        placeholder_password: "Password"
         sign_in: "Sign in"
         remember_me: "Remember me"
     shared:
