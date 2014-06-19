@@ -3,7 +3,7 @@
   <div class="panel-body">
     <div class="tab-wrapper tab-left ">
       <ul class="nav nav-tabs">
-        <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-comment"></i> <%= I18n.t("views.admin.comments.form.comment") %></a></li>
+        <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-comment"></i> <%= t("views.admin.generic.comment") %></a></li>
       </ul>
       <div class="tab-content">
         <%= render :partial => 'admin/partials/submit_bar' %>
@@ -40,13 +40,13 @@
               <div class="col-sm-6">
                 <div class="">
                   <label class="radio-inline">
-                    <%= f.radio_button :comment_approved, "Y", :checked => @comment.comment_approved == 'Y' ? true : false %><%= I18n.t("views.admin.comments.form.radio_1") %>
+                    <%= f.radio_button :comment_approved, "Y", :checked => @comment.comment_approved == 'Y' ? true : false %><%= t("views.admin.generic.approved") %>
                   </label>
                   <label class="radio-inline">
-                    <%= f.radio_button :comment_approved, "N", :checked => @comment.comment_approved == 'N' ? true : false %><%= I18n.t("views.admin.comments.form.radio_2") %>
+                    <%= f.radio_button :comment_approved, "N", :checked => @comment.comment_approved == 'N' ? true : false %><%= t("views.admin.comments.form.radio_2") %>
                   </label>
                   <label class="radio-inline">
-                    <%= f.radio_button :comment_approved, "S", :checked => @comment.comment_approved == 'S' ? true : false %><%= I18n.t("views.admin.comments.form.radio_3") %>
+                    <%= f.radio_button :comment_approved, "S", :checked => @comment.comment_approved == 'S' ? true : false %><%= t("views.admin.generic.spam") %>
                   </label>
                 </div>
               </div>
@@ -56,8 +56,8 @@
           <div class="form-group">
             <%= f.label :submitted_on, :class => "col-sm-3 control-label"  %>
             <div class="col-sm-6">
-              <%= I18n.t("views.admin.comments.form.date") %>
-              <%= f.datetime_select :submitted_on, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => I18n.t("views.admin.comments.form.datetime_separator") }, :class => 'form-control' %>
+              <%= t("views.admin.generic.date") %>
+              <%= f.datetime_select :submitted_on, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => t("views.admin.generic.datetime_separator") }, :class => 'form-control' %>
             </div>
             <div class="clearfix"></div>
           </div>

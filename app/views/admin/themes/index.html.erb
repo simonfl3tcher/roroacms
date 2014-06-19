@@ -14,10 +14,10 @@
           <thead>
             <tr>
               <th>&nbsp;</th>
-              <th><%= I18n.t("views.admin.themes.index.theme") %></th>
-              <th class="hidden-xs"><%= I18n.t("views.admin.themes.index.description") %></th>
-              <th class="hidden-xs"><%= I18n.t("views.admin.themes.index.author") %></th>
-              <th class="hidden-xs"><%= I18n.t("views.admin.themes.index.version") %></th>
+              <th><%= t("views.admin.themes.index.theme") %></th>
+              <th class="hidden-xs"><%= t("views.admin.themes.index.description") %></th>
+              <th class="hidden-xs"><%= t("views.admin.generic.author") %></th>
+              <th class="hidden-xs"><%= t("views.admin.themes.index.version") %></th>
               <th>&nbsp;</th>
             </tr>
           </thead>
@@ -43,7 +43,7 @@
           </td>
             <td class="center">
                 <% if theme['foldername'] != @current %> 
-                  <%= link_to "/admin/themes/#{theme['foldername']}", method: :delete, data: { confirm: I18n.t("views.admin.generic.confirm") }, :class => 'btn btn-xs btn-danger pull-right' do %>       
+                  <%= link_to "/admin/themes/#{theme['foldername']}", method: :delete, data: { confirm: t("views.admin.generic.confirm") }, :class => 'btn btn-xs btn-danger pull-right' do %>       
                     <i class="fa fa-trash-o"></i>
                   <% end %>
                 <% end %>
@@ -58,7 +58,7 @@
           <div class="formSepUpp">
 
             <div class="field">
-              <button type="submit" class="btn btn-block btn-sm btn-primary"><i class="fa fa-refresh"></i>&nbsp;<%= I18n.t("views.admin.generic.update") %></button>
+              <button type="submit" class="btn btn-block btn-sm btn-primary"><i class="fa fa-refresh"></i>&nbsp;<%= t("views.admin.generic.update") %></button>
             </div>
           </div>
       <% end %>

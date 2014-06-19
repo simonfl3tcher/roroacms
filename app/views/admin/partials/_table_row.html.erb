@@ -2,7 +2,7 @@
 
   <td class="hidden-xs"><%= check_box_tag 'pages[]', @content.id %></td>
 	
-  <td><%= ancestory_indent @content %><%= @content.post_title %><%= @content.post_status == "Draft" ? I18n.t("views.admin.partials.articles_table.draft") : '' %></td>
+  <td><%= ancestory_indent @content %><%= @content.post_title %><%= @content.post_status == "Draft" ? t("views.admin.partials.articles_table.draft") : '' %></td>
   <td class="hidden-xs"><%= @content.post_date.strftime "%d-%m-%Y" %></td>
   <td class="center">
 
@@ -13,7 +13,7 @@
       <%= link_to page_path(@content), :class => 'btn btn-xs btn-default', :target => "_blank" do %>
         <i class="fa fa-search"></i>
       <% end %> 
-      <%= link_to admin_page_path(@content), method: :delete, data: { confirm: I18n.t("views.admin.generic.confirm") }, :class => 'btn btn-xs btn-danger' do %>
+      <%= link_to admin_page_path(@content), method: :delete, data: { confirm: t("views.admin.generic.confirm") }, :class => 'btn btn-xs btn-danger' do %>
         <i class="fa fa-trash-o"></i>
       <% end %>
     </div>

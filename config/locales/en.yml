@@ -24,8 +24,6 @@ en:
     application:
       unauthorized: "Not Authorized"
     pages:
-      dynamic_page:
-        breadcrumb_title: "Home"
       contact_form:
         flash:
           success: "Your message has been sent successfully thank you"
@@ -35,7 +33,6 @@ en:
         error: "Something went wrong. Please contact the system administrator"
     admin:
       misc:
-        dashboard_title: "Dashboard"
         dashboard_breadcrumb_title: "Back to dashboard"
         authorize_admin_access_error: "You do not have the necessary access level to view this"
       settings:
@@ -45,8 +42,6 @@ en:
               success: "Settings were updated"
           breadcrumb_title: "Back to settings"
       administrators:
-        new:
-          breadcrumb: "Add New User"
         create:
           flash:
             success: "Admin was successfully created"
@@ -79,7 +74,6 @@ en:
         mark_as_spam:
           flash:
             success: "Comment was successfully marked as spam"
-        title: "Comments"
         breadcrumb_title: "Back to comments"
       menus:
         new:
@@ -93,7 +87,6 @@ en:
         destroy:
           flash:
             success: "Menu group successfully deleted"
-        title: "Menus"
         breadcrumb_title: "Back to menus"
       pages:
         new:
@@ -190,7 +183,6 @@ en:
     routing_helper:
       generic:
         back_to: "Back to %{word}"
-        home: "Home"
       render_template:
         template_error: "You have to have page.html.erb tempalte included in your theme"
     view_helper:
@@ -261,23 +253,23 @@ en:
         confirm: "Are you sure?"
         update: "Update"
         delete: "Delete"
-        change_cover: "Change Cover" #
-        comment: "Comment" #
-        approved: "Approved" #
-        spam: "Spam" #
-        datetime_separator: "Time:- " #
-        date: "Date:- " #
-        article: "Article" #
-        action: "Action" #
-        edit: "edit" #
-        target: "Target" #
-        general: "General" # need to be moved up top
-        content: "Content" # need to be moved up top
-        search_engine_optimisation: "Search Engine Optimisation" #
-        published_date: "Published Date" #
-        restore: "Restore" #
-        name: "Name" #
-        author: "Author" #
+        change_cover: "Change Cover"
+        comment: "Comment"
+        approved: "Approved"
+        spam: "Spam"
+        datetime_separator: "Time:- "
+        date: "Date:- "
+        article: "Article"
+        action: "Action"
+        edit: "edit"
+        target: "Target"
+        general: "General"
+        content: "Content"
+        search_engine_optimisation: "Search Engine Optimisation"
+        published_date: "Published Date"
+        restore: "Restore"
+        name: "Name"
+        author: "Author"
         bulk_update_options:
           button_title: "Bulk Action"
           unapprove: "Unapprove"
@@ -290,43 +282,27 @@ en:
           reinstate: "Reinstate"
       administrators:
         form:
-          cover: "Change cover"
           remove_cover: "Remove cover"
           select_access_level: "Select access level"
         index:
-          add_new_user: "Add New User"
           name: "Name"
           username: "Username"
           email_address: "Email Address"
       comments:
         form:
-          comment: "Comment"
-          radio_1: "Approved"
           radio_2: "Pending"
-          radio_3: "Spam"
-          datetime_separator: "Time:- "
-          date: "Date:- "
         index:
-          article: "Article"
-          comment: "Comment"
           status: "Current Status"
-          action: "Action"
-          approved: "Approved"
           unapproved: "Unapproved"
-          spam: "Spam"
           comment_submitted_on: "Comment submitted on:- "
       dashboard:
-        comments: "Comments"
         administrators: "Administrators"
         quick_links: "Quick Links"
-        menus: "Menus"
         latest_5_comments: "Latest 5 Comments"
       menus:
         generic:
           remove: "Remove"
           key: "Key:-"
-          edit: "edit"
-          target: "Target"
           same_window: "Same Window"
           new_tab: "New Tab"
           add_link: "Add Link"
@@ -354,16 +330,10 @@ en:
           no_pages: "You currently have no pages"
         new:
           tabs:
-            general: "General"
-            content: "Content"
             history: "History"
-            search_engine_optimisation: "Search Engine Optimisation"
             tags_and_categories: "Tags & Categories"
             additional: "Additional Data"
           tab_content:
-            change_cover: "Change cover"
-            date: "Date:- "
-            time: "Time:- "
             markdown: "Markdown"
             seo:
               seo_title_content: "* The contents of this tag are generally shown as the title in search results (and of course in the user's browser)"
@@ -379,7 +349,6 @@ en:
       partials:
         articles_table:
           post_title: "Post Title"
-          published_date: "Published Date"
           draft: " - draft"
         markdown_modal:
           title: "Markdown Basics"
@@ -406,7 +375,6 @@ en:
           content: "For further Markdown syntax reference please see"
         pages_table:
           page_title: "Page Title:"
-          published_date: "Published Date"
         post_additional_data_view: 
           remove: 'Remove "%{key}" field'
         revision_tree:
@@ -414,7 +382,6 @@ en:
           post_title: "Post Title:"
           url: "URL:"
           content: "Content:"
-          restore: "Restore"
           compare: "Compare to live version"
           view_all: "View All Revisions"
         user_group_view:
@@ -422,8 +389,6 @@ en:
       revisions:
         autosave_table:
           date: "Date Created"
-          author: "Author"
-          Action: "Action"
           only_revision: "This is the only revision for this post"
           revision_saved_at: "Revision saved at %{date}"
         edit:
@@ -432,15 +397,10 @@ en:
           removed: "What will be removed"
           title: "Title"
           post_slug: "Post Slug"
-          content: "Content"
-          restore: "Restore"
           more_revisions: "More Revisions"
       settings:
         tabs:
-          general: "General"
           email_config: "Email Configuration"
-          comments: "Comments"
-          search_engine_optimisation: "Search Engine Optimisation"
           user_groups: "User Groups"
         tab_content:
           display_url: "Display URL"
@@ -477,18 +437,14 @@ en:
           facebook_comments: "Facebook Comments"
       terms:
         table:
-          name: "Name"
           slug: "Slug"
-          action: "Action"
         view:
           have_no: "You currently have no %{type}"
       themes:
         index:
           theme: "Theme Name"
           description: "Description"
-          author: "Author"
           version: "Version"
-          action: "Action"
       trash:
         empty: "The trash can is currently empty"
         delete_all: "Delete all"
@@ -499,14 +455,10 @@ en:
           meta_title: "Dashboard | Roroa"
           navigation:
             logout: "Logout"
-            dashboard: "Dashboard"
-            content: "Content"
             add_new_page: "Add New Page"
             add_new_article: "Add New Article"
             all_users: "All Users"
             add_new_user: "Add New User"
-            menus: "Menus"
-            comments: "Comments"
   mailers:
     emailer:
       generic:

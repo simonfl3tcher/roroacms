@@ -5,14 +5,14 @@
     <div class="tab-wrapper tab-left ">
       <ul class="nav nav-tabs">
        
-        <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-cog"></i> <%= I18n.t("views.admin.pages.new.tabs.general") %></a></li>
-        <li><a class="contentReload" href="#content" data-toggle="tab"><i class="fa fa-desktop"></i> <%= I18n.t("views.admin.pages.new.tabs.content") %></a></li>
-        <li><a href="#revisions" data-toggle="tab"><i class="fa fa-history"></i> <%= I18n.t("views.admin.pages.new.tabs.history") %></a></li>
-        <li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> <%= I18n.t("views.admin.pages.new.tabs.search_engine_optimisation") %></a></li>
+        <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-cog"></i> <%= t("views.admin.generic.general") %></a></li>
+        <li><a class="contentReload" href="#content" data-toggle="tab"><i class="fa fa-desktop"></i> <%= t("views.admin.generic.content") %></a></li>
+        <li><a href="#revisions" data-toggle="tab"><i class="fa fa-history"></i> <%= t("views.admin.pages.new.tabs.history") %></a></li>
+        <li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> <%= t("views.admin.generic.search_engine_optimisation") %></a></li>
         <% if @post_type == 'post' %>
-          <li><a href="#categories" data-toggle="tab"><i class="fa fa-sitemap"></i> <%= I18n.t("views.admin.pages.new.tabs.tags_and_categories") %></a></li>
+          <li><a href="#categories" data-toggle="tab"><i class="fa fa-sitemap"></i> <%= t("views.admin.pages.new.tabs.tags_and_categories") %></a></li>
         <% end %>
-        <li><a href="#additional" data-toggle="tab"><i class="fa fa-paperclip"></i> <%= I18n.t("views.admin.pages.new.tabs.additional") %></a></li>
+        <li><a href="#additional" data-toggle="tab"><i class="fa fa-paperclip"></i> <%= t("views.admin.pages.new.tabs.additional") %></a></li>
       
       </ul>
       <div class="tab-content">
@@ -23,7 +23,7 @@
 
             <div class="well well-background" style="background-image: url('<%= @record.post_image %>');">
               <center>
-                <a style="margin:10px;" class="btn btn-xs btn-primary pull-right add-article-image" href="javascript:;"><span class="fa fa-picture-o"></span> <%= I18n.t("views.admin.pages.new.tab_content.change_cover") %></a>
+                <a style="margin:10px;" class="btn btn-xs btn-primary pull-right add-article-image" href="javascript:;"><span class="fa fa-picture-o"></span> <%= t("views.admin.generic.change_cover") %></a>
               </center>
               <%= f.file_field :post_image %>
             </div>
@@ -31,7 +31,7 @@
           <% else %>
 
           <div class="well well-background">
-            <a style="margin:10px;" class="btn btn-xs btn-primary pull-right add-article-image" href="javascript:;"><span class="fa fa-picture-o"></span> <%= I18n.t("views.admin.pages.new.tab_content.change_cover") %></a>
+            <a style="margin:10px;" class="btn btn-xs btn-primary pull-right add-article-image" href="javascript:;"><span class="fa fa-picture-o"></span> <%= t("views.admin.generic.change_cover") %></a>
             <%= f.file_field :post_image %>
           </div>
 
@@ -98,7 +98,7 @@
          <div class="form-group">
           <%= f.label :parent_id, :class => "col-sm-3 control-label"  %>
           <div class="col-sm-6">
-            <%= f.select :parent_id, Post.where(:post_type => 'page', :disabled => 'N').collect {|p| [ p.post_title, p.id ] }, { include_blank: I18n.t("views.admin.generic.none") }, { :class => "form-control" } %>
+            <%= f.select :parent_id, Post.where(:post_type => 'page', :disabled => 'N').collect {|p| [ p.post_title, p.id ] }, { include_blank: t("views.admin.generic.none") }, { :class => "form-control" } %>
             <%= errors_for @record, :parent_id %>
           </div>
           <div class="clearfix"></div>
@@ -109,7 +109,7 @@
         <div class="form-group">
           <%= f.label :post_template, :class => "col-sm-3 control-label"  %>
           <div class="col-sm-6">
-            <%= f.select :post_template, get_template_dropdown(@record.post_template), { include_blank: I18n.t("views.admin.generic.none") }, { :class => "form-control" } %>
+            <%= f.select :post_template, get_template_dropdown(@record.post_template), { include_blank: t("views.admin.generic.none") }, { :class => "form-control" } %>
             <%= errors_for @record, :post_template %>
           </div>
           <div class="clearfix"></div>
@@ -130,8 +130,8 @@
         <div class="form-group">
           <%= f.label :post_date, :class => "col-sm-3 control-label"  %>
           <div class="col-sm-6">
-            <%= I18n.t("views.admin.pages.new.tab_content.date") %>
-            <%= f.datetime_select :post_date, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => I18n.t("views.admin.pages.new.tab_content.time") }, :class => 'form-control' %>
+            <%= t("views.admin.generic.date") %>
+            <%= f.datetime_select :post_date, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => t("views.admin.generic.datetime_separator") }, :class => 'form-control' %>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -146,13 +146,13 @@
             <div class="outer">
               <div class="editorwrap">
                 <section class="entry-markdown">
-                  <header class="floating-header"><%= I18n.t("views.admin.pages.new.tab_content.markdown") %> <a href="javascript:;" data-toggle="modal" data-target="#mdModal"><i class="fa fa-info-circle pull-right"></i></a></header>
+                  <header class="floating-header"><%= t("views.admin.pages.new.tab_content.markdown") %> <a href="javascript:;" data-toggle="modal" data-target="#mdModal"><i class="fa fa-info-circle pull-right"></i></a></header>
                   <section class="entry-markdown-content">
                     <%= f.text_area :post_content, :class => 'editor', :value => @record.post_content.blank? ? '...' : @record.post_content %>
                   </section>
                 </section>
                 <section class="entry-preview active">
-                  <header class="floating-header">&nbsp; <%= I18n.t("views.admin.generic.preview") %> <span class="entry-word-count">0 <%= I18n.t("views.admin.generic.words") %></span> </header>
+                  <header class="floating-header">&nbsp; <%= t("views.admin.generic.preview") %> <span class="entry-word-count">0 <%= t("views.admin.generic.words") %></span> </header>
                   <section class="entry-preview-content">
                     <div class="rendered-markdown"></div>
                   </section>
@@ -177,7 +177,7 @@
           <div class="col-sm-6">
             <%= f.text_field :post_seo_title, size: 40, :class => "form-control" %>
             <%= errors_for @record, :post_seo_title %>
-            <small><%= I18n.t("views.admin.pages.new.tab_content.seo.seo_title_content") %></small>
+            <small><%= t("views.admin.pages.new.tab_content.seo.seo_title_content") %></small>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -187,7 +187,7 @@
           <div class="col-sm-6">
             <%= f.text_field :post_seo_description, size: 40, :class => "form-control" %>
             <%= errors_for @record, :post_seo_description %>
-            <small><%= I18n.t("views.admin.pages.new.tab_content.seo.seo_description_content") %></small>
+            <small><%= t("views.admin.pages.new.tab_content.seo.seo_description_content") %></small>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -196,7 +196,7 @@
           <%= f.label :post_seo_is_disabled, :class => "col-sm-3 control-label"  %>
           <div class="col-sm-6">
             <%= f.check_box :post_seo_is_disabled, {checked: false}, 'Y', 'N'  %>
-            <small><%= I18n.t("views.admin.pages.new.tab_content.seo.seo_disabled_content") %></small>
+            <small><%= t("views.admin.pages.new.tab_content.seo.seo_disabled_content") %></small>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -205,7 +205,7 @@
           <%= f.label :post_seo_no_index, :class => "col-sm-3 control-label"  %>
           <div class="col-sm-6">
             <%= f.check_box :post_seo_no_index, {checked: false}, 'Y', 'N'  %>
-            <small><%= I18n.t("views.admin.pages.new.tab_content.seo.seo_no_index_content") %></small>
+            <small><%= t("views.admin.pages.new.tab_content.seo.seo_no_index_content") %></small>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -214,7 +214,7 @@
           <%= f.label :post_seo_no_follow, :class => "col-sm-3 control-label"  %>
           <div class="col-sm-6">
             <%= f.check_box :post_seo_no_follow, {checked: false}, 'Y', 'N'  %>
-            <small><%= I18n.t("views.admin.pages.new.tab_content.seo.seo_no_follow_content") %></small>
+            <small><%= t("views.admin.pages.new.tab_content.seo.seo_no_follow_content") %></small>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -224,14 +224,14 @@
       <div class="tab-pane" id="categories">
 
         <div class="form-group">
-          <label class="col-sm-3 control-label"><%= I18n.t("generic.categories") %></label>
+          <label class="col-sm-3 control-label"><%= t("generic.categories") %></label>
           <div class="col-sm-6">
 
             <% if !Post::POST_CATEGORIES.blank? %>
             <%= select_tag 'category_ids[]', options_for_select(Post::POST_CATEGORIES.map {|c| [c.name, c.id]}, @record.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
             <% else %>
             <div style="text-align:center;">
-              <strong><%= I18n.t("views.admin.pages.new.tab_content.categories.no_categories") %></strong>
+              <strong><%= t("views.admin.pages.new.tab_content.categories.no_categories") %></strong>
             </div>
             <% end %>
 
@@ -240,14 +240,14 @@
         </div>
 
         <div class="form-group">
-          <label class="col-sm-3 control-label"><%= I18n.t("generic.tags") %></label>
+          <label class="col-sm-3 control-label"><%= t("generic.tags") %></label>
           <div class="col-sm-6">
 
             <% if !Post::POST_TAGS.blank? %>
             <%= select_tag 'tag_ids[]', options_for_select(Post::POST_TAGS.map {|c| [c.name, c.id]}, @record.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
             <% else %>
             <div style="text-align:center;">
-             <strong><%= I18n.t("views.admin.pages.new.tab_content.categories.no_tags") %></strong>
+             <strong><%= t("views.admin.pages.new.tab_content.categories.no_tags") %></strong>
            </div>
            <% end %>
 
@@ -268,7 +268,7 @@
       </div>
 
       <div class="form-group">
-        <label class="col-sm-3 control-label"><%= I18n.t("views.admin.pages.new.tab_content.additional.key") %></label>
+        <label class="col-sm-3 control-label"><%= t("views.admin.pages.new.tab_content.additional.key") %></label>
         <div class="col-sm-6">
           <div class="input-group">
             <input type="text" class="form-control" id="addAdditionalDataInput">

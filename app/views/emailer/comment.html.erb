@@ -1,15 +1,15 @@
-<p><%= I18n.t("mailers.emailer.generic.greeting") %></p> 
+<p><%= t("mailers.emailer.generic.greeting") %></p> 
 
-<p><%= I18n.t("mailers.emailer.comment.line_one", post_title: @comment.post.post_title) %></p>
+<p><%= t("mailers.emailer.comment.line_one", post_title: @comment.post.post_title) %></p>
 
-<p><%= I18n.t("mailers.emailer.comment.line_two") %></p>
+<p><%= t("mailers.emailer.comment.line_two") %></p>
 
-<strong><%= I18n.t("mailers.emailer.comment.line_three") %></strong> <%= @comment.author %>
+<strong><%= t("mailers.emailer.comment.line_three") %></strong> <%= @comment.author %>
 
-<strong><%= I18n.t("mailers.emailer.comment.line_four") %></strong> <%= @comment.email %>
+<strong><%= t("mailers.emailer.comment.line_four") %></strong> <%= @comment.email %>
 
-<strong><%= I18n.t("mailers.emailer.comment.line_five") %></strong> " <%= @comment.comment%> "
+<strong><%= t("mailers.emailer.comment.line_five") %></strong> " <%= @comment.comment%> "
 
-<p><%= I18n.t("mailers.emailer.comment.line_six") %></p>
+<p><%= t("mailers.emailer.comment.line_six") %></p>
 
 <%= image_tag site_url('assets/admin/roroafull.png'), alt: "RoroaCMS Logo" %>

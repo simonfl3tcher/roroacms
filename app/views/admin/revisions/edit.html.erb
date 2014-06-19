@@ -12,13 +12,13 @@
       	<div class="row form-group">
 
 	      	<div class="col-md-3">
-				<strong><%= I18n.t("views.admin.partials.revisions.edit.keycode") %></strong>
+				<strong><%= t("views.admin.partials.revisions.edit.keycode") %></strong>
 			</div>
 
 			<div class="col-md-9">
 				
-				<span class="keycode green"></span> <%= I18n.t("views.admin.partials.revisions.edit.added") %><br />
-				<span class="keycode red"></span> <%= I18n.t("views.admin.partials.revisions.edit.removed") %>
+				<span class="keycode green"></span> <%= t("views.admin.partials.revisions.edit.added") %><br />
+				<span class="keycode red"></span> <%= t("views.admin.partials.revisions.edit.removed") %>
 
 			</div>
 
@@ -29,7 +29,7 @@
       	<div class="row form-group">
 
 	      	<div class="col-md-3">
-				<strong><%= I18n.t("views.admin.partials.revisions.edit.title") %></strong>
+				<strong><%= t("views.admin.partials.revisions.edit.title") %></strong>
 			</div>
 
 			<div class="col-md-9">
@@ -41,7 +41,7 @@
 		<div class="row form-group">
 
 	      	<div class="col-md-3">
-				<strong><%= I18n.t("views.admin.partials.revisions.edit.post_slug") %></strong>
+				<strong><%= t("views.admin.partials.revisions.edit.post_slug") %></strong>
 			</div>
 
 			<div class="col-md-9">
@@ -53,7 +53,7 @@
 		<div class="row form-group">
 
 	      	<div class="col-md-3">
-				<strong><%= I18n.t("views.admin.partials.revisions.edit.content") %></strong>
+				<strong><%= t("views.admin.generic.content") %></strong>
 			</div>
 
 			<div class="col-md-9">
@@ -70,7 +70,7 @@
 
 			<div class="col-md-9">
 				<%= link_to restore_admin_revision_path(@revision['revision'].id), :class => 'btn btn-primary btn-sm btn-block ' do %>
-					<i class="fa fa-magic"></i> <%= I18n.t("views.admin.partials.revisions.edit.restore") %>
+					<i class="fa fa-magic"></i> <%= t("views.admin.generic.restore") %>
 				<% end %>
    			</div>
 			
@@ -78,7 +78,7 @@
 
 		<br />
 
-		<h3 class="thin"><%= I18n.t("views.admin.partials.revisions.edit.more_revisions") %></h3>
+		<h3 class="thin"><%= t("views.admin.partials.revisions.edit.more_revisions") %></h3>
 		<hr>
 
 

@@ -1,6 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-    	<h3 class="panel-title"><i class='fa fa-link pull-left'></i>&nbsp;<%= I18n.t("views.admin.menus.partials.menu_accordion.link") %></h3>
+    	<h3 class="panel-title"><i class='fa fa-link pull-left'></i>&nbsp;<%= t("views.admin.menus.partials.menu_accordion.link") %></h3>
 		<div class="actions pull-right">
 			<i class="fa fa-chevron-down"></i>
 		</div>
@@ -11,7 +11,7 @@
       		<input type="hidden" name="type" value="page" />
       		<div class="form-group">
 				<select name="linkto" class="mod form-control">
-					<option value=""><%= I18n.t("views.admin.menus.partials.menu_accordion.select_an_option") %></option>
+					<option value=""><%= t("views.admin.menus.partials.menu_accordion.select_an_option") %></option>
 					<optgroup label="Pages">
 						<% Post.where(:post_type => 'page', :disabled => 'N').each do |opt| %>
 							<option value="<%= opt.id %>" data-type="page"><%= opt.post_title %></option>
@@ -24,7 +24,7 @@
 						<% end %>
 		            </optgroup>
 		            <optgroup label="<%= Setting.get('articles_slug').capitalize %>">
-		            	<option value="news" data-type="<%= Setting.get('articles_slug').downcase %>"> <%= Setting.get('articles_slug').capitalize %> <%= I18n.t("views.admin.generic.page") %></option>
+		            	<option value="news" data-type="<%= Setting.get('articles_slug').downcase %>"> <%= Setting.get('articles_slug').capitalize %> <%= t("views.admin.generic.page") %></option>
 		            </optgroup>
 		            <optgroup label="Categories">
 		                <% Post::POST_CATEGORIES.each do |opt| %>
@@ -40,26 +40,26 @@
 			</div>
 
 			<div class="form-group">
-				<input name="label" type="text" placeholder="<%= I18n.t("views.admin.menus.partials.menu_dropdown.placeholder_2") %>" class="form-control">
+				<input name="label" type="text" placeholder="<%= t("views.admin.menus.partials.menu_dropdown.placeholder_2") %>" class="form-control">
 			</div>
 			<div class="form-group">
-				<input name="class" type="text" placeholder="<%= I18n.t("views.admin.menus.partials.menu_dropdown.placeholder_3") %>" class="form-control">
+				<input name="class" type="text" placeholder="<%= t("views.admin.menus.partials.menu_dropdown.placeholder_3") %>" class="form-control">
 			</div>
 
-			<label><%= I18n.t("views.admin.menus.generic.target") %></label>
+			<label><%= t("views.admin.generic.target") %></label>
 			<div class="form-group">
 				<div class="radio-inline">
-					<input type="radio" value="sw" name="target" checked="checked"><%= I18n.t("views.admin.menus.generic.same_window") %>
+					<input type="radio" value="sw" name="target" checked="checked"><%= t("views.admin.menus.generic.same_window") %>
 				</div>
 				<div class="radio-inline">
-					<input type="radio" value="nt" name="target"><%= I18n.t("views.admin.menus.generic.new_tab") %>
+					<input type="radio" value="nt" name="target"><%= t("views.admin.menus.generic.new_tab") %>
 				</div>
 			</div>
 
 			<div class='formSepUpp'>
 				<hr>
 				<button type="submit" class='btn btn-sm btn-block btn-primary pull-left'> 
-				    <i class="fa fa-plus"></i>&nbsp; <%= I18n.t("views.admin.menus.generic.add_link") %>
+				    <i class="fa fa-plus"></i>&nbsp; <%= t("views.admin.menus.generic.add_link") %>
 				  </button>
 			</div>
 

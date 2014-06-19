@@ -4,15 +4,15 @@ if revisions.length > 0 %>
 	<table class="table table-hover">
 		<thead>
 
-			<th><%= I18n.t("views.admin.partials.revisions.autosave_table.date") %></th>
-			<th><%= I18n.t("views.admin.partials.revisions.autosave_table.author") %></th>
+			<th><%= t("views.admin.partials.revisions.autosave_table.date") %></th>
+			<th><%= t("views.admin.generic.author") %></th>
 			<th>&nbsp;</th>
 
 		</thead>
 		<% revisions.each do |d| %>
 			<tr <%= d.id == @revision['revision'].id ? 'class=active' : '' %>>
-				<td><%= I18n.t("views.admin.partials.revisions.autosave_table.revision_saved_at", date: d.created_at.strftime "%d %B, %Y at %H:%M") %></td>
-				<td><%= (d.post_status.downcase == 'user-autosave' || d.post_type.downcase == 'page') ? d.admin.username : I18n.t("views.admin.generic.system") %></td>
+				<td><%= t("views.admin.partials.revisions.autosave_table.revision_saved_at", date: d.created_at.strftime "%d %B, %Y at %H:%M") %></td>
+				<td><%= (d.post_status.downcase == 'user-autosave' || d.post_type.downcase == 'page') ? d.admin.username : t("views.admin.generic.system") %></td>
 				<td>
 					<div class="btn-group pull-right">
 			          <%= link_to restore_admin_revision_path(d), :class => 'btn btn-default btn-xs' do %>
@@ -30,6 +30,6 @@ if revisions.length > 0 %>
 
 <% else %>
 	
-	<p><%= I18n.t("views.admin.partials.revisions.autosave_table.only_revision") %></p>
+	<p><%= t("views.admin.partials.revisions.autosave_table.only_revision") %></p>
 	
 <% end %>

@@ -13,7 +13,7 @@ class Admin::AdministratorsController < AdminController
 
 	def index
 		# set title
-		set_title(I18n.t("controllers.admin.administrators.title"))
+		set_title(I18n.t("generic.users"))
 	end
 	
 

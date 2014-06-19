@@ -10,9 +10,9 @@
     <div class="form-group">
       <%= f.label :parent %>
       <% if @type == 'category' %>
-        <%= f.select(:parent, Term::CATEGORIES.collect {|p| [ p.name, p.id ] }, {include_blank: I18n.t("views.admin.generic.none"), selected: @category.id}, { :class => "form-control" } )%>
+        <%= f.select(:parent, Term::CATEGORIES.collect {|p| [ p.name, p.id ] }, {include_blank: t("views.admin.generic.none"), selected: @category.id}, { :class => "form-control" } )%>
       <% else %>
-        <%= f.select(:parent, Term::TAGS.collect {|p| [ p.name, p.id ] }, {include_blank: I18n.t("views.admin.generic.none"), selected: @category.id}, { :class => "form-control" }) %>
+        <%= f.select(:parent, Term::TAGS.collect {|p| [ p.name, p.id ] }, {include_blank: t("views.admin.generic.none"), selected: @category.id}, { :class => "form-control" }) %>
       <% end %>
     </div>
     <div class="form-group">
@@ -25,7 +25,7 @@
       <%= f.text_area :description, :rows => "5", :class => "form-control" %>
     </div>
     <div class="form-group">
-      <button type="submit" class="btn btn-small btn-primary"><%= I18n.t("views.admin.generic.save") %></button>
+      <button type="submit" class="btn btn-small btn-primary"><%= t("views.admin.generic.save") %></button>
     </div>
 
 <% end %>

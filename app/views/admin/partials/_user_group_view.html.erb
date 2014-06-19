@@ -12,7 +12,7 @@
 		<% end %>
 
     	<% if (!defined?(key) && @key != 'admin') || (@key.blank? && key != 'admin') %>
-			<button class="btn btn-danger btn-sm btn-block remove-user-group" style="margin-top:-10px;"><i class="fa fa-times fa-lg"></i> <%= I18n.t("views.admin.partials.user_group_view.remove") %></button>
+			<button class="btn btn-danger btn-sm btn-block remove-user-group" style="margin-top:-10px;"><i class="fa fa-times fa-lg"></i> <%= t("views.admin.partials.user_group_view.remove") %></button>
 		<% end %>
 
     </div>
