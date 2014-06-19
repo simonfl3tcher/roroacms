@@ -8,7 +8,7 @@
 				</div>
 			</div>
 			<div class="panel-body">
-				<%= render partial: 'admin/partials/table_header', locals: {path: new_admin_administrator_path, name: I18n.t("views.admin.administrators.index.add_new_user") } %>
+				<%= render partial: 'admin/partials/table_header', locals: {path: new_admin_administrator_path, name: I18n.t("generic.add_new_user") } %>
 				<table id="dtable" class="table table-hover " cellspacing="0" width="100%">
 					<thead>
 						<tr>
@@ -35,7 +35,7 @@
 										<%= link_to edit_admin_administrator_path(admin), :class => 'btn btn-default btn-xs' do %>
 											<i class="fa fa-pencil"></i>
 										<% end %> 
-										<%= link_to admin_administrator_path(admin), method: :delete, data: { confirm: I18n.t("views.admin.administrators.index.confirm") }, :class => 'btn btn-danger btn-xs' do %>
+										<%= link_to admin_administrator_path(admin), method: :delete, data: { confirm: I18n.t("views.admin.generic.confirm") }, :class => 'btn btn-danger btn-xs' do %>
 											<i class="fa fa-trash-o"></i>
 										<% end %>
 									</div>

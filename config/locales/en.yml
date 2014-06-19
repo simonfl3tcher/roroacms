@@ -2,6 +2,24 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  generic: 
+    comments: "Comments"
+    home: "Home"
+    dashboard: "Dashboard"
+    settings: "Settings"
+    add_new_user: "Add New User"
+    profile: "Profile"
+    users: "Users"
+    menus: "Menus"
+    pages: "Pages"
+    articles: "Articles"
+    revisions: "Revisions"
+    categories: "Categories"
+    tags: "Tags"
+    themes: "Themes"
+    trash: "Trash"
+    search: "Search"
+    nothing: "Nothing was done"
   controllers:
     application:
       unauthorized: "Not Authorized"
@@ -25,12 +43,10 @@ en:
           create:
             flash:
               success: "Settings were updated"
-          title: "Settings"
           breadcrumb_title: "Back to settings"
       administrators:
         new:
           breadcrumb: "Add New User"
-          title: "Profile"
         create:
           flash:
             success: "Admin was successfully created"
@@ -45,7 +61,6 @@ en:
         destroy:
           flash:
             success: "Admin was successfully deleted"
-        title: "Users"
         breadcrumb_title: "Back to users"
       comments:
         edit:
@@ -97,7 +112,6 @@ en:
         destroy:
           flash:
             success: "Page was successfully put into trash can"
-        title: "Pages"
         breadcrumb_title: "Back to pages"
       articles:
         new:
@@ -115,20 +129,16 @@ en:
         destroy:
           flash:
             success: "Post was successfully put into trash can"
-        title: "Articles"
         breadcrumb_title: "Back to articles"
       revisions:
         restore:
           flash:
             notice: "%{post_type} was successfully restored"
         title: 'Revision for "%{post_title}"'
-        breadcrumb_title: "Revisions"
       terms:
         categories:
-          title: "Categories"
           breadcrumb_title: "Back to categories"
         tags:
-          title: "Tags"
           breadcrumb_title: "Back to tags"
         create:
           flash:
@@ -142,11 +152,9 @@ en:
             success: "Successfully deleted"
         edit_title:
           category:
-            breadcrumb: "Categories"
             breadcrumb_title: "Back to categories"
             title: "Article Category"
           tag:
-            breadcrumb: "Tags"
             breadcrumb_title: "Back to tags"
             title: "Article Tag"
       themes:
@@ -156,7 +164,6 @@ en:
         destroy:
           flash:
             success: "Theme successfully was deleted"
-        title: "Themes"
         breadcrumb_title: "Back to themes"
       trash:
         empty_posts:
@@ -165,7 +172,6 @@ en:
         destroy:
           flash:
             success: "This record was successfully destroyed"
-        title: "Trash"
         breadcrumb_title: "Back to trash"
   helpers:
     admin_roroa_helper:
@@ -185,7 +191,6 @@ en:
       generic:
         back_to: "Back to %{word}"
         home: "Home"
-        search: "Search"
       render_template:
         template_error: "You have to have page.html.erb tempalte included in your theme"
     view_helper:
@@ -215,16 +220,12 @@ en:
         recrords_reinstated: "These records was successfully reinstated"
         no_records_to_delete: "There were no records to delete"
         records_deleted: "These records was successfully deleted"
-        nothing_was_done: "Nothing was done"
     term:
       generic:
         tag: "Tag"
         category: "Category"
-        tags: "Tags"
-        categories: "Categories"
       bulk_update:
         deleted: "%{type} were successfully deleted"
-        nothing: "Nothing was done"
     post:
       do_autosave:
         passed: "passed"
@@ -234,7 +235,6 @@ en:
         published_successfully: "%{type} were successfully published"
         draft_successfully: "%{type} were successfully set to draft"
         trash_successfully: "%{type} were successfully moved to trash"
-        nothing: "Nothing was done"
   views:
     pagination:
       first: "&laquo; "
@@ -244,25 +244,40 @@ en:
       truncate: "..."
     admin:
       generic:
-        confirm: "Are you sure?"
         save: "Save"
         by: "by"
         words: "words"
         preview: "Preview"
         says: "says"
         reply: "Reply"
-        delete: "Delete"
         view: "View"
         none: "None"
-        update: "Update"
-        articles: "Articles"
-        pages: "Pages"
         back: "Back"
         here: "here"
         system: "system"
         search: "Search..."
         browse: "Browse..."
         select_homepage: "Select a homepage"
+        confirm: "Are you sure?"
+        update: "Update"
+        delete: "Delete"
+        change_cover: "Change Cover" #
+        comment: "Comment" #
+        approved: "Approved" #
+        spam: "Spam" #
+        datetime_separator: "Time:- " #
+        date: "Date:- " #
+        article: "Article" #
+        action: "Action" #
+        edit: "edit" #
+        target: "Target" #
+        general: "General" # need to be moved up top
+        content: "Content" # need to be moved up top
+        search_engine_optimisation: "Search Engine Optimisation" #
+        published_date: "Published Date" #
+        restore: "Restore" #
+        name: "Name" #
+        author: "Author" #
         bulk_update_options:
           button_title: "Bulk Action"
           unapprove: "Unapprove"
@@ -275,7 +290,6 @@ en:
           reinstate: "Reinstate"
       administrators:
         form:
-          profile: "Profile"
           cover: "Change cover"
           remove_cover: "Remove cover"
           select_access_level: "Select access level"
@@ -284,7 +298,6 @@ en:
           name: "Name"
           username: "Username"
           email_address: "Email Address"
-          confirm: "Are you sure?"
       comments:
         form:
           comment: "Comment"
@@ -303,22 +316,16 @@ en:
           spam: "Spam"
           comment_submitted_on: "Comment submitted on:- "
       dashboard:
-        pages: "Pages"
-        articles: "Articles"
         comments: "Comments"
         administrators: "Administrators"
         quick_links: "Quick Links"
-        settings: "Settings"
         menus: "Menus"
-        trash: "Trash"
         latest_5_comments: "Latest 5 Comments"
       menus:
         generic:
-          update: "Update"
           remove: "Remove"
           key: "Key:-"
           edit: "edit"
-          delete: "delete"
           target: "Target"
           same_window: "Same Window"
           new_tab: "New Tab"
@@ -339,8 +346,6 @@ en:
         menu_group:
           add_menu_group: "Add menu group"
       pages:
-        autosave: 
-          revisions: "Revisions"
         autosave_list:
           revisions_saved_at: "Revision saved at"
           no_revisions: "There is no revision records saved against this article"
@@ -367,8 +372,6 @@ en:
               seo_no_index_content: "* prevents the page from being indexed by search engines"
               seo_no_follow_content: "* prevents the Googlebot from following links from this page"
             categories:
-              categories: "Categories"
-              tags: "Tags"
               no_categories: "No categories"
               no_tags: "No tags"
             additional:
@@ -495,22 +498,15 @@ en:
         admin:
           meta_title: "Dashboard | Roroa"
           navigation:
-            profile: "Profile"
             logout: "Logout"
             dashboard: "Dashboard"
             content: "Content"
             add_new_page: "Add New Page"
             add_new_article: "Add New Article"
-            categories: "Categories"
-            tags: "Tags"
-            users: "Users"
             all_users: "All Users"
             add_new_user: "Add New User"
             menus: "Menus"
             comments: "Comments"
-            themes: "Themes"
-            settings: "Settings"
-            trash: "Trash"
   mailers:
     emailer:
       generic:

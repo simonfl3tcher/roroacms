@@ -4,7 +4,7 @@
           <div class="dashboard-tile detail tile-turquoise">
               <div class="content">
                   <h1 class="text-left timer"><%= get_count_post('page') %></h1>
-                  <p><%= I18n.t("views.admin.dashboard.pages") %></p>
+                  <p><%= I18n.t("generic.pages") %></p>
               </div>
               <div class="icon"><i class="fa fa-files-o"></i>
               </div>
@@ -14,7 +14,7 @@
           <div class="dashboard-tile detail tile-turquoise">
               <div class="content">
                   <h1 class="text-left timer"><%= get_count_post('post') %></h1>
-                  <p><%= I18n.t("views.admin.dashboard.articles") %></p>
+                  <p><%= I18n.t("generic.articles") %></p>
               </div>
               <div class="icon"><i class="fa fa-file-text-o"></i>
               </div>
@@ -24,7 +24,7 @@
           <div class="dashboard-tile detail tile-turquoise">
               <div class="content">
                   <h1 class="text-left timer"><%= @comments.size %></h1>
-                  <p><%= I18n.t("views.admin.dashboard.comments") %></p>
+                  <p><%= I18n.t("generic.comments") %></p>
               </div>
               <div class="icon"><i class="fa fa fa-comments"></i>
               </div>
@@ -50,13 +50,13 @@
                       <div class="col-md-4 col-sm-6">
                         <%= link_to admin_pages_path, :class => 'shortcut' do %>
                           <i class="fa fa-file fa-4x"></i>
-                          <span class="shortcut-label"><%= I18n.t("views.admin.dashboard.pages") %></span>
+                          <span class="shortcut-label"><%= I18n.t("generic.pages") %></span>
                         <% end %>
                       </div>
                       <div class="col-md-4 col-sm-6">
                         <%= link_to admin_articles_path, :class => 'shortcut' do %>
                           <i class="fa fa-file-o fa-4x"></i>
-                          <span class="shortcut-label"><%= I18n.t("views.admin.dashboard.articles") %></span>
+                          <span class="shortcut-label"><%= I18n.t("generic.articles") %></span>
                         <% end %>
                       </div>
                       <div class="col-md-4 col-sm-6">
@@ -71,19 +71,19 @@
                     <div class="col-md-4 col-sm-6">
                       <%= link_to admin_settings_path, :class => 'shortcut' do %>
                         <i class="fa fa-cogs fa-4x"></i>
-                        <span class="shortcut-label"><%= I18n.t("views.admin.dashboard.settings") %></span>
+                        <span class="shortcut-label"><%= I18n.t("generic.settings") %></span>
                       <% end %>
                     </div>
                     <div class="col-md-4 col-sm-6">
                       <%= link_to admin_menus_path, :class => 'shortcut' do %>
                         <i class="fa fa-list fa-4x"></i>
-                        <span class="shortcut-label"><%= I18n.t("views.admin.dashboard.menus") %></span>
+                        <span class="shortcut-label"><%= I18n.t("generic.menus") %></span>
                       <% end %>
                     </div>
                     <div class="col-md-4 col-sm-6">
                       <%= link_to admin_trash_index_path, :class => 'shortcut' do %>
                         <i class="fa fa-trash-o fa-4x"></i>
-                        <span class="shortcut-label"><%= I18n.t("views.admin.dashboard.trash") %></span>
+                        <span class="shortcut-label"><%= I18n.t("generic.trash") %></span>
                       <% end %>
                     </div>
                 </div>

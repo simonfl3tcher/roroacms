@@ -1,6 +1,6 @@
 class Admin::MenusController < AdminController
 
-	add_breadcrumb I18n.t("controllers.admin.menus.title"), :admin_menus_path, :title => I18n.t("controllers.admin.menus.breadcrumb_title")
+	add_breadcrumb I18n.t("generic.menus"), :admin_menus_path, :title => I18n.t("controllers.admin.menus.breadcrumb_title")
 
 	# include the helper in the view
 	helper AdminMenuHelper
@@ -10,7 +10,7 @@ class Admin::MenusController < AdminController
 
 	def index
 		# set title
-		set_title(I18n.t("controllers.admin.menus.title"))
+		set_title(I18n.t("generic.menus"))
 		@menu = Menu.new
 		@all_menus = Menu.all
 	end

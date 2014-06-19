@@ -1,6 +1,6 @@
 class Admin::TrashController < AdminController
 
-	add_breadcrumb I18n.t("controllers.admin.trash.title"), :admin_trash_path, :title => I18n.t("controllers.admin.trash.breadcrumb_title")
+	add_breadcrumb I18n.t("generic.trash"), :admin_trash_path, :title => I18n.t("controllers.admin.trash.breadcrumb_title")
 
 	# the trash area saves any posts/pages that were moved to trash in the trash can.
 	# you can then decide if you want to remove these completely or reinstate them - put simply it is a fail
@@ -8,7 +8,7 @@ class Admin::TrashController < AdminController
 
 	def index 
 		# set title
-		set_title(I18n.t("controllers.admin.trash.title"))
+		set_title(I18n.t("generic.trash"))
 		
 		# get all posts/pages that are in the trash area
 		@records = Post.find(:all, :conditions => { :disabled => 'Y' })

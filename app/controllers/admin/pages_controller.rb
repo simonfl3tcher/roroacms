@@ -3,12 +3,12 @@ class Admin::PagesController < AdminController
 	# displays all the "posts" with the post_type of "page". This is also set up 
 	# to take search parameters so you can search for an individual page itself.
 
-	add_breadcrumb I18n.t("controllers.admin.pages.title"), :admin_pages_path, :title => I18n.t("controllers.admin.pages.breadcrumb_title")
+	add_breadcrumb I18n.t("generic.pages"), :admin_pages_path, :title => I18n.t("controllers.admin.pages.breadcrumb_title")
 
 	before_filter :set_post_type
 
 	def index
-		set_title(I18n.t("controllers.admin.pages.title"))
+		set_title(I18n.t("generic.pages"))
 		@pages = Post.setup_and_search_posts params, 'page'
 	end
 

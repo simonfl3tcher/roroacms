@@ -40,7 +40,7 @@ class Trash < ActiveRecord::Base
 
 			else
 				# return a message for the user
-				return I18n.t("models.trash.deal_with_form.nothing_was_done")
+				return I18n.t("generic.nothing")
 
 		end
 

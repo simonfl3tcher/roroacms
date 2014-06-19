@@ -54,7 +54,7 @@
                 <ul class="nano-content">
                     <li class="<%= cp(admin_path) %>">
                       <%= link_to admin_path do %>
-                        <i class="fa fa-dashboard"></i><span><%= I18n.t("views.admin.layouts.admin.navigation.dashboard") %></span>
+                        <i class="fa fa-dashboard"></i><span><%= I18n.t("generic.dashboard") %></span>
                       <% end %>
                     </li>
                     <% if check_controller_against_user('pages') || check_controller_against_user('articles') || check_controller_against_user('terms') %>
@@ -65,31 +65,31 @@
                           </a>
                           <ul>
                             <% if check_controller_against_user('pages') %>
-                              <li class="<%= cp(admin_pages_path) %>"><%= link_to I18n.t("views.admin.generic.pages"), admin_pages_path %></li>
+                              <li class="<%= cp(admin_pages_path) %>"><%= link_to I18n.t("generic.pages"), admin_pages_path %></li>
                               <li class="<%= cp(new_admin_page_path) %>"><%= link_to I18n.t("views.admin.layouts.admin.navigation.add_new_page"), new_admin_page_path %></li>
                             <% end %>
                             <li class="divider"></li>
                             <% if check_controller_against_user('articles') %>
-                              <li class="<%= cp(admin_articles_path) %>"><%= link_to I18n.t("views.admin.generic.articles"), admin_articles_path %></li>
+                              <li class="<%= cp(admin_articles_path) %>"><%= link_to I18n.t("generic.articles"), admin_articles_path %></li>
                               <li class="<%= cp(new_admin_article_path) %>"><%= link_to I18n.t("views.admin.layouts.admin.navigation.add_new_article"), new_admin_article_path %></li>
                             <% end %>
                             <% if check_controller_against_user('terms') %>
-                              <li class="<%= cp(admin_article_categories_path) %>"><%= link_to I18n.t("views.admin.layouts.admin.navigation.categories"), admin_article_categories_path %></li>
-                              <li class="<%= cp(admin_article_tags_path) %>"><%= link_to I18n.t("views.admin.layouts.admin.navigation.tags"), admin_article_tags_path %></li>
+                              <li class="<%= cp(admin_article_categories_path) %>"><%= link_to I18n.t("generic.categories"), admin_article_categories_path %></li>
+                              <li class="<%= cp(admin_article_tags_path) %>"><%= link_to I18n.t("generic.tags"), admin_article_tags_path %></li>
                             <% end %>
                           </ul>
                       </li>
                     <% end %>
                     <li class="sub-menu <%= cp(admin_administrators_path) %> <%= cp(edit_admin_administrator_path(session[:admin_id])) %> <%= cp(new_admin_administrator_path) %>">
                         <a href="javascript:;">
-                          <i class="fa fa-user"></i><span><%= I18n.t("views.admin.layouts.admin.navigation.users") %></span>
+                          <i class="fa fa-user"></i><span><%= I18n.t("generic.users") %></span>
                           <i class="arrow fa fa-angle-right pull-right"></i>
                         </a>
                         <ul>
-                          <li class="<%= cp(edit_admin_administrator_path(session[:admin_id])) %>"><%= link_to I18n.t("views.admin.layouts.admin.navigation.profile"), edit_admin_administrator_path(session[:admin_id]) %></li>
+                          <li class="<%= cp(edit_admin_administrator_path(session[:admin_id])) %>"><%= link_to I18n.t("generic.profile"), edit_admin_administrator_path(session[:admin_id]) %></li>
                           <% if check_controller_against_user('administrators') %>
-                              <li class="<%= cp(admin_administrators_path) %>"><%= link_to I18n.t("views.admin.layouts.admin.navigation.users"), admin_administrators_path %></li>
-                              <li class="<%= cp(new_admin_administrator_path) %>"><%= link_to I18n.t("views.admin.layouts.admin.navigation.add_new_user"), new_admin_administrator_path %></li>
+                              <li class="<%= cp(admin_administrators_path) %>"><%= link_to I18n.t("generic.users"), admin_administrators_path %></li>
+                              <li class="<%= cp(new_admin_administrator_path) %>"><%= link_to I18n.t("generic.add_new_user"), new_admin_administrator_path %></li>
                           <% end %>
                         </ul>
                     </li>
@@ -97,14 +97,14 @@
                     <% if check_controller_against_user('menus') %>
                       <li class="<%= cp(admin_menus_path) %>">
                         <%= link_to admin_menus_path do %>
-                          <i class="fa fa-list"></i><span><%= I18n.t("views.admin.layouts.admin.navigation.menus") %></span>
+                          <i class="fa fa-list"></i><span><%= I18n.t("generic.menus") %></span>
                         <% end %>
                       </li>
                     <% end %>
                     <% if (Setting.get('article_comment_type') == 'R' && Setting.get('article_comments') == 'Y') && check_controller_against_user('comments') %>
                        <li class="<%= cp(admin_comments_path) %>">
                         <%= link_to admin_comments_path do %>
-                          <i class="fa fa-comments"></i><span><%= I18n.t("views.admin.layouts.admin.navigation.comments") %></span>
+                          <i class="fa fa-comments"></i><span><%= I18n.t("generic.comments") %></span>
                         <% end %>
                       </li>
                     <% end %>
@@ -112,7 +112,7 @@
                     <% if check_controller_against_user('themes') %>
                       <li class="<%= cp(admin_themes_path) %>">
                         <%= link_to admin_themes_path do %>
-                          <i class="fa fa-flask"></i><span><%= I18n.t("views.admin.layouts.admin.navigation.themes") %></span>
+                          <i class="fa fa-flask"></i><span><%= I18n.t("generic.themes") %></span>
                         <% end %>
                       </li>
                     <% end %>
@@ -121,7 +121,7 @@
 
                       <li class="<%= cp(admin_settings_path) %>">
                         <%= link_to admin_settings_path do %>
-                          <i class="fa fa-cogs"></i><span><%= I18n.t("views.admin.layouts.admin.navigation.settings") %></span>
+                          <i class="fa fa-cogs"></i><span><%= I18n.t("generic.settings") %></span>
                         <% end %>
                       </li>
 
@@ -131,7 +131,7 @@
 
                         <li class="<%= cp(admin_trash_index_path) %>">
                           <%= link_to admin_trash_path do %>
-                            <i class="fa fa-trash-o"></i><span><%= I18n.t("views.admin.layouts.admin.navigation.trash") %></span>
+                            <i class="fa fa-trash-o"></i><span><%= I18n.t("generic.trash") %></span>
                           <% end %>
                         </li>
                       

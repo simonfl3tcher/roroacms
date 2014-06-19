@@ -21,7 +21,7 @@
 			<%= form_tag site_url("admin/trash/deal_with_form") do %>
 
 				<div class="panel panel-default">
-		            <div class="panel-heading"><%= I18n.t("views.admin.generic.articles") %>
+		            <div class="panel-heading"><%= I18n.t("generic.articles") %>
 		                <div class="pull-right action-buttons">
 		                    <div class="btn-group pull-right">
 		                    	<%= link_to empty_articles_admin_trash_index_path('post'), :class => 'btn btn-danger btn-xs', data: { confirm: I18n.t("views.admin.generic.confirm") } do %>
@@ -66,7 +66,7 @@
 			<%= form_tag site_url("admin/trash/deal_with_form") do %>
 
 				<div class="panel panel-default">
-		            <div class="panel-heading"><%= I18n.t("views.admin.generic.pages") %>
+		            <div class="panel-heading"><%= I18n.t("generic.pages") %>
 		                <div class="pull-right action-buttons">
 		                    <div class="btn-group pull-right">
 		                    	<%= link_to empty_articles_admin_trash_index_path('page'), :class => 'btn btn-danger btn-xs', data: { confirm: I18n.t("views.admin.generic.confirm") } do %>

@@ -10,7 +10,7 @@ class Admin::RevisionsController < AdminController
 		@revision = { 'parent' => Post.find(@post.ancestry), 'revision' => @post}
 		
 		# set title 
-		add_breadcrumb I18n.t("controllers.admin.revisions.breadcrumb_title")
+		add_breadcrumb I18n.t("generic.revisions")
 		set_title(I18n.t("controllers.admin.revisions.title", post_title: @revision['revision'].post_title))
 	end
 	

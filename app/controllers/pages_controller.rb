@@ -32,7 +32,7 @@ class PagesController < ApplicationController
  	# route_dynamic_page function will take the url and search for the correct data to display
 
 	def dynamic_page
-		add_breadcrumb I18n.t("controllers.pages.dynamic_page.breadcrumb_title"), :root_path, :title => I18n.t("controllers.pages.dynamic_page.breadcrumb_title")
+		add_breadcrumb I18n.t("generic.home"), :root_path, :title => I18n.t("generic.home")
 		route_dynamic_page params
 	end
 	

@@ -1,13 +1,13 @@
 class Admin::SettingsController < AdminController
 
-	add_breadcrumb I18n.t("controllers.admin.settings.general.title"), :admin_settings_path, :title => I18n.t("controllers.admin.settings.general.breadcrumb_title")
+	add_breadcrumb I18n.t("generic.settings"), :admin_settings_path, :title => I18n.t("controllers.admin.settings.general.breadcrumb_title")
 
 	# This controller is used for the settings page. This simply relates to all of the settings that are set in the database
 
 	def index 
 		Setting.reload_settings
 		@settings = Setting.get_all
-		set_title(I18n.t("controllers.admin.settings.general.title"))
+		set_title(I18n.t("generic.settings"))
 	end
 
 
@@ -26,7 +26,7 @@ class Admin::SettingsController < AdminController
 			if validation.blank?
 				Setting.save(params)
 				clear_cache
-				format.html { redirect_to admin_settings_path, notice: I18n.t("controllers.admin.settings.general.create.flash.success") }
+				format.html { redirect_to admin_settings_path, notice: I18n.t("generic.success") }
 			else
 				format.html { 
 		        	# add breadcrumb and set title

@@ -12,7 +12,7 @@ class AdminController < ApplicationController
 	include GeneralHelper
 	include AdminRoroaHelper
 
-	add_breadcrumb I18n.t("controllers.admin.misc.dashboard_title"), :admin_path, :title => I18n.t("controllers.admin.misc.dashboard_breadcrumb_title")
+	add_breadcrumb I18n.t("generic.home"), :admin_path, :title => I18n.t("generic.home")
 
 	before_filter :authorize_admin
 	before_filter :authorize_admin_access

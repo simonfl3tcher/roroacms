@@ -71,12 +71,12 @@ class Term < ActiveRecord::Base
 			if params[:type_taxonomy] == 'category'
 
 				redirect_url = "admin_article_categories_path"
-				type = I18n.t("models.term.generic.categories")
+				type = I18n.t("generic.categories")
 
 			else
 
 				redirect_url = "admin_article_tags_path"
-				type = I18n.t("models.term.generic.tags")
+				type = I18n.t("generic.tags")
 
 			end
 
@@ -85,7 +85,7 @@ class Term < ActiveRecord::Base
 					bulk_update_move_to_trash params[:categories]
 				    return I18n.t("models.term.bulk_update.deleted", type: type)
 				else
-				    return I18n.t("models.term.bulk_update.nothing")
+				    return I18n.t("generic.nothing")
 			end
 		end
 

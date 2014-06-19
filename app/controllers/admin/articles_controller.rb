@@ -1,6 +1,6 @@
 class Admin::ArticlesController < AdminController
 
-	add_breadcrumb I18n.t("controllers.admin.articles.title"), :admin_articles_path, :title => I18n.t("controllers.admin.articles.breadcrumb_title")
+	add_breadcrumb I18n.t("generic.articles"), :admin_articles_path, :title => I18n.t("controllers.admin.articles.breadcrumb_title")
 
 	# displays all the "posts" with the post_type of "page". This is also set up 
 	# to take search parameters so you can search for an individual page itself.
@@ -9,7 +9,7 @@ class Admin::ArticlesController < AdminController
 
 	def index
 		# set title
-		set_title(I18n.t("controllers.admin.articles.title"))
+		set_title(I18n.t("generic.articles"))
 		@posts = Post.setup_and_search_posts params, 'post'
 	end
 

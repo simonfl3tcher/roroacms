@@ -13,8 +13,8 @@ module RoutingHelper
 			gloalize Post.where("(post_title LIKE :p or post_slug LIKE :p2 or post_content LIKE :p3) AND (post_type != 'autosave') AND (post_date <= CURRENT_TIMESTAMP)", {:p => "%#{params[:search]}%", :p2 => "%#{params[:search]}%", :p3 => "%#{params[:search]}%"}).page(params[:page]).per(Setting.get('pagination_per_fe'))
 			
 			# add breadcrumbs to the hash
-			add_breadcrumb I18n.t("helpers.routing_helper.generic.home"), :root_path, :title => I18n.t("helpers.routing_helper.generic.home")
-			add_breadcrumb I18n.t("helpers.routing_helper.generic.search"), "/"
+			add_breadcrumb I18n.t("generic.home"), :root_path, :title => I18n.t("generic.home")
+			add_breadcrumb I18n.t("generic.search"), "/"
 
 			# template Hierarchy
 			do_hierarchy_templating('search')

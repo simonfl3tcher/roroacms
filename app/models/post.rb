@@ -322,7 +322,7 @@ class Post < ActiveRecord::Base
             else
 
             respond_to do |format|
-                return I18n.t("models.post.bulk_update.nothing")
+                return I18n.t("generic.nothing")
             end
         end
 

@@ -7,7 +7,7 @@ class Admin::AdministratorsController < AdminController
 	include MediaHelper
 	include AdminRoroaHelper
 
-	add_breadcrumb I18n.t("controllers.admin.administrators.title"), :admin_administrators_path, :title => I18n.t("controllers.admin.administrators.breadcrumb_title")
+	add_breadcrumb I18n.t("generic.users"), :admin_administrators_path, :title => I18n.t("controllers.admin.administrators.breadcrumb_title")
 
 	# show all of the admins for the system
 
@@ -21,8 +21,8 @@ class Admin::AdministratorsController < AdminController
 
 	def new
 	    # add breadcrumb and set title
-	    add_breadcrumb I18n.t("controllers.admin.administrators.new.breadcrumb")
-	    set_title(I18n.t("controllers.admin.administrators.new.title"))
+	    add_breadcrumb I18n.t("generic.add_new_user")
+	    set_title(I18n.t("generic.profile"))
 
 	    @admin = Admin.new
 	    @action = 'create'
@@ -47,7 +47,7 @@ class Admin::AdministratorsController < AdminController
 		  else
 		    format.html { 
 		    	# add breadcrumb and set title
-			    add_breadcrumb I18n.t("controllers.admin.administrators.new.breadcrumb")
+			    add_breadcrumb I18n.t("generic.add_new_user")
 			  	@action = 'create'
 
 		    	render action: "new" 

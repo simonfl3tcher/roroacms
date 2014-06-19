@@ -4,8 +4,8 @@ class Admin::TermsController < AdminController
 
 	def categories
 		# add breadcrumb and set title
-		add_breadcrumb I18n.t("controllers.admin.terms.categories.title"), :admin_article_categories_path, :title => I18n.t("controllers.admin.terms.categories.breadcrumb_title")
-		set_title(I18n.t("controllers.admin.terms.categories.title"))
+		add_breadcrumb I18n.t("generic.categories"), :admin_article_categories_path, :title => I18n.t("controllers.admin.terms.categories.breadcrumb_title")
+		set_title(I18n.t("generic.categories"))
 		@type = 'category'
 
 		# render view template as it is the same as the tag view
@@ -17,8 +17,8 @@ class Admin::TermsController < AdminController
 
 	def tags
 		# add breadcrumb and set title
-		add_breadcrumb I18n.t("controllers.admin.terms.tags.title"), :admin_article_tags_path, :title => I18n.t("controllers.admin.terms.tags.breadcrumb_title")
-		set_title(I18n.t("controllers.admin.terms.tags.title"))
+		add_breadcrumb I18n.t("generic.tags"), :admin_article_tags_path, :title => I18n.t("controllers.admin.terms.tags.breadcrumb_title")
+		set_title(I18n.t("generic.tags"))
 		@type = 'tag'
 		# render view template as it is the same as the category view
 		render 'view'
@@ -121,11 +121,11 @@ class Admin::TermsController < AdminController
 	def edit_title
 
 		if @category.term_anatomy.taxonomy == 'category' 
-			add_breadcrumb I18n.t("controllers.admin.terms.edit_title.category.breadcrumb"), :admin_article_categories_path, :title => I18n.t("controllers.admin.terms.edit_title.category.breadcrumb_title")
+			add_breadcrumb I18n.t("generic.categories"), :admin_article_categories_path, :title => I18n.t("controllers.admin.terms.edit_title.category.breadcrumb_title")
 			add_breadcrumb I18n.t("controllers.admin.terms.edit_title.category.title")
 			title = I18n.t("controllers.admin.terms.edit_title.category.title")
 		else
-			add_breadcrumb I18n.t("controllers.admin.terms.edit_title.tag.breadcrumb"), :admin_article_tags_path, :title => I18n.t("controllers.admin.terms.edit_title.tag.breadcrumb_title")
+			add_breadcrumb I18n.t("generic.tags"), :admin_article_tags_path, :title => I18n.t("controllers.admin.terms.edit_title.tag.breadcrumb_title")
 			add_breadcrumb I18n.t("controllers.admin.terms.edit_title.tag.title")
 			title = I18n.t("controllers.admin.terms.edit_title.tag.title")
 		end
