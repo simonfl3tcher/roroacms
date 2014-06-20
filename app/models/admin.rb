@@ -55,7 +55,7 @@ class Admin < ActiveRecord::Base
 		where(["username = :value OR email = :value", { :value => login }]).first
 	end
 
-	def self.deal_with_profile_images admin, image, type
+	def self.deal_with_profile_images(admin, image, type)
 		p = Admin.find(admin.id)
 		p[type.to_sym] = image
 		p.save

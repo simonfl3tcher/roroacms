@@ -15,7 +15,7 @@ module MediaHelper
 	# Params:
 	# +url+:: path that you want to get the objects from
 
-	def media_setup_and_search_posts url = nil
+	def media_setup_and_search_posts(url = nil)
 
 		if url.nil?    
 			files = AWS::S3::Bucket.find("#{BUCKET}").objects
@@ -77,7 +77,7 @@ module MediaHelper
 	# Params:
 	# +url+:: path including the folder name
 
-	def manually_create_folder url 
+	def manually_create_folder(url) 
 		AWS::S3::S3Object.store(url, url, BUCKET, :access => :public_read, :content_type => 'binary/octet-stream')
 	end
 
@@ -111,7 +111,7 @@ module MediaHelper
 	# +url+:: path to the directory or file that you want to find the size of
 	# +human+:: human readable value or a value in bytes
 
-	def get_folder_size url, human = true
+	def get_folder_size(url, human = true)
 		
 		total_bytes = 0
 		files = AWS::S3::Bucket.objects(Setting.get('aws_bucket_name'), :prefix => url)		
@@ -161,7 +161,7 @@ module MediaHelper
 	# Params:
 	# +prefix+:: the path that you want to delete. THis will delete everything in the prefix
 	
-	def delete_all prefix
+	def delete_all(prefix)
 
 		obj = AWS::S3::Bucket.objects(BUCKET, :prefix => prefix)
 		obj.each do |f|

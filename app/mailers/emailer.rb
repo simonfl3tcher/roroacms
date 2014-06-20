@@ -11,7 +11,7 @@ class Emailer < ActionMailer::Base
 
   # sends an email to the admin email address (set in the admin panel)
   # notifying them that a new administrator has been set up
-  def profile admin = nil
+  def profile(admin = nil)
     @admin = admin
     mail to: Setting.get('site_email')
   end
@@ -19,7 +19,7 @@ class Emailer < ActionMailer::Base
   # sends an email to the admin email address (set in the admin panel)
   # when someone comments on a blog post
 
-  def comment com
+  def comment(com)
     @comment = com
 
     mail to: Setting.get('site_email')

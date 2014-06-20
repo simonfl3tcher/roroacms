@@ -154,7 +154,7 @@ module AdminRoroaHelper
 	# Params:
 	# +limit+:: count of how many you would like to get
 
-	def latest_comments limit = 5
+	def latest_comments(limit = 5)
 		if !limit.blank?
 			Comment.where(:comment_approved => 'N').order("submitted_on DESC").first(limit)
 		else
@@ -166,7 +166,7 @@ module AdminRoroaHelper
 	# Params:
 	# +type+:: what type of post records you want to get the count for
 
-	def get_count_post type
+	def get_count_post(type)
 		Post.where(:post_type => type).count
 	end
 
@@ -207,7 +207,7 @@ module AdminRoroaHelper
 	# +params+:: parameters
 	# +attribute+:: admin ActiveRecord object
 
-	def profile_images params, admin
+	def profile_images(params, admin)
 
 		if !params[:admin][:avatar].blank?
 			Admin.deal_with_profile_images admin, upload_user_images(params[:admin][:avatar], admin.username), 'avatar'
@@ -223,7 +223,7 @@ module AdminRoroaHelper
 	# Params:
 	# +dir+:: directory that you want to list the controllers for
 
-	def list_controllers dir = 'admin'
+	def list_controllers(dir = 'admin')
 		hash = Hash.new
 		controllers = list_controllers_raw(dir)
 
@@ -257,7 +257,7 @@ module AdminRoroaHelper
 	# Params:
 	# +key+:: user group name that is set in the admin panel
 
-	def get_user_group key
+	def get_user_group(key)
 
 		if !Setting.get('user_groups').blank?
 
@@ -276,7 +276,7 @@ module AdminRoroaHelper
 	# Params:
 	# +key+:: controller name
 
-	def check_controller_against_user key
+	def check_controller_against_user(key)
 		get_user_group(current_user.access_level).include?(key)
 	end
 
@@ -331,7 +331,7 @@ module AdminRoroaHelper
 	# +posts+:: first set of records
 	# +pages+:: second set of records
 
-	def respond_to_trash posts, pages 
+	def respond_to_trash(posts, pages) 
 
 		if !posts.blank? && pages.blank?
 			'6'
@@ -340,6 +340,9 @@ module AdminRoroaHelper
 		end
 
 	end
+
+	# clears the admin view cache. 
+	# This is used when logging out or changing user profile or settings
 
 	def clear_cache
 		expire_fragment('admin_header')

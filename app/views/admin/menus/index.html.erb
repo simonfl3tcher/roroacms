@@ -1,34 +1,35 @@
 <div class="row settings-area">
 
-	<div class="col-md-12">
+  <div class="col-md-12">
 
-		<div class="panel panel-default">
-			<div class="panel-body">
-				<div class="tab-wrapper tab-left ">
-					<ul class="nav nav-tabs">
-						<li class="active"><a href="#new" data-toggle="tab"><i class="fa fa-plus"></i> <%= t("views.admin.menus.index.new_menu") %></a></li>
-						<% @all_menus.each_with_index do |m, index| %>
-							<li><a href="#<%= m.key + '-' + index.to_s %>" data-toggle="tab"><i class="fa fa-list"></i> <%= m.name %></a></li>
-						<% end %>
-					</ul>
-					<div class="tab-content">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="tab-wrapper tab-left ">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#new" data-toggle="tab"><i class="fa fa-plus"></i> <%= t("views.admin.menus.index.new_menu") %></a></li>
+            <% @all_menus.each_with_index do |m, index| %>
+              <li><a href="#<%= m.key + '-' + index.to_s %>" data-toggle="tab"><i class="fa fa-list"></i> <%= m.name %></a></li>
+            <% end %>
+          </ul>
+          <div class="tab-content">
 
-						<%= render :partial => 'admin/partials/submit_bar', locals: { :unbuttoned => false } %>
-						
-						<div class="tab-pane active" id="new">
-							<%= render 'menu_form' %>
-						</div>
+            <%= render :partial => 'admin/partials/submit_bar', locals: { :unbuttoned => false } %>
+            
+            <div class="tab-pane active" id="new">
+              <%= render 'menu_form' %>
+            </div>
 
-						<% @all_menus.each_with_index do |m, index| %>
-							<div class="tab-pane menu-group-display" id="<%= m.key + '-' + index.to_s %>">
-								<%= get_menu_groups m %>
-							</div>
-						<% end %>
+            <% @all_menus.each_with_index do |m, index| %>
+              <div class="tab-pane menu-group-display" id="<%= m.key + '-' + index.to_s %>">
+                <%= get_menu_groups m %>
+              </div>
+            <% end %>
 
-					</div>
-				</div>
-			</div>
-		</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-	</div>
+  </div>
+  
 </div>

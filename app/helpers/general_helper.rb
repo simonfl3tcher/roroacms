@@ -4,7 +4,7 @@ module GeneralHelper
 	# Params:
 	# +key+:: YAML key of the value that you want to retrive
 
-	def theme_yaml key = nil 
+	def theme_yaml(key = nil)
 		if File.exists?("#{Rails.root}/app/views/theme/#{current_theme}/theme.yml")
 			theme_yaml = YAML.load(File.read("#{Rails.root}/app/views/theme/#{current_theme}/theme.yml"))
 			theme_yaml[key]
@@ -54,7 +54,7 @@ module GeneralHelper
 	# Params:
 	# +dir+:: directory that you want to list all of the controllers from
 
-	def list_controllers_raw dir = ""
+	def list_controllers_raw(dir = "")
 		dir = dir + "/**/" if !dir.blank?
 		controller_list = Array.new
 		Dir["app/controllers**/#{dir}*.rb"].each do |file|

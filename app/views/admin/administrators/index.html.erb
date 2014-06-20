@@ -1,54 +1,54 @@
 <div class="row">
-	<div class="col-md-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">&nbsp;</h3>
-				<div class="actions pull-right">
-					<i class="fa fa-chevron-down"></i>
-				</div>
-			</div>
-			<div class="panel-body">
-				<%= render partial: 'admin/partials/table_header', locals: {path: new_admin_administrator_path, name: t("generic.add_new_user") } %>
-				<table id="dtable" class="table table-hover " cellspacing="0" width="100%">
-					<thead>
-						<tr>
-							<th>&nbsp;</th>
-							<th><%= t("views.admin.administrators.index.username") %></th>
-							<th class="hidden-xs"><%= t("views.admin.administrators.index.email_address") %></th>
-							<th>&nbsp;</th>
-						</tr>
-					</thead>
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">&nbsp;</h3>
+        <div class="actions pull-right">
+          <i class="fa fa-chevron-down"></i>
+        </div>
+      </div>
+      <div class="panel-body">
+        <%= render partial: 'admin/partials/table_header', locals: {path: new_admin_administrator_path, name: t("generic.add_new_user")} %>
+        <table id="dtable" class="table table-hover " cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th>&nbsp;</th>
+              <th><%= t("views.admin.administrators.index.username") %></th>
+              <th class="hidden-xs"><%= t("views.admin.administrators.index.email_address") %></th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
 
-					<tbody>
-						<% Admin::GET_ADMINS.each do |admin| %>
-						<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-							<td>
-								<img src="<%= admin.avatar %>" class="img-circle hidden-xs" width="35">&nbsp;
-							</td>
-							<td>
-								<%= admin.username %>
-							</td>
-							<td class="hidden-xs"><%= admin.email %></td>
-							<td class="center">
-								<% if admin.overlord != 'Y' || (admin.id.to_i == session[:admin_id].to_i) %>       
-									<div class="btn-group pull-right">
-										<%= link_to edit_admin_administrator_path(admin), :class => 'btn btn-default btn-xs' do %>
-											<i class="fa fa-pencil"></i>
-										<% end %> 
-										<%= link_to admin_administrator_path(admin), method: :delete, data: { confirm: t("views.admin.generic.confirm") }, :class => 'btn btn-danger btn-xs' do %>
-											<i class="fa fa-trash-o"></i>
-										<% end %>
-									</div>
-								<% end %>
-							</td>
-						</tr>
-						<% end %>
-					</tbody>
-				</table>
-				<hr>
-				<div id="paginationWrapper"></div>
+          <tbody>
+            <% Admin::GET_ADMINS.each do |admin| %>
+            <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+              <td>
+                <img src="<%= admin.avatar %>" class="img-circle hidden-xs" width="35">&nbsp;
+              </td>
+              <td>
+                <%= admin.username %>
+              </td>
+              <td class="hidden-xs"><%= admin.email %></td>
+              <td class="center">
+                <% if admin.overlord != 'Y' || (admin.id.to_i == session[:admin_id].to_i) %>       
+                  <div class="btn-group pull-right">
+                    <%= link_to edit_admin_administrator_path(admin), :class => 'btn btn-default btn-xs' do %>
+                      <i class="fa fa-pencil"></i>
+                    <% end %> 
+                    <%= link_to admin_administrator_path(admin), method: :delete, data: { confirm: t("views.admin.generic.confirm") }, :class => 'btn btn-danger btn-xs' do %>
+                      <i class="fa fa-trash-o"></i>
+                    <% end %>
+                  </div>
+                <% end %>
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <hr>
+        <div id="paginationWrapper"></div>
 
-			</div>
-		</div>
-	</div>
+      </div>
+    </div>
+  </div>
 </div>

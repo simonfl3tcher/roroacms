@@ -10,21 +10,21 @@
       <div class="panel-body">
         
         <div class="col-md-4">
-        	<%= render 'form' %>
+          <%= render 'form' %>
         </div>
         <div class="col-md-8">
 
-        <% if (@type == 'category' ? Term::CATEGORIES : Term::TAGS).blank? %>
-			  
-			  <div class="span8" style="text-align:center;">
-			    <strong style="margin-top:100px; font-size:25px; display:block; "><%= t("views.admin.terms.view.have_no", type: pluralize_without_count(2, @type)) %></strong>
-			  </div>
+          <% if (@type == 'category' ? Term::CATEGORIES : Term::TAGS).blank? %>
+          
+            <div class="span8" style="text-align:center;">
+              <strong style="margin-top:100px; font-size:25px; display:block; "><%= t("views.admin.terms.view.have_no", type: pluralize_without_count(2, @type)) %></strong>
+            </div>
 
-			<% else %>
+          <% else %>
 
-				<%= render 'table' %>
+            <%= render 'table' %>
 
-			<% end %>
+          <% end %>
 
         </div>
 

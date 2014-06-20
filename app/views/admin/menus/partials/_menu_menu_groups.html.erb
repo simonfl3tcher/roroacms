@@ -1,19 +1,19 @@
 <div class="dd" id="nestable">
     <ol class='sortable connect dd-list' data-menuid='<%= @menu.id %>'>
-    	<%= menu_list_loop @menu.id %>
+      <%= menu_list_loop @menu.id %>
     </ol>
 </div>
 <hr>
 <div class="pull-left">
-	<small><%= t("views.admin.menus.generic.key") %> <%= @menu.key %></small>
+  <small><%= t("views.admin.menus.generic.key") %> <%= @menu.key %></small>
 </div>
 <div class='btn-group pull-right'>
-	<a class='btn btn-sm btn-default' href='/admin/menus/<%= @menu.id %>/edit'>
-		<i class='fa fa-pencil'></i>&nbsp;<%= t("views.admin.generic.edit") %>
-	</a>
-	<a rel='nofollow' data-method='delete' data-confirm='<%= t("views.admin.generic.confirm") %>' class='btn btn-sm btn-danger' href='/admin/menus/<%= @menu.id %>'>
-		<i class='fa fa-trash-o'></i>&nbsp;<%= t("views.admin.generic.delete") %>
-	</a>
+  <a class='btn btn-sm btn-default' href='/admin/menus/<%= @menu.id %>/edit'>
+    <i class='fa fa-pencil'></i>&nbsp;<%= t("views.admin.generic.edit") %>
+  </a>
+  <a rel='nofollow' data-method='delete' data-confirm='<%= t("views.admin.generic.confirm") %>' class='btn btn-sm btn-danger' href='/admin/menus/<%= @menu.id %>'>
+    <i class='fa fa-trash-o'></i>&nbsp;<%= t("views.admin.generic.delete") %>
+  </a>
 </div>
 
 <div class='clearfix'></div>

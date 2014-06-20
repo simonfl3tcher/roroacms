@@ -1,22 +1,20 @@
 <div class="form-group user-groups">
-	<%= label_tag(:user_groups, "#{@key.blank? ? key.capitalize : @key.capitalize}", class: "col-sm-3 control-label") %>
+  <%= label_tag(:user_groups, "#{@key.blank? ? key.capitalize : @key.capitalize}", class: "col-sm-3 control-label") %>
     <div class="col-sm-6">
-    	<% if (!defined?(key) && @key == 'admin') || (@key.blank? && key == 'admin') %>
-	    	<% value.each do |f| %>
-	    		<%= hidden_field_tag "user_groups[#{@key.blank? ? key : @key}][]", f %>
-	    	<% end %>
+      <% if (!defined?(key) && @key == 'admin') || (@key.blank? && key == 'admin') %>
+        <% value.each do |f| %>
+          <%= hidden_field_tag "user_groups[#{@key.blank? ? key : @key}][]", f %>
+        <% end %>
 
-    		<%= select_tag "user_groups[#{@key.blank? ? key : @key}][]", options_for_select(list_controllers('admin'), defined?(value) ? value.map {|t| t} : ''), { :multiple => true, :size =>10, :class => 'form-control', :disabled => 'disabled' } %>
-		<% else %>
-	    	<%= select_tag "user_groups[#{@key.blank? ? key : @key}][]", options_for_select(list_controllers('admin'), defined?(value) ? value.map {|t| t} : ''), { :multiple => true, :size =>10, :class => 'form-control' } %>
-		<% end %>
+        <%= select_tag "user_groups[#{@key.blank? ? key : @key}][]", options_for_select(list_controllers('admin'), defined?(value) ? value.map {|t| t} : ''), { :multiple => true, :size =>10, :class => 'form-control', :disabled => 'disabled' } %>
+      <% else %>
+        <%= select_tag "user_groups[#{@key.blank? ? key : @key}][]", options_for_select(list_controllers('admin'), defined?(value) ? value.map {|t| t} : ''), { :multiple => true, :size =>10, :class => 'form-control' } %>
+      <% end %>
 
-    	<% if (!defined?(key) && @key != 'admin') || (@key.blank? && key != 'admin') %>
-			<button class="btn btn-danger btn-sm btn-block remove-user-group" style="margin-top:-10px;"><i class="fa fa-times fa-lg"></i> <%= t("views.admin.partials.user_group_view.remove") %></button>
-		<% end %>
-
+      <% if (!defined?(key) && @key != 'admin') || (@key.blank? && key != 'admin') %>
+        <button class="btn btn-danger btn-sm btn-block remove-user-group" style="margin-top:-10px;"><i class="fa fa-times fa-lg"></i> <%= t("views.admin.partials.user_group_view.remove") %></button>
+      <% end %>
     </div>
-    <div class="col-sm-3">
-    </div>
-	<div class="clearfix"></div>
+    <div class="col-sm-3"></div>
+  <div class="clearfix"></div>
 </div>

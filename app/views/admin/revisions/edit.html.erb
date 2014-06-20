@@ -9,82 +9,84 @@
       </div>
       <div class="panel-body">
 
-      	<div class="row form-group">
+        <div class="row form-group">
 
-	      	<div class="col-md-3">
-				<strong><%= t("views.admin.partials.revisions.edit.keycode") %></strong>
-			</div>
+          <div class="col-md-3">
+            <strong><%= t("views.admin.partials.revisions.edit.keycode") %></strong>
+          </div>
 
-			<div class="col-md-9">
-				
-				<span class="keycode green"></span> <%= t("views.admin.partials.revisions.edit.added") %><br />
-				<span class="keycode red"></span> <%= t("views.admin.partials.revisions.edit.removed") %>
+          <div class="col-md-9">
+            
+            <span class="keycode green"></span> <%= t("views.admin.partials.revisions.edit.added") %><br />
+            <span class="keycode red"></span> <%= t("views.admin.partials.revisions.edit.removed") %>
 
-			</div>
+          </div>
 
-		</div>
+        </div>
 
-		<hr>
+        <hr>
 
-      	<div class="row form-group">
+        <div class="row form-group">
 
-	      	<div class="col-md-3">
-				<strong><%= t("views.admin.partials.revisions.edit.title") %></strong>
-			</div>
+          <div class="col-md-3">
+            <strong><%= t("views.admin.partials.revisions.edit.title") %></strong>
+          </div>
 
-			<div class="col-md-9">
-				<%= Differ.diff_by_word(@revision['revision'].post_title, @revision['parent'].post_title).format_as(:html).html_safe %>
-			</div>
+          <div class="col-md-9">
+            <%= Differ.diff_by_word(@revision['revision'].post_title, @revision['parent'].post_title).format_as(:html).html_safe %>
+          </div>
 
-		</div>
+        </div>
 
-		<div class="row form-group">
+        <div class="row form-group">
 
-	      	<div class="col-md-3">
-				<strong><%= t("views.admin.partials.revisions.edit.post_slug") %></strong>
-			</div>
+          <div class="col-md-3">
+            <strong><%= t("views.admin.partials.revisions.edit.post_slug") %></strong>
+          </div>
 
-			<div class="col-md-9">
-				<%= Differ.diff_by_word("/" + @revision['revision'].post_slug, "/" + @revision['parent'].post_slug).format_as(:html).html_safe %>
-			</div>
-			
-		</div>
+          <div class="col-md-9">
+            <%= Differ.diff_by_word("/" + @revision['revision'].post_slug, "/" + @revision['parent'].post_slug).format_as(:html).html_safe %>
+          </div>
+          
+        </div>
 
-		<div class="row form-group">
+        <div class="row form-group">
 
-	      	<div class="col-md-3">
-				<strong><%= t("views.admin.generic.content") %></strong>
-			</div>
+          <div class="col-md-3">
+            <strong><%= t("views.admin.generic.content") %></strong>
+          </div>
 
-			<div class="col-md-9">
-				<%= Diffy::Diff.new(@revision['parent'].post_content, @revision['revision'].post_content, :include_plus_and_minus_in_html => true).to_s(:html_simple).html_safe %>
-   			</div>
-			
-		</div>
+          <div class="col-md-9">
+            <%= Diffy::Diff.new(@revision['parent'].post_content, @revision['revision'].post_content, :include_plus_and_minus_in_html => true).to_s(:html_simple).html_safe %>
+          </div>
+          
+        </div>
 
-		<div class="row form-group">
+        <div class="row form-group">
 
-	      	<div class="col-md-3">
-				&nbsp;
-			</div>
+          <div class="col-md-3">
+            &nbsp;
+          </div>
 
-			<div class="col-md-9">
-				<%= link_to restore_admin_revision_path(@revision['revision'].id), :class => 'btn btn-primary btn-sm btn-block ' do %>
-					<i class="fa fa-magic"></i> <%= t("views.admin.generic.restore") %>
-				<% end %>
-   			</div>
-			
-		</div>
+          <div class="col-md-9">
+            <%= link_to restore_admin_revision_path(@revision['revision'].id), :class => 'btn btn-primary btn-sm btn-block ' do %>
+              <i class="fa fa-magic"></i> <%= t("views.admin.generic.restore") %>
+            <% end %>
+          </div>
+          
+        </div>
 
-		<br />
+        <br />
 
-		<h3 class="thin"><%= t("views.admin.partials.revisions.edit.more_revisions") %></h3>
-		<hr>
+        <h3 class="thin"><%= t("views.admin.partials.revisions.edit.more_revisions") %></h3>
+        <hr>
 
-
-		<%= render :partial => 'autosave_table' %>
+        <%= render :partial => 'autosave_table' %>
         
       </div>
+
     </div>
+
   </div>
+  
 </div>

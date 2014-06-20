@@ -300,7 +300,7 @@ module RoutingHelper
 	# Params:
 	# +type+:: type of 
 
-	def do_hierarchy_templating type
+	def do_hierarchy_templating(type)
 		
 		case type 
 			when 'archive'

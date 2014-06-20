@@ -2,36 +2,36 @@
 
 <%= form_tag site_url("admin/posts/bulk_update") do %>
   <table id="dtable" class="table table-hover" cellspacing="0" width="100%">
-  <thead>
-    <tr>
-      <th class="checkboxth hidden-xs"><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
-      <th><%= t("views.admin.partials.articles_table.post_title") %></th>
-      <th class="hidden-xs"><%= t("views.admin.generic.published_date") %></th>
-      <th>&nbsp;</th>
-    </tr>
-  </thead>
-  <% @posts.each do |post| %>
-    <tr class="<%= cycle('list_line_odd', 'list_line_even') %> <%= post.post_status == "Draft" ? 'draft' : '' %>">
+    <thead>
+      <tr>
+        <th class="checkboxth hidden-xs"><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
+        <th><%= t("views.admin.partials.articles_table.post_title") %></th>
+        <th class="hidden-xs"><%= t("views.admin.generic.published_date") %></th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <% @posts.each do |post| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %> <%= post.post_status == "Draft" ? 'draft' : '' %>">
 
-      <td class="hidden-xs"><%= check_box_tag 'posts[]', post.id %></td>
-    	<td><%= post.post_title %><%= post.post_status == "Draft" ? t("views.admin.partials.articles_table.draft") : '' %></td>
-    	<td class="hidden-xs"><%= post.post_date.strftime "%d-%m-%Y" %></td>
-      <td class="center">
-        <div class="btn-group pull-right">
-          <%= link_to edit_admin_article_path(post), :class => 'btn btn-xs btn-default' do %>
-            <i class="fa fa-pencil"></i>
-          <% end %>        
-          <%= link_to page_path(post), :class => 'btn btn-xs btn-default', :target => "_blank" do %>
-            <i class="fa fa-search"></i>
-          <% end %>     
-          <%= link_to admin_article_path(post), method: :delete, data: { confirm: t("views.admin.generic.confirm") }, :class => 'btn btn-xs btn-danger' do %>
-            <i class="fa fa-trash-o"></i>
-          <% end %>
-        </div>
-      </td>
+        <td class="hidden-xs"><%= check_box_tag 'posts[]', post.id %></td>
+      	<td><%= post.post_title %><%= post.post_status == "Draft" ? t("views.admin.partials.articles_table.draft") : '' %></td>
+      	<td class="hidden-xs"><%= post.post_date.strftime "%d-%m-%Y" %></td>
+        <td class="center">
+          <div class="btn-group pull-right">
+            <%= link_to edit_admin_article_path(post), :class => 'btn btn-xs btn-default' do %>
+              <i class="fa fa-pencil"></i>
+            <% end %>        
+            <%= link_to page_path(post), :class => 'btn btn-xs btn-default', :target => "_blank" do %>
+              <i class="fa fa-search"></i>
+            <% end %>     
+            <%= link_to admin_article_path(post), method: :delete, data: { confirm: t("views.admin.generic.confirm") }, :class => 'btn btn-xs btn-danger' do %>
+              <i class="fa fa-trash-o"></i>
+            <% end %>
+          </div>
+        </td>
 
-    </tr>
-  <% end %>
+      </tr>
+    <% end %>
   </table>
   <div class="hidden-xs">
     <hr>
@@ -39,6 +39,7 @@
                                   'draft' => t("views.admin.generic.bulk_update_options.draft"), 
                                   'move_to_trash' => t("views.admin.generic.bulk_update_options.move_to_trash")] %>
   </div>
+  
   <div id="paginationWrapper"></div>
 
 <% end %>

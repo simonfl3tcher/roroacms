@@ -3,25 +3,25 @@
     <span class="caret"></span>
   </a>
     <ul role="menu" class="dropdown-menu">
-    	<% @options.each do |k, v| %>
-			<% if k == 'publish' %>
-				<li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-refresh"></i>&nbsp;<%= v %></a></li>
-			<% elsif k == 'draft' %>
-				<li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-edit"></i>&nbsp;<%= v %></a></li>
-			<% elsif k == 'move_to_trash' || k == 'destroy' %>
-				<li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-trash-o"></i>&nbsp;<%= v %></a></li>
-			<% elsif k == 'mark_as_spam'%>
-                <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-fire"></i>&nbsp;<%= v %></a></li>
-            <% elsif k == 'approve' %>
-                <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-check"></i>&nbsp;<%= v %></a></li>
-            <% elsif k == 'unapprove' %>
-                <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-minus"></i>&nbsp;<%= v %></a></li>
-            <% elsif k == 'reinstate' %>
-                <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-reply"></i>&nbsp;<%= v %></a></li>
-            <% else %>
-				<li><a href="javascript:void(0)" data-val="<%= k %>"><%= v %></a></li>
-			<% end %>
-    	<% end %>
+      <% @options.each do |k, v| %>
+        <% if k == 'publish' %>
+          <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-refresh"></i>&nbsp;<%= v %></a></li>
+        <% elsif k == 'draft' %>
+          <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-edit"></i>&nbsp;<%= v %></a></li>
+        <% elsif k == 'move_to_trash' || k == 'destroy' %>
+          <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-trash-o"></i>&nbsp;<%= v %></a></li>
+        <% elsif k == 'mark_as_spam'%>
+            <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-fire"></i>&nbsp;<%= v %></a></li>
+        <% elsif k == 'approve' %>
+            <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-check"></i>&nbsp;<%= v %></a></li>
+        <% elsif k == 'unapprove' %>
+            <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-minus"></i>&nbsp;<%= v %></a></li>
+        <% elsif k == 'reinstate' %>
+            <li><a href="javascript:void(0)" data-val="<%= k %>"><i class="fa fa-reply"></i>&nbsp;<%= v %></a></li>
+        <% else %>
+        <li><a href="javascript:void(0)" data-val="<%= k %>"><%= v %></a></li>
+        <% end %>
+      <% end %>
     </ul>
 </div>
 <input type="hidden" name="to_do" />

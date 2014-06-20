@@ -1,40 +1,40 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-    	<h3 class="panel-title"><i class='fa fa-external-link pull-left'></i>&nbsp;<%= t("views.admin.menus.partials.menu_accordion.custom_link") %></h3>
-		<div class="actions pull-right">
-			<i class="fa fa-chevron-down"></i>
-		</div>
+      <h3 class="panel-title"><i class='fa fa-external-link pull-left'></i>&nbsp;<%= t("views.admin.menus.partials.menu_accordion.custom_link") %></h3>
+    <div class="actions pull-right">
+      <i class="fa fa-chevron-down"></i>
+    </div>
     </div>
     <div class="panel-body">
 
-    	<form action='' method='post' data-type='custom'>
-	    	<input type='hidden' name='type' value='custom' />
-	    	<div class="form-group">
-	    		<input type='text' name='customlink' placeholder='<%= t("views.admin.menus.partials.menu_accordion.custom_placeholder") %>' class="form-control" />
-	    	</div>
-	    	<div class="form-group">
-	    		<input name='label' type='text' placeholder='<%= t("views.admin.menus.partials.menu_dropdown.placeholder_2") %>' class="form-control">
-	    	</div>
-	    	<div class="form-group">
-				<input name='class' type='text' placeholder='<%= t("views.admin.menus.partials.menu_dropdown.placeholder_3") %>' class="form-control">
-			</div>
-			<label><%= t("views.admin.generic.target") %></label>
-			<div class="form-group">
-				<div class="radio-inline">
-					<input type="radio" value="sw" name="target" checked="checked"><%= t("views.admin.menus.generic.same_window") %>
-				</div>
-				<div class="radio-inline">
-					<input type="radio" value="nt" name="target"><%= t("views.admin.menus.generic.new_tab") %>
-				</div>
-			</div>
+      <form action='' method='post' data-type='custom'>
+        <input type='hidden' name='type' value='custom' />
+        <div class="form-group">
+          <input type='text' name='customlink' placeholder='<%= t("views.admin.menus.partials.menu_accordion.custom_placeholder") %>' class="form-control" />
+        </div>
+        <div class="form-group">
+          <input name='label' type='text' placeholder='<%= t("views.admin.menus.partials.menu_dropdown.placeholder_2") %>' class="form-control">
+        </div>
+        <div class="form-group">
+        <input name='class' type='text' placeholder='<%= t("views.admin.menus.partials.menu_dropdown.placeholder_3") %>' class="form-control">
+      </div>
+      <label><%= t("views.admin.generic.target") %></label>
+      <div class="form-group">
+        <div class="radio-inline">
+          <input type="radio" value="sw" name="target" checked="checked"><%= t("views.admin.menus.generic.same_window") %>
+        </div>
+        <div class="radio-inline">
+          <input type="radio" value="nt" name="target"><%= t("views.admin.menus.generic.new_tab") %>
+        </div>
+      </div>
 
-			<div class='formSepUpp'>
-				<hr>
-				<button type='submit' class='btn btn-sm btn-primary btn-block pull-left'> 
-				    <i class='fa fa-plus'></i>&nbsp; <%= t("views.admin.menus.generic.add_link") %>
-				  </button>
-			</div>
-	   	</form>
+      <div class='formSepUpp'>
+        <hr>
+        <button type='submit' class='btn btn-sm btn-primary btn-block pull-left'> 
+            <i class='fa fa-plus'></i>&nbsp; <%= t("views.admin.menus.generic.add_link") %>
+          </button>
+      </div>
+      </form>
 
     </div>
 </div>

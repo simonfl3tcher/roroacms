@@ -1,25 +1,27 @@
 <div class="row">
-	<div class="col-md-7" id="menu-sortable-fields">
+  
+  <div class="col-md-7" id="menu-sortable-fields">
 
-		<div class="panel panel-default">
-			<div class="panel-body">
-		
-				<%= render 'menu_list' %>
+    <div class="panel panel-default">
+      <div class="panel-body">
+    
+        <%= render 'menu_list' %>
 
-				<hr>
+        <hr>
 
-				<button class="btn btn-primary btn-block btn-sm update-menu"><i class="fa fa-check"></i>&nbsp; <%= t("views.admin.generic.save") %></button>
+        <button class="btn btn-primary btn-block btn-sm update-menu"><i class="fa fa-check"></i>&nbsp; <%= t("views.admin.generic.save") %></button>
 
-			</div>
-		</div>
+      </div>
+    </div>
 
-	</div>
+  </div>
 
-	<div class="col-md-5" id="menu-forms">
+  <div class="col-md-5" id="menu-forms">
 
-		<%= render 'admin/menus/partials/menu_content_accordion' %>
+    <%= render 'admin/menus/partials/menu_content_accordion' %>
 
-	    <%= render 'admin/menus/partials/menu_custom_accordion' %> 
+    <%= render 'admin/menus/partials/menu_custom_accordion' %> 
 
-	</div>
+  </div>
+
 </div>

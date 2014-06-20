@@ -40,7 +40,7 @@ class Comment < ActiveRecord::Base
 			return 'ntd'
 		end
 
-end
+	end
 
 
 	private 

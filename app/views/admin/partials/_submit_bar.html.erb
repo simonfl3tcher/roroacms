@@ -1,25 +1,25 @@
 <div class="form-toolbar"> 
     <% cache('admin_submit_bar_toggle') do %>
-        <div class="toggle-navigation toggle-left pull-left">
-            <button type="button" class="btn btn-default shrink">
-                <i class="fa fa-bars"></i>
-            </button>
-        </div>
+      <div class="toggle-navigation toggle-left pull-left">
+        <button type="button" class="btn btn-default shrink">
+          <i class="fa fa-bars"></i>
+        </button>
+      </div>
     <% end %>
     <div class="btn-group pull-right"> 
-        <% if ! defined?(unbuttoned) %>
-            <% if defined?(post_record) && !post_record.id.blank? %>
-                <%= link_to admin_article_path(post_record), method: :delete, data: { confirm: t("views.admin.generic.confirm") }, :class => 'btn btn-sm btn-danger pull-left' do %>
-                    <i class="fa fa-trash-o"></i>&nbsp;<%= t("views.admin.generic.delete") %>
-                <% end %> 
-                <%= link_to page_path(post_record), :class => 'btn btn-default btn-sm pull-left hidden-xs', :target => '_blank' do %>
-                    <i class="fa fa-search"></i>&nbsp;<%= t("views.admin.generic.view") %>
-                <% end %>  
-            <% end %>
-            <button type="submit" class="btn btn-primary btn-sm pull-right"><i class="fa fa-check"></i>&nbsp;<%= t("views.admin.generic.save") %></button>
-        <% else %>
-            &nbsp;
-        <% end %>
+      <% if ! defined?(unbuttoned) %>
+          <% if defined?(post_record) && !post_record.id.blank? %>
+              <%= link_to admin_article_path(post_record), method: :delete, data: { confirm: t("views.admin.generic.confirm") }, :class => 'btn btn-sm btn-danger pull-left' do %>
+                  <i class="fa fa-trash-o"></i>&nbsp;<%= t("views.admin.generic.delete") %>
+              <% end %> 
+              <%= link_to page_path(post_record), :class => 'btn btn-default btn-sm pull-left hidden-xs', :target => '_blank' do %>
+                  <i class="fa fa-search"></i>&nbsp;<%= t("views.admin.generic.view") %>
+              <% end %>  
+          <% end %>
+          <button type="submit" class="btn btn-primary btn-sm pull-right"><i class="fa fa-check"></i>&nbsp;<%= t("views.admin.generic.save") %></button>
+      <% else %>
+          &nbsp;
+      <% end %>
     </div>
     <div class="clearfix"></div>
 </div>

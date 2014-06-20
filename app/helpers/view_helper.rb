@@ -426,7 +426,7 @@ module ViewHelper
 	# Params:
 	# +sub_only+:: show only the sub categories of the current category
 	
-	def get_categories sub_only = false
+	def get_categories(sub_only = false)
 		
 		segments = params[:slug].split('/')
 		category_url = Setting.get('category_slug')
@@ -522,7 +522,7 @@ module ViewHelper
 	# Params:
 	# +ids+:: an array of ids that you want to get the post object of
 
-	def get_posts ids 
+	def get_posts(ids) 
 		Post.where(:id => ids)
 	end
 
@@ -530,8 +530,8 @@ module ViewHelper
 	# Params:
 	# +parent_id+:: ID of the parent post that you want to get the sub pages for
 
-	def get_subpages parent_id = nil, limit = nil, orderby = 'post_title'
-		posts = Post.where(:parent_id => parent_id.blank? ? @content.id : parent_id).order("post_title")
+	def get_subpages(parent_id = nil, limit = nil, orderby = 'post_title')
+		posts = Post.where(:parent_id => parent_id.blank? ? @content.id : parent_id).order(orderby)
 		if !limit.blank?
 			posts = posts.limit(1)
 		end
@@ -564,7 +564,7 @@ module ViewHelper
 	# Params:
 	# +arr+:: array that you want to list through to create the list
 
-	def li_loop arr
+	def li_loop(arr)
 		
 		html = '<ul>'
 		arr.each do |k, v|
@@ -580,7 +580,7 @@ module ViewHelper
 	# Params:
 	# +arr+:: array that you want to list through to create the list
 
-	def li_loop_for_terms arr, term_type, initial = 'initial'
+	def li_loop_for_terms(arr, term_type, initial = 'initial')
 
 		article_url = Setting.get('articles_slug')
 		
