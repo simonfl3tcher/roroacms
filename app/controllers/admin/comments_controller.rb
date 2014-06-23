@@ -1,11 +1,11 @@
 class Admin::CommentsController < AdminController
 
-	add_breadcrumb I18n.t("controllers.admin.comments.title"), :admin_comments_path, :title => I18n.t("controllers.admin.comments.breadcrumb")
+	add_breadcrumb I18n.t("generic.comments"), :admin_comments_path, :title => I18n.t("controllers.admin.comments.breadcrumb")
 
 	# list out all of the comments
 	def index 
 		# set title
-		set_title(I18n.t("controllers.admin.comments.title"))
+		set_title(I18n.t("generic.comments"))
 	end
 
 

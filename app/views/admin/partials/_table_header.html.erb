@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-md-6">
     <% if defined?(path) %>
-      <%= link_to path do %>
-        <button class="pull-left btn btn-small btn-block btn-primary"><span class="fa fa-plus"></span>&nbsp;<%= name %></button>
+      <%= link_to path, id: defined?(id) ? id : '', class: "pull-left btn btn-small btn-block btn-primary" do %>
+        <span class="fa fa-plus"></span>&nbsp;<%= name %>
       <% end %>
     <% else %>
       &nbsp;

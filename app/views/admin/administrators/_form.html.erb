@@ -15,7 +15,9 @@
               <center>
                 <img src="<%= @admin.avatar %>" name="aboutme" width="140" height="140" class="img-circle">
                 <h3><%= @admin.username %></h3>
-                <small><%= @admin.first_name + ' ' + @admin.last_name %></small>
+                <% if !@admin.first_name.blank? %>
+                  <small><%= @admin.first_name + ' ' + @admin.last_name %></small>
+                <% end %>
               </center>
 
               <% if @admin.cover_picture.blank? %>

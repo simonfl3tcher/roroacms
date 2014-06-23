@@ -1,14 +1,14 @@
 class Admin::ThemesController < AdminController
 
 	include AdminRoroaHelper
-	add_breadcrumb I18n.t("generic.title"), :admin_themes_path, :title => I18n.t("controllers.admin.themes.breadcrumb_title")
+	add_breadcrumb I18n.t("generic.themes"), :admin_themes_path, :title => I18n.t("controllers.admin.themes.breadcrumb_title")
 	
 	
 	# lists all the avalible themes
 
 	def index 
 		# set title
-		set_title(I18n.t("generic.title"))
+		set_title(I18n.t("generic.themes"))
 		
 		# finds the current theme that is set in the admin panel
 		@current = Setting.get('theme_folder')
