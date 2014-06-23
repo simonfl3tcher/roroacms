@@ -85,7 +85,7 @@ class Admin < ActiveRecord::Base
 	# If the has cover image has been removed this will be set to nothing and will update the cover image option agasint the admin
 
 	def deal_with_cover params
-		if params[:has_cover_image].blank?
+		if defined?(params[:has_cover_image]) && params[:has_cover_image].blank?
 			self.cover_picture = ''
 		end
 
