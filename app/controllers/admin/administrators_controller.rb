@@ -13,6 +13,7 @@ class Admin::AdministratorsController < AdminController
 
 	def index
 		# set title
+		@admins = Admin::GET_ADMINS
 		set_title(I18n.t("generic.users"))
 	end
 	
@@ -81,6 +82,10 @@ class Admin::AdministratorsController < AdminController
 		    end
 		
 		end
+	end
+
+	def show 
+		redirect_to edit_admin_administrator_path(params[:id])
 	end
 
 

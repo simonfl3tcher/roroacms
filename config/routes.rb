@@ -18,6 +18,8 @@ Roroacms::Application.routes.draw do
     
     resources :login, :users, :administrators, :themes
 
+    resources :administrators, only: [:index, :new, :create, :edit, :update, :destroy]
+
     resources :menus do 
 
       collection do 

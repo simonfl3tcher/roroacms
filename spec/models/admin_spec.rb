@@ -3,12 +3,8 @@ require 'rails_helper'
 RSpec.describe Admin, :type => :model do
 
 	let(:admin) { FactoryGirl.create(:admin) }
+    let(:user) { FactoryGirl.build(:admin) }
 	
-	before(:each) do 
-	    let(:user) { FactoryGirl.build(:admin) }
-	    sign_in(admin)
-	end
-
 	it "has a valid factory" do 
 		expect(user).to be_valid
 	end
@@ -34,7 +30,7 @@ RSpec.describe Admin, :type => :model do
 	end
 
 	it "is valid with a password of a length between 6-128" do 
-		expect(FactoryGirl.build(:admin, password: '123123123')).to_not be_valid
+		expect(FactoryGirl.build(:admin, password: '123123123')).to be_valid
 	end
 
 	it "returns overlord as 'N'" do 
@@ -49,8 +45,8 @@ RSpec.describe Admin, :type => :model do
 
 	it "should return an array if access levels" do 
 		levels = Admin.access_levels
-		expect(levels).to be(Array)
-		expect(levels).to include('Admin')
+		expect(levels).to be_a_kind_of(Array)
+		expect(levels).to include('admin')
 	end
 
 	it "should set the cover image to blank" do 
