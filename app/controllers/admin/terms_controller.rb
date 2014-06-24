@@ -138,9 +138,7 @@ class Admin::TermsController < AdminController
 	# Strong parameter
 
 	def term_params
-		if !session[:admin_id].blank?
-			params.require(:term).permit(:name, :parent, :slug, :structured_url, :description, :term_group)
-		end
+		params.require(:term).permit(:name, :parent, :slug, :structured_url, :description, :term_group)
 	end
 
 end

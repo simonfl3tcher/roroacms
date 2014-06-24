@@ -1,9 +1,9 @@
-FactoryGirl.define do
-  
+FactoryGirl.define do |u|
+
   factory :post do
-    post_title Faker::Lorem.sentence(3, true)
-    post_slug Faker::Internet.slug(Faker::Lorem.sentence(3, true), '-')
-    post_content Faker::Lorem.paragraph(5)
+    post_title { Faker::Lorem.sentence(3, true) }
+    post_slug { Faker::Internet.slug(Faker::Lorem.words(4).join('-'), '-') }
+    post_content { Faker::Lorem.paragraph(5) }
   end
 
   factory :invalid_post, parent: :post do |f|

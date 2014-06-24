@@ -95,9 +95,7 @@ class Admin::CommentsController < AdminController
 	# Strong parameters
 
 	def comments_params
-		if !session[:admin_id].blank?
-			params.require(:comment).permit(:post_id, :author, :email, :website, :comment, :comment_approved, :parent_id, :is_spam, :commit, :submitted_on)
-		end
+		params.require(:comment).permit(:post_id, :author, :email, :website, :comment, :comment_approved, :parent_id, :is_spam, :commit, :submitted_on)
 	end
 
 end

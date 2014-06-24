@@ -55,7 +55,11 @@ class Comment < ActiveRecord::Base
 	# bulk unapprove given comments
 
 	def self.bulk_update_unapprove(comments)
-		Comment.update(comments, comment_approved: 'N')
+		comments.each do |val|
+			comment = Comment.find(val)
+			comment.comment_approved = "N"
+			comment.save
+		end
 	end
 
 	# bulk approve given comments
@@ -74,6 +78,7 @@ class Comment < ActiveRecord::Base
 		comments.each do |val|
 			comment = Comment.find(val)
 			comment.comment_approved = "S"
+			comment.is_spam = "Y"
 			comment.save
 		end
 	end

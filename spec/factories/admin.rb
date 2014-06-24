@@ -1,6 +1,6 @@
 FactoryGirl.define do
   
-  sequence(:id) {|n| rand(10000)}
+  sequence(:id) {|n| rand(10000..100000000)}
   sequence(:email) {|n| "user#{n}@example.com"}
   sequence(:login) {|n| "user#{n}"}
   

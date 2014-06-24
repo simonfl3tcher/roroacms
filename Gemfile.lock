@@ -105,6 +105,8 @@ GEM
     factory_girl_rails (4.4.1)
       factory_girl (~> 4.4.0)
       railties (>= 3.0.0)
+    faker (1.2.0)
+      i18n (~> 0.5)
     fastercsv (1.5.5)
     ffi (1.9.3)
     formatador (0.2.5)
@@ -284,6 +286,7 @@ DEPENDENCIES
   differ
   diffy
   factory_girl_rails
+  faker
   font-awesome-sass!
   guard-rspec
   i18n-js!

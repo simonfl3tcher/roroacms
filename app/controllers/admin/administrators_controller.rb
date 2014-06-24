@@ -35,7 +35,6 @@ class Admin::AdministratorsController < AdminController
 	def create
 		@admin = Admin.new(administrator_params)
 		@admin.deal_with_abnormalaties
-
 		respond_to do |format|
 		  
 		  if @admin.save
@@ -142,9 +141,7 @@ class Admin::AdministratorsController < AdminController
 	# Strong parameters
 
 	def administrator_params
-		if !session[:admin_id].blank?
-			params.require(:admin).permit(:email, :password, :first_name, :last_name, :username, :access_level, :password_confirmation, :description)
-		end
+		params.require(:admin).permit(:email, :password, :first_name, :last_name, :username, :access_level, :password_confirmation, :description)
 	end
 
 end
