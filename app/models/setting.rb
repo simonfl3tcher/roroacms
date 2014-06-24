@@ -52,6 +52,7 @@ class Setting < ActiveRecord::Base
 			value = ActiveSupport::JSON.encode(value) if key == 'user_groups'
 			set = Setting.where("setting_name = ?", key).update_all('setting' => value)
 		end
+		
 	end
 
 

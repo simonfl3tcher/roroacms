@@ -38,5 +38,6 @@ group :test, :development do
 	gem 'guard-rspec'
 	gem 'rb-fsevent'
 	gem 'factory_girl_rails'
+	gem 'faker'
 	gem 'launchy'
 end 

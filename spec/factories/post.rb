@@ -1,0 +1,23 @@
+FactoryGirl.define do
+  
+  factory :post do
+    post_title Faker::Lorem.sentence(3, true)
+    post_slug Faker::Internet.slug(Faker::Lorem.sentence(3, true), '-')
+    post_content Faker::Lorem.paragraph(5)
+  end
+
+  factory :invalid_post, parent: :post do |f|
+  	f.post_title nil
+  end
+
+  factory :disabled_post, parent: :post do |f|
+  	f.post_type 'post'
+  	f.disabled 'Y'
+  end
+
+  factory :disabled_page, parent: :post do |f|
+  	f.post_type 'page'
+  	f.disabled 'Y'
+  end
+
+end
