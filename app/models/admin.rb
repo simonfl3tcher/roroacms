@@ -56,9 +56,8 @@ class Admin < ActiveRecord::Base
 	end
 
 	def self.deal_with_profile_images(admin, image, type)
-		p = Admin.find(admin.id)
-		p[type.to_sym] = image
-		p.save
+		admin[type.to_sym] = image
+		admin.save
 	end
 
 	def self.access_levels 

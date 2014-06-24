@@ -55,7 +55,10 @@ RSpec.describe Admin::AdministratorsController, :type => :controller do
 		context "with valid attributes" do 
 
 			it "creates new admin" do 
-				expect { post :create, admin: FactoryGirl.attributes_for(:admin) }.to change(Admin,:count).by(1)
+				details = FactoryGirl.attributes_for(:admin)
+				abort details.inspect
+				expect { post :create, admin: details }.to change(Admin,:count).by(1)
+				abort assigns(:admin).inspect
 			end
 
 			it "redirects to administrators#index" do 
