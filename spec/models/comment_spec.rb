@@ -41,7 +41,7 @@ RSpec.describe Comment, :type => :model do
 			@array = [@record.id, comment.id]
 		end
 
-		it "approves giveen records" do
+		it "approves given records" do
 
 			Comment.bulk_update({:to_do => 'approve', :comments => @array})
 
@@ -59,7 +59,7 @@ RSpec.describe Comment, :type => :model do
 		end
 
 
-		it "marks giveen records as spam" do
+		it "marks given records as spam" do
 
 			Comment.bulk_update({:to_do => 'mark_as_spam', :comments => @array})
 			expect(Comment.find(@record.id).comment_approved).to eq('S') 

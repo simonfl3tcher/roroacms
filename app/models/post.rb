@@ -29,30 +29,21 @@ class Post < ActiveRecord::Base
 
     def self.setup_and_search_posts(params, type)
         type = type == 'page' ? 'page' : 'post'
-        posts = Post.select('*').where("disabled ='N' and post_type = ?", type).order("ancestry")
+        posts = Post.where(:disabled => 'N', :post_type => type).order("COALESCE(ancestry, id), ancestry IS NOT NULL, id").order("ancestry")
         posts
         
     end
 
-    # get all the tags for the system
+    # get all the tags/categories for the system
 
-    def self.get_tags(id = nil)
-        sql = Term.where(term_anatomies: {taxonomy: 'tag'})
+    def self.get_terms(type = 'category', id = nil)
+        sql = Term.where(term_anatomies: {taxonomy: type})
         if !id.blank?
             sql = sql.where('terms.id != ?', id)
         end
         sql.order('name asc').includes(:term_anatomy)
     end
 
-    # get all the categories for the system
-
-    def self.get_cats(id = nil)
-        sql = Term.where(term_anatomies: {taxonomy: 'category'})
-        if !id.blank?
-            sql = sql.where('terms.id != ?', id)
-        end
-        sql.order('name asc').includes(:term_anatomy)
-    end
 
     # get all the records but with an offset/limit
 

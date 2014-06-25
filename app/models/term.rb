@@ -22,17 +22,7 @@ class Term < ActiveRecord::Base
   	def self.get_redirect_url(params)
 
   		if !params[:type_taxonomy].blank?
-	  		taxonomy = params[:type_taxonomy]
-			
-			if taxonomy == 'category'
-				redirect_url = "/admin/article/categories"
-				type = I18n.t("models.term.generic.category") # are these actually needed?
-			else
-				redirect_url = "/admin/article/tags"
-				type = I18n.t("models.term.generic.tag") # are these actually needed?
-			end
-
-			redirect_url
+  			params[:type_taxonomy] == 'category' ? "/admin/article/categories" : "/admin/article/tags"
 		else
 			"/admin"
 		end
@@ -52,42 +42,6 @@ class Term < ActiveRecord::Base
 		end
 
 		return type
-
-  	end
-
-  	# is the bootstrap for the bulk update function. It takes in the call
-    # and decides what function to call in order to get the correct output
-
-  	def self.bulk_update(params)
-
-  		if !params[:to_do].blank?
-	  		action = params[:to_do]
-			action = action.gsub(' ', '_')
-
-			if params[:categories].nil?
-				action = ""
-			end
-
-			if params[:type_taxonomy] == 'category'
-
-				redirect_url = "admin_article_categories_path"
-				type = I18n.t("generic.categories")
-
-			else
-
-				redirect_url = "admin_article_tags_path"
-				type = I18n.t("generic.tags")
-
-			end
-
-			case action.downcase 
-				when "destroy"
-					bulk_update_move_to_trash params[:categories]
-				    return I18n.t("models.term.bulk_update.deleted", type: type)
-				else
-				    return I18n.t("generic.nothing")
-			end
-		end
 
   	end
 
@@ -141,6 +95,28 @@ class Term < ActiveRecord::Base
 
   			end
   		end
+
+  	end
+
+
+  	# is the bootstrap for the bulk update function. It takes in the call
+    # and decides what function to call in order to get the correct output
+
+  	def self.bulk_update(params)
+
+  		if !params[:to_do].blank?
+
+	  		action = params[:categories].nil? ? "" : params[:to_do].gsub(' ', '_')
+			type = params[:type_taxonomy] == 'category' ? I18n.t("generic.categories") : I18n.t("generic.tags")
+
+			case action.downcase 
+				when "destroy"
+					bulk_update_move_to_trash params[:categories]
+				    return I18n.t("models.term.bulk_update.deleted", type: type)
+				else
+				    return I18n.t("generic.nothing")
+			end
+		end
 
   	end
 
