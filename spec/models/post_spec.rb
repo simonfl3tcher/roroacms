@@ -28,16 +28,16 @@ RSpec.describe Post, :type => :model do
 
 	it "should return all pages" do 
 		pages = Post.setup_and_search_posts({}, 'page')
-		first_page = pages.first
-		first_page = first_page.post_type
-		expect (first_page).to eq('page')
+		first_page = pages.sample.post_type
+		expect(pages).to_not be_nil
+		expect(first_page).to eq('page')
 	end
 
 	it "should return all posts" do 
 		posts = Post.setup_and_search_posts({}, 'post')
-		first_post = posts.first
-		first_post = first_post.post_type
-		expect (first_post).to eq('post')
+		first_post = posts.sample.post_type
+		expect(posts).to_not be_nil
+		expect(first_post).to eq('post')
 	end
 
 	it "should return all tags" 
