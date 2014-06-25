@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Term, :type => :model do
 
 	let(:term) { FactoryGirl.create(:term) }
-	let(:testing_term){ FactoryGirl.create(:term, name: 'Testing Term Title') }
+	let(:testing_term){ FactoryGirl.create(:term, name: 'Testing Term Title', parent: term.id) }
 	let(:invalid_term) { FactoryGirl.create(:invalid_term) }
 
 	it "has a valid factory" do 
@@ -45,7 +45,7 @@ RSpec.describe Term, :type => :model do
 
 
 	it "updates the slug for subcategories" do 
-		
+
 	end
 
 	context "bulk updating" do 
