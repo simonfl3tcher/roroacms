@@ -12,6 +12,8 @@ class Term < ActiveRecord::Base
   	CATEGORIES = Term.includes(:term_anatomy).where(term_anatomies: {taxonomy: 'category'}).order('name asc')
   	TAGS = Term.includes(:term_anatomy).where(term_anatomies: {taxonomy: 'tag'}).order('name asc')
 
+  	before_validation :deal_with_abnormalaties
+  	after_save :deal_with_structured_url
   	
   	def self.create(params)
 		taxonomy = params[:type_taxonomy]
@@ -19,7 +21,7 @@ class Term < ActiveRecord::Base
 
   	# returns a redirect url depending on the type of taxonomy that you have edited
 
-  	def self.get_redirect_url(params)
+  	def self.get_redirect_url(params = {})
 
   		if !params[:type_taxonomy].blank?
   			params[:type_taxonomy] == 'category' ? "/admin/article/categories" : "/admin/article/tags"
@@ -50,10 +52,11 @@ class Term < ActiveRecord::Base
   	def deal_with_abnormalaties
 
   		# if the slug is empty it will take the name and create a slug
+
   		if self.slug.blank?
-			self.slug = self.name.gsub(' ', '-').downcase
+			self.slug = self.name.gsub(' ', '-').downcase.gsub(/[^a-z0-9-\s]/i, '')
 		else
-			self.slug = self.slug.gsub(' ', '-').downcase
+			self.slug = self.slug.gsub(' ', '-').downcase.gsub(/[^a-z0-9-\s]/i, '')
 		end
 
 		self.structured_url = '/' + self.slug
@@ -62,7 +65,7 @@ class Term < ActiveRecord::Base
 
   	# update the url in sub pages if the url changes 
 
-  	def self.update_slug_for_subcategories(term_id, old_url, initial = true)
+  	def update_slug_for_subcategories(term_id, old_url = nil, initial = true)
 
   		# find all the records with the old url - change the url to use the new one
   		term = Term.find(term_id)
@@ -76,14 +79,13 @@ class Term < ActiveRecord::Base
 			end
 			term.structured_url = str_url
 			term.save
-
 		end
 
 
   		if term.structured_url != old_url
   			Term.where(parent: term.id).each do |f|
   				t = Term.find(f.id)
-  				
+
   				url_old = t.structured_url
   				
   				t.structured_url = t.structured_url.gsub(old_url + '/', term.structured_url + '/')
@@ -98,6 +100,13 @@ class Term < ActiveRecord::Base
 
   	end
 
+  	def deal_with_structured_url
+  		if defined?(self.changes[:structured_url]) && !self.changes[:structured_url].blank?
+	  		old = (defined?(self.changes[:structured_url][0]) && !self.changes[:structured_url][0].blank?) ? self.changes[:structured_url][0] : ''
+	  		update_slug_for_subcategories(self.id, old)
+	  	end
+  	end
+
 
   	# is the bootstrap for the bulk update function. It takes in the call
     # and decides what function to call in order to get the correct output
@@ -106,7 +115,7 @@ class Term < ActiveRecord::Base
 
   		if !params[:to_do].blank?
 
-	  		action = params[:categories].nil? ? "" : params[:to_do].gsub(' ', '_')
+	  		action = params[:to_do].nil? ? "" : params[:to_do].gsub(' ', '_')
 			type = params[:type_taxonomy] == 'category' ? I18n.t("generic.categories") : I18n.t("generic.tags")
 
 			case action.downcase 
@@ -127,8 +136,8 @@ class Term < ActiveRecord::Base
 
 	def self.bulk_update_move_to_trash(params)
 		params.each do |val|
-			@category = Term.find(val)
-			@category.destroy
+			category = Term.find(val)
+			category.destroy
 		end
 	end
 

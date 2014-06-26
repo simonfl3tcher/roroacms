@@ -40,7 +40,7 @@ class Setting < ActiveRecord::Base
 		errors = {}
 		validate_arr.each do |f|
 			if defined?(params[f.to_s]) && params[f.to_s].blank?
-				errors[f.to_sym] = "#{f} cannot be blank"
+				errors[f.to_sym] = "#{I18n.t("views.admin.settings.tab_content.#{f.to_s}")} #{I18n.t('generic.cannot_be_blank')}"
 			end
 		end
 		errors

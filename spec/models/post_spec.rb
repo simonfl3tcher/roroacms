@@ -42,7 +42,7 @@ RSpec.describe Post, :type => :model do
 
 	it "should return all tags" do 
 		tags = Post.get_terms('tag')
-		sample = categories.sample.term_anatomy.taxonomy
+		sample = tags.sample.term_anatomy.taxonomy
 		expect(sample).to eq('tag')
 	end
 

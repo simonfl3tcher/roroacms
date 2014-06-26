@@ -20,6 +20,7 @@ en:
     trash: "Trash"
     search: "Search"
     nothing: "Nothing was done"
+    cannot_be_blank: "cannot be blank"
   controllers:
     application:
       unauthorized: "Not Authorized"

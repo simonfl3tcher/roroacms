@@ -29,7 +29,7 @@ class Post < ActiveRecord::Base
 
     def self.setup_and_search_posts(params, type)
         type = type == 'page' ? 'page' : 'post'
-        posts = Post.where(:disabled => 'N', :post_type => type).order("COALESCE(ancestry, id), ancestry IS NOT NULL, id").order("ancestry")
+        posts = Post.select('*').where("disabled ='N' and post_type = ?", type).order("ancestry")
         posts
         
     end
@@ -115,7 +115,7 @@ class Post < ActiveRecord::Base
 
         # if the slug is empty it will take the title and create a slug
         if self.post_slug.blank?
-            self.post_slug = self.post_title.gsub(' ', '-').downcase
+            self.post_slug = self.post_title.gsub(' ', '-').downcase.gsub(/[^a-z0-9-\s]/i, '')
         end
 
         # if post status is left blank it will set the status to draft

@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Term, :type => :model do
 
-	let(:term) { FactoryGirl.create(:term) }
-	let(:testing_term){ FactoryGirl.create(:term, name: 'Testing Term Title', parent: term.id) }
-	let(:invalid_term) { FactoryGirl.create(:invalid_term) }
+	let!(:term) { FactoryGirl.create(:term) }
+
+	before(:each) do 
+		@term = FactoryGirl.create(:term)
+	end
 
 	it "has a valid factory" do 
 		expect(FactoryGirl.create(:term)).to be_valid
@@ -15,21 +17,22 @@ RSpec.describe Term, :type => :model do
 	end
 
 	it "builds the slug if created without a slug" do 
-		expect(testing_term.slug).to eq('testing-term-title')
-		expect(testing_term.slug).to eq('testing-term-title')
+		record = FactoryGirl.build(:term, slug: nil)
+		expect(record).to be_valid
+		expect(record.slug).to eq(record.name.downcase.gsub(' ', '-').gsub(/[^a-z0-9-\s]/i, ''))
 	end
 
 	it "creates the structured url via the slug" do 
-		expect(testing_term.structured_url).to eq('/' + testing_term.structured_url)
+		expect(term.structured_url).to eq('/' + term.slug)
 	end
 
 	it "is invalid without a unique slug" do 
 		expect(FactoryGirl.build(:term, slug: term.slug)).to_not be_valid
 	end
 
-	it "is invalid if it the slug does not match /\A[A-Za-z0-9-]*\z/" do 
-		expect(FactoryGirl.build(:term, slug: 'Hesfd ssdf?-sdf? $')).to_not be_valid
-		expect(FactoryGirl.build(:term, slug: 'hello-how-are-_?')).to_not be_valid
+	it "should format the slug to match the /\A[A-Za-z0-9-]*\z/ format" do 
+		expect(FactoryGirl.build(:term, slug: 'Hesfd ssdf?-sdf? $')).to be_valid
+		expect(FactoryGirl.build(:term, slug: 'hello-how-are-_?')).to be_valid
 	end
 
 	it "returns the redirect url via the type of term" do 
@@ -45,18 +48,18 @@ RSpec.describe Term, :type => :model do
 
 
 	it "updates the slug for subcategories" do 
+		sub_term = FactoryGirl.create(:term, name: 'Testing Term Title', parent: term.id)
+		abort sub_term.inspect
 		term = Term.find(term.id)
-		term.slug = '/123123'
-		ter.save
-
-		expect(testing_term.structured_url).to eq('/123123/' + testing_term.slug)
+		term.slug = 'hello'
+		term.save
+		expect(Term.find(sub_term.id).structured_url).to eq('/hello/' + sub_term.slug)
 	end
 
 	context "bulk updating" do 
-		let(:array) { [FactoryGirl.create(:term).id, term.id] }
 
 		it "deletes given records" do
-			expect { Term.bulk_update({:to_do => 'destroy', :comments => @array}) }.to change(Term, :count).by(-2)
+			expect { Term.bulk_update({:to_do => 'destroy', :categories => [@term.id, term.id]}) }.to change(Term,:count).by(-2)
 		end
 
 	end

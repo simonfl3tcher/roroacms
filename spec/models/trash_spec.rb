@@ -9,7 +9,7 @@ RSpec.describe Trash, :type => :model do
 
 
 	it "should delete posts" do 
-		expect { Trash.deal_with_form({:to_do => "destory", :posts => [@post.id]}) }.to change(Term, :count).by(-1)
+		expect { Trash.deal_with_form({:to_do => "destroy", :posts => [@post.id]}) }.to change(Post,:count).by(-1)
 	end
 
 	it "should reinstate posts" do 
@@ -19,11 +19,11 @@ RSpec.describe Trash, :type => :model do
 
 	it "should reinstate pages" do 
 		Trash.deal_with_form({:to_do => "reinstate", :pages => [@page.id]})
-		expect(Post.find(@post.id).disabled).to eq('N')
+		expect(Post.find(@page.id).disabled).to eq('N')
 	end
 
 	it "should delete pages" do
-		expect { Trash.deal_with_form({:to_do => "destory", :pages => [@page.id]}) }.to change(Term, :count).by(-1)
+		expect { Trash.deal_with_form({:to_do => "destroy", :pages => [@page.id]}) }.to change(Post,:count).by(-1)
 	end
 	
 end

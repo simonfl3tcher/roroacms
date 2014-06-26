@@ -5,10 +5,7 @@ class Trash < ActiveRecord::Base
 
 	def self.deal_with_form params
 
-		action = params[:to_do]
-		action = action.gsub(' ', '_')
-
-		case action.downcase 
+		case params[:to_do].gsub(' ', '_').downcase 
 
 			when "reinstate"
 
