@@ -2,14 +2,28 @@ require 'rails_helper'
 
 RSpec.describe Trash, :type => :model do
 
-	let(:disabled_post) { FactoryGirl.create(:disabled_post) }
-	let(:disabled_page) { FactoryGirl.create(:disabled_page) }
+	before(:each) do 
+		@post = FactoryGirl.create(:disabled_post)
+		@page = FactoryGirl.create(:disabled_page)
+	end
 
 
-	it "should delete posts"
-	it "should reinstate posts"
+	it "should delete posts" do 
+		expect { Trash.deal_with_form({:to_do => "destory", :posts => [@post.id]}) }.to change(Term, :count).by(-1)
+	end
 
-	it "should reinstate pages"
-	it "should delete pages"
+	it "should reinstate posts" do 
+		Trash.deal_with_form({:to_do => "reinstate", :posts => [@post.id]})
+		expect(Post.find(@post.id).disabled).to eq('N')
+	end
+
+	it "should reinstate pages" do 
+		Trash.deal_with_form({:to_do => "reinstate", :pages => [@page.id]})
+		expect(Post.find(@post.id).disabled).to eq('N')
+	end
+
+	it "should delete pages" do
+		expect { Trash.deal_with_form({:to_do => "destory", :pages => [@page.id]}) }.to change(Term, :count).by(-1)
+	end
 	
 end

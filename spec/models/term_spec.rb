@@ -45,7 +45,11 @@ RSpec.describe Term, :type => :model do
 
 
 	it "updates the slug for subcategories" do 
+		term = Term.find(term.id)
+		term.slug = '/123123'
+		ter.save
 
+		expect(testing_term.structured_url).to eq('/123123/' + testing_term.slug)
 	end
 
 	context "bulk updating" do 
