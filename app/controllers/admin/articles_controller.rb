@@ -32,15 +32,6 @@ class Admin::ArticlesController < AdminController
 	def create
 		@record = Post.new(post_params)
 
-		# simply does some checks and updates so the data is correct when entering the data
-		# the things it checks/updates are:-
-		# - post slug
-		# - post status
-		# - structured url
-
-		@record.deal_with_abnormalaties
-		@record.additional_data(params[:additional_data]) if !params[:additional_data].blank?
-
 		respond_to do |format|
 		  
 		  if @record.save
@@ -80,7 +71,6 @@ class Admin::ArticlesController < AdminController
 
 	def update
 	    @record = Post.find(params[:id])
-	    @record.additional_data(params[:additional_data]) if !params[:additional_data].blank?
 
 	    respond_to do |format|
 	      

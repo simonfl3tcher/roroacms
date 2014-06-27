@@ -35,12 +35,29 @@ RSpec.describe Setting, :type => :model do
 	end
 
 	it "is invalid if smtp username slug is blank" do 
-		
+		@settings['smtp_username'] = ''
+		errors = Setting.manual_validation(@settings)
+		expect(errors[:smtp_username]).to eq('Server E-mail Address cannot be blank')
 	end
 
-	it "is invalid if smtp password slug is blank"
-	it "is invalid if smtp authentication slug is blank"
-	it "should save the value against the given field"
+	it "is invalid if smtp password slug is blank" do 
+		@settings['smtp_password'] = ''
+		errors = Setting.manual_validation(@settings)
+		expect(errors[:smtp_password]).to eq('SMTP password cannot be blank')
+	end
+
+	it "it sets a default if smtp authentication is blank" do 
+		@settings['authentication'] = ''
+		errors = Setting.manual_validation(@settings)
+		expect(errors[:authentication]).to be_nil
+	end
+
+	it "should save the value against the given field" do 
+		@settings['articles_slug'] = 'hello'
+		Setting.save(@settings)
+		expect(Setting.all['articles_slug']).to eq('hello')
+
+	end
 
 	it "should return the mail settings" do 
 		mail = Setting.mail_settings

@@ -24,6 +24,8 @@ class Post < ActiveRecord::Base
     POST_TAGS ||= Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy)
     POST_CATEGORIES ||= Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
 
+    before_validation :deal_with_abnormalaties
+
     # get all the posts/pages in the system - however if there is a search parameter 
     # search the necessary fields for the given value
 
@@ -42,13 +44,6 @@ class Post < ActiveRecord::Base
             sql = sql.where('terms.id != ?', id)
         end
         sql.order('name asc').includes(:term_anatomy)
-    end
-
-
-    # get all the records but with an offset/limit
-
-    def self.get_records(off, type)
-        Post.where(:disabled => 'N', :post_type => type).order("COALESCE(ancestry, id), ancestry IS NOT NULL, id").limit(10).offset(off)
     end
 
     # gets called when a post gets saved to add categories/tags against the post
@@ -116,6 +111,8 @@ class Post < ActiveRecord::Base
         # if the slug is empty it will take the title and create a slug
         if self.post_slug.blank?
             self.post_slug = self.post_title.gsub(' ', '-').downcase.gsub(/[^a-z0-9-\s]/i, '')
+        else
+            self.post_slug = self.post_slug.gsub(' ', '-').downcase.gsub(/[^a-z0-9-\s]/i, '')
         end
 
         # if post status is left blank it will set the status to draft
@@ -134,8 +131,9 @@ class Post < ActiveRecord::Base
 
     # filter/format the additional fields and add the data to the post_additional_data field of the record.
 
-    def additional_data(data)
+    def additional_data
 
+        data = self.additional_data
         if !data.blank?
             data.each do |key, value|
                 if value.count < 2
@@ -144,6 +142,7 @@ class Post < ActiveRecord::Base
             end
             self.post_additional_data = ActiveSupport::JSON.encode(data)
         end
+
     end
 
     # creates a revision record of the post
@@ -209,8 +208,6 @@ class Post < ActiveRecord::Base
     end
 
     def self.create_user_backup_record(post)
-
-        
 
         post.parent_id = post.id
         post.structured_url = nil

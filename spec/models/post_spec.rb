@@ -52,4 +52,21 @@ RSpec.describe Post, :type => :model do
 		expect(sample).to eq('category')
 	end
 
+	it "sets default values"
+	it "saves additional data"
+	
+	context "autosaving" do 
+		it "saves data in the background as a autosave record"
+		it "saves the previous data as a record"
+		it "restores the the saved data"
+	end
+
+	context "bulk updating" do 
+
+		it "sets the given recods to published"
+		it "sets the given records to draft"
+		it "disables the given records"
+
+	end
+
 end

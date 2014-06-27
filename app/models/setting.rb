@@ -7,7 +7,7 @@ class Setting < ActiveRecord::Base
 		return setting_name == 'user_groups' ? @reference[setting_name].gsub("\\", '') : @reference[setting_name]
 	end
 
-	def self.get_all
+	def self.all
 		@reference
 	end
 
@@ -52,6 +52,8 @@ class Setting < ActiveRecord::Base
 			value = ActiveSupport::JSON.encode(value) if key == 'user_groups'
 			set = Setting.where("setting_name = ?", key).update_all('setting' => value)
 		end
+
+		Setting.filter_settings
 		
 	end
 

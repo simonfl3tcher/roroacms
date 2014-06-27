@@ -30,14 +30,6 @@ class Admin::PagesController < AdminController
 	def create
 		@record = Post.new(page_params)
 
-		# simply does some checks and updates so the data is correct when entering the data
-		# the things it checks/updates are:-
-		# - post slug
-		# - post status
-		# - structured url
-
-		@record.deal_with_abnormalaties
-		@record.additional_data(params[:additional_data]) if !params[:additional_data].blank?
 
 		respond_to do |format|
 
@@ -77,11 +69,6 @@ class Admin::PagesController < AdminController
 	    
 	    # gets the current url
 	    cur_url = @record.post_slug
-
-	    # again deals with any abnormalaties
-	    @record.deal_with_abnormalaties
-	    @record.additional_data(params[:additional_data]) if !params[:additional_data].blank?
-
 
 	    update_check = Post.do_update_check(Post.find(params[:id]), params[:post])
 
