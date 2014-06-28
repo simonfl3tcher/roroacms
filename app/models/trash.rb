@@ -48,20 +48,13 @@ class Trash < ActiveRecord::Base
 	# update all of the given records to be reinstated
 
 	def self.reinstate_posts(posts)
-		posts.each do |val|
-			post = Post.find(val)
-			post.disabled = "N"
-			post.save
-		end
+		Post.where(:id => posts).update_all(:disabled => "N")
 	end
 
 	# delete all of the given records for good
 
 	def self.delete_posts(posts)
-		posts.each do |val|
-			post = Post.find(val)
-			post.destroy
-		end
+		Post.where(:id => posts).destroy_all
 	end
 
 end

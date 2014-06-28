@@ -6,7 +6,7 @@ class Admin::SettingsController < AdminController
 
 	def index 
 		Setting.reload_settings
-		@settings = Setting.all
+		@settings = Setting.get_all
 		set_title(I18n.t("generic.settings"))
 	end
 

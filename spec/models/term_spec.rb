@@ -19,7 +19,7 @@ RSpec.describe Term, :type => :model do
 	it "builds the slug if created without a slug" do 
 		record = FactoryGirl.build(:term, slug: nil)
 		expect(record).to be_valid
-		expect(record.slug).to eq(record.name.downcase.gsub(' ', '-').gsub(/[^a-z0-9-\s]/i, ''))
+		expect(record.slug).to eq(record.name.downcase.gsub(' ', '-').gsub(/[^a-z0-9\-\s]/i, ''))
 	end
 
 	it "creates the structured url via the slug" do 
@@ -30,7 +30,7 @@ RSpec.describe Term, :type => :model do
 		expect(FactoryGirl.build(:term, slug: term.slug)).to_not be_valid
 	end
 
-	it "should format the slug to match the /\A[A-Za-z0-9-]*\z/ format" do 
+	it "should format the slug to match the /\A[A-Za-z0-9\-]*\z/ format" do 
 		expect(FactoryGirl.build(:term, slug: 'Hesfd ssdf?-sdf? $')).to be_valid
 		expect(FactoryGirl.build(:term, slug: 'hello-how-are-_?')).to be_valid
 	end
@@ -49,10 +49,9 @@ RSpec.describe Term, :type => :model do
 
 	it "updates the slug for subcategories" do 
 		sub_term = FactoryGirl.create(:term, name: 'Testing Term Title', parent: term.id)
-		abort sub_term.inspect
-		term = Term.find(term.id)
-		term.slug = 'hello'
-		term.save
+		t = Term.find(term.id)
+		t.slug = 'hello'
+		t.save
 		expect(Term.find(sub_term.id).structured_url).to eq('/hello/' + sub_term.slug)
 	end
 

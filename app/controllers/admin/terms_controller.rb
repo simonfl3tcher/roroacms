@@ -63,9 +63,6 @@ class Admin::TermsController < AdminController
 	def update
 	    @category = Term.find(params[:id])
 
-	    # redirect url will be different for either tag or category
-	   	old_url = @category.structured_url
-
 	    respond_to do |format|
 	    	# deal with abnormalaties - update the structure url 
 			if @category.update_attributes(term_params)

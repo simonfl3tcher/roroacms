@@ -14,16 +14,16 @@ RSpec.describe Post, :type => :model do
 		expect(FactoryGirl.build(:post, post_title: nil)).to_not be_valid
 	end
 
-	it "is invalid without a post slug" do 
-		expect(FactoryGirl.build(:post, post_slug: nil)).to_not be_valid
+	it "it create the slug out of the title if left blank" do 
+		expect(FactoryGirl.build(:post, post_slug: nil)).to be_valid
 	end
 
 	it "is invalid without a unique slug" do
 		expect(FactoryGirl.build(:post, post_slug: @post.post_slug)).to_not be_valid
 	end
 
-	it "is invalid if it the slug does not match /\A[A-Za-z0-9-]*\z/" do 
-		expect(FactoryGirl.build(:post, post_slug: 'Hesfd sdfd sdf')).to_not be_valid
+	it "formats the slug to match /\A[A-Za-z0-9\-]*\z/" do 
+		expect(FactoryGirl.build(:post, post_slug: 'Hesfd sdfd sdf')).to be_valid
 	end
 
 	it "should return all pages" do 
@@ -63,9 +63,31 @@ RSpec.describe Post, :type => :model do
 
 	context "bulk updating" do 
 
-		it "sets the given recods to published"
-		it "sets the given records to draft"
-		it "disables the given records"
+		before(:each) do 
+			@record = FactoryGirl.create(:post)
+			@array = [@record.id, @post.id]
+		end
+
+		it "sets the given recods to published" do 
+			Post.bulk_update({:to_do => 'publish', :pages => @array}, 'pages')
+
+			expect(Post.find(@record.id).post_status).to eq('Published') 
+			expect(Post.find(@post.id).post_status).to eq('Published')
+		end
+
+		it "sets the given records to draft" do
+			Post.bulk_update({:to_do => 'draft', :pages => @array}, 'pages')
+
+			expect(Post.find(@record.id).post_status).to eq('Draft') 
+			expect(Post.find(@post.id).post_status).to eq('Draft')
+		end
+
+		it "puts the given records into trash" do
+			Post.bulk_update({:to_do => 'move_to_trash', :pages => @array}, 'pages')
+
+			expect(Post.find(@record.id).disabled).to eq('Y') 
+			expect(Post.find(@post.id).disabled).to eq('Y')
+		end
 
 	end
 

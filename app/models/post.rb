@@ -4,6 +4,8 @@ class Post < ActiveRecord::Base
 
     # relations, validations and scope
 
+    attr_accessor :skip_slug_uniqueness 
+
     belongs_to :admin
     has_many :post_abstractions
     has_many :attachments
@@ -12,7 +14,7 @@ class Post < ActiveRecord::Base
     has_many :child, :class_name => "Post", :foreign_key => "parent_id", conditions: "post_type != 'autosave'"
 
     validates :post_title, :post_slug, :presence => true
-    validates_uniqueness_of :post_slug, :scope => [:post_type]
+    validates_uniqueness_of :post_slug, :scope => [:post_type], unless: :skip_slug_uniqueness
     validates_format_of :post_slug, :with => /\A[A-Za-z0-9-]*\z/
     validates :sort_order, :numericality => true, :allow_blank => true
 
@@ -26,12 +28,15 @@ class Post < ActiveRecord::Base
 
     before_validation :deal_with_abnormalaties
 
+    before_save :deal_with_slug_update, on: :update
+    after_save :create_user_backup_record, on: :update
+
     # get all the posts/pages in the system - however if there is a search parameter 
     # search the necessary fields for the given value
 
     def self.setup_and_search_posts(params, type)
         type = type == 'page' ? 'page' : 'post'
-        posts = Post.select('*').where("disabled ='N' and post_type = ?", type).order("ancestry")
+        posts = Post.where("disabled ='N' and post_type = ?", type).order("ancestry")
         posts
         
     end
@@ -82,12 +87,14 @@ class Post < ActiveRecord::Base
 
     # if the post slug is not the same as the old slug. it will update the structured url against the record
 
-    def self.deal_with_slug_update(params, current_url)
-
-        if current_url != params[:post][:post_slug]
-            p = Post.where("(structured_url like ?)", "%#{current_url}%")
+    def deal_with_slug_update
+        # updates the old url and replaces it with the new URL if the name has changed.
+        if self.post_slug_changed?
+            old_slug = self.changes['post_slug'][0]
+            new_slug = self.changes['post_slug'][1]
+            p = Post.where("(structured_url like ?)", "%#{old_slug}%")
             p.each do |pst|
-                pst.structured_url = pst.structured_url.gsub("/#{current_url}", "/#{params[:post][:post_slug]}")
+                pst.structured_url = pst.structured_url.gsub("/#{old_slug}", "/#{new_slug}")
                 pst.save
             end 
         else 
@@ -110,9 +117,9 @@ class Post < ActiveRecord::Base
 
         # if the slug is empty it will take the title and create a slug
         if self.post_slug.blank?
-            self.post_slug = self.post_title.gsub(' ', '-').downcase.gsub(/[^a-z0-9-\s]/i, '')
+            self.post_slug = self.post_title.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
         else
-            self.post_slug = self.post_slug.gsub(' ', '-').downcase.gsub(/[^a-z0-9-\s]/i, '')
+            self.post_slug = self.post_slug.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
         end
 
         # if post status is left blank it will set the status to draft
@@ -207,22 +214,29 @@ class Post < ActiveRecord::Base
 
     end
 
-    def self.create_user_backup_record(post)
+    def create_user_backup_record
 
-        post.parent_id = post.id
-        post.structured_url = nil
-        post.updated_at = nil
-        post.created_at = nil
-        post.id = nil
 
-        if post.post_slug.empty?
-            post.post_slug = post.post_title.gsub(' ', '-')
+        if self.post_slug_changed? || self.post_content_changed? || self.post_title_changed?
+
+            post = self.attributes
+            post['parent_id'] = post['id']
+            post['structured_url'] = nil
+            post['updated_at'] = nil
+            post['created_at'] = nil
+            post['id'] = nil
+
+
+            if post['post_slug'].blank?
+                post['post_slug'] = post['post_title'].gsub(' ', '-')
+            end
+
+            post['post_status'] = 'User-Autosave'
+            post['post_type'] = 'autosave'
+
+            Post.new(post).save  and return true
+
         end
-
-        post.post_status = 'User-Autosave'
-        post.post_type = 'autosave'
-
-        Post.new(post.attributes).save({validate: false}) and return true
 
     end
 
@@ -299,14 +313,23 @@ class Post < ActiveRecord::Base
         case action.downcase 
 
             when "publish"
-                bulk_update_publish act
+
+                # update all of the given records to have a post_status of published
+                Post.where(:id => act).update_all(:post_status => "Published", :post_date => Time.now.utc.to_s(:db))
                 return I18n.t("models.post.bulk_update.published_successfully", type: type.capitalize)
+
             when "draft"
-                bulk_update_draft act
+
+                # update all of the given records to have a post_status of draft
+                Post.where(:id => act).update_all(:post_status => "Draft")
                 return I18n.t("models.post.bulk_update.draft_successfully", type: type.capitalize)
+
             when "move_to_trash"
-                bulk_update_move_to_trash act
+
+                # move all of the given records into the trash
+                Post.where(:id => act).update_all(:disabled => "Y")
                 return I18n.t("models.post.bulk_update.trash_successfully", type: type.capitalize)
+
             else
 
             respond_to do |format|
@@ -314,39 +337,6 @@ class Post < ActiveRecord::Base
             end
         end
 
-    end
-
-    private 
-
-    # update all of the given records to have a post_status of published
-
-    def self.bulk_update_publish(params)
-        params.each do |val|
-            post = Post.find(val)
-            post.post_status = "Published"
-            post.post_date = Time.now.utc.to_s(:db)
-            post.save
-        end
-    end
-
-    # update all of the given records to have a post_status of draft
-
-    def self.bulk_update_draft(params)
-        params.each do |val|
-            post = Post.find(val)
-            post.post_status = "Draft"
-            post.save
-        end 
-    end
-
-    # move all of the given records into the trash
-
-    def self.bulk_update_move_to_trash(params)
-        params.each do |val|
-            post = Post.find(val)
-            post.disabled ="Y"
-            post.save
-        end
     end
 
 end

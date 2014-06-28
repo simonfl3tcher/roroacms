@@ -13,6 +13,7 @@ class Term < ActiveRecord::Base
   	TAGS = Term.includes(:term_anatomy).where(term_anatomies: {taxonomy: 'tag'}).order('name asc')
 
   	before_validation :deal_with_abnormalaties
+  	after_create :deal_with_structured_url
   	after_save :deal_with_structured_url
   	
   	def self.create(params)
@@ -54,9 +55,9 @@ class Term < ActiveRecord::Base
   		# if the slug is empty it will take the name and create a slug
 
   		if self.slug.blank?
-			self.slug = self.name.gsub(' ', '-').downcase.gsub(/[^a-z0-9-\s]/i, '')
+			self.slug = self.name.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
 		else
-			self.slug = self.slug.gsub(' ', '-').downcase.gsub(/[^a-z0-9-\s]/i, '')
+			self.slug = self.slug.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
 		end
 
 		self.structured_url = '/' + self.slug
@@ -78,7 +79,7 @@ class Term < ActiveRecord::Base
 				str_url = Term.find(term.parent.to_i).structured_url + str_url
 			end
 			term.structured_url = str_url
-			term.save
+			term.save(:validate => false)
 		end
 
 
@@ -120,7 +121,8 @@ class Term < ActiveRecord::Base
 
 			case action.downcase 
 				when "destroy"
-					bulk_update_move_to_trash params[:categories]
+					# move all of the given taxonomys to the trash area
+					Term.where(:id => params[:categories]).destroy_all
 				    return I18n.t("models.term.bulk_update.deleted", type: type)
 				else
 				    return I18n.t("generic.nothing")
@@ -128,17 +130,5 @@ class Term < ActiveRecord::Base
 		end
 
   	end
-
-
-	private 
-
-	# move all of the given taxonomys to the trash area
-
-	def self.bulk_update_move_to_trash(params)
-		params.each do |val|
-			category = Term.find(val)
-			category.destroy
-		end
-	end
 
 end

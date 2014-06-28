@@ -55,7 +55,7 @@ RSpec.describe Setting, :type => :model do
 	it "should save the value against the given field" do 
 		@settings['articles_slug'] = 'hello'
 		Setting.save(@settings)
-		expect(Setting.all['articles_slug']).to eq('hello')
+		expect(Setting.get_all['articles_slug']).to eq('hello')
 
 	end
 

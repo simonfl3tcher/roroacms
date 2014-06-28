@@ -66,21 +66,10 @@ class Admin::PagesController < AdminController
 
 	def update
 	    @record = Post.find(params[:id])
-	    
-	    # gets the current url
-	    cur_url = @record.post_slug
-
-	    update_check = Post.do_update_check(Post.find(params[:id]), params[:post])
-
 
 	    respond_to do |format|
 
 	      if @record.update_attributes(page_params)
-
-	      	# updates the old url and replaces it with the new URL if the name has changed.
-	      	Post.deal_with_slug_update params, cur_url
-
-	      	Post.create_user_backup_record(update_check) if !update_check.blank?
 
 	        format.html { redirect_to edit_admin_page_path(@record.id), notice: I18n.t("controllers.admin.pages.update.flash.success") }
 

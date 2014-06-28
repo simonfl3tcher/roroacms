@@ -25,8 +25,6 @@ class Admin::CommentsController < AdminController
 	def update
 	    @comment = Comment.find(params[:id])
 	    atts = comments_params
-	    #  remove any html from the comment as we do not need it and it can be detrimental to the system
-	    atts[:comment] = atts[:comment].to_s.gsub(%r{</?[^>]+?>}, '')
 
 	    respond_to do |format|
 

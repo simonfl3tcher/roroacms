@@ -11,6 +11,7 @@ class Comment < ActiveRecord::Base
 	# set defaults before comment gets added to the database 
 
 	before_create :set_defaults
+	before_validation :strip_html
 
 	# The bootstrap for the bulk update function. It takes in the call
 	# and decides what function to call in order to get the correct output
@@ -24,16 +25,20 @@ class Comment < ActiveRecord::Base
 
 			case action.downcase 
 				when "unapprove"
-					bulk_update_unapprove params[:comments]
+					# bulk unapprove given comments
+					Comment.where(:id => params[:comments]).update_all(:comment_approved => "N")
 					return 'unapproved'
 				when "approve"
-					bulk_update_approve params[:comments]
+					# bulk approve given comments
+					Comment.where(:id => params[:comments]).update_all(:comment_approved => "Y")
 					return 'approved'
 				when "mark_as_spam"
-					bulk_update_mark_as_spam params[:comments]
+					# bulk mark as spam for given comments
+					Comment.where(:id => params[:comments]).update_all(:comment_approved => "S", :is_spam => 'Y')
 					return 'marked as spam'
 				when "destroy"
-					bulk_update_destroy params[:comments]
+					# bulk delete given comments
+					Comment.where(:id => params[:comments]).destroy_all
 					return 'destroyed'
 			end
 		else
@@ -45,51 +50,17 @@ class Comment < ActiveRecord::Base
 
 	private 
 
+	# strip any sort of html, we don't want javascrpt injection
+
+	def strip_html
+		self.comment = self.comment.to_s.gsub(%r{</?[^>]+?>}, '').gsub(/<script.*?>[\s\S]*<\/script>/i, "")
+	end
+
 	# set default values of the record before adding to the database
 
 	def set_defaults
 		self.comment_approved = 'N'
 		self.submitted_on = Time.now.to_s(:db) 
-	end
-
-	# bulk unapprove given comments
-
-	def self.bulk_update_unapprove(comments)
-		comments.each do |val|
-			comment = Comment.find(val)
-			comment.comment_approved = "N"
-			comment.save
-		end
-	end
-
-	# bulk approve given comments
-	
-	def self.bulk_update_approve(comments)
-		comments.each do |val|
-			comment = Comment.find(val)
-			comment.comment_approved = "Y"
-			comment.save
-		end
-	end
-
-	# bulk mark as spam for given comments
-	
-	def self.bulk_update_mark_as_spam(comments)
-		comments.each do |val|
-			comment = Comment.find(val)
-			comment.comment_approved = "S"
-			comment.is_spam = "Y"
-			comment.save
-		end
-	end
-
-	# bulk delete given comments
-	
-	def self.bulk_update_destroy(comments)
-		comments.each do |val|
-			comment = Comment.find(val)
-			comment.destroy
-		end
 	end
   
 end
