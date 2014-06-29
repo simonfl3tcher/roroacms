@@ -1,10 +1,11 @@
 class Post < ActiveRecord::Base
+
+    ## misc ##
   
     has_ancestry
-
-    # relations, validations and scope
-
     attr_accessor :skip_slug_uniqueness 
+
+    ## associations ##
 
     belongs_to :admin
     has_many :post_abstractions
@@ -13,23 +14,32 @@ class Post < ActiveRecord::Base
     has_many :terms, :through => :term_relationships
     has_many :child, :class_name => "Post", :foreign_key => "parent_id", conditions: "post_type != 'autosave'"
 
+    ## validations ##
+
     validates :post_title, :post_slug, :presence => true
     validates_uniqueness_of :post_slug, :scope => [:post_type], unless: :skip_slug_uniqueness
     validates_format_of :post_slug, :with => /\A[A-Za-z0-9-]*\z/
     validates :sort_order, :numericality => true, :allow_blank => true
 
+    ## named scopes ##
+
     scope :from_this_year, where("post_date > ? AND post_date < ?", Time.now.beginning_of_year, Time.now.end_of_year)
 
-    # general data that doesn't change very often
+    ## model constants ##
 
     POST_STATUS = ["Published", "Draft", "Disabled"]
     POST_TAGS ||= Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy)
     POST_CATEGORIES ||= Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
 
-    before_validation :deal_with_abnormalaties
 
+    ## callbacks ##
+
+    before_validation :deal_with_abnormalaties
     before_save :deal_with_slug_update, on: :update
-    after_save :create_user_backup_record, on: :update
+    after_update :create_user_backup_record, on: :update
+
+
+    ## methods ##
 
     # get all the posts/pages in the system - however if there is a search parameter 
     # search the necessary fields for the given value
@@ -138,9 +148,8 @@ class Post < ActiveRecord::Base
 
     # filter/format the additional fields and add the data to the post_additional_data field of the record.
 
-    def additional_data
+    def additional_data(data)
 
-        data = self.additional_data
         if !data.blank?
             data.each do |key, value|
                 if value.count < 2
@@ -156,10 +165,8 @@ class Post < ActiveRecord::Base
 
     def self.do_autosave(params, post)
 
-
         parent = Post.find(params[:post][:id])
-        @autosave_records = Post.where("ancestry = ? AND post_type = 'autosave' AND post_status = 'Autosave'", parent.id).order("created_at DESC")
-        post.post_content = params[:ck_content]
+        @autosave_records = Post.where("ancestry = '?' AND post_type = 'autosave' AND post_status = 'Autosave'", parent.id).order("created_at DESC")
 
         if (remove_uncessary(post) != remove_uncessary(parent)) && (remove_uncessary(post) != remove_uncessary(@autosave_records.first))
 
@@ -233,42 +240,32 @@ class Post < ActiveRecord::Base
 
             post['post_status'] = 'User-Autosave'
             post['post_type'] = 'autosave'
-
-            Post.new(post).save  and return true
+            
+            Post.new(post.symbolize_keys).save(:validate => false) and return true;
 
         end
 
     end
 
-    def self.do_update_check(post, params)
-
-        str1 = params[:post_content] + '//' + params[:post_title] + '//' + params[:post_slug] + '//'
-        str2 = post[:post_content] + '//' + post[:post_title] + '//' + post[:post_slug] + '//'
-
-        if str1 != str2
-            post
-        else 
-            nil
-        end
-
-    end
 
     # remove the unwanted keys from the hash to be able to successfully compare the hashes
 
 
     def self.remove_uncessary(obj)
 
-        obj.post_content = obj.post_content.gsub("\n", ' ').gsub("\r", ' ').squeeze(' ')
-        obj = obj.attributes
-        obj.delete('id')
-        obj.delete('created_at')
-        obj.delete('updated_at')
-        obj.delete('ancestry')
-        obj.delete('structured_url')
-        obj.delete('post_visible')
-        obj.delete('post_status')
-        obj.delete('post_type')
-        obj.delete('parent_id')
+        if !obj.blank?
+            obj.post_content = obj.post_content.gsub("\n", ' ').gsub("\r", ' ').squeeze(' ')
+            obj = obj.attributes
+            obj.delete('id')
+            obj.delete('created_at')
+            obj.delete('updated_at')
+            obj.delete('ancestry')
+            obj.delete('structured_url')
+            obj.delete('post_visible')
+            obj.delete('post_status')
+            obj.delete('post_type')
+            obj.delete('parent_id')
+        end
 
         obj
 

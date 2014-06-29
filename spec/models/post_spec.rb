@@ -52,13 +52,33 @@ RSpec.describe Post, :type => :model do
 		expect(sample).to eq('category')
 	end
 
-	it "sets default values"
-	it "saves additional data"
+	it "sets default values" do 
+		expect(@post.post_status).to eq('Draft')
+		expect(@post.post_slug).to_not be_nil
+	end
 	
 	context "autosaving" do 
-		it "saves data in the background as a autosave record"
-		it "saves the previous data as a record"
-		it "restores the the saved data"
+
+		it "saves data in the background as a autosave record" do 
+			post = Post.create(@post.attributes)
+			ret = Post.do_autosave({:post => @post.attributes.symbolize_keys}, post)
+			expect(ret).to eq("nothing changed")
+
+			post[:post_title] = 'testing rspec'
+			ret = Post.do_autosave({:post => @post.attributes.symbolize_keys}, post)
+			expect(ret).to eq("passed")
+
+		end
+
+		it "saves the previous data as a record" do 
+			p = Post.find(@post.id) 
+			post_title = p.post_title
+			p.post_title = 'fff'
+
+			expect{p.save}.to change(Post,:count).by(1)
+
+		end
+
 	end
 
 	context "bulk updating" do 

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Admin, :type => :model do
 
-	let(:admin) { FactoryGirl.create(:admin) }
-    let(:user) { FactoryGirl.build(:admin) }
+	let!(:admin) { FactoryGirl.create(:admin) }
+    let!(:user) { FactoryGirl.build(:admin) }
 	
 	it "has a valid factory" do 
 		expect(user).to be_valid
@@ -33,14 +33,16 @@ RSpec.describe Admin, :type => :model do
 		expect(FactoryGirl.build(:admin, password: '123123123')).to be_valid
 	end
 
-	it "returns overlord as 'N'" do 
-		user.deal_with_abnormalaties
-		expect(user.overlord).to eq('N')
-	end
+	context "set defaults" do 
 
-	it "should set the profile image" do 
-		user.deal_with_abnormalaties
-		expect(user.avatar).to_not be_blank
+		it "returns overlord as 'N'" do 
+			expect(admin.overlord).to eq('N')
+		end
+
+		it "should set the profile image" do 
+			expect(admin.avatar).to_not be_blank
+		end
+
 	end
 
 	it "should return an array if access levels" do 

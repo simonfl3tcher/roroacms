@@ -1,21 +1,30 @@
 class Admin < ActiveRecord::Base
 
-	# devise configuration
+	## devise ##
 	attr_accessor :login
 	devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 	
-	# relations and validations
+	## associations ##
 
 	has_many :posts
+
+	## validations ##
+
 	validates :username, presence: true
 	validates :username, :uniqueness => {:case_sensitive => false}
 	validates :access_level, presence: true
-
 	validates :password, length: { in: 6..128 }, on: :create
 	validates :password, length: { in: 6..128 }, on: :update, allow_blank: true
 
-	# general data that doesn't change very often
+	## model constants ##
+
 	GET_ADMINS = Admin.all
+
+	## callbacks ##
+
+	before_create :deal_with_abnormalaties
+
+	## methods ##
 
 	# set the session data for the admin to allow/restrict the necessary areas
 
@@ -42,12 +51,12 @@ class Admin < ActiveRecord::Base
 	# end
 
 	def self.find_first_by_auth_conditions(warden_conditions)
-      conditions = warden_conditions.dup
-      if login = conditions.delete(:login)
-        where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
-      else
-        where(conditions).first
-      end
+		conditions = warden_conditions.dup
+		if login = conditions.delete(:login)
+			where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+		else
+			where(conditions).first
+		end
     end
 
 
@@ -75,10 +84,8 @@ class Admin < ActiveRecord::Base
 	# set the defaults for the admin
 
 	def deal_with_abnormalaties
-
 		self.overlord = 'N'
 		self.avatar = 'https://s3.amazonaws.com/roroa/default-user-icon-profile.png'
-
 	end
 
 	# If the has cover image has been removed this will be set to nothing and will update the cover image option agasint the admin

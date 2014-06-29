@@ -1,5 +1,8 @@
 class TermRelationship < ActiveRecord::Base
-	# relations and validations
+	
+	## associations ##
+
 	belongs_to :post
 	belongs_to :term
+	
 end

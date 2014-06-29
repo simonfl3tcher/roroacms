@@ -1,17 +1,24 @@
 class Comment < ActiveRecord::Base
 
+	## misc ##
+
 	has_ancestry
 	
-	# relations and validations
+	## associations ##
 
 	belongs_to :post
+
+	## validations ##
+
 	validates :email, presence: true, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create }
 	validates :author, :comment, :presence => true
 
-	# set defaults before comment gets added to the database 
+	## callbacks ##
 
 	before_create :set_defaults
 	before_validation :strip_html
+
+	## methods ##
 
 	# The bootstrap for the bulk update function. It takes in the call
 	# and decides what function to call in order to get the correct output

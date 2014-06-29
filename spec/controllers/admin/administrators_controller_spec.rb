@@ -20,16 +20,6 @@ RSpec.describe Admin::AdministratorsController, :type => :controller do
 	
 	end
 
-	describe "GET #show" do 
-		
-		it "should redirect to administrators#edit" do 
-			admin = FactoryGirl.create(:admin)
-			get :show, id: admin 
-			expect(response).to redirect_to edit_admin_administrator_path(admin)
-		end  
-
-	end
-
 	describe "GET #new" do
 
 		it "should create a new admin object" do 

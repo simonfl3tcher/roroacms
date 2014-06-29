@@ -16,9 +16,9 @@ Roroacms::Application.routes.draw do
     get 'article/categories', to: 'terms#categories', as: 'article_categories'
     get 'article/tags', to: 'terms#tags', as: 'article_tags'
     
-    resources :login, :users, :administrators, :themes
+    resources :login, :users, :themes
 
-    resources :administrators, only: [:index, :new, :create, :edit, :update, :destroy]
+    resources :administrators, :except => [:show]
 
     resources :menus do 
 
@@ -46,7 +46,7 @@ Roroacms::Application.routes.draw do
       end
     end
 
-    resources :articles do
+    resources :articles, :except => [:show] do
       collection do
         post 'bulk_update'
         post 'autosave_create'

@@ -34,7 +34,6 @@ class Admin::AdministratorsController < AdminController
 
 	def create
 		@admin = Admin.new(administrator_params)
-		@admin.deal_with_abnormalaties
 		respond_to do |format|
 		  
 		  if @admin.save

@@ -29,6 +29,7 @@ class Admin::PagesController < AdminController
 
 	def create
 		@record = Post.new(page_params)
+		@record.additional_data(params[:additional_data]) if !params[:additional_data].blank?
 
 
 		respond_to do |format|
@@ -66,6 +67,7 @@ class Admin::PagesController < AdminController
 
 	def update
 	    @record = Post.find(params[:id])
+	    @record.additional_data(params[:additional_data]) if !params[:additional_data].blank?
 
 	    respond_to do |format|
 

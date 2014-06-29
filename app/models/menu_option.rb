@@ -1,6 +1,10 @@
 class MenuOption < ActiveRecord::Base
-	# relations and validations
+	
+	## associations ##
+
 	belongs_to :menu 
+
+	## methods ##
 
 	# saves the menu on the fly via an ajax call. This is a seperate function because
 	# the ajax call sends through a json object. It decodes this, updates the values and saves the menu

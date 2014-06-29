@@ -32,9 +32,6 @@ $(document).ready ->
         method = form.attr("method").toLowerCase() # "get" or "post"
         action = form.attr("action")
         formData = form.serialize()
-        for instance of CKEDITOR.instances
-          c = CKEDITOR.instances[instance].getData()
-        formData += "&ck_content=" + encodeURIComponent(c)
         if $("input[name=\"_method\"]").length > 0
           $.post "/admin/articles/autosave_update", formData, (data) ->
             if data != 'f'
