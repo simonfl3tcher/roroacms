@@ -53,7 +53,7 @@ class Setting < ActiveRecord::Base
 			set = Setting.where("setting_name = ?", key).update_all('setting' => value)
 		end
 
-		Setting.filter_settings
+		Setting.reload_settings
 		
 	end
 

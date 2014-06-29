@@ -1,15 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe Admin::ArticlesController, :type => :controller do
+RSpec.describe Admin::PagesController, :type => :controller do
 
 	let(:admin) { FactoryGirl.create(:admin) }
 	before { sign_in(admin) }
+
+	before(:each) do 
+		@post = FactoryGirl.create(:post)
+	end 
 
 	describe "GET #index" do 
 		
 		it "populates an array of articles" do 
 			get :index
-	    	expect(assigns(:posts)).to_not be_nil
+	    	expect(assigns(:pages)).to_not be_nil
 		end
 		
 		it "renders the :index template" do 
@@ -49,7 +53,7 @@ RSpec.describe Admin::ArticlesController, :type => :controller do
 
 			it "redirects to administrators#index" do 
 				post :create, {post: FactoryGirl.attributes_for(:post)}
-				expect(response).to redirect_to admin_articles_path
+				expect(response).to redirect_to admin_pages_path
 			end
 
 		end
@@ -90,7 +94,7 @@ RSpec.describe Admin::ArticlesController, :type => :controller do
 
 			it "redirects to the updated post" do 
 				put :update, { post: FactoryGirl.attributes_for(:post, post_title: "123123"), id: @post }
-				expect(response).to redirect_to edit_admin_article_path(@post)
+				expect(response).to redirect_to edit_admin_page_path(@post)
 			end
 
 		end
@@ -130,7 +134,38 @@ RSpec.describe Admin::ArticlesController, :type => :controller do
 
 		it "redirect to artciles#index" do 
 			delete :destroy, id: @post
-			expect(response).to redirect_to admin_articles_path
+			expect(response).to redirect_to admin_pages_path
+		end
+
+	end
+
+	describe "POST #bulk_update" do 
+
+		before(:each) do 
+			@array = [@post.id, FactoryGirl.create(:post).id]
+		end
+		
+		it "marks the given pages as published" do
+			post :bulk_update, { to_do: "publish", pages: @array }
+			@post.reload
+			expect(@post.post_status).to eq('Published')
+			expect(response).to redirect_to admin_pages_path
+		end
+
+		it "marks the given pages as drafts" do 
+			@post.post_status = 'published'
+			post :bulk_update, { to_do: "draft", pages: @array }
+			@post.reload
+			expect(@post.post_status).to eq('Draft')
+			expect(response).to redirect_to admin_pages_path
+		end	
+
+
+		it "moves the given pages into trash" do
+			post :bulk_update, { to_do: "move_to_trash", pages: @array }
+			@post.reload
+			expect(@post.disabled).to eq('Y')
+			expect(response).to redirect_to admin_pages_path
 		end
 
 	end

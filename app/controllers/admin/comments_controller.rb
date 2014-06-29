@@ -78,6 +78,7 @@ class Admin::CommentsController < AdminController
 	def mark_as_spam
 		comment = Comment.find(params[:id])
 		comment.comment_approved = "S"
+		comment.is_spam = "S"
 		respond_to do |format|
 			if comment.save
 				format.html { redirect_to admin_comments_path, notice: I18n.t("controllers.admin.comments.mark_as_spam.flash.success") }

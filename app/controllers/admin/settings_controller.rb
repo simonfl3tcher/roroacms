@@ -12,12 +12,9 @@ class Admin::SettingsController < AdminController
 
 
 	def create
-		redirect = params[:redirect]
-
 		# To do update this table we loop through the fields and update the key with the value. 
 		# In order to do this we need to remove any unnecessary keys from the params hash
 		remove_unwanted_keys
-
 
 		# loop through the param fields and update the key with the value
 		validation = Setting.manual_validation(params)

@@ -26,16 +26,6 @@ class Admin::TrashController < AdminController
 	end
 
 
-	# remvove all of the posts/pages in the trash area in one go
-
-	def empty_posts 
-		type = params[:format]
-		Post.where(:disabled => 'Y', :post_type => type).destroy_all
-		
-		redirect_to admin_trash_path, notice: I18n.t("controllers.admin.trash.empty_posts.flash.success", type: type)
-	end
-
-
 	# Takes all of the checked options and updates them with the given option selected. 
 	# The options for the bulk update in pages area are:-
 	# - Reinstate

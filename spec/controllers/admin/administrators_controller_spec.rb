@@ -76,10 +76,6 @@ RSpec.describe Admin::AdministratorsController, :type => :controller do
 			@admin = FactoryGirl.create(:admin, first_name: "Simon", last_name: "Fletcher")
 		end
 
-		it 'debugging...' do
-			expect(FactoryGirl.create(:admin)).to be_valid
-		end
-
 		context "valid attributes" do 
 
 			it "located the requested @admin" do 

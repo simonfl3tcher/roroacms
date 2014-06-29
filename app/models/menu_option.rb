@@ -11,6 +11,8 @@ class MenuOption < ActiveRecord::Base
 
 	def self.save_menu_on_fly(p)
 
+		return true if p[:data].blank?
+
 		f = ActiveSupport::JSON.decode p[:data]
 		MenuOption.destroy_all(:menu_id => p[:menuid])
 
