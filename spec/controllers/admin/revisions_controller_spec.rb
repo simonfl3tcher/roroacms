@@ -11,7 +11,7 @@ RSpec.describe Admin::RevisionsController, :type => :controller do
 
 	describe "PUT #edit" do 
 
-		it "should create the revision object" do 
+		it "should get the revision object" do 
 			get :edit, id: @revision
 			expect(assigns(:post)).to_not be_nil
 			expect(assigns(:revision)).to_not be_nil

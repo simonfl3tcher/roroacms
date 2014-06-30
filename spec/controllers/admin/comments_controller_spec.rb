@@ -101,7 +101,7 @@ RSpec.describe Admin::CommentsController, :type => :controller do
 
 		it "destroys the given comments" do
 			post :bulk_update, { to_do: "destroy", comments: @array }
-			expect(Post.where(:id => @comment.id)).to_not exist
+			expect(Comment.where(:id => @comment.id)).to_not exist
 			expect(response).to redirect_to admin_comments_path
 		end
 
