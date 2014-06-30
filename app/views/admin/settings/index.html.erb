@@ -284,7 +284,7 @@
 
             <div class="userGroupOptions">
 
-              <% @json.decode(@settings['user_groups']).each do |key, value| %>
+              <% @json.decode(@settings['user_groups'].gsub('\\', '')).each do |key, value| %>
 
               <%= render :partial => 'admin/partials/user_group_view', :locals => {:key => key, :value => value } %>
 

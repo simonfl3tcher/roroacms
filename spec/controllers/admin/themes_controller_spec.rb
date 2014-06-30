@@ -34,14 +34,17 @@ RSpec.describe Admin::ThemesController, :type => :controller do
 	end
 
 	describe "DELETE #destroy" do 
+
+		before(:each) do 
+			Dir.mkdir("#{Rails.root}/app/views/theme/testing") unless File.exists?("#{Rails.root}/app/views/theme/testing")
+			delete :destroy, id: 'testing'
+		end
 		
 		it "deletes the given theme" do 
-			delete :destroy, id: 'roroa1'
-			expect(File.directory?("#{Rails.root}/app/views/theme/roroa1")).to be_false 
+			expect(File.directory?("#{Rails.root}/app/views/theme/testing")).to be_falsey
 		end
 
 		it "redirects to themes#index" do 
-			delete :destroy, id: 'roroa1'
 			expect(response).to redirect_to admin_themes_path
 		end
 

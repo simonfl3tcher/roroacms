@@ -125,7 +125,7 @@ class Term < ActiveRecord::Base
         if !params[:to_do].blank?
 
         action = params[:to_do].nil? ? "" : params[:to_do].gsub(' ', '_')
-          type = params[:type_taxonomy] == 'category' ? I18n.t("generic.categories") : I18n.t("generic.tags")
+        type = params[:type_taxonomy] == 'category' ? I18n.t("generic.categories") : I18n.t("generic.tags")
 
         case action.downcase 
             when "destroy"

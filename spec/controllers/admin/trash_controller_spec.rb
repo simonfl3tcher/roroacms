@@ -53,7 +53,6 @@ RSpec.describe Admin::TrashController, :type => :controller do
 
 		it "deletes the given posts" do
 			post :deal_with_form, { to_do: "destroy", pages: @array }
-			@post.reload
 			expect(Post.where(:id => @post.id)).to_not exist
 			expect(response).to redirect_to admin_trash_path
 		end

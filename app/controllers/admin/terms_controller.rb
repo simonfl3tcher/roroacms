@@ -80,14 +80,13 @@ class Admin::TermsController < AdminController
 	# delete the term
 
 	def destroy
-		# return url will be different for either tag or category
-	    session[:return_to] = request.referer
-
 	    @term = Term.find(params[:id])
+		# return url will be different for either tag or category
+	    redirect_url = Term.get_redirect_url({:type_taxonomy => @term.term_anatomy.taxonomy})
 	    @term.destroy
 
 	    respond_to do |format|
-	      format.html { redirect_to "#{session[:return_to]}", notice: I18n.t("controllers.admin.terms.destroy.flash.success") }
+	      format.html { redirect_to URI.parse(redirect_url).path, notice: I18n.t("controllers.admin.terms.destroy.flash.success") }
 	    end
 	end
 

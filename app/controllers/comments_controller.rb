@@ -8,6 +8,7 @@ class CommentsController < ApplicationController
 	def create
 		# Check to see if comments are actually allowed, this can be switched on and off in the admin panel
 		if comments_on
+
 			
 			session[:return_to] = request.referer
 			@comment = Comment.new(comments_params)
