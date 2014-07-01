@@ -7,7 +7,7 @@ Roroacms::Application.routes.draw do
     get "admin/logout", :to => "devise/sessions#destroy"
   end
 
-  resources :pages,  only: [:index, :show, :dynamic_page]
+  resources :pages
   resources :comments
   
   namespace :admin do
@@ -19,6 +19,13 @@ Roroacms::Application.routes.draw do
     resources :login, :users, :themes
 
     resources :administrators, :except => [:show]
+
+    resources :comments do
+      member {get 'mark_as_spam'}
+      collection do
+        post 'bulk_update'
+      end
+    end
 
     resources :menus do 
 
@@ -39,12 +46,6 @@ Roroacms::Application.routes.draw do
       end
     end
 
-    resources :comments do
-      member {get 'mark_as_spam'}
-      collection do
-        post 'bulk_update'
-      end
-    end
 
     resources :articles, :except => [:show] do
       collection do

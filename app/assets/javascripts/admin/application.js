@@ -4,5 +4,6 @@
 //= require admin/datatables/js/jquery.datatables.js
 //= require admin/datatables/js/datatables.bootstrap.js
 //= require_tree ../../../../vendor/assets/javascripts/admin
+//= require jquery_ujs
 //= require_tree .
 //= require_directory .
