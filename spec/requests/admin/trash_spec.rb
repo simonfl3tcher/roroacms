@@ -2,50 +2,67 @@ require 'rails_helper'
 
 RSpec.describe "Admin::Trash", :type => :request do
 
-	let(:admin) { FactoryGirl.create(:admin) }
+	let!(:admin) { FactoryGirl.create(:admin) }
   	before { sign_in(admin) }
 
-	describe "GET /admin/administrators" do
+	describe "GET /admin/trash" do
 
-		context "without posts or pages in the trash can" do 
+		it "should display trash" do
+			visit admin_trash_path
+			expect(page).to have_content "Trash"
+		end
+
+		it "should show no records message" do 
+			visit admin_trash_path
 			expect(page).to have_content('The trash can is currently empty')
 		end
 
 		context "with posts or pages in the trash can" do 
 
-			before(:each) do 
-				let!(:post) { FactoryGirl.create(:post, disabled: 'Y', post_type: 'post') }
-				let!(:page) { FactoryGirl.create(:post, disabled: 'Y', post_type: 'page') }
-				visit admin_trash_path
-			end
-
-			it "should display trash" do 
-				expect(page).to have_content "Trash"
-			end
+			let!(:post_post) { FactoryGirl.create(:post, disabled: 'Y', post_type: 'post') }
+			let!(:post_page) { FactoryGirl.create(:post, disabled: 'Y', post_type: 'page') }
 
 			it "should have have post on view" do 
-				expect(page).to have_content post.title
+				visit admin_trash_path
+				save_and_open_page
+				expect(page).to have_content post_post.post_title
 			end
 
 			it "should have page on view" do 
-				expect(page).to have_content page.title
+				visit admin_trash_path
+				expect(page).to have_content post_page.post_title
 			end
 
-			it "should delete all records" do 
-				# this html find function needs cleaning up
-				find('page #delete_all').click
+			it "should display the total count of pages" do 
+				visit admin_trash_path
+				expect(page).to have_content("Total Count #{Post.where(:disabled => 'Y', :post_type => 'page').count}")
+			end
+
+			it "should display the total count of posts" do 
+				visit admin_trash_path
+				expect(page).to have_content("Total Count #{Post.where(:disabled => 'Y', :post_type => 'post').count}")
+			end
+
+			# tests what happens if there is no posts but there are pages
+
+
+			# put these at the bottom
+
+			it "should delete all post records" do 
+				visit admin_trash_path
+				find(:css, "#posts").click_link("Delete all")
+				save_and_open_page
 				expect(current_path).to eq(admin_trash_path)
-				expect(page).to have_content('')
+				expect(page).to have_content('All posts were removed from the trash can')
+				expect(page).to have_content post_page.post_title
 			end
 
-			it "should delete certian records" do 
-				
-			end
-
-			it "should reinstate certain records" do 
-				first('reinstate').click
+			it "should delete all page records" do 
+				visit admin_trash_path
+				find(:css, "#pages").click_link("Delete all")
+				save_and_open_page
 				expect(current_path).to eq(admin_trash_path)
-				expect(page).to have_content('These records was successfully reinstated')
+				expect(page).to have_content('All pages were removed from the trash can')
 			end
 
 		end

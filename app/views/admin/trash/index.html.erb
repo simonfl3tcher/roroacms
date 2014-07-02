@@ -16,7 +16,7 @@
 
     <% if !@posts.blank? %>
 
-      <div class="col-md-<%= size %>">
+      <div class="col-md-<%= size %>" id="posts">
 
         <%= form_tag site_url("admin/trash/deal_with_form") do %>
 
@@ -60,7 +60,7 @@
 
   <% if !@pages.blank? %>
 
-    <div class="col-md-<%= size %>">
+    <div class="col-md-<%= size %>" id="pages">
 
       <%= form_tag site_url("admin/trash/deal_with_form") do %>
 

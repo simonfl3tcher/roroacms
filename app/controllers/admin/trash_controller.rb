@@ -12,6 +12,7 @@ class Admin::TrashController < AdminController
 		
 		# get all posts/pages that are in the trash area
 		@records = Post.find(:all, :conditions => { :disabled => 'Y' })
+		@posts = Post.find(:all, :conditions => { :disabled => 'Y', :post_type => 'post' })
 		@pages = Post.find(:all, :conditions => { :disabled => 'Y', :post_type => 'page' })
 	end
 
@@ -25,6 +26,15 @@ class Admin::TrashController < AdminController
 	   	redirect_to admin_trash_path, notice: I18n.t("controllers.admin.trash.destroy.flash.success")
 	end
 
+	# remvove all of the posts/pages in the trash area in one go
+
+	def empty_articles
+		type = params[:format]
+		Post.where(:disabled => 'Y', :post_type => type).destroy_all
+		
+		redirect_to admin_trash_path, notice: I18n.t("controllers.admin.trash.empty_posts.flash.success", type: type)
+	end
+	
 
 	# Takes all of the checked options and updates them with the given option selected. 
 	# The options for the bulk update in pages area are:-
