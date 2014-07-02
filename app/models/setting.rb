@@ -1,4 +1,6 @@
 class Setting < ActiveRecord::Base
+
+	after_save :reload_settings
 	
 	# get a certain settings value
 

@@ -33,19 +33,6 @@ RSpec.describe "Admin::Comments", :type => :request do
 	    	expect(page).to have_content('Comment was successfully marked as spam')
 	    end
 
-	    context "bulk update" do 
-
-	    	it "should mark all comments as approved" do
-	    	end
-
-	    	it "should mark all comments as spam" do
-	    	end
-
-	    	it "should delete all comments" do
-	    	end
-
-	    end
-
     end
 
     describe "GET /admin/comment/#id" do 

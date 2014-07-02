@@ -53,7 +53,7 @@ RSpec.describe "Admin::Administrators", :type => :request do
 
   end
 
-  describe "PUT /tasks" do 
+  describe "PUT /admin/adminstrator/#id" do 
 
   	it "edits an administrator" do 
 

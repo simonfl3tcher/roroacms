@@ -20,7 +20,7 @@ class Admin::ThemesController < AdminController
 	def create
 		# the theme used is set in the settings area - this does the update of the current theme used
 		Setting.where("setting_name = 'theme_folder'").update_all('setting' => params[:theme])
-
+		Setting.reload_settings
 		respond_to do |format|
 			format.html { redirect_to admin_themes_path, notice: I18n.t("controllers.admin.themes.create.flash.success") }
 		end
