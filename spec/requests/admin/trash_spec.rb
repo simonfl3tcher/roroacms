@@ -24,7 +24,6 @@ RSpec.describe "Admin::Trash", :type => :request do
 
 			it "should have have post on view" do 
 				visit admin_trash_path
-				save_and_open_page
 				expect(page).to have_content post_post.post_title
 			end
 
@@ -51,7 +50,6 @@ RSpec.describe "Admin::Trash", :type => :request do
 			it "should delete all post records" do 
 				visit admin_trash_path
 				find(:css, "#posts").click_link("Delete all")
-				save_and_open_page
 				expect(current_path).to eq(admin_trash_path)
 				expect(page).to have_content('All posts were removed from the trash can')
 				expect(page).to have_content post_page.post_title
@@ -60,7 +58,6 @@ RSpec.describe "Admin::Trash", :type => :request do
 			it "should delete all page records" do 
 				visit admin_trash_path
 				find(:css, "#pages").click_link("Delete all")
-				save_and_open_page
 				expect(current_path).to eq(admin_trash_path)
 				expect(page).to have_content('All pages were removed from the trash can')
 			end
