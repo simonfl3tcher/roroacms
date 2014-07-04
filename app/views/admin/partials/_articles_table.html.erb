@@ -1,4 +1,4 @@
-<%= render partial: 'admin/partials/table_header', locals: {path: new_admin_page_path, name: t("views.admin.pages.index.add_new_page") } %>
+<%= render partial: 'admin/partials/table_header', locals: {path: new_admin_article_path, name: t("views.admin.articles.index.add_new_article"), id: "add-new-article" } %>
 
 <%= form_tag site_url("admin/posts/bulk_update") do %>
   <table id="dtable" class="table table-hover" cellspacing="0" width="100%">

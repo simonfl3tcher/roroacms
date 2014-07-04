@@ -322,6 +322,9 @@ en:
             placeholder_3: "Class"
         menu_group:
           add_menu_group: "Add menu group"
+      articles:
+        index:
+          add_new_article: "Add New Article"
       pages:
         autosave_list:
           revisions_saved_at: "Revision saved at"

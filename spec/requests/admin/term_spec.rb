@@ -30,7 +30,8 @@ RSpec.describe "Admin::Terms", :type => :request do
   		it "shoud show tags" do 
 	  		visit  admin_article_tags_path
 	  		expect(page).to have_content('Tags')
-
+	  		save_and_open_page
+	  		tag.name.inspect
 	  		expect(page).to have_content(tag.name)
 	  	end
 

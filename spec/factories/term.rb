@@ -1,7 +1,7 @@
 FactoryGirl.define do
   
   factory :term_anatomy do 
-  	taxonomy 'category'
+  	taxonomy 'tag'
   end
 
 
