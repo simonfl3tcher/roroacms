@@ -25,7 +25,7 @@ module MenuHelper
 
   def descendants_count(m)
     return (m.rgt - m.lft - 1)/2
-    end
+  end
 
 	def get_menu(menu,  sub = false, c = '')
 		if menu.is_a? Integer
