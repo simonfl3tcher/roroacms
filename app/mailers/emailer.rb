@@ -1,7 +1,7 @@
 class Emailer < ActionMailer::Base
-  add_template_helper(AdminRoroaHelper)  
+  add_template_helper(AdminRoroaHelper)
   default from: Setting.get('smtp_domain')
-  
+
   class MailSettingsInterceptor
     def self.delivering_email(message)
       message.delivery_method.settings.merge!(Setting.mail_settings)
@@ -24,5 +24,5 @@ class Emailer < ActionMailer::Base
 
     mail to: Setting.get('site_email')
   end
-  
+
 end

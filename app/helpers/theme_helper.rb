@@ -1,5 +1,5 @@
 module ThemeHelper
 
-# theme helper
+  # theme helper
 
 end

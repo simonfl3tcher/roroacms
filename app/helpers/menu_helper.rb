@@ -1,30 +1,30 @@
 module MenuHelper
 
-	# Returns a hash as key and value from the custom data string
-	# Params:
-	# +str+:: contains all of the data for the link
+  # Returns a hash as key and value from the custom data string
+  # Params:
+  # +str+:: contains all of the data for the link
 
-	def make_hash(str)
+  def make_hash(str)
 
-		str = str.split('&')
-		hash = {}
+    str = str.split('&')
+    hash = {}
 
-		str.each do |s|
-			opt = s.split('=')
-			hash[opt[0]] = URI.unescape(opt[1].to_s.gsub('+', ' '))
-		end
+    str.each do |s|
+      opt = s.split('=')
+      hash[opt[0]] = URI.unescape(opt[1].to_s.gsub('+', ' '))
+    end
 
-		hash
+    hash
 
-	end
+  end
 
 
-	# returns the count of the children within the lft and rgt values
-	# Params:
-	# +m+:: the current record that you want to check against
+  # returns the count of the children within the lft and rgt values
+  # Params:
+  # +m+:: the current record that you want to check against
 
-	def descendants_count(m)
-      return (m.rgt - m.lft - 1)/2
+  def descendants_count(m)
+    return (m.rgt - m.lft - 1)/2
     end
 
 	def get_menu(menu,  sub = false, c = '')

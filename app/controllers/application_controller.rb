@@ -3,19 +3,19 @@ class ApplicationController < ActionController::Base
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_filter :set_json
 
-  
+
   require 'ext/string'
 
   protect_from_forgery
-  helper ShortcodeHelper 
-  helper ViewHelper 
+  helper ShortcodeHelper
+  helper ViewHelper
   helper MenuHelper
-  helper SeoHelper  
+  helper SeoHelper
   helper CommentsHelper
   helper GeneralHelper
   include GeneralHelper
   include ViewHelper
-  
+
   private
 
   # Override the generic 404 page to use the 404 in the theme directory
@@ -27,15 +27,15 @@ class ApplicationController < ActionController::Base
 
   # Get the current theme being used by the application
 
-  def current_theme 
+  def current_theme
     @theme_folder = Setting.get('theme_folder')
-  end 
+  end
   helper_method :current_theme
 
 
-  # theme extension 
+  # theme extension
 
-  def get_theme_ext 
+  def get_theme_ext
     theme_yaml('view_extension')
   end
   helper_method :get_theme_ext
@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
 
   # Return the current user data
 
-  def current_user 
+  def current_user
     if !session["warden.user.admin.key"].blank?
       @current_admin ||= Admin.find(session["warden.user.admin.key"][0][0])
     else
@@ -52,18 +52,18 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
-  
+
   # globalize allows access to all of the given content from anywhere
 
   def gloalize content
-      @content = content
+    @content = content
   end
 
 
   # Return the current user logged in as admin data
 
   def current_admin
-  	@current_admin ||= current_user
+    @current_admin ||= current_user
   end
 
 
@@ -71,16 +71,18 @@ class ApplicationController < ActionController::Base
   # currently there are only two user types (admin or editor)
 
   def current_admin_access
+
     if !@current_admin.nil?
       return @current_admin.access_level
     else
       return false;
     end
+
   end
 
   # json encode/decode object variable - this is set here because it is used through out helpers/models/controllers
 
-  def set_json 
+  def set_json
     @json = ActiveSupport::JSON
   end
 
@@ -88,7 +90,7 @@ class ApplicationController < ActionController::Base
   # checks if the admin is logged in before anything else
 
   def authorize_admin
-  	redirect_to admin_login_path, error: I18n.t("controllers.application.unauthorized") if current_user.nil?
+    redirect_to admin_login_path, error: I18n.t("controllers.application.unauthorized") if current_user.nil?
   end
 
 

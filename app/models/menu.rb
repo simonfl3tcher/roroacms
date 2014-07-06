@@ -1,11 +1,11 @@
 class Menu < ActiveRecord::Base
-	
-	## associations ##
 
-	has_many :menu_options, :dependent => :destroy
+  ## associations ##
 
-	## validations ##
+  has_many :menu_options, :dependent => :destroy
 
-	validates :name, :key, :presence => true
+  ## validations ##
+
+  validates :name, :key, :presence => true
 
 end

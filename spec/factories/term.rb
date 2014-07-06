@@ -1,7 +1,7 @@
 FactoryGirl.define do
-  
-  factory :term_anatomy do 
-  	taxonomy 'tag'
+
+  factory :term_anatomy do
+    taxonomy 'tag'
   end
 
 
@@ -21,7 +21,7 @@ FactoryGirl.define do
 
 
   factory :invalid_term, parent: :term do |f|
-  	f.name nil
+    f.name nil
   end
 
 end

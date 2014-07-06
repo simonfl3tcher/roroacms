@@ -1,73 +1,73 @@
 class Comment < ActiveRecord::Base
 
-	## misc ##
+  ## misc ##
 
-	has_ancestry
-	
-	## associations ##
+  has_ancestry
 
-	belongs_to :post
+  ## associations ##
 
-	## validations ##
+  belongs_to :post
 
-	validates :email, presence: true, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create }
-	validates :author, :comment, :presence => true
+  ## validations ##
 
-	## callbacks ##
+  validates :email, presence: true, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create }
+  validates :author, :comment, :presence => true
 
-	before_create :set_defaults
-	before_validation :strip_html
+  ## callbacks ##
 
-	## methods ##
+  before_create :set_defaults
+  before_validation :strip_html
 
-	# The bootstrap for the bulk update function. It takes in the call
-	# and decides what function to call in order to get the correct output
+  ## methods ##
 
-	def self.bulk_update(params)
+  # The bootstrap for the bulk update function. It takes in the call
+  # and decides what function to call in order to get the correct output
 
-		action = params[:to_do]
-		action = action.gsub(' ', '_')
+  def self.bulk_update(params)
 
-		if !params[:comments].blank?
+    action = params[:to_do]
+    action = action.gsub(' ', '_')
 
-			case action.downcase 
-				when "unapprove"
-					# bulk unapprove given comments
-					Comment.where(:id => params[:comments]).update_all(:comment_approved => "N")
-					return 'unapproved'
-				when "approve"
-					# bulk approve given comments
-					Comment.where(:id => params[:comments]).update_all(:comment_approved => "Y")
-					return 'approved'
-				when "mark_as_spam"
-					# bulk mark as spam for given comments
-					Comment.where(:id => params[:comments]).update_all(:comment_approved => "S", :is_spam => 'Y')
-					return 'marked as spam'
-				when "destroy"
-					# bulk delete given comments
-					Comment.where(:id => params[:comments]).destroy_all
-					return 'destroyed'
-			end
-		else
-			return 'ntd'
-		end
+    if !params[:comments].blank?
 
-	end
+      case action.downcase
+      when "unapprove"
+        # bulk unapprove given comments
+        Comment.where(:id => params[:comments]).update_all(:comment_approved => "N")
+        return 'unapproved'
+      when "approve"
+        # bulk approve given comments
+        Comment.where(:id => params[:comments]).update_all(:comment_approved => "Y")
+        return 'approved'
+      when "mark_as_spam"
+        # bulk mark as spam for given comments
+        Comment.where(:id => params[:comments]).update_all(:comment_approved => "S", :is_spam => 'Y')
+        return 'marked as spam'
+      when "destroy"
+        # bulk delete given comments
+        Comment.where(:id => params[:comments]).destroy_all
+        return 'destroyed'
+      end
+    else
+      return 'ntd'
+    end
+
+  end
 
 
-	private 
+  private
 
-	# strip any sort of html, we don't want javascrpt injection
+  # strip any sort of html, we don't want javascrpt injection
 
-	def strip_html
-		self.comment = self.comment.to_s.gsub(%r{</?[^>]+?>}, '').gsub(/<script.*?>[\s\S]*<\/script>/i, "")
-	end
+  def strip_html
+    self.comment = self.comment.to_s.gsub(%r{</?[^>]+?>}, '').gsub(/<script.*?>[\s\S]*<\/script>/i, "")
+  end
 
-	# set default values of the record before adding to the database
+  # set default values of the record before adding to the database
 
-	def set_defaults
-		self.comment_approved = 'N'
-		self.submitted_on = Time.now.to_s(:db) 
-	end
-  
+  def set_defaults
+    self.comment_approved = 'N'
+    self.submitted_on = Time.now.to_s(:db)
+  end
+
 end

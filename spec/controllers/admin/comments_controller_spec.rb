@@ -2,121 +2,121 @@ require 'rails_helper'
 
 RSpec.describe Admin::CommentsController, :type => :controller do
 
-	let(:admin) { FactoryGirl.create(:admin) }
-	let!(:comment) { FactoryGirl.create(:comment) }
-	before { sign_in(admin) }
+  let(:admin) { FactoryGirl.create(:admin) }
+  let!(:comment) { FactoryGirl.create(:comment) }
+  before { sign_in(admin) }
 
-	describe "GET #index" do 
-		
-		it "renders the :index template" do 
-			get :index 
-			expect(response).to render_template :index
-		end
-	
-	end
+  describe "GET #index" do
 
-	describe "PUT #edit" do 
+    it "renders the :index template" do
+      get :index
+      expect(response).to render_template :index
+    end
 
-		before(:each) do
-			get :edit, id: comment
-		end
+  end
 
-		it "should create the comment object" do 
-			expect(assigns(:comment)).to_not be_nil
-		end
+  describe "PUT #edit" do
 
-		it "renders the :edit template" do
-			expect(response).to render_template :edit
-		end
+    before(:each) do
+      get :edit, id: comment
+    end
 
-	end
+    it "should create the comment object" do
+      expect(assigns(:comment)).to_not be_nil
+    end
 
-	describe "PUT #update" do
+    it "renders the :edit template" do
+      expect(response).to render_template :edit
+    end
 
-		it "locates the requested record" do 
-			get :update, id: comment
-			expect(assigns(:comment)).to eq(comment)
-		end
+  end
 
-		context "valid attributes" do
+  describe "PUT #update" do
 
-			before(:each) do 
-				put :update, { comment: FactoryGirl.attributes_for(:comment, author: 'Testing') , id: comment }
-			end
+    it "locates the requested record" do
+      get :update, id: comment
+      expect(assigns(:comment)).to eq(comment)
+    end
 
-			it "changes comment's attributes" do
-				comment.reload
-				expect(comment.author).to eq('Testing')
-			end
+    context "valid attributes" do
 
-			it "redirects to the updated comment" do 
-				expect(response).to redirect_to edit_admin_comment_path(comment)
-			end
+      before(:each) do
+        put :update, { comment: FactoryGirl.attributes_for(:comment, author: 'Testing') , id: comment }
+      end
 
-		end
+      it "changes comment's attributes" do
+        comment.reload
+        expect(comment.author).to eq('Testing')
+      end
 
-		context "invalid attributes" do
+      it "redirects to the updated comment" do
+        expect(response).to redirect_to edit_admin_comment_path(comment)
+      end
 
-			before(:each) do 
-				put :update, { comment: FactoryGirl.attributes_for(:invalid_comment, website: 'Testing') , id: comment }
-			end
+    end
 
-			it "does not change comment's attributes" do 
-				comment.reload
-				expect(comment.website).to_not eq('Testing')
-			end
+    context "invalid attributes" do
 
-			it "re-renders the edit template" do 
-				expect(response).to render_template :edit
-			end
+      before(:each) do
+        put :update, { comment: FactoryGirl.attributes_for(:invalid_comment, website: 'Testing') , id: comment }
+      end
 
-		end
+      it "does not change comment's attributes" do
+        comment.reload
+        expect(comment.website).to_not eq('Testing')
+      end
 
-	end
+      it "re-renders the edit template" do
+        expect(response).to render_template :edit
+      end
 
-	describe "DELETE #destroy" do 
+    end
 
-		it "deletes the comment" do 
-			expect{ delete :destroy, id: comment }.to change(Comment, :count).by(-1)
-		end
+  end
 
-	end
+  describe "DELETE #destroy" do
 
-	describe "POST #bulk_update" do
+    it "deletes the comment" do
+      expect{ delete :destroy, id: comment }.to change(Comment, :count).by(-1)
+    end
 
-		let!(:array) { [comment.id, FactoryGirl.create(:comment).id] }
+  end
 
-		it "marks the given comments as unapproved" do 
-			post :bulk_update, { to_do: "unapprove", comments: array }
-			comment.reload
-			expect(comment.comment_approved).to eq('N')
-			expect(response).to redirect_to admin_comments_path
-		end	
+  describe "POST #bulk_update" do
 
-		it "marks the given comments as approved" do
-			post :bulk_update, { to_do: "approve", comments: array }
-			comment.reload
-			expect(comment.comment_approved).to eq('Y')
-			expect(response).to redirect_to admin_comments_path
-		end
+    let!(:array) { [comment.id, FactoryGirl.create(:comment).id] }
 
-		it "destroys the given comments" do
-			post :bulk_update, { to_do: "destroy", comments: array }
-			expect(Comment.where(:id => comment.id)).to_not exist
-			expect(response).to redirect_to admin_comments_path
-		end
+    it "marks the given comments as unapproved" do
+      post :bulk_update, { to_do: "unapprove", comments: array }
+      comment.reload
+      expect(comment.comment_approved).to eq('N')
+      expect(response).to redirect_to admin_comments_path
+    end
+
+    it "marks the given comments as approved" do
+      post :bulk_update, { to_do: "approve", comments: array }
+      comment.reload
+      expect(comment.comment_approved).to eq('Y')
+      expect(response).to redirect_to admin_comments_path
+    end
+
+    it "destroys the given comments" do
+      post :bulk_update, { to_do: "destroy", comments: array }
+      expect(Comment.where(:id => comment.id)).to_not exist
+      expect(response).to redirect_to admin_comments_path
+    end
 
 
-	end
+  end
 
-	describe "GET #mark_as_spam" do
+  describe "GET #mark_as_spam" do
 
-		it "sets the given record to spam" do 
-			get :mark_as_spam, id: comment
-			comment.reload
-			expect(comment.is_spam).to eq('S')
-		end
+    it "sets the given record to spam" do
+      get :mark_as_spam, id: comment
+      comment.reload
+      expect(comment.is_spam).to eq('S')
+    end
 
-	end
+  end
 
 end

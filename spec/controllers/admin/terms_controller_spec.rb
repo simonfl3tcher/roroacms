@@ -2,175 +2,175 @@ require 'rails_helper'
 
 RSpec.describe Admin::TermsController, :type => :controller do
 
-	let(:admin) { FactoryGirl.create(:admin) }
-	let!(:term) { FactoryGirl.create(:term) }
-	before { sign_in(admin) }
+  let(:admin) { FactoryGirl.create(:admin) }
+  let!(:term) { FactoryGirl.create(:term) }
+  before { sign_in(admin) }
 
-	describe "GET #categories" do
+  describe "GET #categories" do
 
-		before(:each) do 
-			get :categories
-		end
+    before(:each) do
+      get :categories
+    end
 
-		it "should set type to category" do 
-			expect(assigns(:type)).to eq('category')
-		end
+    it "should set type to category" do
+      expect(assigns(:type)).to eq('category')
+    end
 
-		it "should render the view template" do 
-			expect(response).to render_template :view
-		end
+    it "should render the view template" do
+      expect(response).to render_template :view
+    end
 
-	end
+  end
 
-	describe "GET #tags" do 
+  describe "GET #tags" do
 
-		before(:each) do 
-			get :tags
-		end
+    before(:each) do
+      get :tags
+    end
 
-		it "should set type to tag" do 
-			expect(assigns(:type)).to eq('tag')
-		end
+    it "should set type to tag" do
+      expect(assigns(:type)).to eq('tag')
+    end
 
-		it "should render the view template" do 
-			expect(response).to render_template :view
-		end
+    it "should render the view template" do
+      expect(response).to render_template :view
+    end
 
-	end
+  end
 
-	describe "POST #create" do 
+  describe "POST #create" do
 
-		context "with valid attributes" do 
-			
-			it "creates new term" do 
-				expect { post :create, {term: FactoryGirl.attributes_for(:term) } }.to change(Term,:count).by(1)
-			end
+    context "with valid attributes" do
 
-			it "redirects to article/categories" do 
-				post :create, {term: FactoryGirl.attributes_for(:term), type_taxonomy: "category"} 
-				expect(response).to redirect_to admin_article_categories_path
-			end
+      it "creates new term" do
+        expect { post :create, {term: FactoryGirl.attributes_for(:term) } }.to change(Term,:count).by(1)
+      end
 
-			it "redirects to article/tags" do 
-				post :create, {term: FactoryGirl.attributes_for(:term), type_taxonomy: "tag"} 
-				expect(response).to redirect_to admin_article_tags_path
-			end
-		end
+      it "redirects to article/categories" do
+        post :create, {term: FactoryGirl.attributes_for(:term), type_taxonomy: "category"}
+        expect(response).to redirect_to admin_article_categories_path
+      end
 
-		context "with invalid attributes" do 
-			
-			it "does not save the contact" do 
-				expect { post :create, {term: FactoryGirl.attributes_for(:term, name: nil) } }.to_not change(Term,:count)
-			end
+      it "redirects to article/tags" do
+        post :create, {term: FactoryGirl.attributes_for(:term), type_taxonomy: "tag"}
+        expect(response).to redirect_to admin_article_tags_path
+      end
+    end
 
-			it "redirects to article/categories" do 
-				post :create, {term: FactoryGirl.attributes_for(:term, name: nil), type_taxonomy: "category"} 
-				expect(response).to redirect_to admin_article_categories_path
-			end
+    context "with invalid attributes" do
 
-			it "redirects to article/tags" do 
-				post :create, {term: FactoryGirl.attributes_for(:term, name: nil), type_taxonomy: "tag"} 
-				expect(response).to redirect_to admin_article_tags_path
-			end
+      it "does not save the contact" do
+        expect { post :create, {term: FactoryGirl.attributes_for(:term, name: nil) } }.to_not change(Term,:count)
+      end
 
-		end
+      it "redirects to article/categories" do
+        post :create, {term: FactoryGirl.attributes_for(:term, name: nil), type_taxonomy: "category"}
+        expect(response).to redirect_to admin_article_categories_path
+      end
 
-	end
+      it "redirects to article/tags" do
+        post :create, {term: FactoryGirl.attributes_for(:term, name: nil), type_taxonomy: "tag"}
+        expect(response).to redirect_to admin_article_tags_path
+      end
 
-	describe "PUT #edit" do 
+    end
 
-		before(:each) do 
-			get :edit, id: term
-		end
+  end
 
-		it "should get the term object" do 
-			expect(assigns(:category)).to_not be_nil
-		end
+  describe "PUT #edit" do
 
-		it "renders the :edit template" do 
-			expect(response).to render_template :edit
-		end
+    before(:each) do
+      get :edit, id: term
+    end
 
-	end
+    it "should get the term object" do
+      expect(assigns(:category)).to_not be_nil
+    end
 
-	describe "PUT #update" do 
+    it "renders the :edit template" do
+      expect(response).to render_template :edit
+    end
 
-		it "locates the requested record" do 
-			put :update, id: term
-			expect(assigns(:category)).to eq(term)
-		end
+  end
 
-		context "with valid attributes" do 
+  describe "PUT #update" do
 
-			before(:each) do 
-				put :update, { term: FactoryGirl.attributes_for(:term, name: "testing test"), id: term }
-			end
-			
-			it "updates the given term" do 
-				term.reload
-				expect(term.name).to eq("testing test")
-			end
+    it "locates the requested record" do
+      put :update, id: term
+      expect(assigns(:category)).to eq(term)
+    end
 
-			it "renders the :edit template" do 
-				expect(response).to redirect_to edit_admin_term_path(term)
-			end
+    context "with valid attributes" do
 
-		end
+      before(:each) do
+        put :update, { term: FactoryGirl.attributes_for(:term, name: "testing test"), id: term }
+      end
 
-		context "with invalid attributes" do 
+      it "updates the given term" do
+        term.reload
+        expect(term.name).to eq("testing test")
+      end
 
-			before(:each) do 
-				put :update, { term: FactoryGirl.attributes_for(:invalid_term, slug: '123123'), id: term }
-			end
+      it "renders the :edit template" do
+        expect(response).to redirect_to edit_admin_term_path(term)
+      end
 
-			it "does not save the contact" do
-				term.reload
-				expect(term.slug).to_not eq("123123")
-			end
+    end
 
-			it "renders the :edit template" do 
-				expect(response).to render_template :edit
-			end
+    context "with invalid attributes" do
 
-		end
+      before(:each) do
+        put :update, { term: FactoryGirl.attributes_for(:invalid_term, slug: '123123'), id: term }
+      end
 
-	end
+      it "does not save the contact" do
+        term.reload
+        expect(term.slug).to_not eq("123123")
+      end
 
-	describe "DELETE #destroy" do 
+      it "renders the :edit template" do
+        expect(response).to render_template :edit
+      end
 
-		before(:each) do 
-			delete :destroy, id: term
-		end
+    end
 
-		it "deletes the term" do 
-			expect(Term.where(:id => term.id)).to_not exist
-		end
+  end
 
-		it "redirects to article/categories" do 
-			expect(response).to redirect_to admin_article_categories_path
-		end
-		
-	end
+  describe "DELETE #destroy" do
 
-	describe "POST #bulk_update" do 
+    before(:each) do
+      delete :destroy, id: term
+    end
 
-		let!(:array){ [term.id, FactoryGirl.create(:term).id] }
+    it "deletes the term" do
+      expect(Term.where(:id => term.id)).to_not exist
+    end
 
-		it "deletes the given terms" do 
-			post :bulk_update, { to_do: "destroy", categories: array }
-			expect(Term.where(:id => term.id)).to_not exist
-		end
+    it "redirects to article/categories" do
+      expect(response).to redirect_to admin_article_categories_path
+    end
 
-		it "redirects to article/categories" do 
-			post :bulk_update, {to_do: "destory", categories: array, type_taxonomy: "category"}
-			expect(response).to redirect_to admin_article_categories_path
-		end
+  end
 
-		it "redirects to article/tags" do 
-			post :bulk_update, {to_do: "destory", categories: array, type_taxonomy: "tag"}
-			expect(response).to redirect_to admin_article_tags_path
-		end
+  describe "POST #bulk_update" do
 
-	end
+    let!(:array){ [term.id, FactoryGirl.create(:term).id] }
+
+    it "deletes the given terms" do
+      post :bulk_update, { to_do: "destroy", categories: array }
+      expect(Term.where(:id => term.id)).to_not exist
+    end
+
+    it "redirects to article/categories" do
+      post :bulk_update, {to_do: "destory", categories: array, type_taxonomy: "category"}
+      expect(response).to redirect_to admin_article_categories_path
+    end
+
+    it "redirects to article/tags" do
+      post :bulk_update, {to_do: "destory", categories: array, type_taxonomy: "tag"}
+      expect(response).to redirect_to admin_article_tags_path
+    end
+
+  end
 
 end

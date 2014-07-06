@@ -1,7 +1,7 @@
 FactoryGirl.define do
-  
+
   sequence(:id) {|n| rand(10000..100000000)}
-  
+
   factory :admin do
     email { Faker::Internet.email }
     username { Faker::Lorem.word  }
@@ -10,7 +10,7 @@ FactoryGirl.define do
   end
 
   factory :invalid_admin, parent: :admin do |f|
-  	f.username nil
+    f.username nil
   end
 
 end

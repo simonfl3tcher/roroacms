@@ -8,17 +8,17 @@ FactoryGirl.define do |u|
   end
 
   factory :invalid_post, parent: :post do |f|
-  	f.post_title nil
+    f.post_title nil
   end
 
   factory :disabled_post, parent: :post do |f|
-  	f.post_type 'post'
-  	f.disabled 'Y'
+    f.post_type 'post'
+    f.disabled 'Y'
   end
 
   factory :disabled_page, parent: :post do |f|
-  	f.post_type 'page'
-  	f.disabled 'Y'
+    f.post_type 'page'
+    f.disabled 'Y'
   end
 
 end

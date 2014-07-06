@@ -2,68 +2,69 @@ require 'rails_helper'
 
 RSpec.describe "Admin::Trash", :type => :request do
 
-	let!(:admin) { FactoryGirl.create(:admin) }
-  	before { sign_in(admin) }
+  let!(:admin) { FactoryGirl.create(:admin) }
+  before { sign_in(admin) }
 
-	describe "GET /admin/trash" do
+  describe "GET /admin/trash" do
 
-		it "should display trash" do
-			visit admin_trash_path
-			expect(page).to have_content "Trash"
-		end
+    before(:each) do
+      visit admin_trash_path
+    end
 
-		it "should show no records message" do 
-			visit admin_trash_path
-			expect(page).to have_content('The trash can is currently empty')
-		end
+    it "should display trash" do
+      expect(page).to have_content "Trash"
+    end
 
-		context "with posts or pages in the trash can" do 
+    it "should show no records message" do
+      expect(page).to have_content('The trash can is currently empty')
+    end
 
-			let!(:post_post) { FactoryGirl.create(:post, disabled: 'Y', post_type: 'post') }
-			let!(:post_page) { FactoryGirl.create(:post, disabled: 'Y', post_type: 'page') }
+    context "with posts or pages in the trash can" do
 
-			it "should have have post on view" do 
-				visit admin_trash_path
-				expect(page).to have_content post_post.post_title
-			end
+      let!(:post_post) { FactoryGirl.create(:post, disabled: 'Y', post_type: 'post') }
+      let!(:post_page) { FactoryGirl.create(:post, disabled: 'Y', post_type: 'page') }
 
-			it "should have page on view" do 
-				visit admin_trash_path
-				expect(page).to have_content post_page.post_title
-			end
+      before(:each) do
+        visit admin_trash_path
+      end
 
-			it "should display the total count of pages" do 
-				visit admin_trash_path
-				expect(page).to have_content("Total Count #{Post.where(:disabled => 'Y', :post_type => 'page').count}")
-			end
+      it "should have have post on view" do
+        expect(page).to have_content post_post.post_title
+      end
 
-			it "should display the total count of posts" do 
-				visit admin_trash_path
-				expect(page).to have_content("Total Count #{Post.where(:disabled => 'Y', :post_type => 'post').count}")
-			end
+      it "should have page on view" do
+        expect(page).to have_content post_page.post_title
+      end
 
-			# tests what happens if there is no posts but there are pages
+      it "should display the total count of pages" do
+        expect(page).to have_content("Total Count #{Post.where(:disabled => 'Y', :post_type => 'page').count}")
+      end
 
+      it "should display the total count of posts" do
+        expect(page).to have_content("Total Count #{Post.where(:disabled => 'Y', :post_type => 'post').count}")
+      end
 
-			# put these at the bottom
+      it "should delete all post records" do
 
-			it "should delete all post records" do 
-				visit admin_trash_path
-				find(:css, "#posts").click_link("Delete all")
-				expect(current_path).to eq(admin_trash_path)
-				expect(page).to have_content('All posts were removed from the trash can')
-				expect(page).to have_content post_page.post_title
-			end
+        find(:css, "#posts").click_link("Delete all")
 
-			it "should delete all page records" do 
-				visit admin_trash_path
-				find(:css, "#pages").click_link("Delete all")
-				expect(current_path).to eq(admin_trash_path)
-				expect(page).to have_content('All pages were removed from the trash can')
-			end
+        expect(current_path).to eq(admin_trash_path)
+        expect(page).to have_content('All posts were removed from the trash can')
+        expect(page).to have_content post_page.post_title
 
-		end
+      end
 
-	end
+      it "should delete all page records" do
+
+        find(:css, "#pages").click_link("Delete all")
+
+        expect(current_path).to eq(admin_trash_path)
+        expect(page).to have_content('All pages were removed from the trash can')
+
+      end
+
+    end
+
+  end
 
 end

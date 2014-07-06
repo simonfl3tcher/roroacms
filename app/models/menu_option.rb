@@ -1,38 +1,38 @@
 class MenuOption < ActiveRecord::Base
-	
-	## associations ##
 
-	belongs_to :menu 
+  ## associations ##
 
-	## methods ##
+  belongs_to :menu
 
-	# saves the menu on the fly via an ajax call. This is a seperate function because
-	# the ajax call sends through a json object. It decodes this, updates the values and saves the menu
+  ## methods ##
 
-	def self.save_menu_on_fly(p)
+  # saves the menu on the fly via an ajax call. This is a seperate function because
+  # the ajax call sends through a json object. It decodes this, updates the values and saves the menu
 
-		return true if p[:data].blank?
+  def self.save_menu_on_fly(p)
 
-		f = ActiveSupport::JSON.decode p[:data]
-		MenuOption.destroy_all(:menu_id => p[:menuid])
+    return true if p[:data].blank?
 
-		f.each do | record |
-			
-			opt = MenuOption.new
-			opt.menu_id = p[:menuid]
-			opt.parent_id = record['parent_id']
-			opt.data_type = record['data_type'].to_s.gsub(/\s+/, "")
-			opt.option_id = record['item_id']
-			opt.lft = record['left']
-			opt.rgt = record['right']
+    f = ActiveSupport::JSON.decode p[:data]
+    MenuOption.destroy_all(:menu_id => p[:menuid])
 
-			opt.custom_data = record['custom_data']
+    f.each do | record |
 
-			opt.save
+      opt = MenuOption.new
+      opt.menu_id = p[:menuid]
+      opt.parent_id = record['parent_id']
+      opt.data_type = record['data_type'].to_s.gsub(/\s+/, "")
+      opt.option_id = record['item_id']
+      opt.lft = record['left']
+      opt.rgt = record['right']
 
-		end
+      opt.custom_data = record['custom_data']
 
-		return true
-	end
-	
+      opt.save
+
+    end
+
+    return true
+  end
+
 end

@@ -2,34 +2,34 @@ require 'rails_helper'
 
 RSpec.describe PagesController, :type => :controller do
 
-	let!(:record) { FactoryGirl.create(:post, post_status: 'Published') }
-	let!(:record_draft) { FactoryGirl.create(:post, post_status: 'Draft') }
+  let!(:record) { FactoryGirl.create(:post, post_status: 'Published') }
+  let!(:record_draft) { FactoryGirl.create(:post, post_status: 'Draft') }
 
 
-	describe "GET /pages/#id" do 
+  describe "GET /pages/#id" do
 
-		it "should show any post" do 
-			get :show, id: record_draft.id
-			expect(response.status).to eq(302)
-			expect(response).to redirect_to record_draft.structured_url
-		end
+    it "should show any post" do
+      get :show, id: record_draft.id
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to record_draft.structured_url
+    end
 
-	end
+  end
 
-	describe "dynamic_page" do 
-		
-		it "should route to the necessary page" do 
-			url = record.structured_url[1..-1]
-			get :dynamic_page, {slug: url}
-			expect(response.status).to eq(200)
-		end
+  describe "dynamic_page" do
 
-		it "should render 404" do 
-			url = record_draft.structured_url[1..-1]
-			get :dynamic_page, {slug: url}
-			expect(response.status).to eq(404)
-		end
+    it "should route to the necessary page" do
+      url = record.structured_url[1..-1]
+      get :dynamic_page, {slug: url}
+      expect(response.status).to eq(200)
+    end
 
-	end
+    it "should render 404" do
+      url = record_draft.structured_url[1..-1]
+      get :dynamic_page, {slug: url}
+      expect(response.status).to eq(404)
+    end
+
+  end
 
 end
