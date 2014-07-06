@@ -327,7 +327,7 @@ en:
           add_new_article: "Add New Article"
       pages:
         autosave_list:
-          revisions_saved_at: "Revision saved at"
+          revisions_saved_at: "Revision saved at %{date}"
           no_revisions: "There is no revision records saved against this article"
         index:
           add_new_page: "Add New Page"

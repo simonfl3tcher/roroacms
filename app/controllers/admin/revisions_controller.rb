@@ -18,11 +18,18 @@ class Admin::RevisionsController < AdminController
 	# restore the post to the given post data
 
 	def restore
+		post = Post.find(params[:id])
 		# do the restore
-		restore = Post.restore(Post.find(params[:id]))
+		restore = Post.restore(post)
+
+		if restore.post_type == 'page'
+			url = "/admin/pages/#{restore.id}/edit"
+		elsif restore.post_type == 'post'
+			url = "/admin/articles/#{restore.id}/edit"
+		end
 
 		# redirect to either the post or page area depending on what post_type the post has
-		redirect_to edit_admin_page_path(restore.id), notice: I18n.t("controllers.admin.revisions.restore.flash.notice", post_type: restore.post_type.capitalize)
+		redirect_to URI.parse(url).path, notice: I18n.t("controllers.admin.revisions.restore.flash.notice", post_type: restore.post_type.capitalize)
 	end
 
 end

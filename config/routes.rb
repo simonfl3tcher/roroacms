@@ -36,7 +36,7 @@ Roroacms::Application.routes.draw do
 
     end 
 
-    resources :revisions do
+    resources :revisions, :only=> [:edit, :restore] do
         member {get 'restore'}
     end
 

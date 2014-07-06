@@ -2,106 +2,161 @@ require 'rails_helper'
 
 RSpec.describe "Admin::Terms", :type => :request do
 
-	let(:admin) { FactoryGirl.create(:admin) }
-  	before { sign_in(admin) }
+  let(:admin) { FactoryGirl.create(:admin) }
+  before { sign_in(admin) }   
 
-  	describe "GET /admin/article/categories" do
+    describe "GET /admin/article/categories" do
 
-  		let!(:category) { FactoryGirl.create(:term) }
+      let!(:category) { FactoryGirl.create(:term) }
+      let!(:term){ FactoryGirl.build(:term) }
 
-  		it "shoud show categories" do 
-	  		visit  admin_article_categories_path
-	  		expect(page).to have_content('Categories')
-	  		expect(page).to have_content(category.name)
-  		end
+      it "should show categories and allow user to updated individual records" do 
+        visit admin_article_categories_path
+        expect(page).to have_content('Categories')
+        expect(page).to have_content(category.name)
+        find(:xpath, "//a[@href='/admin/terms/#{category.id}/edit']").click
+        expect(page).to have_content('Article Category')
+      end
 
-  		it "should have a form to create a tag" do 
-	  		visit admin_article_tags_path
-	  		expect(page).to have_css('form#new_term')
-	  	end
+      it "should have a form to create a category" do 
+        visit admin_article_categories_path
+        expect(page).to have_css('form#new_term')
+      end
 
-  	end
+      context "Creating a category" do 
 
-  	describe "GET /admin/article/tags" do
+        before(:each) do 
+          visit admin_article_categories_path
+        end
 
-  		let!(:tag) { FactoryGirl.create(:term_tag) }
-		let!(:term){ FactoryGirl.build(:term_tag) }
+        it "should create a new category" do 
+          fill_in "term_name", :with => term.name
+          fill_in "term_slug", :with => term.slug
+          click_button 'Save'
 
-  		it "shoud show tags" do 
-	  		visit  admin_article_tags_path
-	  		expect(page).to have_content('Tags')
-	  		save_and_open_page
-	  		tag.name.inspect
-	  		expect(page).to have_content(tag.name)
-	  	end
+          expect(current_path).to eq(admin_article_categories_path)
+          expect(page).to have_content('Success')
+        end
 
-	  	it "should have a form to create a tag" do 
-	  		visit admin_article_tags_path
-	  		expect(page).to have_css('form#new_term')
-	  	end
+        it "should not allow you to create a category with no name" do 
+          fill_in "term_slug", :with => term.slug
+          click_button 'Save'
+          expect(current_path).to eq(admin_article_categories_path)
+          expect(page).to have_content('Error')
+        end
 
-	  	context "Creating a tag" do 
+        it "should allow you to create a category with no slug" do 
+          fill_in "term_name", :with => term.name
+          fill_in "term_slug", :with => ''
+          click_button 'Save'
+          expect(current_path).to eq(admin_article_categories_path)
+          expect(page).to have_content('Success')
+        end
 
-	  		before(:each) do 
-		  		visit admin_article_tags_path
-	  		end
+      end
 
-		  	it "should create a new tag" do 
-		  		fill_in "term_name", :with => term.name
-		  		fill_in "term_slug", :with => term.slug
-		  		click_button 'Save'
+      context "Editing a category" do 
 
-		  		expect(current_path).to eq(admin_article_tags_path)
-		  		expect(page).to have_content('Success')
-		  	end
+        it "should user to update the name" do 
+          visit edit_admin_term_path(category.id)
+          expect(page).to have_content('Article Category')
 
-		  	it "should not allow you to create a tag with no name" do 
-		  		fill_in "term_slug", :with => term.slug
-		  		click_button 'Save'
-		  		expect(current_path).to eq(admin_article_tags_path)
-		  		expect(page).to have_content('Error')
-		  	end
+          fill_in "term_name", :with => term.name
+          click_button 'Save'
 
-		  	it "should allow you to create a tag with no slug" do 
-		  		fill_in "term_name", :with => term.name
-		  		fill_in "term_slug", :with => ''
-		  		click_button 'Save'
-		  		expect(current_path).to eq(admin_article_tags_path)
-		  		expect(page).to have_content('Success')
-		  	end
+          expect(current_path).to eq(edit_admin_term_path(category.id))
+          expect(page).to have_content('Success')
+        end
 
-	  	end
+        it "should not allow user to update a category with no name" do 
+          visit edit_admin_term_path(category.id)
+          fill_in "term_name", :with => ''
+          click_button 'Save'
 
-	  	context "Editing a tag" do 
+          expect(current_path).to eq(admin_term_path(category.id))
+          expect(page).to have_selector('.help-block.error')
+        end
 
-	  		it "should allow you to edit the tag" do 
-	  			visit admin_article_tags_path
-	  			find(:xpath, "//a[@href='/admin/terms/145/edit']").click
-	  		end
+      end
 
-	  		it "should user to update the name" do 
-	  			visit edit_admin_term_path(tag.id)
-	  			expect(page).to have_content('Article Tag')
+    end
 
-	  			fill_in "term_name", :with => term.name
-	  			click_button 'Save'
 
-	  			expect(current_path).to eq(edit_admin_term_path(tag.id))
-	  			expect(page).to have_content('Success')
-	  		end
+    describe "GET /admin/article/tags" do
 
-	  		it "should not allow user to update a tag with no name" do 
-	  			visit edit_admin_term_path(tag.id)
-	  			fill_in "term_name", :with => ''
-	  			click_button 'Save'
+      let!(:tag) { FactoryGirl.create(:tag) }
+      let!(:term){ FactoryGirl.build(:tag) }
 
-	  			expect(current_path).to eq(admin_term_path(tag.id))
-	  			expect(page).to have_selector('.help-block.error')
-	  		end
+      it "should show tags" do 
+        visit admin_article_tags_path
+        expect(page).to have_content('Tags')
+        expect(page).to have_content(tag.name)
+        find(:xpath, "//a[@href='/admin/terms/#{tag.id}/edit']").click
+        expect(page).to have_content('Article Tag')
+      end
 
-	  	end
+      it "should have a form to create a tag" do 
+        visit admin_article_tags_path
+        expect(page).to have_css('form#new_term')
+      end
 
-  	end
+      context "Creating a tag" do 
+
+        before(:each) do 
+          visit admin_article_tags_path
+        end
+
+        it "should create a new tag" do 
+          fill_in "term_name", :with => term.name
+          fill_in "term_slug", :with => term.slug
+          click_button 'Save'
+
+          expect(current_path).to eq(admin_article_tags_path)
+          expect(page).to have_content('Success')
+        end
+
+        it "should not allow you to create a tag with no name" do 
+          fill_in "term_slug", :with => term.slug
+          click_button 'Save'
+          expect(current_path).to eq(admin_article_tags_path)
+          expect(page).to have_content('Error')
+        end
+
+        it "should allow you to create a tag with no slug" do 
+          fill_in "term_name", :with => term.name
+          fill_in "term_slug", :with => ''
+          click_button 'Save'
+          expect(current_path).to eq(admin_article_tags_path)
+          expect(page).to have_content('Success')
+        end
+
+      end
+
+      context "Editing a tag" do 
+
+        it "should user to update the name" do 
+          visit edit_admin_term_path(tag.id)
+          expect(page).to have_content('Article Tag')
+
+          fill_in "term_name", :with => term.name
+          click_button 'Save'
+
+          expect(current_path).to eq(edit_admin_term_path(tag.id))
+          expect(page).to have_content('Success')
+        end
+
+        it "should not allow user to update a tag with no name" do 
+          visit edit_admin_term_path(tag.id)
+          fill_in "term_name", :with => ''
+          click_button 'Save'
+
+          expect(current_path).to eq(admin_term_path(tag.id))
+          expect(page).to have_selector('.help-block.error')
+        end
+
+      end
+
+    end
 
 
 end

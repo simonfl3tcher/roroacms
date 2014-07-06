@@ -27,7 +27,7 @@ class Admin::MenusController < AdminController
 		    format.html { redirect_to edit_admin_menu_path(@menu), notice: I18n.t("controllers.admin.menus.create.flash.success")}
 		  else
 		    format.html { 
-			  	@menugroups = Menu.all
+			  	@all_menus = Menu.all
 		    	render action: "index" 
 		    }
 		  end

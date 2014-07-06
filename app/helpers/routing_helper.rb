@@ -73,7 +73,6 @@ module RoutingHelper
 		tag_url = Setting.get('tag_slug')
 
 		status = "(post_status = 'Published' AND post_date <= CURRENT_TIMESTAMP AND disabled = 'N')"
-
 		# is it a article post or a page post
 
 		case get_type_by_url
@@ -138,8 +137,8 @@ module RoutingHelper
 	def render_page(url, status)
 
 		# get content - if the admin isn't logged in your add the extra status requirements
-		if !session[:admin_id].blank?
-			@content = Post.where(:post_type => 'page', :post_status => 'Published', :post_visible => 'Y').find_by_structured_url("/#{url}")
+		if !current_user.blank?
+			@content = Post.where("post_type = 'page' AND post_visible = 'Y' AND (post_status = 'Published' OR post_status = 'Draft')").find_by_structured_url("/#{url}")
 		else
 			@content = Post.where(status, :post_type => 'page', :post_status => 'Published', :post_visible => 'Y').find_by_structured_url("/#{url}")
 		end

@@ -1,4 +1,4 @@
-<%= render partial: 'admin/partials/table_header', locals: {path: new_admin_page_path, name: t("views.admin.pages.index.add_new_page") } %>
+<%= render partial: 'admin/partials/table_header', locals: {path: new_admin_page_path, name: t("views.admin.pages.index.add_new_page"), id: "add-new-page" } %>
 
 <%= form_tag site_url("admin/pages/bulk_update") do %>
 

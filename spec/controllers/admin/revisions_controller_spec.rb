@@ -6,7 +6,7 @@ RSpec.describe Admin::RevisionsController, :type => :controller do
 	before { sign_in(admin) }
 
 	before(:each) do 
-		@revision = Post.where(:post_status => 'Autosave').first
+		@revision = Post.where(:post_type => 'autosave').first
 	end
 
 	describe "PUT #edit" do 
@@ -27,8 +27,17 @@ RSpec.describe Admin::RevisionsController, :type => :controller do
 	describe "GET #restore" do
 			
 		it "restores the parent post to the given revision" do 
-			get :restore, id: @revision
-			expect(response).to redirect_to edit_admin_page_path(@revision.parent_id)
+			get :restore, id: @revision.id
+
+			parent = Post.find(@revision.parent_id)
+
+			if parent.post_type == 'page'
+				url = "/admin/pages/#{parent.id}/edit"
+			elsif parent.post_type == 'post'
+				url = "/admin/articles/#{parent.id}/edit"
+			end
+
+			expect(response).to redirect_to url
 		end
 
 	end

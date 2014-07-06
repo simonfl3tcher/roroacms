@@ -62,6 +62,11 @@ RSpec.describe "Admin::Articles", :type => :request do
 	  		expect(page).to have_content(article.post_title)
 	  	end
 
+	  	it "should not have any revisions" do 
+	  		visit new_admin_article_path
+	  		expect(page).to have_content('There are no revisions')
+	  	end
+
   	end
 
   	describe "PUT /admin/article/#id" do 

@@ -45,7 +45,7 @@ class Term < ActiveRecord::Base
 
     def self.get_type_of_term(params)
 
-    taxonomy = params[:type_taxonomy]
+        taxonomy = params[:type_taxonomy]
         
         if taxonomy == 'category'
             type = I18n.t("models.term.generic.category")
@@ -137,6 +137,10 @@ class Term < ActiveRecord::Base
           end
       end
 
+    end
+
+    def self.term_cats type = 'category'
+        Term.includes(:term_anatomy).where(term_anatomies: {taxonomy: type}).order('name asc')
     end
 
 end
