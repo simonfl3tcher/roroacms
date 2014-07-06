@@ -2,19 +2,22 @@ require 'rails_helper'
 
 RSpec.describe Admin::AdministratorsController, :type => :controller do
 
-	let(:admin) { FactoryGirl.create(:admin) }
+	let!(:admin) { FactoryGirl.create(:admin) }
+	let!(:new_admin) { FactoryGirl.create(:admin, first_name: "Simon", last_name: "Fletcher") }
 	before { sign_in(admin) }
 
 
 	describe "GET #index" do 
+
+		before(:each) do 
+			get :index
+		end
 		
 		it "populates an array of contacts" do 
-			get :index
 	    	expect(assigns(:admins)).to_not be_nil
 		end
 		
 		it "renders the :index template" do 
-			get :index 
 			expect(response).to render_template :index
 		end
 	
@@ -22,18 +25,19 @@ RSpec.describe Admin::AdministratorsController, :type => :controller do
 
 	describe "GET #new" do
 
-		it "should create a new admin object" do 
+		before(:each) do 
 			get :new
+		end
+
+		it "should create a new admin object" do 
 			expect(assigns(:admin)).to_not be_nil
 		end
 
 		it "renders the :new template" do
-			get :new
 			expect(response).to render_template :new
 		end
 
 		it "assigns form action to variable" do 
-			get :new
 			expect(assigns(:action)).to eq('create')
 		end
 
@@ -71,27 +75,23 @@ RSpec.describe Admin::AdministratorsController, :type => :controller do
 	end
 
 	describe "PUT #update" do 
-		
-		before(:each) do 
-			@admin = FactoryGirl.create(:admin, first_name: "Simon", last_name: "Fletcher")
-		end
 
 		context "valid attributes" do 
 
 			it "located the requested @admin" do 
-				put :update, id: @admin, admin: FactoryGirl.attributes_for(:admin)
-				expect(assigns(:admin)).to eq(@admin)
+				put :update, id: new_admin, admin: FactoryGirl.attributes_for(:admin)
+				expect(assigns(:admin)).to eq(new_admin)
 			end
 
-			it "changes @admin's attributes" do 
-				put :update, id: @admin, admin: FactoryGirl.attributes_for(:admin, first_name: "Paul")
-				@admin.reload
-				expect(@admin.first_name).to eq("Paul")
+			it "changes new_admin's attributes" do 
+				put :update, id: new_admin, admin: FactoryGirl.attributes_for(:admin, first_name: "Paul")
+				new_admin.reload
+				expect(new_admin.first_name).to eq("Paul")
 			end
 
 			it "redirects to the updated admin" do 
-				put :update, id: @admin, admin: FactoryGirl.attributes_for(:admin)
-				expect(response).to redirect_to edit_admin_administrator_path(@admin)
+				put :update, id: new_admin, admin: FactoryGirl.attributes_for(:admin)
+				expect(response).to redirect_to edit_admin_administrator_path(new_admin)
 			end
 
 		end
@@ -99,18 +99,18 @@ RSpec.describe Admin::AdministratorsController, :type => :controller do
 		context "invalid attributes" do 
 			
 			it "located the requested @admin" do 
-				put :update, id: @admin, admin: FactoryGirl.attributes_for(:invalid_admin)
-				expect(assigns(:admin)).to eq(@admin)
+				put :update, id: new_admin, admin: FactoryGirl.attributes_for(:invalid_admin)
+				expect(assigns(:admin)).to eq(new_admin)
 			end
 
-			it "does not change @admin's attributes" do 
-				put :update, id: @admin, admin: FactoryGirl.attributes_for(:invalid_admin, first_name: "Paul")
-				@admin.reload
-				expect(@admin.first_name).to_not eq("Paul")
+			it "does not change new_admin's attributes" do 
+				put :update, id: new_admin, admin: FactoryGirl.attributes_for(:invalid_admin, first_name: "Paul")
+				new_admin.reload
+				expect(new_admin.first_name).to_not eq("Paul")
 			end
 
 			it "re-renders the edit template" do 
-				put :update, id: @admin, admin: FactoryGirl.attributes_for(:invalid_admin)
+				put :update, id: new_admin, admin: FactoryGirl.attributes_for(:invalid_admin)
 				expect(response).to render_template :edit
 			end
 
@@ -119,17 +119,13 @@ RSpec.describe Admin::AdministratorsController, :type => :controller do
 	end
 
 	describe "DELETE #destroy" do 
-		
-		before(:each) do
-			@admin = FactoryGirl.create(:admin)
-		end
 
 		it "deletes the contact" do 
-			expect { delete :destroy, id: @admin }.to change(Admin,:count).by(-1)
+			expect { delete :destroy, id: new_admin.id }.to change(Admin,:count).by(-1)
 		end
 
 		it "redirect to administrators#index" do 
-			delete :destroy, id: @admin
+			delete :destroy, id: new_admin
 			expect(response).to redirect_to admin_administrators_path
 		end
 

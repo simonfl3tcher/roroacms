@@ -2,18 +2,21 @@ require 'rails_helper'
 
 RSpec.describe Admin::ArticlesController, :type => :controller do
 
-	let(:admin) { FactoryGirl.create(:admin) }
+	let!(:admin) { FactoryGirl.create(:admin) }
+	let!(:new_post) { FactoryGirl.create(:post) }
 	before { sign_in(admin) }
 
 	describe "GET #index" do 
+
+		before(:each) do 
+			get :index
+		end
 		
 		it "populates an array of articles" do 
-			get :index
 	    	expect(assigns(:posts)).to_not be_nil
 		end
 		
 		it "renders the :index template" do 
-			get :index 
 			expect(response).to render_template :index
 		end
 	
@@ -21,18 +24,19 @@ RSpec.describe Admin::ArticlesController, :type => :controller do
 
 	describe "GET #new" do
 
-		it "should create a new admin object" do 
+		before(:each) do 
 			get :new
+		end
+
+		it "should create a new admin object" do 
 			expect(assigns(:record)).to_not be_nil
 		end
 
 		it "renders the :new template" do
-			get :new
 			expect(response).to render_template :new
 		end
 
 		it "assigns form action to variable" do 
-			get :new
 			expect(assigns(:action)).to eq('create')
 		end
 
@@ -70,27 +74,23 @@ RSpec.describe Admin::ArticlesController, :type => :controller do
 	end
 
 	describe "PUT #update" do 
-		
-		before(:each) do 
-			@post = FactoryGirl.create(:post, post_title: "Testing Rspec post")
-		end
 
 		context "valid attributes" do
 
 			it "located the requested record" do 
-				put :update, id: @post
-				expect(assigns(:record)).to eq(@post)
+				put :update, id: new_post
+				expect(assigns(:record)).to eq(new_post)
 			end 
 
 			it "changes @admin's attributes" do 
-				put :update, { post: FactoryGirl.attributes_for(:post, post_title: "123123"), id: @post }
-				@post.reload
-				expect(@post.post_title).to eq('123123')
+				put :update, { post: FactoryGirl.attributes_for(:post, post_title: "123123"), id: new_post }
+				new_post.reload
+				expect(new_post.post_title).to eq('123123')
 			end
 
 			it "redirects to the updated post" do 
-				put :update, { post: FactoryGirl.attributes_for(:post, post_title: "123123"), id: @post }
-				expect(response).to redirect_to edit_admin_article_path(@post)
+				put :update, { post: FactoryGirl.attributes_for(:post, post_title: "123123"), id: new_post }
+				expect(response).to redirect_to edit_admin_article_path(new_post)
 			end
 
 		end
@@ -98,18 +98,18 @@ RSpec.describe Admin::ArticlesController, :type => :controller do
 		context "invalid attributes" do 
 
 			it "located the requested record" do 
-				put :update, id: @post
-				expect(assigns(:record)).to eq(@post)
+				put :update, id: new_post
+				expect(assigns(:record)).to eq(new_post)
 			end 
 
-			it "does not change @post's attributes" do 
-				put :update, { post: FactoryGirl.attributes_for(:invalid_post, post_slug: '123123'), id: @post }
-				@post.reload
-				expect(@post.post_slug).to_not eq("123123")
+			it "does not change new_post's attributes" do 
+				put :update, { post: FactoryGirl.attributes_for(:invalid_post, post_slug: '123123'), id: new_post }
+				new_post.reload
+				expect(new_post.post_slug).to_not eq("123123")
 			end
 
 			it "re-renders the edit template" do 
-				put :update, { post: FactoryGirl.attributes_for(:invalid_post), id: @post }
+				put :update, { post: FactoryGirl.attributes_for(:invalid_post), id: new_post }
 				expect(response).to render_template :edit
 			end
 
@@ -118,18 +118,14 @@ RSpec.describe Admin::ArticlesController, :type => :controller do
 	end
 
 	describe "DELETE #destroy" do 
-		
-		before(:each) do
-			@post = FactoryGirl.create(:post)
-		end
 
 		it "deletes the contact" do 
-			delete :destroy, id: @post
-			expect(Post.find(@post).disabled).to eq('Y')
+			delete :destroy, id: new_post
+			expect(Post.find(new_post).disabled).to eq('Y')
 		end
 
 		it "redirect to artciles#index" do 
-			delete :destroy, id: @post
+			delete :destroy, id: new_post
 			expect(response).to redirect_to admin_articles_path
 		end
 

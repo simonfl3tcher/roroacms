@@ -7,13 +7,15 @@ RSpec.describe Admin::ThemesController, :type => :controller do
 
 	describe "GET #index" do
 
-		it "sets the current theme used by roroa" do 
+		before(:each) do 
 			get :index
+		end
+
+		it "sets the current theme used by roroa" do 
 	    	expect(assigns(:current)).to_not be_nil
 	    end
 
 	    it "renders the :index template" do 
-			get :index 
 			expect(response).to render_template :index
 		end 
 
@@ -21,13 +23,15 @@ RSpec.describe Admin::ThemesController, :type => :controller do
 
 	describe "POST #create" do 
 
-		it "resets the current theme" do
+		before(:each) do 
 			post :create, theme: 'roroa1'
+		end
+
+		it "resets the current theme" do
 			expect(Setting.get('theme_folder')).to eq('roroa1')
 		end
 
 		it "redirects to themes#index" do 
-			post :create, theme: 'roroa1'
 			expect(response).to redirect_to admin_themes_path
 		end
 

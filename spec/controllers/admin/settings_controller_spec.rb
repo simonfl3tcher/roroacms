@@ -7,13 +7,15 @@ RSpec.describe Admin::SettingsController, :type => :controller do
 
 	describe "GET #index" do 
 
-		it "should create the settings object" do 
+		before(:each) do 
 			get :index
+		end
+
+		it "should create the settings object" do 
 			expect(assigns(:settings)).to_not be_nil
 		end
 
 		it "renders the :edit template" do
-			get :index 
 			expect(response).to render_template :index
 		end
 	end
@@ -58,10 +60,12 @@ RSpec.describe Admin::SettingsController, :type => :controller do
 	end
 
 	describe "POST #create_user_group" do 
+
 		it "creates a user group" do 
 			post :create_user_group, {key: "123123"}
 			expect(response).to render_template(:partial => 'admin/partials/_user_group_view')
 		end
+		
 	end
 
 

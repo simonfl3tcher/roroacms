@@ -1,12 +1,10 @@
 FactoryGirl.define do
   
   sequence(:id) {|n| rand(10000..100000000)}
-  sequence(:email) {|n| "user#{n}@example.com"}
-  sequence(:login) {|n| "user#{n}"}
   
   factory :admin do
-    email {FactoryGirl.generate :email}
-    username {FactoryGirl.generate :login}
+    email { Faker::Internet.email }
+    username { Faker::Lorem.word  }
     password "123123123"
     access_level "admin"
   end

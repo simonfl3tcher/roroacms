@@ -7,13 +7,15 @@ RSpec.describe Admin::DashboardController, :type => :controller do
 
 	describe "GET #index" do 
 
-		it "populates an array of the latest comments" do 
+		before(:each) do 
 			get :index
+		end
+
+		it "populates an array of the latest comments" do 
 	    	expect(assigns(:comments)).to_not be_nil
 		end
 		
 		it "renders the :index template" do 
-			get :index 
 			expect(response).to render_template :index
 		end
 	
