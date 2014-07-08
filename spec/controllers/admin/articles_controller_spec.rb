@@ -12,11 +12,11 @@ RSpec.describe Admin::ArticlesController, :type => :controller do
       get :index
     end
 
-    it "populates an array of articles" do
+    it "should populate an array of articles" do
       expect(assigns(:posts)).to_not be_nil
     end
 
-    it "renders the :index template" do
+    it "should render the :index template" do
       expect(response).to render_template :index
     end
 
@@ -32,11 +32,11 @@ RSpec.describe Admin::ArticlesController, :type => :controller do
       expect(assigns(:record)).to_not be_nil
     end
 
-    it "renders the :new template" do
+    it "should render the :new template" do
       expect(response).to render_template :new
     end
 
-    it "assigns form action to variable" do
+    it "should assign form action to variable" do
       expect(assigns(:action)).to eq('create')
     end
 
@@ -47,11 +47,11 @@ RSpec.describe Admin::ArticlesController, :type => :controller do
 
     context "with valid attributes" do
 
-      it "creates new admin" do
+      it "should create new admin" do
         expect { post :create, {post: FactoryGirl.attributes_for(:post) } }.to change(Post,:count).by(1)
       end
 
-      it "redirects to administrators#index" do
+      it "should redirect to administrators#index" do
         post :create, {post: FactoryGirl.attributes_for(:post)}
         expect(response).to redirect_to admin_articles_path
       end
@@ -60,11 +60,11 @@ RSpec.describe Admin::ArticlesController, :type => :controller do
 
     context "with invalid attributes" do
 
-      it "does not save the contact" do
+      it "should not save the contact" do
         expect { post :create, { post: FactoryGirl.attributes_for(:invalid_post) } }.to_not change(Post,:count)
       end
 
-      it "re-renders the new method" do
+      it "should re-render the new method" do
         post :create, { post: FactoryGirl.attributes_for(:invalid_post) }
         expect(response).to render_template :new
       end
@@ -77,18 +77,18 @@ RSpec.describe Admin::ArticlesController, :type => :controller do
 
     context "valid attributes" do
 
-      it "located the requested record" do
+      it "should locate the requested record" do
         put :update, id: new_post
         expect(assigns(:record)).to eq(new_post)
       end
 
-      it "changes @admin's attributes" do
+      it "should change @admin's attributes" do
         put :update, { post: FactoryGirl.attributes_for(:post, post_title: "123123"), id: new_post }
         new_post.reload
         expect(new_post.post_title).to eq('123123')
       end
 
-      it "redirects to the updated post" do
+      it "should redirect to the updated post" do
         put :update, { post: FactoryGirl.attributes_for(:post, post_title: "123123"), id: new_post }
         expect(response).to redirect_to edit_admin_article_path(new_post)
       end
@@ -97,18 +97,18 @@ RSpec.describe Admin::ArticlesController, :type => :controller do
 
     context "invalid attributes" do
 
-      it "located the requested record" do
+      it "should locate the requested record" do
         put :update, id: new_post
         expect(assigns(:record)).to eq(new_post)
       end
 
-      it "does not change new_post's attributes" do
+      it "should not change new_post's attributes" do
         put :update, { post: FactoryGirl.attributes_for(:invalid_post, post_slug: '123123'), id: new_post }
         new_post.reload
         expect(new_post.post_slug).to_not eq("123123")
       end
 
-      it "re-renders the edit template" do
+      it "should re-render the edit template" do
         put :update, { post: FactoryGirl.attributes_for(:invalid_post), id: new_post }
         expect(response).to render_template :edit
       end
@@ -119,12 +119,12 @@ RSpec.describe Admin::ArticlesController, :type => :controller do
 
   describe "DELETE #destroy" do
 
-    it "deletes the contact" do
+    it "should delete the contact" do
       delete :destroy, id: new_post
       expect(Post.find(new_post).disabled).to eq('Y')
     end
 
-    it "redirect to artciles#index" do
+    it "should redirect to artciles#index" do
       delete :destroy, id: new_post
       expect(response).to redirect_to admin_articles_path
     end

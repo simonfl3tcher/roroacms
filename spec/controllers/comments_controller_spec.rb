@@ -10,7 +10,7 @@ RSpec.describe CommentsController, :type => :controller do
 
   describe "POST #create" do
 
-    it "creates the comment" do
+    it "should create the comment" do
       expect{post :create, {comment: FactoryGirl.attributes_for(:comment, post_id: record.id)}}.to change(Comment, :count).by(1)
     end
 

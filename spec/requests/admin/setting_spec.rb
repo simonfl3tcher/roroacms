@@ -17,29 +17,29 @@ RSpec.describe "Admin::Settings", :type => :request do
 
     context "should have different options for different settings" do
 
-      it "has general settings" do
+      it "should have general settings" do
         expect(page).to have_content('General')
       end
 
-      it "has email settings" do
+      it "should have email settings" do
         expect(page).to have_content('Email Configuration')
       end
 
-      it "has comments" do
+      it "should have comments" do
         expect(page).to have_content('Comments')
       end
 
-      it "has search engine optimisation" do
+      it "should have search engine optimisation" do
         expect(page).to have_content('Search Engine Optimisation')
       end
 
-      it "has user groups" do
+      it "should have user groups" do
         expect(page).to have_content('User Groups')
       end
 
     end
 
-    it "updates the settings" do
+    it "should update the settings" do
 
       fill_in "articles_slug", :with => 'testing'
       find('button[type=submit]').click
@@ -49,7 +49,7 @@ RSpec.describe "Admin::Settings", :type => :request do
 
     end
 
-    context "does not update the settings" do
+    context "invalid attributes" do
 
       it "should not update if article slug is left blank" do
 
@@ -107,7 +107,6 @@ RSpec.describe "Admin::Settings", :type => :request do
       end
 
     end
-
 
   end
 

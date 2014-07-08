@@ -12,7 +12,6 @@ RSpec.describe Comment, :type => :model do
 
     let!(:comment_build) { FactoryGirl.build(:comment) }
 
-
     it "is invalid without email" do
       comment_build.email = nil
       expect(comment_build).to_not be_valid
@@ -41,7 +40,7 @@ RSpec.describe Comment, :type => :model do
     let!(:record) { FactoryGirl.create(:comment) }
     let!(:array) { [record.id, comment.id] }
 
-    it "approves given records" do
+    it "should approve given records" do
 
       Comment.bulk_update({:to_do => 'approve', :comments => array})
 
@@ -50,7 +49,7 @@ RSpec.describe Comment, :type => :model do
 
     end
 
-    it "unapproves given records by id" do
+    it "should unapprove given records by id" do
 
       Comment.bulk_update({:to_do => 'unapprove', :comments => array})
       expect(Comment.find(record.id).comment_approved).to eq('N')
@@ -58,8 +57,7 @@ RSpec.describe Comment, :type => :model do
 
     end
 
-
-    it "marks given records as spam" do
+    it "should mark given records as spam" do
 
       Comment.bulk_update({:to_do => 'mark_as_spam', :comments => array})
       expect(Comment.find(record.id).comment_approved).to eq('S')
@@ -69,11 +67,10 @@ RSpec.describe Comment, :type => :model do
 
     end
 
-    it "deletes given records" do
+    it "should delete given records" do
       expect { Comment.bulk_update({:to_do => 'destroy', :comments => array}) }.to change(Comment, :count).by(-2)
     end
 
   end
-
 
 end

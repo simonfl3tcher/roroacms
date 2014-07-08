@@ -6,7 +6,6 @@ RSpec.describe Admin::RevisionsController, :type => :controller do
   let!(:revision){ Post.where(:post_type => 'autosave').first }
   before { sign_in(admin) }
 
-
   describe "PUT #edit" do
 
     before(:each) do
@@ -18,7 +17,7 @@ RSpec.describe Admin::RevisionsController, :type => :controller do
       expect(assigns(:revision)).to_not be_nil
     end
 
-    it "renders the :edit template" do
+    it "should render the :edit template" do
       expect(response).to render_template :edit
     end
 
@@ -26,7 +25,7 @@ RSpec.describe Admin::RevisionsController, :type => :controller do
 
   describe "GET #restore" do
 
-    it "restores the parent post to the given revision" do
+    it "should restore the parent post to the given revision" do
       get :restore, id: revision.id
 
       parent = Post.find(revision.parent_id)

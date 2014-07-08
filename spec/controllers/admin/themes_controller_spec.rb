@@ -11,11 +11,11 @@ RSpec.describe Admin::ThemesController, :type => :controller do
       get :index
     end
 
-    it "sets the current theme used by roroa" do
+    it "should set the current theme used by roroa" do
       expect(assigns(:current)).to_not be_nil
     end
 
-    it "renders the :index template" do
+    it "should render the :index template" do
       expect(response).to render_template :index
     end
 
@@ -27,11 +27,11 @@ RSpec.describe Admin::ThemesController, :type => :controller do
       post :create, theme: 'roroa1'
     end
 
-    it "resets the current theme" do
+    it "should reset the current theme" do
       expect(Setting.get('theme_folder')).to eq('roroa1')
     end
 
-    it "redirects to themes#index" do
+    it "should redirect to themes#index" do
       expect(response).to redirect_to admin_themes_path
     end
 
@@ -44,11 +44,11 @@ RSpec.describe Admin::ThemesController, :type => :controller do
       delete :destroy, id: 'testing'
     end
 
-    it "deletes the given theme" do
+    it "should delete the given theme" do
       expect(File.directory?("#{Rails.root}/app/views/theme/testing")).to be_falsey
     end
 
-    it "redirects to themes#index" do
+    it "should redirect to themes#index" do
       expect(response).to redirect_to admin_themes_path
     end
 

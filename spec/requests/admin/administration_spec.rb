@@ -16,11 +16,9 @@ RSpec.describe "Admin::Administrators", :type => :request do
     end
 
     it "should have a button to allow user to create new administrator" do
-
       expect(page).to have_content "Add New User"
       click_link "Add New User"
       expect(current_path).to eq(new_admin_administrator_path)
-
     end
 
   end
@@ -59,7 +57,7 @@ RSpec.describe "Admin::Administrators", :type => :request do
 
   describe "PUT /admin/adminstrator/#id" do
 
-    it "edits an administrator" do
+    it "should edit an administrator" do
 
       visit admin_administrators_path
       first(:linkhref, edit_admin_administrator_path(admin)).click

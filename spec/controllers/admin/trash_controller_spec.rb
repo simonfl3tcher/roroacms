@@ -16,12 +16,12 @@ RSpec.describe Admin::TrashController, :type => :controller do
       get :index
     end
 
-    it "populates an array of pages" do
+    it "should populate an array of pages" do
       expect(assigns(:records)).to_not be_nil
       expect(assigns(:pages)).to_not be_nil
     end
 
-    it "renders the :index template" do
+    it "should render the :index template" do
       expect(response).to render_template :index
     end
 
@@ -29,12 +29,11 @@ RSpec.describe Admin::TrashController, :type => :controller do
 
   describe "DELETE #destroy" do
 
-
-    it "deletes the post" do
+    it "should delete the post" do
       expect{delete :destroy, id: record}.to change(Post,:count).by(-1)
     end
 
-    it "redirect to trash#index" do
+    it "should redirect to trash#index" do
       delete :destroy, id: record
       expect(response).to redirect_to admin_trash_path
     end
@@ -45,20 +44,19 @@ RSpec.describe Admin::TrashController, :type => :controller do
 
     let!(:array){ [record.id, FactoryGirl.create(:post).id] }
 
-    it "reinstates the given posts" do
+    it "should reinstate the given posts" do
       post :deal_with_form, { to_do: "reinstate", pages: array }
       record.reload
       expect(record.disabled).to eq('N')
       expect(response).to redirect_to admin_trash_path
     end
 
-    it "deletes the given posts" do
+    it "should delete the given posts" do
       post :deal_with_form, { to_do: "destroy", pages: array }
       expect(Post.where(:id => record.id)).to_not exist
       expect(response).to redirect_to admin_trash_path
     end
 
   end
-
-
+  
 end

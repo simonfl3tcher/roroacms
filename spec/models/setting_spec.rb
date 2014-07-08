@@ -10,7 +10,7 @@ RSpec.describe Setting, :type => :model do
     expect(Setting.get('articles_slug')).to eq('news')
   end
 
-  it "get all settings" do
+  it "should return all settings" do
     expect(@settings).to be_a_kind_of(Hash)
     expect(@settings['articles_slug']).to eq('news')
     expect(@settings['pagination_per']).to eq("2")

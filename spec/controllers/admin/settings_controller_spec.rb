@@ -15,9 +15,10 @@ RSpec.describe Admin::SettingsController, :type => :controller do
       expect(assigns(:settings)).to_not be_nil
     end
 
-    it "renders the :edit template" do
+    it "should render the :edit template" do
       expect(response).to render_template :index
     end
+
   end
 
   describe "POST #create" do
@@ -28,29 +29,30 @@ RSpec.describe Admin::SettingsController, :type => :controller do
 
     context "with valid attributes" do
 
-      it "creates saves the settings" do
+      it "should save the settings" do
         @settings['articles_slug'] = '123123'
         @settings = @settings.symbolize_keys!
         post :create, @settings
         expect(Setting.get('articles_slug')).to eq('123123')
       end
 
-      it "redirects to administrators#index" do
+      it "should redirect to administrators#index" do
         post :create, @settings
         expect(response).to redirect_to admin_settings_path
       end
+
     end
 
     context "with invalid attributes" do
 
-      it "does not save the settings" do
+      it "should not save the settings" do
         @settings['articles_slug'] = nil
         @settings = @settings.symbolize_keys!
         post :create, @settings
         expect(Setting.get('articles_slug')).to eq('news')
       end
 
-      it "re-renders the index method" do
+      it "should re-render the index method" do
         post :create, @settings
         expect(response).to render_template :index
       end
@@ -61,12 +63,11 @@ RSpec.describe Admin::SettingsController, :type => :controller do
 
   describe "POST #create_user_group" do
 
-    it "creates a user group" do
+    it "should create a user group" do
       post :create_user_group, {key: "123123"}
       expect(response).to render_template(:partial => 'admin/partials/_user_group_view')
     end
 
   end
-
-
+  
 end

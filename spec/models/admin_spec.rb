@@ -35,7 +35,7 @@ RSpec.describe Admin, :type => :model do
 
   context "set defaults" do
 
-    it "returns overlord as 'N'" do
+    it "should return overlord as 'N'" do
       expect(admin.overlord).to eq('N')
     end
 
@@ -45,14 +45,21 @@ RSpec.describe Admin, :type => :model do
 
   end
 
-  it "should return an array if access levels" do
-    levels = Admin.access_levels
-    expect(levels).to be_a_kind_of(Array)
-    expect(levels).to include('admin')
+  context "access levels" do 
+
+    let(:levels) { Admin.access_levels }
+
+    it "should return an array" do
+      expect(levels).to be_a_kind_of(Array)
+    end
+
+    it "should include admin" do 
+      expect(levels).to include('admin')
+    end
+
   end
 
   it "should set the cover image to blank" do
-    # deal_with_cover
     user.deal_with_cover({:has_cover_image => nil})
     expect(user.cover_picture).to be_blank
   end

@@ -41,7 +41,7 @@ RSpec.describe "Admin::Comments", :type => :request do
 
   describe "GET /admin/comment/#id" do
 
-    it "takes us to the edit comment page" do
+    it "should go to edit comment page" do
 
       visit admin_comments_path
       first(:linkhref, edit_admin_comment_path(comment)).click

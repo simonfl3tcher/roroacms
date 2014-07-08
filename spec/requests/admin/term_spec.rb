@@ -71,7 +71,7 @@ RSpec.describe "Admin::Terms", :type => :request do
         visit edit_admin_term_path(category.id)
       end
 
-      it "should user to update the name" do
+      it "should allow user to update the name" do
 
         expect(page).to have_content('Article Category')
 
@@ -165,7 +165,7 @@ RSpec.describe "Admin::Terms", :type => :request do
         visit edit_admin_term_path(tag.id)
       end
 
-      it "should user to update the name" do
+      it "should allow user to update the name" do
 
         expect(page).to have_content('Article Tag')
 
@@ -190,6 +190,5 @@ RSpec.describe "Admin::Terms", :type => :request do
     end
 
   end
-
 
 end

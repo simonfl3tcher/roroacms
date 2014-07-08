@@ -12,11 +12,11 @@ RSpec.describe Admin::PagesController, :type => :controller do
       get :index
     end
 
-    it "populates an array of articles" do
+    it "should populate an array of articles" do
       expect(assigns(:pages)).to_not be_nil
     end
 
-    it "renders the :index template" do
+    it "should render the :index template" do
       expect(response).to render_template :index
     end
 
@@ -32,11 +32,11 @@ RSpec.describe Admin::PagesController, :type => :controller do
       expect(assigns(:record)).to_not be_nil
     end
 
-    it "renders the :new template" do
+    it "should render the :new template" do
       expect(response).to render_template :new
     end
 
-    it "assigns form action to variable" do
+    it "should assign form action to variable" do
       expect(assigns(:action)).to eq('create')
     end
 
@@ -47,11 +47,11 @@ RSpec.describe Admin::PagesController, :type => :controller do
 
     context "with valid attributes" do
 
-      it "creates new admin" do
+      it "should create new admin" do
         expect { post :create, {post: FactoryGirl.attributes_for(:post) } }.to change(Post,:count).by(1)
       end
 
-      it "redirects to administrators#index" do
+      it "should redirect to administrators#index" do
         post :create, {post: FactoryGirl.attributes_for(:post)}
         expect(response).to redirect_to admin_pages_path
       end
@@ -60,11 +60,11 @@ RSpec.describe Admin::PagesController, :type => :controller do
 
     context "with invalid attributes" do
 
-      it "does not save the contact" do
+      it "should not save the contact" do
         expect { post :create, { post: FactoryGirl.attributes_for(:invalid_post) } }.to_not change(Post,:count)
       end
 
-      it "re-renders the new method" do
+      it "should re-render the new method" do
         post :create, { post: FactoryGirl.attributes_for(:invalid_post) }
         expect(response).to render_template :new
       end
@@ -75,7 +75,7 @@ RSpec.describe Admin::PagesController, :type => :controller do
 
   describe "PUT #update" do
 
-    it "located the requested record" do
+    it "should locate the requested record" do
       put :update, id: record
       expect(assigns(:record)).to eq(record)
     end
@@ -86,12 +86,12 @@ RSpec.describe Admin::PagesController, :type => :controller do
         put :update, { post: FactoryGirl.attributes_for(:post, post_title: "123123"), id: record }
       end
 
-      it "changes @admin's attributes" do
+      it "should change @admin's attributes" do
         record.reload
         expect(record.post_title).to eq('123123')
       end
 
-      it "redirects to the updated post" do
+      it "should redirect to the updated post" do
         expect(response).to redirect_to edit_admin_page_path(record)
       end
 
@@ -103,12 +103,12 @@ RSpec.describe Admin::PagesController, :type => :controller do
         put :update, { post: FactoryGirl.attributes_for(:invalid_post, post_slug: '123123'), id: record }
       end
 
-      it "does not change record's attributes" do
+      it "should not change record's attributes" do
         record.reload
         expect(record.post_slug).to_not eq("123123")
       end
 
-      it "re-renders the edit template" do
+      it "should re-render the edit template" do
         expect(response).to render_template :edit
       end
 
@@ -121,14 +121,14 @@ RSpec.describe Admin::PagesController, :type => :controller do
 
     let!(:array) { [record.id, FactoryGirl.create(:post).id] }
 
-    it "marks the given pages as published" do
+    it "should mark the given pages as published" do
       post :bulk_update, { to_do: "publish", pages: array }
       record.reload
       expect(record.post_status).to eq('Published')
       expect(response).to redirect_to admin_pages_path
     end
 
-    it "marks the given pages as drafts" do
+    it "should mark the given pages as drafts" do
       record.post_status = 'published'
       post :bulk_update, { to_do: "draft", pages: array }
       record.reload
@@ -137,7 +137,7 @@ RSpec.describe Admin::PagesController, :type => :controller do
     end
 
 
-    it "moves the given pages into trash" do
+    it "should move the given pages into trash" do
       post :bulk_update, { to_do: "move_to_trash", pages: array }
       record.reload
       expect(record.disabled).to eq('Y')
@@ -148,17 +148,16 @@ RSpec.describe Admin::PagesController, :type => :controller do
 
   describe "DELETE #destroy" do
 
-    it "deletes the contact" do
+    it "should delete the contact" do
       delete :destroy, id: record
       expect(Post.find(record).disabled).to eq('Y')
     end
 
-    it "redirect to artciles#index" do
+    it "should redirect to artciles#index" do
       delete :destroy, id: record
       expect(response).to redirect_to admin_pages_path
     end
 
   end
-
-
+  
 end

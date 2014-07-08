@@ -15,15 +15,14 @@ RSpec.describe "Admin::Pages", :type => :request do
     end
 
     it "should show pages" do
-
       expect(page).to have_content('Pages')
       expect(page).to have_content(record.post_title)
-
     end
 
     it "should have a button to allow user to create new article" do
 
       find('#add-new-page').click
+      
       expect(current_path).to eq(new_admin_page_path)
       expect(page).to have_content('Create New Page')
 

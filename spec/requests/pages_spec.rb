@@ -10,10 +10,8 @@ RSpec.describe "Pages", :type => :request do
   describe "GET /pages" do
 
     it "should show the homepage" do
-
       visit root_path
       expect(page).to have_content(home.post_title)
-
     end
 
   end
@@ -21,10 +19,8 @@ RSpec.describe "Pages", :type => :request do
   describe "GET /pages/#id" do
 
     it "should show any page" do
-
       visit page_path(post.id)
       expect(page).to have_content(post.post_title)
-
     end
 
   end
