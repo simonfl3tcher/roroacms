@@ -1,9 +1,9 @@
 class Admin < ActiveRecord::Base
 
-  ## devise ##
-  attr_accessor :login
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+  ## constants ##
 
+  GET_ADMINS = Admin.all
+  
   ## associations ##
 
   has_many :posts
@@ -11,18 +11,20 @@ class Admin < ActiveRecord::Base
   ## validations ##
 
   validates :username, presence: true
-  validates :username, :uniqueness => {:case_sensitive => false}
+  validates :username, :uniqueness => { case_sensitive: false }
   validates :access_level, presence: true
   validates :password, length: { in: 6..128 }, on: :create
   validates :password, length: { in: 6..128 }, on: :update, allow_blank: true
 
-  ## model constants ##
-
-  GET_ADMINS = Admin.all
 
   ## callbacks ##
 
   before_create :deal_with_abnormalaties
+
+  ## devise ##
+  
+  attr_accessor :login
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
   ## methods ##
 
@@ -53,7 +55,7 @@ class Admin < ActiveRecord::Base
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
-      where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+      where(conditions).where(["lower(username) = :value OR lower(email) = :value", { value: login.downcase }]).first
     else
       where(conditions).first
     end
@@ -61,7 +63,7 @@ class Admin < ActiveRecord::Base
 
 
   def self.find_record(login)
-    where(["username = :value OR email = :value", { :value => login }]).first
+    where(["username = :value OR email = :value", { value: login }]).first
   end
 
   def self.deal_with_profile_images(admin, image, type)
@@ -91,10 +93,7 @@ class Admin < ActiveRecord::Base
   # If the has cover image has been removed this will be set to nothing and will update the cover image option agasint the admin
 
   def deal_with_cover params
-    if defined?(params[:has_cover_image]) && params[:has_cover_image].blank?
-      self.cover_picture = ''
-    end
-
+    self.cover_picture = '' if defined?(params[:has_cover_image]) && params[:has_cover_image].blank?
   end
 
 end

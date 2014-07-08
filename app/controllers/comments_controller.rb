@@ -17,9 +17,7 @@ class CommentsController < ApplicationController
           Emailer.comment(@comment).deliver
           format.html { redirect_to "#{session[:return_to]}#commentsArea", notice: comments_success_message }
         else
-
           format.html { redirect_to "#{session[:return_to]}#commentsArea", notice: comments_error_display(@comment).html_safe}
-
         end
       end
 

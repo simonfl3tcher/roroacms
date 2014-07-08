@@ -98,11 +98,12 @@ class Admin::AdministratorsController < AdminController
 
     respond_to do |format|
 
-      if params[:admin][:password].blank?
-        admin_passed = @admin.update_without_password(administrator_params)
-      else
-        admin_passed = @admin.update_attributes(administrator_params)
-      end
+      admin_passed = 
+        if params[:admin][:password].blank?
+          @admin.update_without_password(administrator_params)
+        else
+          @admin.update_attributes(administrator_params)
+        end
 
       if admin_passed
         clear_cache

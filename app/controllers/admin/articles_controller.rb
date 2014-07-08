@@ -114,10 +114,8 @@ class Admin::ArticlesController < AdminController
     ret = Post.do_autosave params, post
 
     if ret == 'passed'
-
       @record = Post.find(params[:post][:id])
       render :partial => "admin/partials/revision_tree"
-
     else
       return render :text => "f"
     end

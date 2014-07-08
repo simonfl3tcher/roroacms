@@ -57,7 +57,7 @@
             <%= f.label :submitted_on, :class => "col-sm-3 control-label"  %>
             <div class="col-sm-6">
               <%= t("views.admin.generic.date") %>
-              <%= f.datetime_select :submitted_on, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => t("views.admin.generic.datetime_separator") }, :class => 'form-control' %>
+              <%= f.datetime_select :submitted_on, { order: [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', datetime_separator: t("views.admin.generic.datetime_separator") }, :class => 'form-control' %>
             </div>
             <div class="clearfix"></div>
           </div>

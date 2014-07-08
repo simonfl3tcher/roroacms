@@ -18,35 +18,33 @@ module MenuHelper
 
   end
 
-
   # returns the count of the children within the lft and rgt values
   # Params:
   # +m+:: the current record that you want to check against
 
   def descendants_count(m)
-    return (m.rgt - m.lft - 1)/2
+    (m.rgt - m.lft - 1)/2
   end
 
 	def get_menu(menu,  sub = false, c = '')
 		if menu.is_a? Integer
-			if sub 
-				data = MenuOption.find(menu)
-				data = MenuOption.where(:parent_id => data.option_id)
-			else 
-				data = MenuOption.where(:menu_id => menu, :parent_id => nil)
-			end
+			data =
+				if sub 
+					MenuOption.where(:parent_id => MenuOption.find(menu).option_id)
+				else 
+					MenuOption.where(:menu_id => menu, :parent_id => nil)
+				end
 		else
 			m = Menu.find_by_key(menu)
 			if m.blank?
 				data = []
 			else
-
-				if sub 
-					data = MenuOption.find(m[:id])
-					data = MenuOption.where(:parent_id => data.option_id)
-				else 
-					data = MenuOption.where(:menu_id => m[:id], :parent_id => nil)
-				end
+				data = 
+					if sub 
+						MenuOption.where(:parent_id => MenuOption.find(m[:id]).option_id)
+					else 
+						MenuOption.where(:menu_id => m[:id], :parent_id => nil)
+					end
 
 			end
 		end
@@ -79,29 +77,29 @@ module MenuHelper
 
 		html +='</ul>'
 
-		return html.html_safe
+		html.html_safe
 
 	end
 
 	def raw_menu(menu, sub = false)
-		if menu.is_a? Integer
-			if sub 
-				data = MenuOption.find(menu)
-				data = MenuOption.where(:parent_id => data.option_id)
-			else 
-				data = MenuOption.where(:menu_id => menu, :parent_id => nil)
-			end
+		if menu.is_a?(Integer)
+			data =
+				if sub 
+					MenuOption.where(:parent_id => MenuOption.find(menu).option_id)
+				else 
+					MenuOption.where(:menu_id => menu, :parent_id => nil)
+				end
 		else
 			m = Menu.find_by_key(menu)
-			if sub 
-				data = MenuOption.find(m[:id])
-				data = MenuOption.where(:parent_id => data.option_id)
-			else 
-				data = MenuOption.where(:menu_id => m[:id], :parent_id => nil)
-			end
+			data =
+				if sub 
+					MenuOption.where(:parent_id => MenuOption.find(m[:id]).option_id)
+				else 
+					MenuOption.where(:menu_id => m[:id], :parent_id => nil)
+				end
 		end
 
-		return data
+		data
 
 	end
 

@@ -36,14 +36,14 @@ RSpec.describe Term, :type => :model do
   end
 
   it "should retun the redirect url via the type of term" do
-    expect(Term.get_redirect_url({:type_taxonomy => 'category'})).to eq('/admin/article/categories')
-    expect(Term.get_redirect_url({:type_taxonomy => 'tag'})).to eq('/admin/article/tags')
+    expect(Term.get_redirect_url({ type_taxonomy: 'category' })).to eq('/admin/article/categories')
+    expect(Term.get_redirect_url({ type_taxonomy: 'tag' })).to eq('/admin/article/tags')
     expect(Term.get_redirect_url).to eq('/admin')
   end
 
   it "should return type for front end visuals" do
-    expect(Term.get_type_of_term({:type_taxonomy => 'category'})).to eq('Category')
-    expect(Term.get_type_of_term({:type_taxonomy => 'tag'})).to eq('Tag')
+    expect(Term.get_type_of_term({ type_taxonomy: 'category' })).to eq('Category')
+    expect(Term.get_type_of_term({ type_taxonomy: 'tag' })).to eq('Tag')
   end
 
   it "should update the slug subcategories" do
@@ -59,7 +59,7 @@ RSpec.describe Term, :type => :model do
     let!(:term_2){ FactoryGirl.create(:term) }
 
     it "should delete given records" do
-      expect { Term.bulk_update({:to_do => 'destroy', :categories => [term_2.id, term.id]}) }.to change(Term,:count).by(-2)
+      expect { Term.bulk_update({ to_do: 'destroy', categories: [term_2.id, term.id] }) }.to change(Term,:count).by(-2)
     end
 
   end

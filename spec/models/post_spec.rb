@@ -65,11 +65,11 @@ RSpec.describe Post, :type => :model do
 
     it "should save data in the background as a autosave record" do
       post = Post.create(@post.attributes)
-      ret = Post.do_autosave({:post => @post.attributes.symbolize_keys}, post)
+      ret = Post.do_autosave({ post: @post.attributes.symbolize_keys }, post)
       expect(ret).to eq("nothing changed")
 
       post[:post_title] = 'testing rspec'
-      ret = Post.do_autosave({:post => @post.attributes.symbolize_keys}, post)
+      ret = Post.do_autosave({ post: @post.attributes.symbolize_keys }, post)
       expect(ret).to eq("passed")
 
     end
@@ -93,21 +93,21 @@ RSpec.describe Post, :type => :model do
     end
 
     it "should set the given recods to published" do
-      Post.bulk_update({:to_do => 'publish', :pages => @array}, 'pages')
+      Post.bulk_update({ to_do: 'publish', pages: @array }, 'pages')
 
       expect(Post.find(@record.id).post_status).to eq('Published')
       expect(Post.find(@post.id).post_status).to eq('Published')
     end
 
     it "should set the given records to draft" do
-      Post.bulk_update({:to_do => 'draft', :pages => @array}, 'pages')
+      Post.bulk_update({ to_do: 'draft', pages: @array }, 'pages')
 
       expect(Post.find(@record.id).post_status).to eq('Draft')
       expect(Post.find(@post.id).post_status).to eq('Draft')
     end
 
     it "should put the given records into trash" do
-      Post.bulk_update({:to_do => 'move_to_trash', :pages => @array}, 'pages')
+      Post.bulk_update({ to_do: 'move_to_trash', pages: @array }, 'pages')
 
       expect(Post.find(@record.id).disabled).to eq('Y')
       expect(Post.find(@post.id).disabled).to eq('Y')

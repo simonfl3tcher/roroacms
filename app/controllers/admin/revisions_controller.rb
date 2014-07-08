@@ -22,11 +22,12 @@ class Admin::RevisionsController < AdminController
     # do the restore
     restore = Post.restore(post)
 
-    if restore.post_type == 'page'
-      url = "/admin/pages/#{restore.id}/edit"
-    elsif restore.post_type == 'post'
-      url = "/admin/articles/#{restore.id}/edit"
-    end
+    url = 
+      if restore.post_type == 'page'
+        "/admin/pages/#{restore.id}/edit"
+      elsif restore.post_type == 'post'
+        "/admin/articles/#{restore.id}/edit"
+      end
 
     # redirect to either the post or page area depending on what post_type the post has
     redirect_to URI.parse(url).path, notice: I18n.t("controllers.admin.revisions.restore.flash.notice", post_type: restore.post_type.capitalize)

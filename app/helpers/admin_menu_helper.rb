@@ -26,9 +26,9 @@ module AdminMenuHelper
 
   def check_for_checked(one, two)
     if one.to_s == two.to_s
-      return "checked='checked'"
+      "checked='checked'"
     else
-      return ''
+      ''
     end
   end
 
@@ -92,19 +92,18 @@ module AdminMenuHelper
   # +value+:: the current record that you want to check against
 
   def descendants_count(value)
-    return (value.rgt - value.lft - 1)/2
-    end
+    (value.rgt - value.lft - 1)/2
+  end
     
-
-    # returns a list of all of the menus as an accordion with its list items inside 
-	# Params:
-	# +menu+:: the current record that you want to create the menu group option for
-	
-	def get_menu_groups(menu)
-		@id = menu.name.gsub(' ', '');
-		@menu = menu
-    	return render :partial => 'admin/menus/partials/menu_menu_groups' 
-	end
-	
-
+    
+  # returns a list of all of the menus as an accordion with its list items inside 
+  # Params:
+  # +menu+:: the current record that you want to create the menu group option for
+  
+  def get_menu_groups(menu)
+    @id = menu.name.gsub(' ', '');
+    @menu = menu
+    return render :partial => 'admin/menus/partials/menu_menu_groups' 
+  end
+  
 end

@@ -66,10 +66,12 @@
           </table>
           <div class="hidden-xs">
             <hr>
-            <%= bulk_update_dropdown Hash['unapprove' => t("views.admin.generic.bulk_update_options.unapprove"),
-                                          'approve' => t("views.admin.generic.bulk_update_options.approve"), 
-                                          'mark_as_spam' => t("views.admin.generic.bulk_update_options.mark_as_spam"), 
-                                          'destroy' => t("views.admin.generic.bulk_update_options.destroy")] %>
+            <%= bulk_update_dropdown Hash[
+                                        'unapprove' => t("views.admin.generic.bulk_update_options.unapprove"),
+                                        'approve' => t("views.admin.generic.bulk_update_options.approve"), 
+                                        'mark_as_spam' => t("views.admin.generic.bulk_update_options.mark_as_spam"), 
+                                        'destroy' => t("views.admin.generic.bulk_update_options.destroy")
+                                        ] %>
           </div>
         <% end %>
       </div>

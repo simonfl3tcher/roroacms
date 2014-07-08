@@ -71,24 +71,23 @@ class Setting < ActiveRecord::Base
   # this stops you having to change the settings in the config file and having to reload the application.
 
   def self.mail_settings
-    case Setting.get('smtp_authentication')
-    when 'plain'
-      sym = :plain
-    when 'login'
-      sym = :login
-    when 'cram_md5'
-      sym = :cram_md5
-    else
-      sym = :plain
-    end
-    {
-      :address 	=> Setting.get('smtp_address'),
-      :domain 	=> Setting.get('smtp_domain'),
-      :port 		=> Setting.get('smtp_port').blank? ? '25' : Setting.get('smtp_port'),
-      :user_name 	=> Setting.get('smtp_username'),
-      :password 	=> Setting.get('smtp_password'),
-      :authentication => sym
-    }
+    sym = 
+      case Setting.get('smtp_authentication')
+      when 'plain' then :plain
+      when 'login' then :login
+      when 'cram_md5' then :cram_md5
+      else :plain
+      end
+
+      {
+        :address 	=> Setting.get('smtp_address'),
+        :domain 	=> Setting.get('smtp_domain'),
+        :port 		=> Setting.get('smtp_port').blank? ? '25' : Setting.get('smtp_port'),
+        :user_name 	=> Setting.get('smtp_username'),
+        :password 	=> Setting.get('smtp_password'),
+        :authentication => sym
+      }
+
   end
 
 end

@@ -82,7 +82,7 @@ class Admin::TermsController < AdminController
   def destroy
     @term = Term.find(params[:id])
     # return url will be different for either tag or category
-    redirect_url = Term.get_redirect_url({:type_taxonomy => @term.term_anatomy.taxonomy})
+    redirect_url = Term.get_redirect_url({ type_taxonomy: @term.term_anatomy.taxonomy })
     @term.destroy
 
     respond_to do |format|

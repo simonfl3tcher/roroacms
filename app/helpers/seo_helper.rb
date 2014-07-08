@@ -31,10 +31,7 @@ module SeoHelper
 
       else
 
-
-        if !params[:slug].nil?
-          url_arr = params[:slug].split('/')
-        end
+        url_arr = params[:slug].split('/') if !params[:slug].nil?
 
         # get generic variables
         article_url = Setting.get('articles_slug')
@@ -201,12 +198,7 @@ module SeoHelper
   # This includes the additional headers that you can set within the admin panel
 
   def get_additional_headers
-
-    additionalHeaders = Setting.get('seo_additional_headers')
-    if !additionalHeaders.blank?
-      return additionalHeaders
-    end
-
+    Setting.get('seo_additional_headers')
   end
 
 

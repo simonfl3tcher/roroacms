@@ -63,11 +63,12 @@ module AdminRoroaHelper
     str = ''
 
     templates.each do |f|
-      if f == current
-        str	+= "<option value='#{f}' selected='selected'>#{f}</option>"
-      else
-        str	+= "<option value='#{f}'>#{f}</option>"
-      end
+      str += 
+        if f == current
+          "<option value='#{f}' selected='selected'>#{f}</option>"
+        else
+          "<option value='#{f}'>#{f}</option>"
+        end
     end
 
     str.html_safe
@@ -109,122 +110,117 @@ module AdminRoroaHelper
 
     i = 0
     while i < cont.ancestor_ids.length  do
-        html += "<i class=\"icon-minus\"></i>"
-        i += 1
-      end
-
-      render :inline =>  html.html_safe
-
+      html += "<i class=\"icon-minus\"></i>"
+      i += 1
     end
 
+    render :inline =>  html.html_safe
 
-    # returns the site url + an extention if you give it one
-    # Params:
-    # +str+:: extension to add on to the end of the site url
+  end
 
-    def site_url(str = nil)
-      url = Setting.get('site_url')
 
-      if !str.blank? && str[0,1] == '/'
-        str = str[1..-1]
-      end
+  # returns the site url + an extention if you give it one
+  # Params:
+  # +str+:: extension to add on to the end of the site url
 
-      if !url.blank? && url[-1, 1] != '/'
-        url = url + '/'
-      end
+  def site_url(str = nil)
+    url = Setting.get('site_url')
 
-      return "#{url}#{str}"
+    if !str.blank? && str[0,1] == '/'
+      str = str[1..-1]
     end
 
-
-    # checks if the current theme being used actually exists. If not it will return an error message to the user
-
-    def theme_exists
-
-      current_theme = Setting.get('theme_folder')
-
-      if !Dir.exists?("app/views/theme/#{current_theme}/")
-        html = "<div class='alert alert-danger'><strong>" + I18n.t("helpers.admin_roroa_helper.theme_exists.warning") + "!</strong>" + I18n.t("helpers.admin_roroa_helper.theme_exists.message") + "!</div>"
-        render :inline => html.html_safe
-      end
-
+    if !url.blank? && url[-1, 1] != '/'
+      url = url + '/'
     end
 
-    # get the last (#{limit}) comments
-    # Params:
-    # +limit+:: count of how many you would like to get
+    return "#{url}#{str}"
+  end
 
-    def latest_comments(limit = 5)
-      if !limit.blank?
-        Comment.where(:comment_approved => 'N').order("submitted_on DESC").first(limit)
-      else
-        Comment.where(:comment_approved => 'N').order("submitted_on DESC")
-      end
+
+  # checks if the current theme being used actually exists. If not it will return an error message to the user
+
+  def theme_exists
+
+    current_theme = Setting.get('theme_folder')
+
+    if !Dir.exists?("app/views/theme/#{current_theme}/")
+      html = "<div class='alert alert-danger'><strong>" + I18n.t("helpers.admin_roroa_helper.theme_exists.warning") + "!</strong>" + I18n.t("helpers.admin_roroa_helper.theme_exists.message") + "!</div>"
+      render :inline => html.html_safe
     end
 
-    # count how many records in given post type
-    # Params:
-    # +type+:: what type of post records you want to get the count for
+  end
 
-    def get_count_post(type)
-      Post.where(:post_type => type).count
+  # get the last (#{limit}) comments
+  # Params:
+  # +limit+:: count of how many you would like to get
+
+  def latest_comments(limit = 5)
+    if !limit.blank?
+      Comment.where(:comment_approved => 'N').order("submitted_on DESC").first(limit)
+    else
+      Comment.where(:comment_approved => 'N').order("submitted_on DESC")
     end
+  end
 
-    # count all comments
-    def get_count_comments
-      Comment.all.count
-    end
+  # count how many records in given post type
+  # Params:
+  # +type+:: what type of post records you want to get the count for
 
-    # display errors inline to the input
-    # Params:
-    # +model+:: ActiveRecord model from form
-    # +attribute+:: the attribute that you want to check errors for
+  def get_count_post(type)
+    Post.where(:post_type => type).count
+  end
 
-    def errors_for(model, attribute)
-      if model.errors[attribute].present?
-        name = model.class.name.constantize.human_attribute_name(attribute)
-        content_tag :span, :class => 'help-block error' do
-          name.to_s.capitalize + ' ' + model.errors[attribute].join(", ")
-        end
-      end
-    end
+  # count all comments
+  def get_count_comments
+    Comment.all.size
+  end
 
-    # display errors inline to the input specifically for setting ares
-    # Params:
-    # +model+:: ActiveRecord model from form
-    # +attribute+:: the attribute that you want to check errors for
+  # display errors inline to the input
+  # Params:
+  # +model+:: ActiveRecord model from form
+  # +attribute+:: the attribute that you want to check errors for
 
-    def setting_errors_for(model, attribute)
-      if !model[:errors].blank? && model[:errors][attribute.to_sym].present?
-        content_tag :span, :class => 'help-block error' do
-          I18n.t("views.admin.settings.tab_content.#{attribute.to_s}").downcase.capitalize + ' ' + I18n.t("activerecord.errors.messages.empty")
-        end
+  def errors_for(model, attribute)
+    if model.errors[attribute].present?
+      name = model.class.name.constantize.human_attribute_name(attribute)
+      content_tag :span, :class => 'help-block error' do
+        name.to_s.capitalize + ' ' + model.errors[attribute].join(", ")
       end
     end
+  end
 
-    # deals with the user images (profile/cover images)
-    # Params:
-    # +params+:: parameters
-    # +attribute+:: admin ActiveRecord object
+  # display errors inline to the input specifically for setting ares
+  # Params:
+  # +model+:: ActiveRecord model from form
+  # +attribute+:: the attribute that you want to check errors for
 
-    def profile_images(params, admin)
-
-      if !params[:admin][:avatar].blank?
-        Admin.deal_with_profile_images admin, upload_user_images(params[:admin][:avatar], admin.username), 'avatar'
+  def setting_errors_for(model, attribute)
+    if !model[:errors].blank? && model[:errors][attribute.to_sym].present?
+      content_tag :span, :class => 'help-block error' do
+        I18n.t("views.admin.settings.tab_content.#{attribute.to_s}").downcase.capitalize + ' ' + I18n.t("activerecord.errors.messages.empty")
       end
-
-      if !params[:admin][:cover_picture].blank?
-        Admin.deal_with_profile_images admin, upload_user_images(params[:admin][:cover_picture], admin.username), 'cover_picture'
-      end
-
     end
+  end
+
+  # deals with the user images (profile/cover images)
+  # Params:
+  # +params+:: parameters
+  # +attribute+:: admin ActiveRecord object
+
+  def profile_images(params, admin)
+
+    Admin.deal_with_profile_images(admin, upload_user_images(params[:admin][:avatar], admin.username), 'avatar') if !params[:admin][:avatar].blank?
+    Admin.deal_with_profile_images(admin, upload_user_images(params[:admin][:cover_picture], admin.username), 'cover_picture') if !params[:admin][:cover_picture].blank?
+
+  end
 
     # lists all the controllers in the admin area and returns a formatted hash. This is used for the user group administration
     # Params:
     # +dir+:: directory that you want to list the controllers for
 
     def list_controllers(dir = 'admin')
-      hash = Hash.new
+      hash = {}
       controllers = list_controllers_raw(dir)
 
       controllers.each do |f|
@@ -234,18 +230,21 @@ module AdminRoroaHelper
 
         next if value == 'dashboard'
 
-        case value
-        when 'settings/general'
-          value = 'Settings'
-        when 'terms'
-          value = 'Categories & Tags'
-        when 'posts'
-          value = 'Articles'
-        when 'administrators'
-          value = 'Users'
-        end
+        v =
+          case value
+          when 'settings/general'
+            'Settings'
+          when 'terms'
+            'Categories & Tags'
+          when 'posts'
+            'Articles'
+          when 'administrators'
+            'Users'
+          else
+            value
+          end
 
-        hash[ucwords(value)] = key.sub('_controller.rb', '')
+        hash[ucwords(v)] = key.sub('_controller.rb', '')
 
       end
 
@@ -310,15 +309,16 @@ module AdminRoroaHelper
       string = ''
       if keys_exist
         data.each do |key, value|
-          if value.is_a?(Array)
-            string += addition_data_loop(value, false, key)
-          else
-            string += (render :partial => 'admin/partials/post_additional_data_view', :locals => {:key => key, :value => value })
-          end
+          string +=
+            if value.is_a?(Array)
+              addition_data_loop(value, false, key)
+            else
+              (render :partial => 'admin/partials/post_additional_data_view', :locals => { key: key, value: value })
+            end
         end
       else
         data.each do |value|
-          string += (render :partial => 'admin/partials/post_additional_data_view', :locals => {:key => key, :value => value })
+          string += (render :partial => 'admin/partials/post_additional_data_view', :locals => { key: key, value: value })
         end
       end
 
@@ -332,13 +332,7 @@ module AdminRoroaHelper
     # +pages+:: second set of records
 
     def respond_to_trash(posts, pages)
-
-      if !posts.blank? && pages.blank?
-        '6'
-      else
-        '12'
-      end
-
+      !posts.blank? && pages.blank? ? '6' : '12'
     end
 
     # clears the admin view cache.

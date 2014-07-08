@@ -66,8 +66,9 @@ module GeneralHelper
   # Params:
   # +str+:: the string
 
-  def ucwords str
-    return str.split(' ').select {|w| w.capitalize! || w }.join(' ');
+  def ucwords(str = nil)
+    return '' if str.blank?
+    str.split(' ').select {|w| w.capitalize! || w }.join(' ')
   end
 
 end

@@ -1,4 +1,4 @@
-<%= form_for [:admin, @record], :url => { :action => @action.to_sym } do |f| %>
+<%= form_for [:admin, @record], :url => { action: @action.to_sym } do |f| %>
 
   <div class="panel panel-default">
     <div class="panel-body">
@@ -16,7 +16,7 @@
 
         </ul>
         <div class="tab-content">
-          <%= render :partial => 'admin/partials/submit_bar', :locals => { :post_record => @record }  %>
+          <%= render :partial => 'admin/partials/submit_bar', :locals => { post_record: @record }  %>
           <div class="tab-pane active" id="general">
 
             <% if !@record.post_image.blank? %>
@@ -77,7 +77,7 @@
             <div class="form-group">
               <%= f.label :post_status, :class => "col-sm-3 control-label"  %>
               <div class="col-sm-6">
-                <%= f.select :post_status, Post::POST_STATUS, {:selected => 'Draft'}, { :class => "form-control" }  %>
+                <%= f.select :post_status, Post::POST_STATUS, { selected: 'Draft' }, { class: "form-control" }  %>
                 <%= errors_for @record, :post_status %>
               </div>
               <div class="clearfix"></div>
@@ -88,7 +88,7 @@
             <div class="form-group">
              <%= f.label :post_author, :class => "col-sm-3 control-label"  %>
              <div class="col-sm-6">
-               <%= f.select :admin_id, Admin::GET_ADMINS.collect {|p| [ p.username, p.id ] }, { prompt: 'Select a Author' }, { :class => "form-control" } %>
+               <%= f.select :admin_id, Admin::GET_ADMINS.collect {|p| [ p.username, p.id ] }, { prompt: 'Select a Author' }, { class: "form-control" } %>
              </div>
              <div class="clearfix"></div>
            </div>
@@ -98,7 +98,7 @@
            <div class="form-group">
             <%= f.label :parent_id, :class => "col-sm-3 control-label"  %>
             <div class="col-sm-6">
-              <%= f.select :parent_id, Post.where(:post_type => 'page', :disabled => 'N').collect {|p| [ p.post_title, p.id ] }, { include_blank: t("views.admin.generic.none") }, { :class => "form-control" } %>
+              <%= f.select :parent_id, Post.where(:post_type => 'page', :disabled => 'N').collect {|p| [ p.post_title, p.id ] }, { include_blank: t("views.admin.generic.none") }, { class: "form-control" } %>
               <%= errors_for @record, :parent_id %>
             </div>
             <div class="clearfix"></div>
@@ -109,7 +109,7 @@
           <div class="form-group">
             <%= f.label :post_template, :class => "col-sm-3 control-label"  %>
             <div class="col-sm-6">
-              <%= f.select :post_template, get_template_dropdown(@record.post_template), { include_blank: t("views.admin.generic.none") }, { :class => "form-control" } %>
+              <%= f.select :post_template, get_template_dropdown(@record.post_template), { include_blank: t("views.admin.generic.none") }, { class: "form-control" } %>
               <%= errors_for @record, :post_template %>
             </div>
             <div class="clearfix"></div>
@@ -131,7 +131,7 @@
             <%= f.label :post_date, :class => "col-sm-3 control-label"  %>
             <div class="col-sm-6">
               <%= t("views.admin.generic.date") %>
-              <%= f.datetime_select :post_date, {:order => [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', :datetime_separator => t("views.admin.generic.datetime_separator") }, :class => 'form-control' %>
+              <%= f.datetime_select :post_date, { order: [:day, :month, :year, :hour, :minute], use_short_month: true, time_separator: '', datetime_separator: t("views.admin.generic.datetime_separator") }, :class => 'form-control' %>
             </div>
             <div class="clearfix"></div>
           </div>

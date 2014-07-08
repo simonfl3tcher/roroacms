@@ -5,6 +5,12 @@ class Post < ActiveRecord::Base
   has_ancestry
   attr_accessor :skip_slug_uniqueness
 
+  ## constants ##
+
+  POST_STATUS = ["Published", "Draft", "Disabled"]
+  POST_TAGS ||= Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy)
+  POST_CATEGORIES ||= Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
+
   ## associations ##
 
   belongs_to :admin
@@ -24,12 +30,6 @@ class Post < ActiveRecord::Base
   ## named scopes ##
 
   scope :from_this_year, where("post_date > ? AND post_date < ?", Time.now.beginning_of_year, Time.now.end_of_year)
-
-  ## model constants ##
-
-  POST_STATUS = ["Published", "Draft", "Disabled"]
-  POST_TAGS ||= Term.where(term_anatomies: {taxonomy: 'tag'}).order('name asc').includes(:term_anatomy)
-  POST_CATEGORIES ||= Term.where(term_anatomies: {taxonomy: 'category'}).order('name asc').includes(:term_anatomy)
 
 
   ## callbacks ##
@@ -69,12 +69,9 @@ class Post < ActiveRecord::Base
 
     # if delete is true it will remove all relationships with that individual post
 
-    if delete
-      if !@delcats.blank?
-        @delcats.each do |f|
-          @cat = TermRelationship.find(f.id)
-          @cat.destroy
-        end
+    if delete && !@delcats.blank?
+      @delcats.each do |f|
+        TermRelationship.where(:id => f.id).destroy_all
       end
     end
 
@@ -93,6 +90,7 @@ class Post < ActiveRecord::Base
         TermRelationship.create(:term_id => val, :post_id => post.id)
       end
     end
+
   end
 
   # if the post slug is not the same as the old slug. it will update the structured url against the record
@@ -126,11 +124,12 @@ class Post < ActiveRecord::Base
   def deal_with_abnormalaties
 
     # if the slug is empty it will take the title and create a slug
-    if self.post_slug.blank?
-      self.post_slug = self.post_title.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
-    else
-      self.post_slug = self.post_slug.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
-    end
+    self.post_slug = 
+      if self.post_slug.blank?
+        self.post_title.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
+      else
+        self.post_slug.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
+      end
 
     # if post status is left blank it will set the status to draft
     if self.post_status.blank?
@@ -138,11 +137,12 @@ class Post < ActiveRecord::Base
     end
 
     # if the post has a parent it will prefix the structured url with its parents url
-    if self.parent_id
-      self.structured_url = "#{self.parent.structured_url}/#{self.post_slug}"
-    else
-      self.structured_url = "/#{self.post_slug}"
-    end
+    self.structured_url = 
+      if self.parent_id
+        "#{self.parent.structured_url}/#{self.post_slug}"
+      else
+        "/#{self.post_slug}"
+      end
 
   end
 
@@ -152,7 +152,7 @@ class Post < ActiveRecord::Base
 
     if !data.blank?
       data.each do |key, value|
-        if value.count < 2
+        if value.size < 2
           data[key.to_sym] = value[0]
         end
       end
@@ -198,8 +198,7 @@ class Post < ActiveRecord::Base
 
         if !@delcats.blank?
           @delcats.each do |f|
-            @cat = TermRelationship.find(f.id)
-            @cat.destroy
+            @cat = TermRelationship.where(:id => f.id).destroy_all
           end
         end
 
@@ -297,15 +296,14 @@ class Post < ActiveRecord::Base
     action = params[:to_do]
     action = action.gsub(' ', '_')
 
-    if type == 'pages'
-      act = params[:pages]
-    else
-      act = params[:posts]
-    end
+    act = 
+      if type == 'pages'
+        params[:pages]
+      else
+        params[:posts]
+      end
 
-    if act.nil?
-      action = ""
-    end
+    action = "" if act.nil?
 
     case action.downcase
 
@@ -332,6 +330,7 @@ class Post < ActiveRecord::Base
       respond_to do |format|
         return I18n.t("generic.nothing")
       end
+
     end
 
   end

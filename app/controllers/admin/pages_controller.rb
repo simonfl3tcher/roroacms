@@ -53,7 +53,6 @@ class Admin::PagesController < AdminController
   # gets and displays the post object with the necessary dependencies
 
   def edit
-
     @edit = true
     @record = Post.find(params[:id])
 
@@ -61,7 +60,6 @@ class Admin::PagesController < AdminController
     add_breadcrumb I18n.t("controllers.admin.pages.edit.breadcrumb")
     set_title(I18n.t("controllers.admin.pages.edit.title", post_title: @record.post_title))
     @action = 'update'
-    
   end
 
 
@@ -129,4 +127,5 @@ class Admin::PagesController < AdminController
   def set_post_type
     @post_type ||= 'page'
   end
+  
 end

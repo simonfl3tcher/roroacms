@@ -7,7 +7,7 @@
     <p class="notice"><%= flash[:notice] %></p>
     <p class="error"><%= flash[:error] %></p>
 
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:class => 'form-horizontal'}) do |f| %>
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => { class: 'form-horizontal' }) do |f| %>
         <%= devise_error_messages! %>
         <div class="form-group">
           <div class="col-md-12">

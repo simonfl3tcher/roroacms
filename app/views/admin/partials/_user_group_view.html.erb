@@ -6,9 +6,9 @@
           <%= hidden_field_tag "user_groups[#{@key.blank? ? key : @key}][]", f %>
         <% end %>
 
-        <%= select_tag "user_groups[#{@key.blank? ? key : @key}][]", options_for_select(list_controllers('admin'), defined?(value) ? value.map {|t| t} : ''), { :multiple => true, :size =>10, :class => 'form-control', :disabled => 'disabled' } %>
+        <%= select_tag "user_groups[#{@key.blank? ? key : @key}][]", options_for_select(list_controllers('admin'), defined?(value) ? value.map {|t| t} : ''), { multiple: true, size: 10, class: 'form-control', disabled: 'disabled' } %>
       <% else %>
-        <%= select_tag "user_groups[#{@key.blank? ? key : @key}][]", options_for_select(list_controllers('admin'), defined?(value) ? value.map {|t| t} : ''), { :multiple => true, :size =>10, :class => 'form-control' } %>
+        <%= select_tag "user_groups[#{@key.blank? ? key : @key}][]", options_for_select(list_controllers('admin'), defined?(value) ? value.map {|t| t} : ''), { multiple: true, size: 10, class: 'form-control' } %>
       <% end %>
 
       <% if (!defined?(key) && @key != 'admin') || (@key.blank? && key != 'admin') %>

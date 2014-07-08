@@ -44,7 +44,10 @@
           <div class="panel-footer">
             <div class="row">
               <div class="col-md-6">
-                <%= bulk_update_dropdown Hash['reinstate' => t("views.admin.generic.bulk_update_options.reinstate"), 'destroy' =>  t("views.admin.generic.bulk_update_options.destroy")] %>
+                <%= bulk_update_dropdown Hash[
+                                          'reinstate' => t("views.admin.generic.bulk_update_options.reinstate"), 
+                                          'destroy' =>  t("views.admin.generic.bulk_update_options.destroy")
+                                          ] %>
               </div>
               <div class="col-md-6">
                 <h6 class="pull-right"><%= t("views.admin.trash.total") %> <span class="label label-primary"><%= @posts.count %></span></h6>
@@ -88,7 +91,10 @@
           <div class="panel-footer">
             <div class="row">
               <div class="col-md-6">
-                <%= bulk_update_dropdown Hash['reinstate' => t("views.admin.generic.bulk_update_options.reinstate"), 'destroy' =>  t("views.admin.generic.bulk_update_options.destroy")] %>
+                <%= bulk_update_dropdown Hash[
+                                          'reinstate' => t("views.admin.generic.bulk_update_options.reinstate"), 
+                                          'destroy' =>  t("views.admin.generic.bulk_update_options.destroy")
+                                          ] %>
               </div>
               <div class="col-md-6">
                 <h6 class="pull-right"><%= t("views.admin.trash.total") %> <span class="label label-primary"><%= @pages.count %></span></h6>

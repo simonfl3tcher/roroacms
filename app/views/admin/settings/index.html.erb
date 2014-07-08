@@ -2,7 +2,7 @@
 
   <div class="col-md-12">
 
-    <%= form_tag(admin_settings_path, :html => {:class => 'form-horizontal'}) do %>
+    <%= form_tag(admin_settings_path, :html => { class: 'form-horizontal' }) do %>
 
     <%= hidden_field_tag 'redirect', 'general' %>
 
@@ -286,7 +286,7 @@
 
               <% @json.decode(@settings['user_groups'].gsub('\\', '')).each do |key, value| %>
 
-              <%= render :partial => 'admin/partials/user_group_view', :locals => {:key => key, :value => value } %>
+              <%= render :partial => 'admin/partials/user_group_view', :locals => { key: key, value: value } %>
 
               <% end %>
 

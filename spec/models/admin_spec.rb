@@ -60,7 +60,7 @@ RSpec.describe Admin, :type => :model do
   end
 
   it "should set the cover image to blank" do
-    user.deal_with_cover({:has_cover_image => nil})
+    user.deal_with_cover({ has_cover_image: nil })
     expect(user.cover_picture).to be_blank
   end
 

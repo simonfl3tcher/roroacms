@@ -45,6 +45,7 @@ class Admin::CommentsController < AdminController
   # delete the comment
 
   def destroy
+    
     @comment = Comment.find(params[:id])
     @comment.destroy
 

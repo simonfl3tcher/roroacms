@@ -24,7 +24,7 @@ class PagesController < ApplicationController
 
 
   def show
-    redirect_to show_url params
+    redirect_to show_url(params)
   end
 
 

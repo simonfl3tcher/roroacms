@@ -32,7 +32,7 @@ class MenuOption < ActiveRecord::Base
 
     end
 
-    return true
+    true
   end
 
 end

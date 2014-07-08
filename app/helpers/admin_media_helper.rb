@@ -63,9 +63,7 @@ module AdminMediaHelper
     file = fulldata[i+1]
     name = file.key.split("/").last
 
-    if !y
-      html = '<ul>'
-    end
+    html = '<ul>' if !y
 
     # add li for the folder
     html += "<li class='folderRow'>
@@ -84,11 +82,9 @@ module AdminMediaHelper
 
     html += "</li>"
 
-    if !y
-      html += '</ul>'
-    end
+    html += '</ul>' if !y
 
-    return html.html_safe
+    html.html_safe
 
   end
 

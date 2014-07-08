@@ -73,9 +73,9 @@ class ApplicationController < ActionController::Base
   def current_admin_access
 
     if !@current_admin.nil?
-      return @current_admin.access_level
+      @current_admin.access_level
     else
-      return false;
+      false
     end
 
   end

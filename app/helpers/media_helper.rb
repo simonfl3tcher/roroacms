@@ -17,13 +17,14 @@ module MediaHelper
 
   def media_setup_and_search_posts(url = nil)
 
-    if url.nil?
-      files = AWS::S3::Bucket.find("#{BUCKET}").objects
-    else
-      # if url is defined it will either get all objects inside a directory or get an inidividual
-      # file depending on the type of string passed in through prefix
-      files = AWS::S3::Bucket.objects(Setting.get('aws_bucket_name'), :prefix => url)
-    end
+    files =
+      if url.nil?
+        AWS::S3::Bucket.find("#{BUCKET}").objects
+      else
+        # if url is defined it will either get all objects inside a directory or get an inidividual
+        # file depending on the type of string passed in through prefix
+        AWS::S3::Bucket.objects(Setting.get('aws_bucket_name'), :prefix => url)
+      end
 
     files
 
@@ -95,12 +96,10 @@ module MediaHelper
     begin
 
       @file = AWS::S3::S3Object.store(sanitize_filename(p.original_filename), p.read, where, :access => :public_read)
-      @url = S3Object.url_for("/" + initial_folder.to_s + "/" + user.to_s + "/" + p.original_filename, BUCKET, :authenticated => false)
-
-      return @url
+      S3Object.url_for("/" + initial_folder.to_s + "/" + user.to_s + "/" + p.original_filename, BUCKET, :authenticated => false)
 
     rescue ResponseError => error
-      return @url = ''
+      ''
     end
 
   end

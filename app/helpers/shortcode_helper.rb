@@ -9,9 +9,7 @@ module ShortcodeHelper
 
   def prep_content(c = '')
 
-    if c != ''
-      @content = c
-    end
+    @content = c if c != ''
 
     # c always has to be a post object as you will need to be able to access post_content
     c = @content.post_content

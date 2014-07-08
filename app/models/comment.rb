@@ -10,7 +10,7 @@ class Comment < ActiveRecord::Base
 
   ## validations ##
 
-  validates :email, presence: true, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create }
+  validates :email, presence: true, :format => { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create }
   validates :author, :comment, :presence => true
 
   ## callbacks ##

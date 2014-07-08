@@ -37,9 +37,9 @@ module ViewHelper
     # get the taxonomy name and search the database for the record with this as its slug
     if !segments[2].blank?
       t =  Term.where(:structured_url => "/" +  segments.drop(2).join('/')).last
-      return t.name
+      t.name
     else
-      return nil
+      nil
     end
 
   end
@@ -53,9 +53,9 @@ module ViewHelper
 
     if !segments[1].blank?
       term = TermAnatomy.where(:taxonomy => segments[1]).last
-      return term.taxonomy
+      term.taxonomy
     else
-      return nil
+      nil
     end
 
   end
@@ -214,7 +214,7 @@ module ViewHelper
 
   # Easy to understand function for getting the archive data
 
-  def get_archive_date
+  def get_archive_data
     @content
   end
 
@@ -275,7 +275,7 @@ module ViewHelper
 
     if Setting.get('article_comments') == 'Y'
       type = Setting.get('article_comment_type')
-      render(:template =>"theme/#{current_theme}/comments_form." + get_theme_ext , :layout => nil, :locals => { :type => type }).to_s
+      render(:template =>"theme/#{current_theme}/comments_form." + get_theme_ext , :layout => nil, :locals => { type: type }).to_s
     end
 
   end
@@ -287,11 +287,12 @@ module ViewHelper
 
   def return_comments(post_id = nil)
 
-    if !post_id.nil?
-      comments = Comment.where(:post_id => post_id)
-    else
-      comments = Comment.where(:post_id => @content.id, :comment_approved => 'Y')
-    end
+    comments =
+      if !post_id.nil?
+        Comment.where(:post_id => post_id)
+      else
+        Comment.where(:post_id => @content.id, :comment_approved => 'Y')
+      end
 
     comments
 
@@ -305,13 +306,14 @@ module ViewHelper
   def display_comments_loop(post_id = nil)
 
     # get the comments by the post id or the globalized @content record
-    if !post_id.nil?
-      comments = Comment.where(:post_id => post_id)
-    else
-      comments = Comment.where(:post_id => @content.id, :comment_approved => 'Y', :is_spam => 'N')
-    end
+    comments = 
+      if !post_id.nil?
+        Comment.where(:post_id => post_id)
+      else
+        Comment.where(:post_id => @content.id, :comment_approved => 'Y', :is_spam => 'N')
+      end
 
-    if comments.count > 0
+    if comments.size > 0
       html = "<h3 id='comments-title'>#{comments.count}" + I18n.t("helpers.view_helper.display_comments_loop.response") + " #{display_title}</h3>"
     end
 
@@ -326,9 +328,9 @@ module ViewHelper
 
   def display_author_information(raw = false)
 
-    @admin = Admin.find_by_id(@content.admin_id)
+    admin = Admin.find(@content.admin_id)
     if raw
-      return @admin
+      admin
     else
       unless @admin.blank?
         html = "<div id='author-info'>
@@ -356,7 +358,7 @@ module ViewHelper
       str = str[1..-1]
     end
 
-    return "#{url}#{str}"
+    "#{url}#{str}"
   end
 
 
@@ -438,12 +440,13 @@ module ViewHelper
       # get the current category
       parent_term = Term.where(term_anatomies: {taxonomy: 'category'}, :structured_url => "/" +  segments.drop(2).join('/')).includes(:term_anatomy).first
 
-      if !parent_term.blank?
-        # get all the records with the current category as its parent
-        terms = Term.where(:parent => parent_term.id)
-      else
-        terms = []
-      end
+      terms =
+        if !parent_term.blank?
+          # get all the records with the current category as its parent
+          Term.where(:parent => parent_term.id)
+        else
+          []
+        end
 
     else
       # get all the categories
@@ -495,7 +498,7 @@ module ViewHelper
         terms = Term.where(term_anatomies: {taxonomy: 'tag'}, :parent => nil).includes(:term_anatomy)
       end
       # if you want a list style
-      return li_loop_for_terms(terms, tag_url)
+      li_loop_for_terms(terms, tag_url)
 
     end
 
@@ -506,16 +509,18 @@ module ViewHelper
     article_url = Setting.get('articles_slug')
     tag_url = Setting.get('tag_slug')
 
-    if id.blank?
-      terms = @content.terms.where(term_anatomies: {taxonomy: 'tag'}).includes(:term_anatomy)
-    else
-      terms = Post.find(id).terms.where(term_anatomies: {taxonomy: 'tag'}).includes(:term_anatomy)
-    end
+    terms = 
+      if id.blank?
+        @content.terms.where(term_anatomies: {taxonomy: 'tag'}).includes(:term_anatomy)
+      else
+        Post.find(id).terms.where(term_anatomies: {taxonomy: 'tag'}).includes(:term_anatomy)
+      end
 
     return terms.all.map do |u|
       url = article_url + '/' + tag_url + u.structured_url
       "<a href='#{site_url(url)}'>" + u.name + "</a>"
     end.join(', ').html_safe
+    
   end
 
   # get posts with the ID of the given string '1,2,4'
@@ -532,9 +537,7 @@ module ViewHelper
 
   def get_subpages(parent_id = nil, limit = nil, orderby = 'post_title')
     posts = Post.where(:parent_id => parent_id.blank? ? @content.id : parent_id).order(orderby)
-    if !limit.blank?
-      posts = posts.limit(1)
-    end
+    posts = posts.limit(1) if !limit.blank?
     posts
   end
 
@@ -600,10 +603,10 @@ module ViewHelper
 
   # Returns a sub string of the month name
   # Params:
-  # +s+:: integer of the month
+  # +str+:: integer of the month
 
-  def get_date_name_by_number(s)
-    case s
+  def get_date_name_by_number(str)
+    case str
     when  1 then I18n.t("helpers.view_helper.get_date_name_by_number.date_1")
     when  2 then I18n.t("helpers.view_helper.get_date_name_by_number.date_2")
     when  3 then I18n.t("helpers.view_helper.get_date_name_by_number.date_3")

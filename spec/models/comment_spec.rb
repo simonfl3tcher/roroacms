@@ -42,7 +42,7 @@ RSpec.describe Comment, :type => :model do
 
     it "should approve given records" do
 
-      Comment.bulk_update({:to_do => 'approve', :comments => array})
+      Comment.bulk_update({ to_do: 'approve', comments: array})
 
       expect(Comment.find(record.id).comment_approved).to eq('Y')
       expect(Comment.find(comment.id).comment_approved).to eq('Y')
@@ -51,7 +51,7 @@ RSpec.describe Comment, :type => :model do
 
     it "should unapprove given records by id" do
 
-      Comment.bulk_update({:to_do => 'unapprove', :comments => array})
+      Comment.bulk_update({ to_do: 'unapprove', comments: array})
       expect(Comment.find(record.id).comment_approved).to eq('N')
       expect(Comment.find(comment.id).comment_approved).to eq('N')
 
@@ -59,7 +59,7 @@ RSpec.describe Comment, :type => :model do
 
     it "should mark given records as spam" do
 
-      Comment.bulk_update({:to_do => 'mark_as_spam', :comments => array})
+      Comment.bulk_update({ to_do: 'mark_as_spam', comments: array})
       expect(Comment.find(record.id).comment_approved).to eq('S')
       expect(Comment.find(comment.id).comment_approved).to eq('S')
 
@@ -68,7 +68,7 @@ RSpec.describe Comment, :type => :model do
     end
 
     it "should delete given records" do
-      expect { Comment.bulk_update({:to_do => 'destroy', :comments => array}) }.to change(Comment, :count).by(-2)
+      expect { Comment.bulk_update({ to_do: 'destroy', comments: array}) }.to change(Comment, :count).by(-2)
     end
 
   end

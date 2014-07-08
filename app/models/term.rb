@@ -1,5 +1,10 @@
 class Term < ActiveRecord::Base
 
+  ## constants ##
+
+  CATEGORIES = Term.includes(:term_anatomy).where(term_anatomies: {taxonomy: 'category'}).order('name asc')
+  TAGS = Term.includes(:term_anatomy).where(term_anatomies: {taxonomy: 'tag'}).order('name asc')
+
   ## associations ##
 
   has_many :term_relationships
@@ -12,10 +17,6 @@ class Term < ActiveRecord::Base
   validates_format_of :slug, :with => /\A[A-Za-z0-9-]*\z/
   validates_uniqueness_of :slug, :on => :create
 
-  ## model constants ##
-
-  CATEGORIES = Term.includes(:term_anatomy).where(term_anatomies: {taxonomy: 'category'}).order('name asc')
-  TAGS = Term.includes(:term_anatomy).where(term_anatomies: {taxonomy: 'tag'}).order('name asc')
 
   ## callbacks ##
 
@@ -47,13 +48,14 @@ class Term < ActiveRecord::Base
 
     taxonomy = params[:type_taxonomy]
 
-    if taxonomy == 'category'
-      type = I18n.t("models.term.generic.category")
-    else
-      type = I18n.t("models.term.generic.tag")
-    end
+    type = 
+      if taxonomy == 'category'
+        I18n.t("models.term.generic.category")
+      else
+        I18n.t("models.term.generic.tag")
+      end
 
-    return type
+    type
 
   end
 
@@ -62,12 +64,12 @@ class Term < ActiveRecord::Base
   def deal_with_abnormalaties
 
     # if the slug is empty it will take the name and create a slug
-
-    if self.slug.blank?
-      self.slug = self.name.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
-    else
-      self.slug = self.slug.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
-    end
+    self.slug =
+      if self.slug.blank?
+        self.name.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
+      else
+        self.slug.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
+      end
 
     self.structured_url = '/' + self.slug
 
