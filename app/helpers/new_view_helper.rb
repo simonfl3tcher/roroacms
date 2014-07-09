@@ -183,7 +183,11 @@ module NewViewHelper
 
 	end
 
-	def is_tag?(tagid = nil)
+	def is_tag?
+
+	end
+
+	def is_category?
 
 	end
 
@@ -221,6 +225,20 @@ module NewViewHelper
 	end
 
 	def comment_time(id)
+
+	end
+
+	# others 
+
+	def obtain_id
+
+	end
+
+	def obtain_the_author(id = nil)
+
+	end
+
+	def obtain_the_authors_articles(id = nil)
 
 	end
 
