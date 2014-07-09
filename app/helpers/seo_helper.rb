@@ -229,11 +229,12 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
   # if you set to use canonical urls in the admin panel it will return the html to allow this
 
   def canonical_urls
+    headtags = ''
     canonical = Setting.get('seo_canonical_urls')
     if canonical.to_s == 'Y'
       headtags = "<link rel=\"canonical\" href=\"#{url_for(:action => 'index')}\" />\n"
-      return headtags
     end
+    headtags
   end
 
 end

@@ -60,7 +60,7 @@ class Comment < ActiveRecord::Base
   # strip any sort of html, we don't want javascrpt injection
 
   def strip_html
-    self.comment = self.comment.to_s.gsub(%r{</?[^>]+?>}, '').gsub(/<script.*?>[\s\S]*<\/script>/i, "")
+    self.comment = comment.to_s.gsub(%r{</?[^>]+?>}, '').gsub(/<script.*?>[\s\S]*<\/script>/i, "")
   end
 
   # set default values of the record before adding to the database

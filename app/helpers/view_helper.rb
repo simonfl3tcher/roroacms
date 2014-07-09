@@ -144,6 +144,7 @@ module ViewHelper
   end
 
 
+  # HACK: Clean this code up
   # Check to see if given id or string is the current content record
   # Params:
   # +check+:: can be either name or id of the post

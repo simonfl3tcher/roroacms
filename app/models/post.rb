@@ -97,9 +97,9 @@ class Post < ActiveRecord::Base
 
   def deal_with_slug_update
     # updates the old url and replaces it with the new URL if the name has changed.
-    if self.post_slug_changed?
-      old_slug = self.changes['post_slug'][0]
-      new_slug = self.changes['post_slug'][1]
+    if post_slug_changed?
+      old_slug = changes['post_slug'][0]
+      new_slug = changes['post_slug'][1]
       p = Post.where("(structured_url like ?)", "%#{old_slug}%")
       p.each do |pst|
         pst.structured_url = pst.structured_url.gsub("/#{old_slug}", "/#{new_slug}")
@@ -122,26 +122,25 @@ class Post < ActiveRecord::Base
   # will make sure that specific data is correctly formatted for the database
 
   def deal_with_abnormalaties
-
     # if the slug is empty it will take the title and create a slug
     self.post_slug = 
-      if self.post_slug.blank?
-        self.post_title.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
+      if post_slug.blank?
+        post_title.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
       else
-        self.post_slug.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
+        post_slug.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
       end
 
     # if post status is left blank it will set the status to draft
-    if self.post_status.blank?
+    if post_status.blank?
       self.post_status = 'Draft'
     end
 
     # if the post has a parent it will prefix the structured url with its parents url
     self.structured_url = 
-      if self.parent_id
-        "#{self.parent.structured_url}/#{self.post_slug}"
+      if parent_id
+        "#{parent.structured_url}/#{post_slug}"
       else
-        "/#{self.post_slug}"
+        "/#{post_slug}"
       end
 
   end
@@ -152,9 +151,7 @@ class Post < ActiveRecord::Base
 
     if !data.blank?
       data.each do |key, value|
-        if value.size < 2
-          data[key.to_sym] = value[0]
-        end
+        data[key.to_sym] = value[0] if value.size < 2
       end
       self.post_additional_data = ActiveSupport::JSON.encode(data)
     end
@@ -171,9 +168,7 @@ class Post < ActiveRecord::Base
     if (remove_uncessary(post) != remove_uncessary(parent)) && (remove_uncessary(post) != remove_uncessary(@autosave_records.first))
 
       # if the amount of records is equal to 10 remove the last one
-      if @autosave_records.length > 9
-        Post.destroy(@autosave_records.last[:id])
-      end
+      Post.destroy(@autosave_records.last[:id]) if @autosave_records.length > 9
 
       # Do the autosave
       @cats = params[:category_ids]
@@ -183,9 +178,7 @@ class Post < ActiveRecord::Base
       post.id = nil
       post.parent_id = parent.id
 
-      if post.post_slug.empty?
-        post.post_slug = post.post_title.gsub(' ', '-')
-      end
+      post.post_slug = post.post_title.gsub(' ', '-') if post.post_slug.empty?
 
       post.post_status = 'Autosave'
       post.post_type = 'autosave'
@@ -221,7 +214,6 @@ class Post < ActiveRecord::Base
   end
 
   def create_user_backup_record
-
 
     if self.post_slug_changed? || self.post_content_changed? || self.post_title_changed?
 

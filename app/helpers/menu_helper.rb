@@ -103,6 +103,7 @@ module MenuHelper
 
 	end
 
+	# HACK: Change into a case switch statement
 
 	# create the a links with the given attributes
 	# Params:

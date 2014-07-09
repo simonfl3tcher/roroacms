@@ -17,7 +17,6 @@ class Term < ActiveRecord::Base
   validates_format_of :slug, :with => /\A[A-Za-z0-9-]*\z/
   validates_uniqueness_of :slug, :on => :create
 
-
   ## callbacks ##
 
   before_validation :deal_with_abnormalaties
@@ -65,10 +64,10 @@ class Term < ActiveRecord::Base
 
     # if the slug is empty it will take the name and create a slug
     self.slug =
-      if self.slug.blank?
-        self.name.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
+      if slug.blank?
+        name.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
       else
-        self.slug.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
+        slug.gsub(' ', '-').downcase.gsub(/[^a-z0-9\-\s]/i, '')
       end
 
     self.structured_url = '/' + self.slug
@@ -85,9 +84,8 @@ class Term < ActiveRecord::Base
     if initial
       str_url = '/' + term.slug
       # make sure you prepend the parent structured url if parent exitst
-      if !term.parent.blank?
-        str_url = Term.find(term.parent.to_i).structured_url + str_url
-      end
+      str_url = (Term.find(term.parent.to_i).structured_url + str_url) if !term.parent.blank?
+      
       term.structured_url = str_url
       term.save(:validate => false)
     end
@@ -102,9 +100,7 @@ class Term < ActiveRecord::Base
         t.structured_url = t.structured_url.gsub(old_url + '/', term.structured_url + '/')
         t.save
 
-        if !t.parent.blank?
-          update_slug_for_subcategories(t.id, url_old, false)
-        end
+        update_slug_for_subcategories(t.id, url_old, false) if !t.parent.blank?
 
       end
     end

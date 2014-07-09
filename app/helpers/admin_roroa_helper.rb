@@ -126,13 +126,9 @@ module AdminRoroaHelper
   def site_url(str = nil)
     url = Setting.get('site_url')
 
-    if !str.blank? && str[0,1] == '/'
-      str = str[1..-1]
-    end
+    str = str[1..-1] if !str.blank? && str[0,1] == '/'
 
-    if !url.blank? && url[-1, 1] != '/'
-      url = url + '/'
-    end
+    url = url + '/' if !url.blank? && url[-1, 1] != '/'
 
     return "#{url}#{str}"
   end

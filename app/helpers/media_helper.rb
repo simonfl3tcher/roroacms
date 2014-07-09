@@ -54,7 +54,6 @@ module MediaHelper
   def media_advanced_create(params, url = '')
 
     if p[:reference].blank?
-
       dir = ''
       where = BUCKET
     else
@@ -145,9 +144,7 @@ module MediaHelper
     array = Array.new
 
     files.each_with_index do |item, index|
-      if item.content_type != 'binary/octet-stream'
-        next
-      end
+      next if item.content_type != 'binary/octet-stream'
       array.push item
     end
 

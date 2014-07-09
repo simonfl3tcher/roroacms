@@ -29,10 +29,7 @@ module AdminMediaHelper
     @f = Array.new
 
     files.each_with_index do |item, index|
-      if item.content_type != 'binary/octet-stream'
-        next
-      end
-
+      next if item.content_type != 'binary/octet-stream'
       @f.push item
     end
     # render the html

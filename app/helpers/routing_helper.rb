@@ -103,6 +103,8 @@ module RoutingHelper
 
     status = "(post_status = 'Published' AND post_date <= CURRENT_TIMESTAMP AND disabled = 'N')"
 
+    # HACK: this needs to be optimised
+    
     # is it a article post or a page post
     if segments[0] == article_url
       if !segments[1].blank?
