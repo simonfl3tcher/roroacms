@@ -5,14 +5,16 @@ module ShortcodeHelper
   # prepares the content for visual display by replacing shortcodes with the html equivalent
   # Params:
   # +c+:: is optional, but if you choose to pass it data this has to be a singular post object.
-  # 		If you don't pass it any content then it will take the globalized content for the page
+  # If you don't pass it any content then it will take the globalized content for the page
 
   def prep_content(c = '')
 
-    @content = c if c != ''
-
-    # c always has to be a post object as you will need to be able to access post_content
-    c = @content.post_content
+    c = 
+      if c == ''
+        @content.post_content
+      else
+        c.post_content
+      end
 
     if !c.blank?
 

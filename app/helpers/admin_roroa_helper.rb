@@ -340,4 +340,16 @@ module AdminRoroaHelper
       expire_fragment('admin_submit_bar_toggle')
     end
 
+    # Returns generic notifications if the flash data exists
+
+    def get_notifications
+      if flash[:notice]
+        html = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert'>x</button><strong>" + I18n.t("helpers.view_helper.generic.flash.success") + "!</strong> #{flash[:notice]}</div>"
+        render :inline => html.html_safe
+      elsif flash[:error]
+        html = "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>x</button><strong>" + I18n.t("helpers.view_helper.generic.flash.error") + "!</strong> #{flash[:error]}</div>"
+        render :inline => html.html_safe
+      end
+    end
+
   end
