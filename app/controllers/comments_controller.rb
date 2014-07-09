@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
 
   include CommentsHelper
 
-
+  
   def create
     # Check to see if comments are actually allowed, this can be switched on and off in the admin panel
     if comments_on
