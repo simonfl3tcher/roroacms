@@ -7,139 +7,139 @@ module ViewHelper
 
   # display the content of the globalized @content record
 
-  # def display_content
-  #   render :inline => prep_content.html_safe
-  # end
+  def display_content
+    render :inline => prep_content.html_safe
+  end
 
 
   # display the content of the globalized @content record
 
-  # def display_title
-  #   render :inline => @content.post_title
-  # end
+  def display_title
+    render :inline => @content.post_title
+  end
 
 
   # display the date of the globalized @content record
   # Params:
   # +format+:: the date format that you want the date to be provided in
 
-  # def display_date(format = "%d-%m-%Y")
-  #   render :inline => @content.post_date.strftime(format)
-  # end
+  def display_date(format = "%d-%m-%Y")
+    render :inline => @content.post_date.strftime(format)
+  end
 
 
   # display the taxonomy name from the url
 
-  # def get_term_name
+  def get_term_name
 
-  #   segments = params[:slug].split('/')
+    segments = params[:slug].split('/')
 
-  #   # get the taxonomy name and search the database for the record with this as its slug
-  #   if !segments[2].blank?
-  #     t =  Term.where(:structured_url => "/" +  segments.drop(2).join('/')).last
-  #     t.name
-  #   else
-  #     nil
-  #   end
+    # get the taxonomy name and search the database for the record with this as its slug
+    if !segments[2].blank?
+      t =  Term.where(:structured_url => "/" +  segments.drop(2).join('/')).last
+      t.name
+    else
+      nil
+    end
 
-  # end
+  end
 
 
   # return what type of taxonomy it is either - category or tag
 
-  # def get_term_type
+  def get_term_type
 
-  #   segments = params[:slug].split('/')
+    segments = params[:slug].split('/')
 
-  #   if !segments[1].blank?
-  #     term = TermAnatomy.where(:taxonomy => segments[1]).last
-  #     term.taxonomy
-  #   else
-  #     nil
-  #   end
+    if !segments[1].blank?
+      term = TermAnatomy.where(:taxonomy => segments[1]).last
+      term.taxonomy
+    else
+      nil
+    end
 
-  # end
+  end
 
 
   # display the content of the given post via the post parameter
   # Params:
   # +post+:: post record that you want to return the content of
 
-  # def get_the_content(post)
-  #   render :inline => prep_content(post).html_safe
-  # end
+  def get_the_content(post)
+    render :inline => prep_content(post).html_safe
+  end
 
 
   # display the title of the given post via the post parameter
   # Params:
   # +post+:: post record that you want to return the title of
 
-  # def get_the_title(post)
-  #   render :inline => post.post_title
-  # end
+  def get_the_title(post)
+    render :inline => post.post_title
+  end
 
 
   # checks to see if it is the home page
 
-  # def is_homepage?
-  #   return false if (!defined?(@content.length).blank? || @content.blank?)
-  #   @content.id == Setting.get('home_page').to_i	? true : false
-  # end
+  def is_homepage?
+    return false if (!defined?(@content.length).blank? || @content.blank?)
+    @content.id == Setting.get('home_page').to_i	? true : false
+  end
 
 
   # is a category page
   # Params:
   # +check+:: check wether it is a certain category or not by name or id
 
-  # def is_category?(check = nil)
-  #   segments = params[:slug].split('/')
-  #   if check.blank?
-  #     Setting.get('category_slug') == segments[1] ? true : false
-  #   else
-  #     (Setting.get('category_slug') == segments[1] && (Term.where(slug: segments[2]).first.name == check || Term.where(slug: segments[2]).first.id == check) ) ? true : false
-  #   end
-  # end
+  def is_category?(check = nil)
+    segments = params[:slug].split('/')
+    if check.blank?
+      Setting.get('category_slug') == segments[1] ? true : false
+    else
+      (Setting.get('category_slug') == segments[1] && (Term.where(slug: segments[2]).first.name == check || Term.where(slug: segments[2]).first.id == check) ) ? true : false
+    end
+  end
 
   # is_article?
   # Params:
-  # +check+:: check wether it is a certain category or not by ID, name, or slug
+  # +check+:: check wether it is a certain category or not by name or id
 
-  # def is_article?(check = nil)
-  #   segments = params[:slug].split('/')
-  #   if check.blank?
-  #     Setting.get('articles_slug') == segments[0] ? true : false
-  #   else
-  #     if !defined?(@content.size).blank?
-  #       return false
-  #     end
-  #     (Setting.get('articles_slug') == segments[0] && (@content.post_title == check || @content.id == check || @content.post_slug == check) ) ? true : false
-  #   end
-  # end
+  def is_article?(check = nil)
+    segments = params[:slug].split('/')
+    if check.blank?
+      Setting.get('articles_slug') == segments[0] ? true : false
+    else
+      if !defined?(@content.size).blank?
+        return false
+      end
+      (Setting.get('articles_slug') == segments[0] && (@content.post_title == check || @content.id == check || @content.post_slug == check) ) ? true : false
+    end
+  end
 
-  # def is_tag?(check = nil)
-  #   segments = params[:slug].split('/')
-  #   if check.blank?
-  #     Setting.get('tag_slug') == segments[1] ? true : false
-  #   else
-  #     (Setting.get('tag_slug') == segments[1] && (Term.where(slug: segments[2]).first.name == check || Term.where(slug: segments[2]).first.id == check) ) ? true : false
-  #   end
-  # end
+  def is_tag?(check = nil)
+    segments = params[:slug].split('/')
+    if check.blank?
+      Setting.get('tag_slug') == segments[1] ? true : false
+    else
+      (Setting.get('tag_slug') == segments[1] && (Term.where(slug: segments[2]).first.name == check || Term.where(slug: segments[2]).first.id == check) ) ? true : false
+    end
+  end
 
 
   # is archive page
   # Params:
   # +check+:: check wether it is a certain carchive or not by name or id
 
-  # def is_archive?
-  #   get_type_by_url == 'AR' ? true : false
-  # end
+  def is_archive?
+    get_type_by_url == 'AR' ? true : false
+  end
 
 
   # checks wether you are on the overall blog page
 
-  # def is_articles_home?
-  #   get_type_by_url == 'C' ? true : false
-  # end
+  def is_articles_home?
+    get_type_by_url == 'C' ? true : false
+  end
 
 
   # HACK: Clean this code up
@@ -147,37 +147,37 @@ module ViewHelper
   # Params:
   # +check+:: can be either ID, name, or slug
 
-  # def is_page?(check)
+  def is_page?(check)
 
-  #   @p = @content
+    @p = @content
 
-  #   check = check.to_s
+    check = check.to_s
 
-  #   if defined? @p.post_title
-  #     if !@p.blank?
-  #       if check.nonnegative_float?
-  #         if @p.id == check.to_i
-  #           return true
-  #         else
-  #           return false
-  #         end
-  #       else
-  #         if @p.post_title.downcase == check.downcase
-  #           return true
-  #         elsif @p.post_slug == check
-  #           return true
-  #         else
-  #           return false
-  #         end
-  #       end
-  #     else
-  #       return false
-  #     end
-  #   else
-  #     return false
-  #   end
+    if defined? @p.post_title
+      if !@p.blank?
+        if check.nonnegative_float?
+          if @p.id == check.to_i
+            return true
+          else
+            return false
+          end
+        else
+          if @p.post_title.downcase == check.downcase
+            return true
+          elsif @p.post_slug == check
+            return true
+          else
+            return false
+          end
+        end
+      else
+        return false
+      end
+    else
+      return false
+    end
 
-  # end
+  end
 
   # A short extract from the post content
   # Params:
@@ -185,59 +185,59 @@ module ViewHelper
   # +length+:: length of the string in characters
   # +omission+:: something to represent the omission of the content
 
-  # def get_the_excerpt(post, length = 300, omission = '...')
-  #   render :inline => truncate(post.post_content.to_s.gsub(/<[^>]*>/ui,'').html_safe, :omission => omission, :length => length)
-  # end
+  def get_the_excerpt(post, length = 300, omission = '...')
+    render :inline => truncate(post.post_content.to_s.gsub(/<[^>]*>/ui,'').html_safe, :omission => omission, :length => length)
+  end
 
 
   # The same as the above however you can provide any content to this function
 
-  # def excerpt(content, length = 255, omission = '...')
-  #   render :inline => truncate(content, :omission => omission, :length => length)
-  # end
+  def excerpt(content, length = 255, omission = '...')
+    render :inline => truncate(content, :omission => omission, :length => length)
+  end
 
 
   # display the date of the given post via the post parameter
   # Params:
   # +format+:: the date format that you want the date to be provided in
 
-  # def get_the_date(post, format = "%d-%m-%Y")
-  #   render :inline => post.post_date.strftime(format)
-  # end
+  def get_the_date(post, format = "%d-%m-%Y")
+    render :inline => post.post_date.strftime(format)
+  end
 
 
   # Easy to understand function for getting the category data
 
-  # def get_category_data
-  #   @content
-  # end
+  def get_category_data
+    @content
+  end
 
 
-  # # Easy to understand function for getting the archive data
+  # Easy to understand function for getting the archive data
 
-  # def get_archive_data
-  #   @content
-  # end
+  def get_archive_data
+    @content
+  end
 
 
   # Gets the link to the post
   # Params:
   # +post+:: post record that you want to return the link of
 
-  # def get_the_permalink(post)
+  def get_the_permalink(post)
 
-  #   post = Post.find(post) if post.is_a?(Integer)
+    post = Post.find(post) if post.is_a?(Integer)
 
-  #   article_url = Setting.get('articles_slug')
-  #   site_url = Setting.get('site_url')
+    article_url = Setting.get('articles_slug')
+    site_url = Setting.get('site_url')
 
-  #   if post.post_type == 'post'
-  #     render :inline => "#{site_url}#{article_url}/#{post.post_slug}"
-  #   else
-  #     render :inline => "#{site_url}#{post.post_slug}"
-  #   end
+    if post.post_type == 'post'
+      render :inline => "#{site_url}#{article_url}/#{post.post_slug}"
+    else
+      render :inline => "#{site_url}#{post.post_slug}"
+    end
 
-  # end
+  end
 
   # Gets all the additional data for the current post by default. You can play around by given
   # different variables to get almost evey combination that you would want
@@ -246,45 +246,58 @@ module ViewHelper
   # +post+:: if you want to get the additional data of a different post then you can provide the post id
 
 
-  # def get_additional_data(key = nil, post = nil)
-  #   post = post.is_a?(Integer) ? Post.find(post) : @content.post_additional_data
-  #   data = @json.decode(post)
-  #   if key.blank?
-  #     data
-  #   else
-  #     data[key]
-  #   end
-  # end
+  def get_additional_data(key = nil, post = nil)
+    post = post.is_a?(Integer) ? Post.find(post) : @content.post_additional_data
+    data = @json.decode(post)
+    if key.blank?
+      data
+    else
+      data[key]
+    end
+  end
+
+
+  # Returns generic notifications if the flash data exists
+
+  def get_notifications
+    if flash[:notice]
+      html = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert'>x</button><strong>" + I18n.t("helpers.view_helper.generic.flash.success") + "!</strong> #{flash[:notice]}</div>"
+      render :inline => html.html_safe
+    elsif flash[:error]
+      html = "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>x</button><strong>" + I18n.t("helpers.view_helper.generic.flash.error") + "!</strong> #{flash[:error]}</div>"
+      render :inline => html.html_safe
+    end
+  end
 
 
   # gets the comment form from the theme folder and displays it.
 
-  # def display_comments_form
+  def display_comments_form
 
-  #   if Setting.get('article_comments') == 'Y'
-  #     type = Setting.get('article_comment_type')
-  #     render(:template =>"theme/#{current_theme}/comments_form." + get_theme_ext , :layout => nil, :locals => { type: type }).to_s
-  #   end
+    if Setting.get('article_comments') == 'Y'
+      type = Setting.get('article_comment_type')
+      render(:template =>"theme/#{current_theme}/comments_form." + get_theme_ext , :layout => nil, :locals => { type: type }).to_s
+    end
 
-  # end
+  end
 
 
   # Gets the comments of the given post
   # Params:
   # +post_id+:: id of the post that you want to get comments for
 
-  # def return_comments(post_id = nil)
+  def return_comments(post_id = nil)
 
-  #   comments =
-  #     if !post_id.nil?
-  #       Comment.where(:post_id => post_id, :comment_approved => 'Y')
-  #     else
-  #       Comment.where(:post_id => @content.id, :comment_approved => 'Y')
-  #     end
+    comments =
+      if !post_id.nil?
+        Comment.where(:post_id => post_id)
+      else
+        Comment.where(:post_id => @content.id, :comment_approved => 'Y')
+      end
 
-  #   comments
+    comments
 
-  # end
+  end
 
 
   # Returns a nested list of the comments
@@ -316,7 +329,7 @@ module ViewHelper
 
   def display_author_information(raw = false)
 
-    admin = Admin.find(@content.admin_id)
+    admin = Admin.find_by_id(@content.admin_id)
     if raw
       admin
     else
@@ -515,19 +528,19 @@ module ViewHelper
   # Params:
   # +ids+:: an array of ids that you want to get the post object of
 
-  # def get_posts(ids)
-  #   Post.where(:id => ids)
-  # end
+  def get_posts(ids)
+    Post.where(:id => ids)
+  end
 
   # get sub pages of a post
   # Params:
   # +parent_id+:: ID of the parent post that you want to get the sub pages for
 
-  # def get_subpages(parent_id = nil, limit = nil, orderby = 'post_title')
-  #   posts = Post.where(:parent_id => parent_id.blank? ? @content.id : parent_id).order(orderby)
-  #   posts = posts.limit(1) if !limit.blank?
-  #   posts
-  # end
+  def get_subpages(parent_id = nil, limit = nil, orderby = 'post_title')
+    posts = Post.where(:parent_id => parent_id.blank? ? @content.id : parent_id).order(orderby)
+    posts = posts.limit(1) if !limit.blank?
+    posts
+  end
 
   # Returns the html for the comments tree of a post
   # Params:

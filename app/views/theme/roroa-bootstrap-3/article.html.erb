@@ -24,6 +24,7 @@
 		</div>
 
 		<hr>
+		<%= abort has_tag?(145).inspect %>
         <p><i class="fa fa-user"></i> <%= display_author_information(true).first_name + ' ' + display_author_information(true).last_name %></p>
         <p><%= display_author_information(true).description %></p>
         <hr>

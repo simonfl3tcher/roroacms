@@ -151,7 +151,13 @@ module NewViewHelper
 
   # TODO: --
   def in_category?(cat, postid = nil)
-
+  	post =
+  		if postid.blank?
+  			@content.id
+  		else
+  			postid
+  		end
+  	Post.includes(:terms => :term_anatomy).where(id: post, terms: { id: cat }, term_anatomies: { taxonomy: 'category' }).count
   end
 
   # TAG Functions #
@@ -175,7 +181,13 @@ module NewViewHelper
 
   # TODO: --
   def has_tag?(tag, postid = nil)
-
+  	post =
+  		if postid.blank?
+  			@content.id
+  		else
+  			postid
+  		end
+  	Post.includes(:terms => :term_anatomy).where(id: post, terms: { id: tag }, term_anatomies: { taxonomy: 'tag' }).count
   end
 
   def obtain_tag_title(id = nil)
@@ -280,15 +292,6 @@ module NewViewHelper
     @content
   end
 
-  # TODO: --
-  def obtain_page_link(id = nil)
-
-  end
-
-  # TODO: --
-  def obtain_page_uri(id = nil)
-
-  end
 
   # TODO: --
   def obtain_page_field(field, id = nil)
@@ -520,12 +523,20 @@ module NewViewHelper
 
   # TODO: --
   def obtain_the_author(id = nil)
-    
+    if id.blank?
+    	Admin.find_by_id(@content.admin_id)
+    else
+    	Admin.includes(:posts).where(posts: { id: id }).first
+    end
   end
 
 	# TODO: --
   def obtain_the_authors_articles(id = nil)
-    
+  	if id.blank?
+    	Post.where(:admin_id => @content.admin_id)
+    else
+    	Post.where(:admin_id => id)
+    end
   end
 
   def obtain_the_content(id = nil)
