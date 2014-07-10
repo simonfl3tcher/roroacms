@@ -85,31 +85,31 @@ describe NewViewHelper do
 	end
 
 	describe "#obtain_next_article_link" do 
-
+		it "should return the link to the article that is next in line"
 	end
 
 	describe "#obtain_previous_article" do 
-
+		it "should return the article that is previous in line"
 	end
 
 	describe "#obtain_previous_article_link" do 
-
+		it "should return the link to the article that is previous in line"
 	end
 
 	describe "#obtain_article" do 
-
+		it "should return the article"
 	end
 
 	describe "#obtain_article_field" do 
-
+		it "should return the article field"
 	end
 
 	describe "#obtain_article_status" do 
-
+		it "should return the article status"
 	end
 
 	describe "#obtain_articles" do 
-
+		it "should return the pages that have the given ids"
 	end
 
 	describe "#obtain_archives" do 
@@ -221,15 +221,15 @@ describe NewViewHelper do
 	end
 
 	describe "#obtain_the_authors_articles" do 
-
+		it "should return the articles that the author has published"
 	end
 
 	describe "#obtain_the_content" do 
-
+		it "should return the content of the post/page"
 	end
 
 	describe "#obtain_the_title" do 
-
+		it "should return the title of the post/page"
 	end
 
 	describe "#obtain_term_type" do 
@@ -237,15 +237,11 @@ describe NewViewHelper do
 	end
 
 	describe "#obtain_additional_data" do 
-
+		it "should return the additional data via the key"
 	end
 
 	describe "#create_excerpt" do 
-
-	end
-
-	describe "#obtain_record" do 
-
+		it "should create an excerpt via the given content"
 	end
 
 end

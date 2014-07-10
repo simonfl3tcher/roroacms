@@ -256,7 +256,7 @@ module NewViewHelper
 
   # TODO: this is rubbish!!
   def obtain_articles(ids = nil)
-  	return Post.where(:id => ids) if ids.blank?
+  	return Post.where(:id => ids, :post_type => 'post') if !ids.blank?
   	@content
   end
 
@@ -274,6 +274,11 @@ module NewViewHelper
       Post.where("(post_title = :p OR post_slug = :p2 OR id = :p3) AND post_type = 'page' ", { p: check, p2: check, p3: check.to_i} )
     end
   end 
+
+  def obtain_pages(ids = nil)
+    return Post.where(:id => ids, :post_type => 'post') if !ids.blank?
+    @content
+  end
 
   # TODO: --
   def obtain_page_link(id = nil)
@@ -566,7 +571,7 @@ module NewViewHelper
   def obtain_additional_data(key = nil, post = nil)
   	
   	post = 
-  		if id.blank?
+  		if post.blank?
   			@content.post_additional_data
   		else
   			Post.find(post).post_additional_data
