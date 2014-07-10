@@ -15,9 +15,9 @@ module NewViewHelper
 
   # Gets the link to the post
   # Params:
-  # +post+:: id of the post record that you want to return the link of
+  # +check+:: id of the post record that you want to return the link of
 
-  def obtain_permalink(id = nil)
+  def obtain_permalink(check = nil)
 
   	post = 
   		if id.blank?
@@ -88,18 +88,25 @@ module NewViewHelper
 
   # CATEGORY functions #
 
-  # TODO: --
-  def obtain_all_category_id(id = nil)
-
+  # TODO: get by post if id is not nil
+  def obtain_all_category_ids(article_id = nil)
+    if article_id.blank?
+      terms = Term.includes(:term_anatomy).where(term_anatomies: { taxonomy: 'category' }).pluck(:id)
+    else
+      # get via the posts
+    end
   end
 
   def obtain_categories
 		Term::CATEGORIES
   end
 
-  # TODO: return the category data
   def obtain_category(check = nil)
-
+    if check.blank?
+      Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'category' }).last
+    else
+      Term.includes(:term_anatomy).where("name = :p OR slug = :p2 OR id = :p3", { p: check, p2: check, p3: check.to_i }).where(term_anatomies: { taxonomy: 'category' }).first
+    end
   end
 
   def obtain_category_title(id = nil)
@@ -114,6 +121,18 @@ module NewViewHelper
       nil
     end
 
+  end
+
+  def obtain_category_link(id = nil)
+    segments = params[:slug].split('/')
+
+    # get the taxonomy name and search the database for the record with this as its slug
+    if !segments[2].blank?
+      t =  Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'category' }).last
+      Setting.get('articles_slug') + '/' + Setting.get('tag_slug') + t.structured_url
+    else
+      nil
+    end
   end
 
   def obtain_category_description(id = nil)
@@ -138,13 +157,16 @@ module NewViewHelper
   # TAG Functions #
 
   # TODO: --
-  def obtain_tag_data(id = nil)
-
-  end
-
-  # TODO: --
   def obtain_tag_link(id = nil)
+    segments = params[:slug].split('/')
 
+    # get the taxonomy name and search the database for the record with this as its slug
+    if !segments[2].blank?
+      t =  Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'tag' }).last
+      Setting.get('articles_slug') + '/' + Setting.get('tag_slug') + t.structured_url
+    else
+      nil
+    end
   end
 
   def obtain_tags
@@ -152,12 +174,7 @@ module NewViewHelper
   end
 
   # TODO: --
-  def has_tag?(tag, id = nil)
-
-  end
-
-  # TODO: --
-  def in_tag?(tag, postid = nil)
+  def has_tag?(tag, postid = nil)
 
   end
 
@@ -189,6 +206,14 @@ module NewViewHelper
 
   end
 
+  def obtain_tag(check = nil) 
+    if check.blank?
+      Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'tag' }).last
+    else
+      Term.includes(:term_anatomy).where("name = :p OR slug = :p2 OR id = :p3", { p: check, p2: check, p3: check.to_i }).where(term_anatomies: { taxonomy: 'tag' }).first
+    end
+  end
+
   # ARTICLE Functions #
 
   # TODO: --
@@ -211,9 +236,12 @@ module NewViewHelper
 
   end
 
-  # TODO: --
-  def obtain_article(id)
-
+  def obtain_article(check = nil)
+    if check.blank?
+      @content
+    else
+      Post.where("(post_title = :p OR post_slug = :p2 OR id = :p3) AND post_type = 'post' ", { p: check, p2: check, p3: check.to_i} ).first
+    end
   end
 
   # TODO: --
@@ -238,10 +266,14 @@ module NewViewHelper
 
   # PAGE functions #
 
-  # TODO: --
+  # TODO: this sql can be refactored
   def obtain_page(id = nil)
-
-  end
+    if check.blank?
+      @content
+    else
+      Post.where("(post_title = :p OR post_slug = :p2 OR id = :p3) AND post_type = 'page' ", { p: check, p2: check, p3: check.to_i} )
+    end
+  end 
 
   # TODO: --
   def obtain_page_link(id = nil)
@@ -316,17 +348,20 @@ module NewViewHelper
 
   # TODO: --
   def is_day_archive?
-
+    segments = params[:slug].split('/')
+    (get_type_by_url == 'AR' && !segments[3].blank?) ? true : false
   end
 
   # TODO: --
   def is_month_archive?
-
+    segments = params[:slug].split('/')
+    (get_type_by_url == 'AR' && !segments[2].blank? && segments[3].blank?) ? true : false
   end
 
   # TODO: --
   def is_year_archive?
-
+    segments = params[:slug].split('/')
+    (get_type_by_url == 'AR' && !segments[1].blank? && segments[2].blank? && segments[3].blank?) ? true : false
   end
 
   def obtain_archive_year
@@ -360,9 +395,8 @@ module NewViewHelper
     end
   end
 
-  # TODO: --
   def is_search?
-
+    (defined?(params[:search]) && !params[:search].blank?) ? true : false
   end
 
   # HACK: make sure this is checked the taxonomy as well
@@ -394,56 +428,69 @@ module NewViewHelper
   end
 
 
-
   # USER Functions #
 
   # TODO: --
-  def obtain_user_profile(id)
-
+  def obtain_user_profile(str)
+    str = 
+      if str.is_a?(Array)
+        str
+        { name: "Joe", email: "joe@example.com" }
+        # hash_example = ["name = :name AND email = :email", { name: "Joe", email: "joe@example.com" }]
+      else
+        str.id
+        check = ["id = :id", { :id => str.id }]
+      end
+    Admin.where(check)
   end
 
   # TODO: --
-  def obtain_user_by(field)
+  def obtain_users(access = nil)
+    admins = Admin.all
+    admins = admins.where(:access => access) if !access.blank?
 
-  end
-
-  # TODO: --
-  def obtain_users
-
+    admins
   end
 
 	# TODO: --
-  def obtain_user_field(id = nil, field)
-
+  def obtain_user_field(field, id = nil)
+    admins = 
+      if id.blank?
+        Admin.all
+      else
+        Admin.where(:id => id.to_i)
+      end
+    admins.pluck(field.to_sym)
   end
 
   # COMMENT Functions #
 
 	# TODO: --
-  def obtain_comment_author(id)
-
+  def obtain_comment_author(comment_id)
+    Comment.find_by_id(comment_id).author
   end
 
 	# TODO: --
-  def obtain_comment_date(id)
-
+  def obtain_comment_date(comment_id, format = "%d-%m-%Y")
+    comment = Comment.find_by_id(comment_id)
+    comment = comment.submitted_on.strftime(format) if !comment.blank?
+    comment
   end
 
 	# TODO: --
-  def obtain_comment_time(id)
-
+  def obtain_comment_time(comment_id, format = "%H-%M-%S")
+    comment = Comment.find_by_id(comment_id)
+    comment = comment.submitted_on.strftime(format) if !comment.blank?
+    comment
   end
 
-  def obtain_comments(id = nil)
+  def obtain_comments(article_id = nil)
 
-  	comments =
-      if !id.nil?
-        Comment.where(:post_id => post_id, :comment_approved => 'Y')
-      else
-        Comment.where(:post_id => @content.id, :comment_approved => 'Y')
-      end
-
-    comments
+    if !article_id.nil?
+      Comment.where(:post_id => article_id, :comment_approved => 'Y')
+    else
+      Comment.where(:post_id => @content.id, :comment_approved => 'Y')
+    end
 
   end
 
@@ -468,12 +515,12 @@ module NewViewHelper
 
   # TODO: --
   def obtain_the_author(id = nil)
-
+    
   end
 
 	# TODO: --
   def obtain_the_authors_articles(id = nil)
-
+    
   end
 
   def obtain_the_content(id = nil)
@@ -536,6 +583,16 @@ module NewViewHelper
 
   def create_excerpt(content, length = 255, omission = '...')
     render :inline => truncate(content, :omission => omission, :length => length)
+  end
+
+  def obtain_record(check = nil)
+
+    if check.blank?
+      @content
+    else
+      Post.where( 'post_title = :p OR post_slug = :p2 OR id = :p3', { p: check, p2: check, p3: check.to_i} )
+    end
+
   end
 
 end
