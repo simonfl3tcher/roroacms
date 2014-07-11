@@ -4,8 +4,14 @@ module NewViewHelper
   # will use in order to display the contents of either the content
   # or format other data
 
+
+  # TODO: -- need to check that all functions work on all of the template pages, 
+  # We cannot have the page failing because the content variable is either not avalible or has an array of options
+  # change categories page to use a different instance variable
+
   # GENERIC Functions #
 
+  # TODO: - Change this to use the ancestry gem 
   def obtain_children(parent_id = nil, limit = nil, orderby = 'post_title')
   	# look at ancertry gem 
   	posts = Post.where(:parent_id => parent_id.blank? ? @content.id : parent_id).order(orderby)
@@ -160,6 +166,11 @@ module NewViewHelper
   	Post.includes(:terms => :term_anatomy).where(id: post, terms: { id: cat }, term_anatomies: { taxonomy: 'category' }).count
   end
 
+  # TODO: --
+  def obtain_subcategories(catid, depth) 
+
+  end
+
   # TAG Functions #
 
   # TODO: --
@@ -179,7 +190,6 @@ module NewViewHelper
   	Term::TAGS
   end
 
-  # TODO: --
   def has_tag?(tag, postid = nil)
   	post =
   		if postid.blank?
@@ -226,6 +236,11 @@ module NewViewHelper
     end
   end
 
+  # TODO: --
+  def obtain_subtags(catid, depth) 
+
+  end
+
   # ARTICLE Functions #
 
   # TODO: --
@@ -248,6 +263,7 @@ module NewViewHelper
 
   end
 
+
   def obtain_article(check = nil)
     if check.blank?
       @content
@@ -256,14 +272,24 @@ module NewViewHelper
     end
   end
 
-  # TODO: --
-  def obtain_article_field(field, id = nil)
-
+  def obtain_article_field(field, check = nil)
+    article = 
+      if check.blank?
+        @content
+      else
+        Post.where("(post_title = :p OR post_slug = :p2 OR id = :p3) AND post_type = 'post' ", { p: check, p2: check, p3: check.to_i} ).first
+      end
+    article.has_key?(field) ? post[field.to_sym] : nil
   end
 
-  # TODO: --
   def obtain_article_status(id = nil)
-
+    article = 
+      if check.blank?
+        @content
+      else
+        Post.where("(post_title = :p OR post_slug = :p2 OR id = :p3) AND post_type = 'post' ", { p: check, p2: check, p3: check.to_i} ).first
+      end
+    !artilce.blank? article.post_status : nil
   end
 
   # TODO: this is rubbish!!
@@ -278,7 +304,6 @@ module NewViewHelper
 
   # PAGE functions #
 
-  # TODO: this sql can be refactored
   def obtain_page(id = nil)
     if check.blank?
       @content
@@ -292,10 +317,14 @@ module NewViewHelper
     @content
   end
 
-
-  # TODO: --
   def obtain_page_field(field, id = nil)
-
+    post = 
+      if check.blank?
+        @content
+      else
+        Post.where("(post_title = :p OR post_slug = :p2 OR id = :p3) AND post_type = 'page' ", { p: check, p2: check, p3: check.to_i} )
+      end
+    post.has_key?(field) ? post[field.to_sym] : nil
   end
 
   # CONDITIONAL functions #
@@ -354,19 +383,16 @@ module NewViewHelper
     get_type_by_url == 'C' ? true : false
   end
 
-  # TODO: --
   def is_day_archive?
     segments = params[:slug].split('/')
     (get_type_by_url == 'AR' && !segments[3].blank?) ? true : false
   end
 
-  # TODO: --
   def is_month_archive?
     segments = params[:slug].split('/')
     (get_type_by_url == 'AR' && !segments[2].blank? && segments[3].blank?) ? true : false
   end
 
-  # TODO: --
   def is_year_archive?
     segments = params[:slug].split('/')
     (get_type_by_url == 'AR' && !segments[1].blank? && segments[2].blank? && segments[3].blank?) ? true : false
@@ -452,7 +478,6 @@ module NewViewHelper
     Admin.where(check)
   end
 
-  # TODO: --
   def obtain_users(access = nil)
     admins = Admin.all
     admins = admins.where(:access => access) if !access.blank?
@@ -460,7 +485,7 @@ module NewViewHelper
     admins
   end
 
-	# TODO: --
+	# TODO: -- this and the above need to filter the certain fields out! Also be sure you can search via a number of different fields
   def obtain_user_field(field, id = nil)
     admins = 
       if id.blank?
@@ -468,24 +493,21 @@ module NewViewHelper
       else
         Admin.where(:id => id.to_i)
       end
-    admins.pluck(field.to_sym)
+    admins.has_key?(field) ? admins.pluck(field.to_sym) : nil
   end
 
   # COMMENT Functions #
 
-	# TODO: --
   def obtain_comment_author(comment_id)
     Comment.find_by_id(comment_id).author
   end
 
-	# TODO: --
   def obtain_comment_date(comment_id, format = "%d-%m-%Y")
     comment = Comment.find_by_id(comment_id)
     comment = comment.submitted_on.strftime(format) if !comment.blank?
     comment
   end
 
-	# TODO: --
   def obtain_comment_time(comment_id, format = "%H-%M-%S")
     comment = Comment.find_by_id(comment_id)
     comment = comment.submitted_on.strftime(format) if !comment.blank?
@@ -520,8 +542,6 @@ module NewViewHelper
   	@content.id
   end
 
-
-  # TODO: --
   def obtain_the_author(id = nil)
     if id.blank?
     	Admin.find_by_id(@content.admin_id)
@@ -530,7 +550,6 @@ module NewViewHelper
     end
   end
 
-	# TODO: --
   def obtain_the_authors_articles(id = nil)
   	if id.blank?
     	Post.where(:admin_id => @content.admin_id)

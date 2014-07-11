@@ -113,23 +113,20 @@ describe NewViewHelper do
 	end
 
 	describe "#obtain_archives" do 
-
+		it "should return all archives"
 	end
 
 	describe "#obtain_page" do 
-
+		it "should return the given page - full record"
 	end
 
 	describe "#obtain_page_link" do 
-
+		it "should return the given page - link"
 	end
 
-	describe "#obtain_page_uri" do 
-
-	end
 
 	describe "#obtain_page_field" do 
-
+		it "should return a certain field in the given page"
 	end
 
 	describe "#is_page" do 
@@ -169,55 +166,51 @@ describe NewViewHelper do
 	end
 
 	describe "#is_search" do 
-
+		it "should return wether the given page is a searcg page"
 	end
 
 	describe "#is_tag" do 
-
+		it "should return wether the given page is a tag page"
 	end
 
 	describe "#is_category" do 
-
+		it "should return wether the given page is a category page"
 	end
 
 	describe "#obtain_user_profile" do 
-
+		it "should return the user via id, email or username"
 	end
 
 	describe "#obtain_users" do 
-
+		it "should return all users"
 	end
 
 	describe "#obtain_user_field" do 
-
+		it "should return the given "
 	end
 
 	describe "#obtain_comment_author" do 
-
+		it "should return the author of the comment"
 	end
 
 	describe "#obtain_comment_date" do 
-
+		it "should return the date of the comment"
 	end
 
 	describe "#obtain_comment_time" do 
-
+		it "should return the time of the comment"
 	end
 
 	describe "#obtain_comments" do 
-
-	end
-
-	describe "#obtain_comments_form" do 
-
+		it "should return the comments for the article"
 	end
 
 	describe "#obtain_id" do 
-
+		it "should return post/page record id"
 	end
 
 	describe "#obtain_the_author" do 
-
+		it "should return the author of the article"
 	end
 
 	describe "#obtain_the_authors_articles" do 
