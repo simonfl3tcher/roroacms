@@ -14,7 +14,7 @@
 	<div class="col-md-8">
 
 		<hr>
-        <p><i class="fa fa-clock-o"></i> Posted on <%= display_date %> by <%= display_author_information(true).first_name + ' ' + display_author_information(true).last_name %></p>
+        <p><i class="fa fa-clock-o"></i> Posted on <%= display_date %> by <%= obtain_user_field('first_name') + ' ' + obtain_user_field('lsat_name') %></p>
         <hr>
 
 		<%= display_content %>
@@ -24,11 +24,9 @@
 		</div>
 
 		<hr>
-		<%= abort has_tag?(145).inspect %>
-        <p><i class="fa fa-user"></i> <%= display_author_information(true).first_name + ' ' + display_author_information(true).last_name %></p>
-        <p><%= display_author_information(true).description %></p>
+        <p><i class="fa fa-user"></i> <%= obtain_user_field('first_name') + ' ' + obtain_user_field('last_name') %></p>
+        <p><%= obtain_user_field('description') %></p>
         <hr>
-
         <%= display_comments_form %>
 
 	</div>

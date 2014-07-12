@@ -4,65 +4,79 @@ module NewViewHelper
   # will use in order to display the contents of either the content
   # or format other data
 
-
-  # TODO: -- need to check that all functions work on all of the template pages, 
-  # We cannot have the page failing because the content variable is either not avalible or has an array of options
-  # change categories page to use a different instance variable
-
   # GENERIC Functions #
 
-  # TODO: - Change this to use the ancestry gem 
-  def obtain_children(parent_id = nil, limit = nil, orderby = 'post_title')
+  def obtain_children(check = nil, depth = 10000000, orderby = 'post_title')
   	# look at ancertry gem 
-  	posts = Post.where(:parent_id => parent_id.blank? ? @content.id : parent_id).order(orderby)
-    posts = posts.limit(1) if !limit.blank?
-    posts
+    post = obtain_record(check)
+    return {} if post.blank?
+    p = post.children
+    p = p.arrange(:order => orderby.to_sym) if !orderby.blank?
+    p
   end
+
+  def has_children?(check = nil)
+    post = obtain_record(check)
+    post.blank? ? false : post.has_children?
+  end
+
+  def has_siblings?(check = nil)
+    post = obtain_record(check)
+    post.blank? ? false : post.has_siblings?
+  end
+
+  # get siblings
+
+  def obtain_siblings(check = nil, orderby = 'post_title')
+    post = obtain_record(check)
+    return nil if post.blank?
+    p = post.siblings
+    p = p.arrange(:order => orderby.to_sym) if !orderby.blank?
+    p
+  end
+
+  # get ancestors
+
+  def obtain_ancestor(check = nil)
+    post = obtain_record(check)
+    return nil if post.blank?
+    p = post.ancestors
+    p = p.arrange(:order => orderby.to_sym) if !orderby.blank?
+    p
+  end
+
+  # hererrewrewrrew #
 
   # Gets the link to the post
   # Params:
   # +check+:: id of the post record that you want to return the link of
 
   def obtain_permalink(check = nil)
+    site_url = Setting.get('site_url')
+    post = obtain_record(check)
 
-  	post = 
-  		if id.blank?
-  			@content
-  		else
-  			Post.find(id)
-  		end
+    return '' if post.blank?
 
     article_url = Setting.get('articles_slug')
-    site_url = Setting.get('site_url')
 
     if post.post_type == 'post'
-      render :inline => "#{site_url}#{article_url}/#{post.post_slug}"
+      render :inline => site_url("#{article_url}#{post.structured_url}")
     else
-      render :inline => "#{site_url}#{post.post_slug}"
+      render :inline => site_url("#{post.structured_url}")
     end
 
   end
 
-  def obtain_excerpt(id = nil, length = 300, omission = '...')
+  def obtain_excerpt(check = nil, length = 250, omission = '...')
   	
-  	post =
-  		if id.blank?
-  			@content
-  		else
-  			Post.find(id.to_i)
-  		end
-  	render :inline => truncate(post.post_content.to_s.gsub(/<[^>]*>/ui,'').html_safe, :omission => omission, :length => length)
+  	post = obtain_record(check)
+  	render :inline => truncate(post.post_content.to_s.gsub(/<[^>]*>/ui,'').html_safe, :omission => omission, :length => length) if !post.blank?
   
   end
 
-  def obtain_cover_image(id = nil)
-  	post =
-  		if id.blank?
-  			@content
-  		else
-  			Post.find(id.to_i)
-  		end
-  	post.post_image
+  def obtain_cover_image(check = nil)
+  	post = obtain_record(check)
+    return !post.blank? ? post.post_image : ''
   end
 
 
@@ -72,34 +86,24 @@ module NewViewHelper
   # +format+:: the date format that you want the date to be provided in
   # PREVIOUSLY: get_the_date
 
-  def obtain_the_date(id = nil, format = "%d-%m-%Y")
-  	post = 
-  		if id.blank?
-  			@content
-  		else
-  			Post.find(id.to_i)
-  		end
-  	render :inline => post.post_date.strftime(format)
+  def obtain_the_date(check = nil, format = "%d-%m-%Y")
+  	post = obtain_record(check)
+  	render :inline => post.post_date.strftime(format) if !post.blank?
   end
 
-  def has_cover_image?(id = nil)
-  	post = 
-  		if id.blank?
-  			@content
-  		else
-  			Post.find(id.to_i)
-  		end
-  	post.post_image.blank?
+  def has_cover_image?(check = nil)
+  	post = obtain_record(check)
+  	!post.blank? && !post.post_image.blank? ? true : false
   end
 
   # CATEGORY functions #
 
-  # TODO: get by post if id is not nil
   def obtain_all_category_ids(article_id = nil)
     if article_id.blank?
-      terms = Term.includes(:term_anatomy).where(term_anatomies: { taxonomy: 'category' }).pluck(:id)
+      Term.joins(:term_anatomy).where(term_anatomies: { taxonomy: 'category' }).pluck(:id)
     else
       # get via the posts
+      Term.joins(:term_anatomy, :posts).where(posts: {id: article_id}, term_anatomies: { taxonomy: 'category' }).pluck(:id)
     end
   end
 
@@ -108,82 +112,98 @@ module NewViewHelper
   end
 
   def obtain_category(check = nil)
+    
     if check.blank?
-      Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'category' }).last
-    else
-      Term.includes(:term_anatomy).where("name = :p OR slug = :p2 OR id = :p3", { p: check, p2: check, p3: check.to_i }).where(term_anatomies: { taxonomy: 'category' }).first
+      return nil if  params[:slug].blank?
+      segments = params[:slug].split('/')
     end
-  end
-
-  def obtain_category_title(id = nil)
-
-  	segments = params[:slug].split('/')
 
     # get the taxonomy name and search the database for the record with this as its slug
-    if !segments[2].blank?
-      t =  Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'category' }).last
-      t.name
-    else
-      nil
-    end
-
+    t = 
+      if check.blank? && !segments[2].blank?
+        Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'category' }).last
+      else
+        Term.includes(:term_anatomy).where("name = :p OR slug = :p2 OR terms.id = :p3", { p: check.to_s, p2: check.to_s, p3: check.to_i }).where(term_anatomies: { taxonomy: 'category' }).first
+      end
+    t if !t.blank?
   end
 
-  def obtain_category_link(id = nil)
-    segments = params[:slug].split('/')
+  def obtain_category_title(check = nil)
+    if check.blank?
+      return nil if  params[:slug].blank?
+      segments = params[:slug].split('/')
+    end
 
     # get the taxonomy name and search the database for the record with this as its slug
-    if !segments[2].blank?
-      t =  Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'category' }).last
-      Setting.get('articles_slug') + '/' + Setting.get('tag_slug') + t.structured_url
-    else
-      nil
-    end
+    t = 
+      if check.blank? && !segments[2].blank?
+        Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'category' }).last
+      else
+        Term.includes(:term_anatomy).where("name = :p OR slug = :p2 OR terms.id = :p3", { p: check.to_s, p2: check.to_s, p3: check.to_i }).where(term_anatomies: { taxonomy: 'category' }).first
+      end
+    t.name if !t.blank?
+
   end
 
-  def obtain_category_description(id = nil)
+  def obtain_category_link(check = nil)
 
-  	segments = params[:slug].split('/')
+    if check.blank?
+      return nil if  params[:slug].blank?
+      segments = params[:slug].split('/')
+    end
 
     # get the taxonomy name and search the database for the record with this as its slug
-    if !segments[2].blank?
-      t =  Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'category' }).last
-      t.description
-    else
-      nil
+    t =
+      if check.blank? && !segments[2].blank?
+        Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'category' }).last
+      else
+        Term.includes(:term_anatomy).where("name = :p OR slug = :p2 OR terms.id = :p3", { p: check.to_s, p2: check.to_s, p3: check.to_i }).where(term_anatomies: { taxonomy: 'category' }).first
+      end
+    
+    Setting.get('articles_slug') + '/' + Setting.get('category_slug') + t.structured_url
+  end
+
+  def obtain_category_description(check = nil)
+
+  	if check.blank?
+      return nil if  params[:slug].blank?
+      segments = params[:slug].split('/')
     end
+
+    # get the taxonomy name and search the database for the record with this as its slug
+    t = 
+      if check.blank? && !segments[2].blank?
+        Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'category' }).last
+      else
+        Term.includes(:term_anatomy).where("name = :p OR slug = :p2 OR terms.id = :p3", { p: check.to_s, p2: check.to_s, p3: check.to_i }).where(term_anatomies: { taxonomy: 'category' }).first
+      end
+    t.description
 
   end
 
-  # TODO: --
   def in_category?(cat, postid = nil)
-  	post =
-  		if postid.blank?
-  			@content.id
-  		else
-  			postid
-  		end
-  	Post.includes(:terms => :term_anatomy).where(id: post, terms: { id: cat }, term_anatomies: { taxonomy: 'category' }).count
-  end
-
-  # TODO: --
-  def obtain_subcategories(catid, depth) 
-
+  	post = obtain_record(postid)
+    return false if post.blank?
+  	!Post.includes(:terms => :term_anatomy).where(id: post.id, terms: { id: cat }, term_anatomies: { taxonomy: 'category' }).blank?
   end
 
   # TAG Functions #
 
-  # TODO: --
-  def obtain_tag_link(id = nil)
-    segments = params[:slug].split('/')
-
-    # get the taxonomy name and search the database for the record with this as its slug
-    if !segments[2].blank?
-      t =  Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'tag' }).last
-      Setting.get('articles_slug') + '/' + Setting.get('tag_slug') + t.structured_url
-    else
-      nil
+  def obtain_tag_link(check = nil)
+    
+    if check.blank?
+      return nil if  params[:slug].blank?
+      segments = params[:slug].split('/')
     end
+
+    t =
+      if check.blank? && !segments[2].blank?
+        Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'tag' }).last
+      else
+        Term.includes(:term_anatomy).where("name = :p OR slug = :p2 OR terms.id = :p3", { p: check.to_s, p2: check.to_s, p3: check.to_i }).where(term_anatomies: { taxonomy: 'tag' }).first
+      end
+    
+    (Setting.get('articles_slug') + '/' + Setting.get('tag_slug') + t.structured_url) if !t.blank?
   end
 
   def obtain_tags
@@ -191,111 +211,105 @@ module NewViewHelper
   end
 
   def has_tag?(tag, postid = nil)
-  	post =
-  		if postid.blank?
-  			@content.id
-  		else
-  			postid
-  		end
-  	Post.includes(:terms => :term_anatomy).where(id: post, terms: { id: tag }, term_anatomies: { taxonomy: 'tag' }).count
+  	post = obtain_record(postid)
+    return false if post.blank?
+    !Post.includes(:terms => :term_anatomy).where(id: post.id, terms: { id: tag }, term_anatomies: { taxonomy: 'tag' }).blank?
   end
 
-  def obtain_tag_title(id = nil)
+  def obtain_tag_title(check = nil)
 
-  	segments = params[:slug].split('/')
+  	if check.blank?
+      return nil if  params[:slug].blank?
+      segments = params[:slug].split('/')
+    end
 
     # get the taxonomy name and search the database for the record with this as its slug
-    if !segments[2].blank?
-      t =  Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'tag' }).last
-      t.name
-    else
-      nil
-    end
+    t = 
+      if check.blank? && !segments[2].blank?
+        Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'tag' }).last
+      else
+        Term.includes(:term_anatomy).where("name = :p OR slug = :p2 OR terms.id = :p3", { p: check.to_s, p2: check.to_s, p3: check.to_i }).where(term_anatomies: { taxonomy: 'tag' }).first
+      end
+    t.name if !t.blank?
 
   end
 
   def obtain_tag_description(id = nil)
 
-  	segments = params[:slug].split('/')
+  	if check.blank?
+      return nil if  params[:slug].blank?
+      segments = params[:slug].split('/')
+    end
 
     # get the taxonomy name and search the database for the record with this as its slug
-    if !segments[2].blank?
-      t =  Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'tag' }).last
-      t.description
-    else
-      nil
-    end
+    t = 
+      if !check.blank? && !segments[2].blank?
+        Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'tag' }).last
+      else
+        Term.includes(:term_anatomy).where("name = :p OR slug = :p2 OR terms.id = :p3", { p: check.to_s, p2: check.to_s, p3: check.to_i }).where(term_anatomies: { taxonomy: 'tag' }).first
+      end
+    t.description if !t.blank?
 
   end
 
   def obtain_tag(check = nil) 
-    if check.blank?
-      Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'tag' }).last
-    else
-      Term.includes(:term_anatomy).where("name = :p OR slug = :p2 OR id = :p3", { p: check, p2: check, p3: check.to_i }).where(term_anatomies: { taxonomy: 'tag' }).first
-    end
-  end
 
-  # TODO: --
-  def obtain_subtags(catid, depth) 
+    if check.blank?
+      return nil if  params[:slug].blank?
+      segments = params[:slug].split('/')
+    end
+
+    # get the taxonomy name and search the database for the record with this as its slug
+    t = 
+      if check.blank? && !segments[2].blank?
+        Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: 'tag' }).last
+      else
+        Term.includes(:term_anatomy).where("name = :p OR slug = :p2 OR terms.id = :p3", { p: check.to_s, p2: check.to_s, p3: check.to_i }).where(term_anatomies: { taxonomy: 'tag' }).first
+      end
+    t if !t.blank?
 
   end
 
   # ARTICLE Functions #
 
-  # TODO: --
-  def obtain_next_article(id = nil)
-
-  end
-
-  # TODO: --
-  def obtain_next_article_link(id = nil)
-
-  end
-
-  # TODO: --
-  def obtain_previous_article(id = nil)
-
-  end
-
-  # TODO: --
-  def obtain_previous_article_link(id = nil)
-
-  end
-
-
   def obtain_article(check = nil)
-    if check.blank?
+    if check.blank? && !@content.blank? && @content[0].blank?
       @content
     else
-      Post.where("(post_title = :p OR post_slug = :p2 OR id = :p3) AND post_type = 'post' ", { p: check, p2: check, p3: check.to_i} ).first
+      Post.where("(post_title = :p OR post_slug = :p2 OR id = :p3) AND post_type = 'post' ", { p: check.to_s, p2: check.to_s, p3: check.to_i} ).first
     end
   end
 
   def obtain_article_field(field, check = nil)
     article = 
-      if check.blank?
+      if check.blank? && !@content.blank? && @content[0].blank?
         @content
       else
-        Post.where("(post_title = :p OR post_slug = :p2 OR id = :p3) AND post_type = 'post' ", { p: check, p2: check, p3: check.to_i} ).first
+        Post.where("(post_title = :p OR post_slug = :p2 OR id = :p3) AND post_type = 'post' ", { p: check.to_s, p2: check.to_s, p3: check.to_i} ).first
       end
-    article.has_key?(field) ? post[field.to_sym] : nil
+    !article.blank? && article.has_attribute?(field) ? article[field.to_sym] : nil
   end
 
-  def obtain_article_status(id = nil)
+  def obtain_article_status(check = nil)
     article = 
-      if check.blank?
+      if check.blank? && !@content.blank? && @content[0].blank?
         @content
       else
-        Post.where("(post_title = :p OR post_slug = :p2 OR id = :p3) AND post_type = 'post' ", { p: check, p2: check, p3: check.to_i} ).first
+        Post.where("(post_title = :p OR post_slug = :p2 OR id = :p3) AND post_type = 'post' ", { p: check.to_s, p2: check.to_s, p3: check.to_i} ).first
       end
-    !artilce.blank? article.post_status : nil
+    !article.blank? && article.has_attribute?('post_status') ? article.post_status : nil
   end
 
-  # TODO: this is rubbish!!
-  def obtain_articles(ids = nil)
-  	return Post.where(:id => ids, :post_type => 'post') if !ids.blank?
-  	@content
+  def obtain_articles(ids = nil, orderby = "post_title DESC")
+    ret = 
+      if !ids.blank?
+        Post.where(:id => ids, :post_type => 'post').order(orderby)
+      elsif !@content[0].blank?
+        [@content]
+      else
+        Post.where(:post_type => 'post', :post_status => 'Published').order(orderby)
+      end
+  	ret
   end
 
   def obtain_archives
@@ -304,27 +318,28 @@ module NewViewHelper
 
   # PAGE functions #
 
-  def obtain_page(id = nil)
-    if check.blank?
+  def obtain_page(check = nil)
+    if check.blank? && !@content.blank? && @content[0].blank?
       @content
     else
-      Post.where("(post_title = :p OR post_slug = :p2 OR id = :p3) AND post_type = 'page' ", { p: check, p2: check, p3: check.to_i} )
+      Post.where("(post_title = :p OR post_slug = :p2 OR id = :p3) AND post_type = 'page' ", { p: check.to_s, p2: check.to_s, p3: check.to_i} )
     end
   end 
 
-  def obtain_pages(ids = nil)
-    return Post.where(:id => ids, :post_type => 'post') if !ids.blank?
-    @content
+  def obtain_pages(ids = nil, orderby = "post_title DESC")
+    return Post.where(:id => ids, :post_type => 'page').order(orderby) if !ids.blank?
+    return [@content] if !@content[0].blank?
+    return Post.where(:post_type => 'page', :post_status => 'Published').order(orderby)
   end
 
-  def obtain_page_field(field, id = nil)
-    post = 
-      if check.blank?
+  def obtain_page_field(field, check = nil)
+    page = 
+      if check.blank? && !@content.blank? && @content[0].blank?
         @content
       else
-        Post.where("(post_title = :p OR post_slug = :p2 OR id = :p3) AND post_type = 'page' ", { p: check, p2: check, p3: check.to_i} )
+        Post.where("(post_title = :p OR post_slug = :p2 OR id = :p3) AND post_type = 'page' ", { p: check.to_s, p2: check.to_s, p3: check.to_i} ).first
       end
-    post.has_key?(field) ? post[field.to_sym] : nil
+    !page.blank? && page.has_attribute?(field) ? page[field.to_sym] : nil
   end
 
   # CONDITIONAL functions #
@@ -338,7 +353,7 @@ module NewViewHelper
   def is_page?(check = nil)
 
     p = @content
-
+    return false if @content.class == ActiveRecord::Relation || p.blank?
     return true if p.post_type == 'page' && check.blank?
 
     check = check.to_s
@@ -399,10 +414,14 @@ module NewViewHelper
   end
 
   def obtain_archive_year
-    str = ''
-    segments = params[:slug].split('/')
-    str = (get_date_name_by_number(segments[2].to_i) + ' ') if !segments[2].blank?
-    str += segments[1]
+
+    if get_type_by_url == 'AR'
+      segments = params[:slug].split('/')
+      str = ''
+      str = (get_date_name_by_number(segments[2].to_i) + ' ') if !segments[2].blank?
+      str += segments[1]
+    end
+
   end
   
   # checks to see if the current page is the home page
@@ -418,9 +437,10 @@ module NewViewHelper
   # +check+:: check wether it is a certain category or not by ID, name, or slug
 
   def is_article?(check = nil)
+    return false if params[:slug].blank?
     segments = params[:slug].split('/')
     if check.blank?
-      Setting.get('articles_slug') == segments[0] ? true : false
+      (segments[0] == Setting.get('articles_slug') && !segments[1].blank? && segments[1] != Setting.get('tag_slug') && segments[1] != Setting.get('category_slug') && @content.class != ActiveRecord::Relation) ? true : false
     else
       if !defined?(@content.size).blank?
         return false
@@ -433,93 +453,86 @@ module NewViewHelper
     (defined?(params[:search]) && !params[:search].blank?) ? true : false
   end
 
-  # HACK: make sure this is checked the taxonomy as well
   # is_tag?
   # Params:
   # +check+:: check wether it is a certain tag or not. This is checked by the ID, name, or slug
 
-  def is_tag?
+  def is_tag?(check = nil)
+    return false if params[:slug].blank?
   	segments = params[:slug].split('/')
     if check.blank?
-      Setting.get('tag_slug') == segments[1] ? true : false
+      Setting.get('tag_slug') == segments[1] ? true : false 
     else
       (Setting.get('tag_slug') == segments[1] && (Term.where(slug: segments[2]).first.name == check || Term.where(slug: segments[2]).first.id == check || Term.where(slug: segments[2]).first.slug == check) ) ? true : false
     end
   end
 
-  # HACK: make sure this is checked the taxonomy as well
- 	# is_category?
+  # is_category?
   # Params:
   # +check+:: check wether it is a certain category or not. This is checked by the ID, name, or slug
 
   def is_category?(check = nil)
+    return false if params[:slug].blank?
   	segments = params[:slug].split('/')
     if check.blank?
       Setting.get('category_slug') == segments[1] ? true : false
     else
-      (Setting.get('category_slug') == segments[1] && (Term.where(slug: segments[2]).first.name == check || Term.where(slug: segments[2]).first.id == check || Term.where(slug: segments[2]).first.slug == check) ) ? true : false
+      url = '/' + segments[2..-1].join('/')
+      (Setting.get('category_slug') == segments[1] && (Term.where(structured_url: url).first.name == check || Term.where(structured_url: url).first.id == check || Term.where(structured_url: url).first.slug == check) ) ? true : false
     end
   end
 
 
   # USER Functions #
 
-  # TODO: --
-  def obtain_user_profile(str)
-    str = 
-      if str.is_a?(Array)
-        str
-        { name: "Joe", email: "joe@example.com" }
-        # hash_example = ["name = :name AND email = :email", { name: "Joe", email: "joe@example.com" }]
-      else
-        str.id
-        check = ["id = :id", { :id => str.id }]
-      end
-    Admin.where(check)
+  def obtain_user_profile(check)
+    Admin.select('id, email, first_name, last_name, username, access_level, avatar, cover_picture, overlord').where( 'id = :p OR email = :p2 OR username = :p3', { p: check.to_i, p2: check.to_s, p3: check.to_s} ).first
   end
 
   def obtain_users(access = nil)
-    admins = Admin.all
-    admins = admins.where(:access => access) if !access.blank?
+    admins = Admin.select('id, email, first_name, last_name, username, access_level, avatar, cover_picture, overlord').where('1=1')
+    admins = admins.where(:access_level => access) if !access.blank?
 
     admins
   end
 
-	# TODO: -- this and the above need to filter the certain fields out! Also be sure you can search via a number of different fields
-  def obtain_user_field(field, id = nil)
-    admins = 
-      if id.blank?
-        Admin.all
+  def obtain_user_field(field, check = nil)
+    admin = 
+      if !check.blank?
+        Admin.where( 'id = :p OR email = :p2 OR username = :p3', { p: check.to_i, p2: check.to_s, p3: check.to_s} ).first
       else
-        Admin.where(:id => id.to_i)
+        return nil if @content.blank? || !@content[0].blank?
+        Admin.find_by_id(@content.admin_id)
       end
-    admins.has_key?(field) ? admins.pluck(field.to_sym) : nil
+    return '' if admin.blank?
+    admin.has_attribute?(field) ? admin[field] : nil
   end
 
   # COMMENT Functions #
 
   def obtain_comment_author(comment_id)
-    Comment.find_by_id(comment_id).author
+    comm = Comment.find_by_id(comment_id)
+    comm.author if !comm.blank?
   end
 
   def obtain_comment_date(comment_id, format = "%d-%m-%Y")
     comment = Comment.find_by_id(comment_id)
     comment = comment.submitted_on.strftime(format) if !comment.blank?
-    comment
+    comment if !comment.blank?
   end
 
-  def obtain_comment_time(comment_id, format = "%H-%M-%S")
+  def obtain_comment_time(comment_id, format = "%H:%M:%S")
     comment = Comment.find_by_id(comment_id)
     comment = comment.submitted_on.strftime(format) if !comment.blank?
-    comment
+    comment if !comment.blank?
   end
 
-  def obtain_comments(article_id = nil)
+  def obtain_comments(check = nil)
 
-    if !article_id.nil?
-      Comment.where(:post_id => article_id, :comment_approved => 'Y')
-    else
+    if check.blank? && !@content.blank? && @content[0].blank?
       Comment.where(:post_id => @content.id, :comment_approved => 'Y')
+    else
+      Comment.where(:post_id => check, :comment_approved => 'Y')
     end
 
   end
@@ -530,6 +543,7 @@ module NewViewHelper
 
   	if Setting.get('article_comments') == 'Y'
       type = Setting.get('article_comment_type')
+      @new_comment = Comment.new
       render(:template =>"theme/#{current_theme}/comments_form." + get_theme_ext , :layout => nil, :locals => { type: type }).to_s
     end
 
@@ -537,61 +551,51 @@ module NewViewHelper
 
   # MISCELLANEOUS Functions #
 
-	# TODO: what happens if content is an array?
   def obtain_id
-  	@content.id
+  	@content.id if !@content.blank? && @content[0].blank?
   end
 
   def obtain_the_author(id = nil)
     if id.blank?
-    	Admin.find_by_id(@content.admin_id)
+      return nil if @content.blank? || !@content[0].blank?
+    	Admin.select('id, email, first_name, last_name, username, access_level, avatar, cover_picture, overlord').find_by_id(@content.admin_id)
     else
-    	Admin.includes(:posts).where(posts: { id: id }).first
+    	Admin.joins(:posts).select('admins.id, email, first_name, last_name, username, access_level, avatar, cover_picture, overlord').where(posts: { id: id }).first
     end
   end
 
   def obtain_the_authors_articles(id = nil)
   	if id.blank?
+      return nil if @content.blank? || !@content[0].blank?
     	Post.where(:admin_id => @content.admin_id)
     else
     	Post.where(:admin_id => id)
     end
   end
 
-  def obtain_the_content(id = nil)
-  	post = 
-  		if id.blank?
-  			@content
-  		else
-  			Post.find(id.to_i)
-  		end
-
-  	render :inline => prep_content(post).html_safe
+  def obtain_the_content(check = nil)
+  	post = obtain_record(check)
+  	render :inline => prep_content(post).html_safe if !post.blank?
   end
 
   # display the title of the given post via the post parameter
   # Params:
   # +id+:: id of the post that you want to get the title for
 
-  def obtain_the_title(id = nil)
-  	post = 
-  		if id.blank?
-  			@content
-  		else
-  			Post.find(id.to_i)
-  		end
-  	render :inline => post.post_title
+  def obtain_the_title(check = nil)
+  	post = obtain_record(check)
+  	render :inline => post.post_title if !post.blank?
   end
 
   # return what type of taxonomy it is either - category or tag
 
   def obtain_term_type
-
+    return nil if params[:slug].blank?
     segments = params[:slug].split('/')
 
     if !segments[1].blank?
       term = TermAnatomy.where(:taxonomy => segments[1]).last
-      term.taxonomy
+      term.taxonomy if !term.blank?
     else
       nil
     end
@@ -599,6 +603,10 @@ module NewViewHelper
   end
 
   def obtain_additional_data(key = nil, post = nil)
+
+    if post.blank?
+      return nil if @content.blank? || !@content[0].blank?
+    end
   	
   	post = 
   		if post.blank?
@@ -606,6 +614,8 @@ module NewViewHelper
   		else
   			Post.find(post).post_additional_data
   		end
+
+    return nil if post.blank?
 
     data = @json.decode(post)
     if key.blank?
@@ -622,10 +632,11 @@ module NewViewHelper
 
   def obtain_record(check = nil)
 
-    if check.blank?
+    if check.blank? 
+      return nil if @content.blank? || !@content[0].blank?
       @content
     else
-      Post.where( 'post_title = :p OR post_slug = :p2 OR id = :p3', { p: check, p2: check, p3: check.to_i} )
+      Post.where( 'post_title = :p OR post_slug = :p2 OR id = :p3', { p: check.to_s, p2: check.to_s, p3: check.to_i} ).first
     end
 
   end

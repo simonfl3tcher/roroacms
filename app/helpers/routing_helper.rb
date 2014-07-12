@@ -92,6 +92,8 @@ module RoutingHelper
 
   def get_type_by_url
 
+    return 'P' if params[:slug].blank?
+
     # split the url up into segments
     segments = params[:slug].split('/')
 

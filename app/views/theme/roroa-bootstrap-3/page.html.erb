@@ -16,7 +16,14 @@
 	<% end %>
     <div class="row">
     	<div class="col-lg-12 col-md-12">
+            <% if has_cover_image? %>
+                <img src="<%= obtain_cover_image %>" width="1140">
+            <% end %>
     		<%= display_content %>
     	</div>
+
+        <a href="<%= site_url(obtain_category_link('1235kkk')) %>"><%= obtain_category_title('1235kkk') %></a>
+
+        <%= in_category?('1235kkk') %>
     </div>
     <!-- /.row -->

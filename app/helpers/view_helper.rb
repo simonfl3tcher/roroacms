@@ -91,39 +91,40 @@ module ViewHelper
   # Params:
   # +check+:: check wether it is a certain category or not by name or id
 
-  def is_category?(check = nil)
-    segments = params[:slug].split('/')
-    if check.blank?
-      Setting.get('category_slug') == segments[1] ? true : false
-    else
-      (Setting.get('category_slug') == segments[1] && (Term.where(slug: segments[2]).first.name == check || Term.where(slug: segments[2]).first.id == check) ) ? true : false
-    end
-  end
+  # def is_category?(check = nil)
+  #   segments = params[:slug].split('/')
+  #   if check.blank?
+  #     Setting.get('category_slug') == segments[1] ? true : false
+  #   else
+  #     (Setting.get('category_slug') == segments[1] && (Term.where(slug: segments[2]).first.name == check || Term.where(slug: segments[2]).first.id == check) ) ? true : false
+  #   end
+  # end
 
   # is_article?
   # Params:
   # +check+:: check wether it is a certain category or not by name or id
 
-  def is_article?(check = nil)
-    segments = params[:slug].split('/')
-    if check.blank?
-      Setting.get('articles_slug') == segments[0] ? true : false
-    else
-      if !defined?(@content.size).blank?
-        return false
-      end
-      (Setting.get('articles_slug') == segments[0] && (@content.post_title == check || @content.id == check || @content.post_slug == check) ) ? true : false
-    end
-  end
+  # def is_article?(check = nil)
+  #   return false if params[:slug].blank?
+  #   segments = params[:slug].split('/')
+  #   if check.blank?
+  #     Setting.get('articles_slug') == segments[0] ? true : false
+  #   else
+  #     if !defined?(@content.size).blank?
+  #       return false
+  #     end
+  #     (Setting.get('articles_slug') == segments[0] && (@content.post_title == check || @content.id == check || @content.post_slug == check) ) ? true : false
+  #   end
+  # end
 
-  def is_tag?(check = nil)
-    segments = params[:slug].split('/')
-    if check.blank?
-      Setting.get('tag_slug') == segments[1] ? true : false
-    else
-      (Setting.get('tag_slug') == segments[1] && (Term.where(slug: segments[2]).first.name == check || Term.where(slug: segments[2]).first.id == check) ) ? true : false
-    end
-  end
+  # def is_tag?(check = nil)
+  #   segments = params[:slug].split('/')
+  #   if check.blank?
+  #     Setting.get('tag_slug') == segments[1] ? true : false
+  #   else
+  #     (Setting.get('tag_slug') == segments[1] && (Term.where(slug: segments[2]).first.name == check || Term.where(slug: segments[2]).first.id == check) ) ? true : false
+  #   end
+  # end
 
 
   # is archive page
@@ -147,37 +148,37 @@ module ViewHelper
   # Params:
   # +check+:: can be either ID, name, or slug
 
-  def is_page?(check)
+  # def is_page?(check)
 
-    @p = @content
+  #   @p = @content
 
-    check = check.to_s
+  #   check = check.to_s
 
-    if defined? @p.post_title
-      if !@p.blank?
-        if check.nonnegative_float?
-          if @p.id == check.to_i
-            return true
-          else
-            return false
-          end
-        else
-          if @p.post_title.downcase == check.downcase
-            return true
-          elsif @p.post_slug == check
-            return true
-          else
-            return false
-          end
-        end
-      else
-        return false
-      end
-    else
-      return false
-    end
+  #   if defined? @p.post_title
+  #     if !@p.blank?
+  #       if check.nonnegative_float?
+  #         if @p.id == check.to_i
+  #           return true
+  #         else
+  #           return false
+  #         end
+  #       else
+  #         if @p.post_title.downcase == check.downcase
+  #           return true
+  #         elsif @p.post_slug == check
+  #           return true
+  #         else
+  #           return false
+  #         end
+  #       end
+  #     else
+  #       return false
+  #     end
+  #   else
+  #     return false
+  #   end
 
-  end
+  # end
 
   # A short extract from the post content
   # Params:
@@ -354,11 +355,6 @@ module ViewHelper
 
   def site_url(str = nil)
     url = Setting.get('site_url')
-
-    if !str.blank? && str[0,1] == '/'
-      str = str[1..-1]
-    end
-
     "#{url}#{str}"
   end
 

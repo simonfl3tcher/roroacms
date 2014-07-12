@@ -31,7 +31,7 @@ group :test, :development do
 	gem 'tilt', '1.3.7'
 	gem 'bullet'
 	gem 'thin'
-	gem 'rack-mini-profiler'
+	# gem 'rack-mini-profiler'
 	gem 'rspec-rails'
 	gem 'capybara'
 	gem 'guard-rspec'

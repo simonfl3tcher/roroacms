@@ -56,9 +56,9 @@ class ApplicationController < ActionController::Base
   # globalize allows access to all of the given content from anywhere
 
   def gloalize content
+    @content_multiple = content if content.class == ActiveRecord::Relation
     @content = content
   end
-
 
   # Return the current user logged in as admin data
 
