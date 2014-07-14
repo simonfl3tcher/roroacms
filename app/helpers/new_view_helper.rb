@@ -463,7 +463,8 @@ module NewViewHelper
     if check.blank?
       Setting.get('tag_slug') == segments[1] ? true : false 
     else
-      (Setting.get('tag_slug') == segments[1] && (Term.where(slug: segments[2]).first.name == check || Term.where(slug: segments[2]).first.id == check || Term.where(slug: segments[2]).first.slug == check) ) ? true : false
+      term = obtain_term(segments)
+      (Setting.get('tag_slug') == segments[1] && (term.first.name == check || term.first.id == check || term.first.slug == check) ) ? true : false
     end
   end
 
@@ -477,8 +478,8 @@ module NewViewHelper
     if check.blank?
       Setting.get('category_slug') == segments[1] ? true : false
     else
-      url = '/' + segments[2..-1].join('/')
-      (Setting.get('category_slug') == segments[1] && (Term.where(structured_url: url).first.name == check || Term.where(structured_url: url).first.id == check || Term.where(structured_url: url).first.slug == check) ) ? true : false
+      term = obtain_term(segments)
+      (Setting.get('category_slug') == segments[1] && (term.first.name == check || term.first.id == check || term.first.slug == check) ) ? true : false
     end
   end
 
@@ -643,6 +644,10 @@ module NewViewHelper
       Post.where( 'post_title = :p OR post_slug = :p2 OR id = :p3', { p: check.to_s, p2: check.to_s, p3: check.to_i} ).first
     end
 
+  end
+
+  def obtain_term(segments)
+    Term.where(structured_url: ('/' + segments[2..-1].join('/')))
   end
 
 end
