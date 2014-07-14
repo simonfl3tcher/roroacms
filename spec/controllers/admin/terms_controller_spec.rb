@@ -97,7 +97,7 @@ RSpec.describe Admin::TermsController, :type => :controller do
   describe "PUT #update" do
 
     it "should locate the requested record" do
-      put :update, id: term
+      put :update, { id: term, term: FactoryGirl.attributes_for(:term) }
       expect(assigns(:category)).to eq(term)
     end
 

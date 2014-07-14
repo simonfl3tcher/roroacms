@@ -81,5 +81,5 @@ Roroacms::Application.routes.draw do
   end 
 
   root to: 'pages#index'
-  match '/*slug', :to => 'pages#dynamic_page'
+  match '/*slug', :to => 'pages#dynamic_page', via: [:get]
 end

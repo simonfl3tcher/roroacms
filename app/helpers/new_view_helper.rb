@@ -491,7 +491,11 @@ module NewViewHelper
 
   def obtain_users(access = nil)
     admins = Admin.select('id, email, first_name, last_name, username, access_level, avatar, cover_picture, overlord').where('1=1')
-    admins = admins.where(:access_level => access) if !access.blank?
+    if access.is_a?(Array)
+      admins = admins.where(:id => access) if !access.blank?
+    else
+      admins = admins.where(:access_level => access) if !access.blank?
+    end
 
     admins
   end

@@ -1,5 +1,7 @@
 class Post < ActiveRecord::Base
 
+  include GeneralHelper
+
   ## misc ##
 
   has_ancestry
@@ -18,7 +20,7 @@ class Post < ActiveRecord::Base
   has_many :attachments
   has_many :term_relationships, :dependent => :destroy
   has_many :terms, :through => :term_relationships
-  has_many :child, :class_name => "Post", :foreign_key => "parent_id", conditions: "post_type != 'autosave'"
+  # has_many :child, :class_name => "Post", :foreign_key => "parent_id", conditions: "post_type != 'autosave'"
 
   ## validations ##
 
@@ -131,9 +133,8 @@ class Post < ActiveRecord::Base
       end
 
     # if post status is left blank it will set the status to draft
-    if post_status.blank?
-      self.post_status = 'Draft'
-    end
+    self.post_status = 'Draft' if post_status.blank?
+    self.admin_id = current_user.id if admin_id.blank?
 
     # if the post has a parent it will prefix the structured url with its parents url
     self.structured_url = 

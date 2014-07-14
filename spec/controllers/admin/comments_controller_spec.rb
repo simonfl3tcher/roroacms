@@ -34,7 +34,7 @@ RSpec.describe Admin::CommentsController, :type => :controller do
   describe "PUT #update" do
 
     it "should locate the requested record" do
-      get :update, id: comment
+      get :update, { id: comment, comment: FactoryGirl.attributes_for(:comment) }
       expect(assigns(:comment)).to eq(comment)
     end
 

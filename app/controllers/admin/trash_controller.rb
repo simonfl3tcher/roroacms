@@ -11,9 +11,9 @@ class Admin::TrashController < AdminController
     set_title(I18n.t("generic.trash"))
 
     # get all posts/pages that are in the trash area
-    @records = Post.find(:all, :conditions => { disabled: 'Y' })
-    @posts = Post.find(:all, :conditions => { disabled: 'Y', post_type: 'post' })
-    @pages = Post.find(:all, :conditions => { disabled: 'Y', post_type: 'page' })
+    @records = Post.where(disabled: 'Y')
+    @posts = Post.where(disabled: 'Y', post_type: 'post' )
+    @pages = Post.where(disabled: 'Y', post_type: 'page' )
   end
 
 

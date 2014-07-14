@@ -76,7 +76,7 @@ RSpec.describe Admin::PagesController, :type => :controller do
   describe "PUT #update" do
 
     it "should locate the requested record" do
-      put :update, id: record
+      put :update, { id: record, post: FactoryGirl.attributes_for(:post) }
       expect(assigns(:record)).to eq(record)
     end
 

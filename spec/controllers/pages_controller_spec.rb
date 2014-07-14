@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe PagesController, :type => :controller do
 
-  let!(:record) { FactoryGirl.create(:post, post_status: 'Published') }
-  let!(:record_draft) { FactoryGirl.create(:post, post_status: 'Draft') }
+  let!(:record) { FactoryGirl.create(:post, post_type: 'page', post_status: 'Published') }
+  let!(:record_draft) { FactoryGirl.create(:post, post_type: 'page', post_status: 'Draft') }
 
   describe "GET /pages/#id" do
 

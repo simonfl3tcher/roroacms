@@ -5,6 +5,8 @@ FactoryGirl.define do |u|
     post_slug { Faker::Internet.slug(Faker::Lorem.words(4).join('-'), '-') }
     post_content { Faker::Lorem.paragraph(5) }
     post_date { Date.new(2012, 12, 3) }
+    post_type 'post'
+    disabled 'N'
   end
 
   factory :invalid_post, parent: :post do |f|

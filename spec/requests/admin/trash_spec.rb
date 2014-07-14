@@ -21,8 +21,8 @@ RSpec.describe "Admin::Trash", :type => :request do
 
     context "with posts or pages in the trash can" do
 
-      let!(:post_post) { FactoryGirl.create(:post, disabled: 'Y', post_type: 'post') }
-      let!(:post_page) { FactoryGirl.create(:post, disabled: 'Y', post_type: 'page') }
+      let!(:post_post) { FactoryGirl.create(:disabled_post) }
+      let!(:post_page) { FactoryGirl.create(:disabled_page) }
 
       before(:each) do
         visit admin_trash_path

@@ -78,7 +78,7 @@ RSpec.describe Admin::ArticlesController, :type => :controller do
     context "valid attributes" do
 
       it "should locate the requested record" do
-        put :update, id: new_post
+        put :update, { id: new_post, post: FactoryGirl.attributes_for(:post) }
         expect(assigns(:record)).to eq(new_post)
       end
 
@@ -98,7 +98,7 @@ RSpec.describe Admin::ArticlesController, :type => :controller do
     context "invalid attributes" do
 
       it "should locate the requested record" do
-        put :update, id: new_post
+        put :update, { id: new_post, post: FactoryGirl.attributes_for(:post) }
         expect(assigns(:record)).to eq(new_post)
       end
 
