@@ -4,10 +4,18 @@ module NewViewHelper
   # will use in order to display the contents of either the content
   # or format other data
 
+
+
   # GENERIC Functions #
 
+
+  # returns the children records for the post. 
+  # Params:
+  # +check+:: ID, post_slug, or post_title - if this is nil it will use the @content variable (the current page)
+  # +depth+:: The nest depth that you want to children to return
+  # +orderby+:: What table column you want the posts to be ordered by
+
   def obtain_children(check = nil, depth = 10000000, orderby = 'post_title')
-  	# look at ancertry gem 
     post = obtain_record(check)
     return {} if post.blank?
     p = post.children
@@ -15,17 +23,29 @@ module NewViewHelper
     p
   end
 
+  # returns a boolean as to wether the post has children
+  # Params:
+  # +check+:: ID, post_slug, or post_title - if this is nil it will use the @content variable
+
   def has_children?(check = nil)
     post = obtain_record(check)
     post.blank? ? false : post.has_children?
   end
+
+  # returns a boolean as to wether the post has siblings
+  # Params:
+  # +check+:: ID, post_slug, or post_title - if this is nil it will use the @content variable
 
   def has_siblings?(check = nil)
     post = obtain_record(check)
     post.blank? ? false : post.has_siblings?
   end
 
-  # get siblings
+  # returns the sibling records for the given post. 
+  # Params:
+  # +check+:: ID, post_slug, or post_title - if this is nil it will use the @content variable (the current page)
+  # +depth+:: The nest depth that you want to children to return
+  # +orderby+:: What table column you want the posts to be ordered by
 
   def obtain_siblings(check = nil, orderby = 'post_title')
     post = obtain_record(check)
@@ -35,7 +55,9 @@ module NewViewHelper
     p
   end
 
-  # get ancestors
+  # returns the ancestors for the given post
+  # Params:
+  # +check+:: ID, post_slug, or post_title - if this is nil it will use the @content variable (the current page)
 
   def obtain_ancestor(check = nil)
     post = obtain_record(check)
@@ -45,13 +67,12 @@ module NewViewHelper
     p
   end
 
-  # hererrewrewrrew #
-
-  # Gets the link to the post
+  # returns the link to the given post
   # Params:
-  # +check+:: id of the post record that you want to return the link of
+  # +check+:: ID, post_slug, or post_title - if this is nil it will use the @content variable (the current page)
+  # +render+:: wether to render the link straight on to the page or return the link in a string
 
-  def obtain_permalink(check = nil)
+  def obtain_permalink(check = nil, render = true)
     site_url = Setting.get('site_url')
     post = obtain_record(check)
 
@@ -59,13 +80,22 @@ module NewViewHelper
 
     article_url = Setting.get('articles_slug')
 
-    if post.post_type == 'post'
-      render :inline => site_url("#{article_url}#{post.structured_url}")
-    else
-      render :inline => site_url("#{post.structured_url}")
-    end
+    url =
+      if post.post_type == 'post'
+         site_url("#{article_url}#{post.structured_url}")
+      else
+        site_url("#{post.structured_url}")
+      end
+
+    return render ? render :inline => url  : url
 
   end
+
+  # returns a short extract from the post content
+  # Params:
+  # +check+:: ID, post_slug, or post_title - if this is nil it will use the @content variable (the current page)
+  # +length+:: length of the string in characters
+  # +omission+:: something to represent the omission of the content
 
   def obtain_excerpt(check = nil, length = 250, omission = '...')
   	
@@ -74,42 +104,63 @@ module NewViewHelper
   
   end
 
-  def obtain_cover_image(check = nil)
-  	post = obtain_record(check)
-    return !post.blank? ? post.post_image : ''
-  end
-
-
-  # Display the date of the current post or the given post via the ID
+  # returns a boolean as to wether the post has cover image
   # Params:
-  # +id+:: article or page id
-  # +format+:: the date format that you want the date to be provided in
-  # PREVIOUSLY: get_the_date
-
-  def obtain_the_date(check = nil, format = "%d-%m-%Y")
-  	post = obtain_record(check)
-  	render :inline => post.post_date.strftime(format) if !post.blank?
-  end
+  # +check+:: ID, post_slug, or post_title - if this is nil it will use the @content variable (the current page)
 
   def has_cover_image?(check = nil)
   	post = obtain_record(check)
   	!post.blank? && !post.post_image.blank? ? true : false
   end
 
+  # returns the cover image of the given post
+  # Params:
+  # +check+:: ID, post_slug, or post_title - if this is nil it will use the @content variable (the current page)
+
+  def obtain_cover_image(check = nil)
+    post = obtain_record(check)
+    return !post.blank? ? post.post_image : ''
+  end
+
+
+  # returns the date of the given post
+  # Params:
+  # +check+:: ID, post_slug, or post_title - if this is nil it will use the @content variable (the current page)
+  # +render+:: wether to render the link straight on to the page or return the link in a string
+  # +format+:: the date format that you want the date to be provided in
+
+  def obtain_the_date(check = nil, render = true, format = "%d-%m-%Y")
+    post = obtain_record(check)
+    render :inline => post.post_date.strftime(format) if !post.blank?
+  end
+
+
   # CATEGORY functions #
 
-  def obtain_all_category_ids(article_id = nil)
+
+
+  # returns an array of all the ids that are either in the system or attached to the given post
+  # Params:
+  # +articleid+:: ID of the article you want to get all the categories for - if this is nil it will return all the categories in the system
+
+  def obtain_all_category_ids(articleid = nil)
     if article_id.blank?
       Term.joins(:term_anatomy).where(term_anatomies: { taxonomy: 'category' }).pluck(:id)
     else
       # get via the posts
-      Term.joins(:term_anatomy, :posts).where(posts: {id: article_id}, term_anatomies: { taxonomy: 'category' }).pluck(:id)
+      Term.joins(:term_anatomy, :posts).where(posts: {id: articleid}, term_anatomies: { taxonomy: 'category' }).pluck(:id)
     end
   end
+
+  # returns all the categories in the system
 
   def obtain_categories
 		Term::CATEGORIES
   end
+
+  # returns the data for a certain category
+  # Params:
+  # +check+:: ID, slug, or name of the category - if this is nil it will return the current category you are in
 
   def obtain_category(check = nil)
     
@@ -128,6 +179,10 @@ module NewViewHelper
     t if !t.blank?
   end
 
+  # returns the title to the given category
+  # Params:
+  # +check+:: ID, slug, or name of the category - if this is nil it will return the current category you are in
+
   def obtain_category_title(check = nil)
     if check.blank?
       return nil if  params[:slug].blank?
@@ -144,6 +199,10 @@ module NewViewHelper
     t.name if !t.blank?
 
   end
+
+  # returns the link to the given category
+  # Params:
+  # +check+:: ID, slug, or name of the category - if this is nil it will return the current category you are in
 
   def obtain_category_link(check = nil)
 
@@ -163,6 +222,10 @@ module NewViewHelper
     Setting.get('articles_slug') + '/' + Setting.get('category_slug') + t.structured_url
   end
 
+  # returns the link to the given category
+  # Params:
+  # +check+:: ID, slug, or name of the category - if this is nil it will return the current category you are in
+
   def obtain_category_description(check = nil)
 
   	if check.blank?
@@ -181,13 +244,25 @@ module NewViewHelper
 
   end
 
-  def in_category?(cat, postid = nil)
+  # returns a boolean as to wether the given post is in the given category
+  # Params:
+  # +categoryid+:: ID of the category that you want to check
+  # +postid+:: ID, post_slug, or post_title - if this is nil it will use the @content variable (the current page)
+
+  def in_category?(categoryid, postid = nil)
   	post = obtain_record(postid)
     return false if post.blank?
-  	!Post.includes(:terms => :term_anatomy).where(id: post.id, terms: { id: cat }, term_anatomies: { taxonomy: 'category' }).blank?
+  	!Post.includes(:terms => :term_anatomy).where(id: post.id, terms: { id: categoryid }, term_anatomies: { taxonomy: 'category' }).blank?
   end
 
+
+
   # TAG Functions #
+
+
+  # returns the link to the given tag
+  # Params:
+  # +check+:: ID, slug, or name of the tag - if this is nil it will return the current tag you are on
 
   def obtain_tag_link(check = nil)
     
@@ -206,15 +281,26 @@ module NewViewHelper
     (Setting.get('articles_slug') + '/' + Setting.get('tag_slug') + t.structured_url) if !t.blank?
   end
 
+  # returns all the tags in the system
+
   def obtain_tags
   	Term::TAGS
   end
 
-  def has_tag?(tag, postid = nil)
+  # returns a boolean as to wether the given post has the give tag attached to it
+  # Params:
+  # +categoryid+:: ID of the tag that you want to check
+  # +postid+:: ID, post_slug, or post_title - if this is nil it will use the @content variable (the current page)
+
+  def has_tag?(tagid, postid = nil)
   	post = obtain_record(postid)
     return false if post.blank?
-    !Post.includes(:terms => :term_anatomy).where(id: post.id, terms: { id: tag }, term_anatomies: { taxonomy: 'tag' }).blank?
+    !Post.includes(:terms => :term_anatomy).where(id: post.id, terms: { id: tagid }, term_anatomies: { taxonomy: 'tag' }).blank?
   end
+
+  # returns the title to the given tag
+  # Params:
+  # +check+:: ID, slug, or name of the tag - if this is nil it will return the current tag you are on
 
   def obtain_tag_title(check = nil)
 
@@ -234,7 +320,11 @@ module NewViewHelper
 
   end
 
-  def obtain_tag_description(id = nil)
+  # returns the description to the given tag
+  # Params:
+  # +check+:: ID, slug, or name of the tag - if this is nil it will return the current tag you are on
+
+  def obtain_tag_description(check = nil)
 
   	if check.blank?
       return nil if  params[:slug].blank?
@@ -251,6 +341,10 @@ module NewViewHelper
     t.description if !t.blank?
 
   end
+
+  # returns all the data for the given tag
+  # Params:
+  # +check+:: ID, slug, or name of the tag - if this is nil it will return the current tag you are on
 
   def obtain_tag(check = nil) 
 
@@ -270,7 +364,14 @@ module NewViewHelper
 
   end
 
+
+
   # ARTICLE Functions #
+
+
+  # returns all the data for the given article
+  # Params:
+  # +check+:: ID, slug, or name of the article - if this is nil it will use the @content variable (the current page)
 
   def obtain_article(check = nil)
     if check.blank? && !@content.blank? && @content[0].blank?
@@ -279,6 +380,11 @@ module NewViewHelper
       Post.where("(post_title = :p OR post_slug = :p2 OR id = :p3) AND post_type = 'post' ", { p: check.to_s, p2: check.to_s, p3: check.to_i} ).first
     end
   end
+
+  # returns the value of the given field for the given article
+  # Params:
+  # +field+:: admin_id, post_content, post_date, post_name, parent_id, post_slug, sort_order, post_visible, post_additional_data, post_status, post_title, post_image, post_template, post_type, disabled, post_seo_title, post_seo_description, post_seo_keywords, post_seo_is_disabled, post_seo_no_follow, post_seo_no_index
+  # +check+:: ID, slug, or name of the article - if this is nil it will use the @content variable (the current page)
 
   def obtain_article_field(field, check = nil)
     article = 
@@ -290,6 +396,10 @@ module NewViewHelper
     !article.blank? && article.has_attribute?(field) ? article[field.to_sym] : nil
   end
 
+  # returns the status of the given article
+  # Params:
+  # +check+:: ID, slug, or name of the article - if this is nil it will use the @content variable (the current page)
+
   def obtain_article_status(check = nil)
     article = 
       if check.blank? && !@content.blank? && @content[0].blank?
@@ -299,6 +409,12 @@ module NewViewHelper
       end
     !article.blank? && article.has_attribute?('post_status') ? article.post_status : nil
   end
+
+  # TODO: Clean this code up like the below
+  # returns all the data of the given articles 
+  # Params:
+  # +ids+:: an array of article ids that you want to obtain the data for - if this is nil it will simply return the @content variable data in an array format
+  # +orderby+:: What table column you want the posts to be ordered by, this is a sql string format
 
   def obtain_articles(ids = nil, orderby = "post_title DESC")
     ret = 
@@ -312,11 +428,19 @@ module NewViewHelper
   	ret
   end
 
+  # returns all the archive records for the archive you are currently on 
+
   def obtain_archives
     @content
   end
 
+
   # PAGE functions #
+
+
+  # returns all the data for the given page
+  # Params:
+  # +check+:: ID, slug, or name of the article - if this is nil it will use the @content variable (the current page)
 
   def obtain_page(check = nil)
     if check.blank? && !@content.blank? && @content[0].blank?
@@ -326,11 +450,21 @@ module NewViewHelper
     end
   end 
 
+  # returns all the data of the given pages 
+  # Params:
+  # +ids+:: an array of article ids that you want to obtain the data for - if this is nil it will simply return the @content variable data in an array format
+  # +orderby+:: What table column you want the posts to be ordered by, this is a sql string format
+
   def obtain_pages(ids = nil, orderby = "post_title DESC")
     return Post.where(:id => ids, :post_type => 'page').order(orderby) if !ids.blank?
     return [@content] if !@content[0].blank?
     return Post.where(:post_type => 'page', :post_status => 'Published').order(orderby)
   end
+
+  # returns the value of the given field for the given page
+  # Params:
+  # +field+:: admin_id, post_content, post_date, post_name, parent_id, post_slug, sort_order, post_visible, post_additional_data, post_status, post_title, post_image, post_template, post_type, disabled, post_seo_title, post_seo_description, post_seo_keywords, post_seo_is_disabled, post_seo_no_follow, post_seo_no_index
+  # +check+:: ID, slug, or name of the article - if this is nil it will use the @content variable (the current page)
 
   def obtain_page_field(field, check = nil)
     page = 
@@ -344,11 +478,11 @@ module NewViewHelper
 
   # CONDITIONAL functions #
 
-  # HACK: Clean this code up
-  # is_page?
-  # Checks to see if given id or string is the current content record
+
+  # TODO: Clean this code up
+  # returns a boolean as to wether the given page/post is a page
   # Params:
-  # +check+:: can be either ID, name, or slug
+  # +check+:: ID of the page
 
   def is_page?(check = nil)
 
@@ -385,33 +519,41 @@ module NewViewHelper
   end
 
 
-  # is_archive?
-  # checks wether you are viewing an archive
+
+  # returns a boolean as to wether the current view is the blog homepage
+
+  def is_articles_home?
+    get_type_by_url == 'C' ? true : false
+  end
+ 
+  # returns a boolean as to whether the current view is an archive
 
   def is_archive?
     get_type_by_url == 'AR' ? true : false
   end
 
-  # checks wether you are on the overall blog page
-
-  def is_articles_home?
-    get_type_by_url == 'C' ? true : false
-  end
+  # returns a boolean as to whether the current view is a day archive
 
   def is_day_archive?
     segments = params[:slug].split('/')
     (get_type_by_url == 'AR' && !segments[3].blank?) ? true : false
   end
 
+  # returns a boolean as to whether the current view is a month archive
+
   def is_month_archive?
     segments = params[:slug].split('/')
     (get_type_by_url == 'AR' && !segments[2].blank? && segments[3].blank?) ? true : false
   end
 
+  # returns a boolean as to whether the current view is a year archive
+
   def is_year_archive?
     segments = params[:slug].split('/')
     (get_type_by_url == 'AR' && !segments[1].blank? && segments[2].blank? && segments[3].blank?) ? true : false
   end
+
+  # returns the that year/month/day of the current archive 
 
   def obtain_archive_year
 
@@ -424,7 +566,7 @@ module NewViewHelper
 
   end
   
-  # checks to see if the current page is the home page
+  # returns a boolean as to whether the current view is the homepage
 
   def is_homepage?
     return false if (!defined?(@content.length).blank? || @content.blank?)
@@ -432,9 +574,9 @@ module NewViewHelper
   end
 
 
-  # is_article?
+  # returns a boolean as to whether the current page is either an article or whether it is the given article provided by the check variable
   # Params:
-  # +check+:: check wether it is a certain category or not by ID, name, or slug
+  # +check+:: ID, slug, or name of the article you want to check - if this is nil it will just return if the current view is an article or not
 
   def is_article?(check = nil)
     return false if params[:slug].blank?
@@ -449,13 +591,15 @@ module NewViewHelper
     end
   end
 
+  # returns a boolean as to whether the current view is a search view or not
+
   def is_search?
     (defined?(params[:search]) && !params[:search].blank?) ? true : false
   end
 
-  # is_tag?
+  # returns a boolean as to whether the current page is either an tag view or whether it is the given tag provided by the check variable
   # Params:
-  # +check+:: check wether it is a certain tag or not. This is checked by the ID, name, or slug
+  # +check+:: ID, slug, or name of the tag - if this is nil it will just check to see if the current view is a tag view
 
   def is_tag?(check = nil)
     return false if params[:slug].blank?
@@ -463,13 +607,14 @@ module NewViewHelper
     if check.blank?
       Setting.get('tag_slug') == segments[1] ? true : false 
     else
-      (Setting.get('tag_slug') == segments[1] && (Term.where(slug: segments[2]).first.name == check || Term.where(slug: segments[2]).first.id == check || Term.where(slug: segments[2]).first.slug == check) ) ? true : false
+      term = obtain_term(segments)
+      (Setting.get('tag_slug') == segments[1] && (term.first.name == check || term.first.id == check || term.first.slug == check) ) ? true : false
     end
   end
 
-  # is_category?
+  # returns a boolean as to whether the current page is either an category view or whether it is the given category provided by the check variable
   # Params:
-  # +check+:: check wether it is a certain category or not. This is checked by the ID, name, or slug
+  # +check+:: ID, slug, or name of the category - if this is nil it will just check to see if the current view is a category view
 
   def is_category?(check = nil)
     return false if params[:slug].blank?
@@ -477,17 +622,25 @@ module NewViewHelper
     if check.blank?
       Setting.get('category_slug') == segments[1] ? true : false
     else
-      url = '/' + segments[2..-1].join('/')
-      (Setting.get('category_slug') == segments[1] && (Term.where(structured_url: url).first.name == check || Term.where(structured_url: url).first.id == check || Term.where(structured_url: url).first.slug == check) ) ? true : false
+      term = obtain_term(segments)
+      (Setting.get('category_slug') == segments[1] && (term.first.name == check || term.first.id == check || term.first.slug == check) ) ? true : false
     end
   end
 
 
   # USER Functions #
 
+  # returns all the data for the given user
+  # Params:
+  # +check+:: ID, email, or username of the user
+
   def obtain_user_profile(check)
     Admin.select('id, email, first_name, last_name, username, access_level, avatar, cover_picture, overlord').where( 'id = :p OR email = :p2 OR username = :p3', { p: check.to_i, p2: check.to_s, p3: check.to_s} ).first
   end
+
+  # returns all the users
+  # Params:
+  # +access+:: restrict the returned data to show only certain access levels access level - the options can be found in the admin panel
 
   def obtain_users(access = nil)
     admins = Admin.select('id, email, first_name, last_name, username, access_level, avatar, cover_picture, overlord').where('1=1')
@@ -499,6 +652,11 @@ module NewViewHelper
 
     admins
   end
+
+  # returns certian field of the given user
+  # Params:
+  # +field+:: the field that you want to return - id, email, first_name, last_name, username, access_level, avatar, cover_picture, overlord
+  # +check+:: ID, email, or username of the user - if this is nil it will user the user that wrote the current article/page
 
   def obtain_user_field(field, check = nil)
     admin = 
@@ -512,12 +670,23 @@ module NewViewHelper
     admin.has_attribute?(field) ? admin[field] : nil
   end
 
+
+
   # COMMENT Functions #
+
+  # returns the author name of the given comment
+  # Params:
+  # +comment_id+:: ID of the comment
 
   def obtain_comment_author(comment_id)
     comm = Comment.find_by_id(comment_id)
     comm.author if !comm.blank?
   end
+
+  # returns the date of the given comment
+  # Params:
+  # +comment_id+:: ID of the comment
+  # +format+:: the format that you want the date to be returned in
 
   def obtain_comment_date(comment_id, format = "%d-%m-%Y")
     comment = Comment.find_by_id(comment_id)
@@ -525,11 +694,20 @@ module NewViewHelper
     comment if !comment.blank?
   end
 
+  # returns the time of the given comment
+  # Params:
+  # +comment_id+:: ID of the comment
+  # +format+:: the format that you want the time to be returned in
+
   def obtain_comment_time(comment_id, format = "%H:%M:%S")
     comment = Comment.find_by_id(comment_id)
     comment = comment.submitted_on.strftime(format) if !comment.blank?
     comment if !comment.blank?
   end
+
+  # returns the comments for the given article
+  # Params:
+  # +check+:: ID, post_slug, or post_title - if this is nil it return the comments for the the @content variable (the current page)
 
   def obtain_comments(check = nil)
 
@@ -541,7 +719,7 @@ module NewViewHelper
 
   end
 
-  # gets the comment form from the theme folder and displays it.
+  # returns the comment form that is created in the theme folder. 
 
   def obtain_comments_form
 
@@ -555,18 +733,28 @@ module NewViewHelper
 
   # MISCELLANEOUS Functions #
 
+  # returns the ID for the current view that you are on
+
   def obtain_id
   	@content.id if !@content.blank? && @content[0].blank?
   end
 
-  def obtain_the_author(id = nil)
+  # returns the author of the current article/page
+  # Params:
+  # +postid+:: ID of the post/page that you want o obtain the author for
+
+  def obtain_the_author(postid = nil)
     if id.blank?
       return nil if @content.blank? || !@content[0].blank?
     	Admin.select('id, email, first_name, last_name, username, access_level, avatar, cover_picture, overlord').find_by_id(@content.admin_id)
     else
-    	Admin.joins(:posts).select('admins.id, email, first_name, last_name, username, access_level, avatar, cover_picture, overlord').where(posts: { id: id }).first
+    	Admin.joins(:posts).select('admins.id, email, first_name, last_name, username, access_level, avatar, cover_picture, overlord').where(posts: { id: postid }).first
     end
   end
+
+  # returns all of the articles that the user has created
+  # Params:
+  # +id+:: ID of the user that you want to get all the records for
 
   def obtain_the_authors_articles(id = nil)
   	if id.blank?
@@ -577,14 +765,18 @@ module NewViewHelper
     end
   end
 
+  # returns the content for the given post/page
+  # Params:
+  # +id+:: ID, post_slug, or post_title - if this is nil it will use the @content variable (the current page)
+
   def obtain_the_content(check = nil)
   	post = obtain_record(check)
   	render :inline => prep_content(post).html_safe if !post.blank?
   end
 
-  # display the title of the given post via the post parameter
+  # returns the title for the given post/page
   # Params:
-  # +id+:: id of the post that you want to get the title for
+  # +id+:: ID, post_slug, or post_title - if this is nil it will use the @content variable (the current page)
 
   def obtain_the_title(check = nil)
   	post = obtain_record(check)
@@ -606,9 +798,14 @@ module NewViewHelper
 
   end
 
-  def obtain_additional_data(key = nil, post = nil)
+  # returns the additional data record
+  # Params:
+  # +key+:: the key to the additional data that you want to return - if this is nil it will return all of the additional data for the given record
+  # +check+:: ID, post_slug, or post_title of the post record - if this is nil it will use the @content variable (the current page)
 
-    if post.blank?
+  def obtain_additional_data(key = nil, check = nil)
+
+    if check.blank?
       return nil if @content.blank? || !@content[0].blank?
     end
   	
@@ -630,9 +827,19 @@ module NewViewHelper
 
   end
 
+  # returns a short extract of the given content
+  # Params:
+  # +content+:: the content 
+  # +length+:: length of the string in characters
+  # +omission+:: something to represent the omission of the content
+
   def create_excerpt(content, length = 255, omission = '...')
     render :inline => truncate(content, :omission => omission, :length => length)
   end
+
+  # returns a full post record (this is used mainly internally to retrieve the data for other functions) 
+  # Params:
+  # +check+:: ID, post_slug, or post_title of the post record - if this is nil it will use the @content variable (the current page)
 
   def obtain_record(check = nil)
 
@@ -643,6 +850,14 @@ module NewViewHelper
       Post.where( 'post_title = :p OR post_slug = :p2 OR id = :p3', { p: check.to_s, p2: check.to_s, p3: check.to_i} ).first
     end
 
+  end
+
+  # returns a full term record (this is used mainly internally to retrieve the data for other functions) 
+  # Params:
+  # +segments+:: URL segments
+
+  def obtain_term(segments)
+    Term.where(structured_url: ('/' + segments[2..-1].join('/')))
   end
 
 end
