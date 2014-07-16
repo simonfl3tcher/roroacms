@@ -18,20 +18,27 @@ readURL = (input) ->
 $(document).ready ->
   $("body").on "click", ".add-article-image", (e) ->
     e.preventDefault()
-    $('#post-post-image').trigger('click');
+    $('#post_post_image').trigger('click');
     return
 
-  $("#post-post-image").change ->
+  $("body").on "click", ".add-term-image", (e) ->
+    e.preventDefault()
+    $('#term_cover_image').trigger('click');
+    return
+
+  $("#post_post_image").change ->
     readURL this
+    $('.add-article-image').addClass('hidden')
+    $('.remove-profile-image').removeClass('hidden')
     return
 
 
   $("body").on "click", ".add-profile-image", (e) ->
     e.preventDefault()
-    $('#admin-cover-picture').trigger('click');
+    $('#admin_cover_picture').trigger('click');
     return
 
-  $("#admin-cover-picture").change ->
+  $("#admin_cover_picture").change ->
     readURL this
     $('.add-profile-image').addClass('hidden')
     $('.remove-profile-image').removeClass('hidden')
@@ -39,14 +46,22 @@ $(document).ready ->
 
   $("body").on "click", ".remove-profile-image", (e) ->
     
-    input = $("#admin-cover-picture")
+    input = $("#admin_cover_picture")
 
     $(".well").attr("style", "")
     $(this).addClass('hidden')
     $('.add-profile-image').removeClass('hidden')
+    $('.add-article-image').removeClass('hidden')
+    $('.add-term-image').removeClass('hidden')
     $(".well input[name=has_cover_image]").val('')
 
     input.replaceWith(input.val('').clone(true))
+    return
+
+  $("#term_cover_image").change ->
+    readURL this
+    $('.add-term-image').addClass('hidden')
+    $('.remove-profile-image').removeClass('hidden')
     return
 
   $("body").on "keypress", "#addAdditionalDataInput", (e) ->

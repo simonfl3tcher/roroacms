@@ -353,7 +353,7 @@ module NewViewHelper
   def is_page?(check = nil)
 
     p = @content
-    return false if @content.class == ActiveRecord::Relation || p.blank?
+    return false if @content.blank? || !@content[0].blank? || p.blank?
     return true if p.post_type == 'page' && check.blank?
 
     check = check.to_s

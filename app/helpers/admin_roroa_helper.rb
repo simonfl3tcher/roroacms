@@ -206,8 +206,8 @@ module AdminRoroaHelper
 
   def profile_images(params, admin)
 
-    Admin.deal_with_profile_images(admin, upload_user_images(params[:admin][:avatar], admin.username), 'avatar') if !params[:admin][:avatar].blank?
-    Admin.deal_with_profile_images(admin, upload_user_images(params[:admin][:cover_picture], admin.username), 'cover_picture') if !params[:admin][:cover_picture].blank?
+    Admin.deal_with_profile_images(admin, upload_images(params[:admin][:avatar], admin.username), 'avatar') if !params[:admin][:avatar].blank?
+    Admin.deal_with_profile_images(admin, upload_images(params[:admin][:cover_picture], admin.username), 'cover_picture') if !params[:admin][:cover_picture].blank?
 
   end
 

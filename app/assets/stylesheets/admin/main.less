@@ -3187,7 +3187,7 @@ ol.sortable .item-information {
     font-weight: 100;
 }
 
-#post_post_image, #admin_cover_picture {
+#post_post_image, #admin_cover_picture, #term_cover_image{
   position: absolute;
   z-index: -1;
 }
@@ -3249,6 +3249,14 @@ ol.sortable .item-information {
   background-repeat: no-repeat; 
   background-size: cover; 
   overflow: hidden;
+}
+
+.well-background.term {
+  min-height: 150px;
+}
+
+.well-background.term-large {
+  min-height: 350px;
 }
 
 .hidden {
@@ -3447,6 +3455,26 @@ input[type=checkbox] {
 
 .help-block.error {
   color: #F74E4D;
+}
+
+.panel-body.no-padding {
+  padding:0px;
+  .list-group {
+    margin-bottom:0px;
+  }
+  .list-group-item:hover, a.list-group-item:focus {text-decoration: none;background-color: rgb(245, 245, 245);}
+  .list-group-item {
+    border:none;
+    border-radius: 0px;
+    display: block;
+    height: 66px;
+    margin-bottom: -1px;
+    padding: 19px 16px;
+    position: relative;
+  }
+  .btn-xs {
+    padding:3px 9px;
+  }
 }
 /* ==========================================================================
    Media Queries

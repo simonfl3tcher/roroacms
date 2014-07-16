@@ -15,3 +15,39 @@
   </div>
 
 </div>
+
+<% if @category.posts.size > 0 %>
+  <div class="row">
+
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Articles in <%= @type.capitalize %></h3>
+          <div class="actions pull-right">
+            <i class="fa fa-chevron-down"></i>
+          </div>
+        </div>
+        <div class="panel-body no-padding">
+          <ul class="list-group">
+            <% @category.posts.each do |f| %>
+              <li class="list-group-item">
+                <%= link_to edit_admin_article_path(f) do %>
+                  <%= f.post_title %>
+                <% end %>
+                <div class="btn-group pull-right">
+                  <%= link_to edit_admin_article_path(f), :class => 'btn btn-xs btn-default' do %>
+                    <i class="fa fa-pencil"></i>
+                  <% end %>        
+                  <%= link_to page_path(f), :class => 'btn btn-xs btn-default', :target => "_blank" do %>
+                    <i class="fa fa-search"></i>
+                  <% end %> 
+                </div> 
+              </li>
+            <% end %>
+           </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+<% end %>

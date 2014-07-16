@@ -1,6 +1,7 @@
 class Post < ActiveRecord::Base
 
   include GeneralHelper
+  include MediaHelper
 
   ## misc ##
 
@@ -124,6 +125,7 @@ class Post < ActiveRecord::Base
   # will make sure that specific data is correctly formatted for the database
 
   def deal_with_abnormalaties
+    self.post_image = upload_images(post_image, post_type.to_s + '/' + id.to_s, 'posts') if post_image.class != String && post_image.class != NilClass
     # if the slug is empty it will take the title and create a slug
     self.post_slug = 
       if post_slug.blank?
@@ -134,7 +136,6 @@ class Post < ActiveRecord::Base
 
     # if post status is left blank it will set the status to draft
     self.post_status = 'Draft' if post_status.blank?
-    self.admin_id = current_user.id if admin_id.blank?
 
     # if the post has a parent it will prefix the structured url with its parents url
     self.structured_url = 
@@ -183,6 +184,7 @@ class Post < ActiveRecord::Base
 
       post.post_status = 'Autosave'
       post.post_type = 'autosave'
+      self.ancestry = nil
 
 
       # save the post and its categories/tags
@@ -219,7 +221,7 @@ class Post < ActiveRecord::Base
     if self.post_slug_changed? || self.post_content_changed? || self.post_title_changed?
 
       post = self.attributes
-      post['parent_id'] = post['id']
+      post['parent_id'] = post['id'].to_i
       post['structured_url'] = nil
       post['updated_at'] = nil
       post['created_at'] = nil
@@ -326,6 +328,12 @@ class Post < ActiveRecord::Base
 
     end
 
+  end
+
+  # If the has cover image has been removed this will be set to nothing and will update the cover image option agasint the admin
+
+  def deal_with_cover has_cover
+    self.post_image = '' if defined?(has_cover) && has_cover.blank?
   end
 
 end

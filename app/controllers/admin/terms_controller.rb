@@ -40,6 +40,8 @@ class Admin::TermsController < AdminController
 
       else
 
+        abort @category.errors.messages.inspect
+
         flash[:error] = I18n.t("controllers.admin.terms.create.flash.error")
         format.html { redirect_to URI.parse(redirect_url).path, only_path: true }
 
@@ -62,7 +64,7 @@ class Admin::TermsController < AdminController
 
   def update
     @category = Term.find(params[:id])
-
+    @category.deal_with_cover(params[:has_cover_image])
     respond_to do |format|
       # deal with abnormalaties - update the structure url
       if @category.update_attributes(term_params)
@@ -129,7 +131,7 @@ class Admin::TermsController < AdminController
   # Strong parameter
 
   def term_params
-    params.require(:term).permit(:name, :parent, :slug, :structured_url, :description, :term_group)
+    params.require(:term).permit(:name, :parent, :slug, :structured_url, :description, :term_group, :cover_image)
   end
 
 end

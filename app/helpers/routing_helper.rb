@@ -40,14 +40,14 @@ module RoutingHelper
 
     post = Post.find(params[:id])
     article_url = Setting.get('articles_slug')
-    url = ''
+    url = '' 
 
     # if the post is an article. Prepend the url with the article url
     if post.post_type == 'post'
-      url = "/#{article_url}/#{post.post_slug}"
+      url = "/#{article_url}/#{post.post_slug}?admin_preview=true"
     end
 
-    url += "#{post.structured_url}"
+    url += "#{post.structured_url}?admin_preview=true"
 
     url
 
@@ -139,9 +139,8 @@ module RoutingHelper
 
 
   def render_page(url, status)
-
     # get content - if the admin isn't logged in your add the extra status requirements
-    if !current_user.blank?
+    if !current_user.blank? && !params[:admin_preview].blank? && params[:admin_preview] == 'true'
       @content = Post.where("post_type = 'page' AND post_visible = 'Y' AND (post_status = 'Published' OR post_status = 'Draft')").find_by_structured_url("/#{url}")
     else
       @content = Post.where(status, :post_type => 'page', :post_status => 'Published', :post_visible => 'Y').find_by_structured_url("/#{url}")
@@ -186,11 +185,19 @@ module RoutingHelper
         # if segment 2 is blank then you want to disply the top level article page
         redirect_to article_url
       else
+        term_type = 
+          if segments[1] == category_url
+            'category'
+          elsif segments[1] == tag_slug
+            'tag'
+          else
+            nil
+          end
         segments.shift(2)
         term = Term.where(:structured_url => '/' + segments.join('/')).first
 
         # do a search for the content
-        gloalize Post.joins('LEFT JOIN term_relationships ON term_relationships.post_id = posts.id').where("(post_status = 'Published' AND post_date <= CURRENT_TIMESTAMP AND disabled = 'N') and term_relationships.term_id = ?", term).order('post_date DESC').page(params[:page]).per(Setting.get('pagination_per_fe'))
+        gloalize Post.joins(terms: :term_anatomy).where("post_status = 'Published' AND post_type != 'autosave' AND post_date <= CURRENT_TIMESTAMP AND disabled = 'N' AND terms.id = ? ", term).where(term_anatomies: {taxonomy: term_type}).order('post_date DESC').page(params[:page]).per(Setting.get('pagination_per_fe'))
 
         # add the breadcrumbs
         add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => I18n.t("helpers.routing_helper.generic.back_to", word: article_url.capitalize)
@@ -230,8 +237,8 @@ module RoutingHelper
   def render_single(segments, article_url, status)
 
     # get content - if the admin isn't logged in your add the extra status requirements
-    if !session[:admin_id].blank?
-      @content = Post.where(:post_type => 'post', :post_visible => 'Y').find_by_post_slug(segments[1])
+    if !current_user.blank? && !params[:admin_preview].blank? && params[:admin_preview] == 'true'
+      @content = Post.where("post_type = 'page' AND post_visible = 'Y' AND (post_status = 'Published' OR post_status = 'Draft')").find_by_post_slug(segments[1])
     else
       @content = Post.where(status, :post_type => 'post', :disabled => 'N', :post_visible => 'Y').find_by_post_slug(segments[1])
     end

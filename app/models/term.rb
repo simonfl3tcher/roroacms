@@ -1,5 +1,7 @@
 class Term < ActiveRecord::Base
 
+  include MediaHelper
+
   ## constants ##
 
   CATEGORIES = Term.includes(:term_anatomy).where(term_anatomies: {taxonomy: 'category'}).order('name asc')
@@ -61,6 +63,8 @@ class Term < ActiveRecord::Base
   # will make sure that specific data is correctly formatted for the database
 
   def deal_with_abnormalaties
+
+    self.cover_image = upload_images(cover_image, id.to_s, 'terms') if cover_image.class != String && cover_image.class != NilClass
 
     # if the slug is empty it will take the name and create a slug
     self.slug =
@@ -139,6 +143,12 @@ class Term < ActiveRecord::Base
 
   def self.term_cats type = 'category'
     Term.includes(:term_anatomy).where(term_anatomies: {taxonomy: type}).order('name asc')
+  end
+
+  # If the has cover image has been removed this will be set to nothing and will update the cover image option agasint the admin
+
+  def deal_with_cover has_cover
+    self.cover_image = '' if defined?(has_cover) && has_cover.blank?
   end
 
 end

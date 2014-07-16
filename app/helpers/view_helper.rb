@@ -233,9 +233,9 @@ module ViewHelper
     site_url = Setting.get('site_url')
 
     if post.post_type == 'post'
-      render :inline => "#{site_url}#{article_url}/#{post.post_slug}"
+      render :inline => site_url("#{article_url}/#{post.post_slug}")
     else
-      render :inline => "#{site_url}#{post.post_slug}"
+      render :inline => site_url("#{post.post_slug}")
     end
 
   end
@@ -355,6 +355,8 @@ module ViewHelper
 
   def site_url(str = nil)
     url = Setting.get('site_url')
+    str = str[1..-1] if !str.blank? && str[0,1] == '/'
+    url = url + '/' if !url.blank? && url[-1, 1] != '/'
     "#{url}#{str}"
   end
 
@@ -405,11 +407,11 @@ module ViewHelper
       lp.each do |k, i|
 
         if blockbydate
-          h["#{article_url}/#{k}"] = k
+          h["#{article_url}/#{k.to_i}"] = k.to_i
         end
 
         i.each do |nm|
-          h["#{article_url}/#{k}/#{nm}"] = "#{get_date_name_by_number(nm)} - #{k}"
+          h["#{article_url}/#{k.to_i}/#{nm.to_i}"] = "#{get_date_name_by_number(nm.to_i)} - #{k.to_i}"
         end
 
       end

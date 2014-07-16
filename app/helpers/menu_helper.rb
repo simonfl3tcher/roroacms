@@ -59,7 +59,7 @@ module MenuHelper
 					existingData = make_hash m.custom_data
 
 					name = existingData['label']
-					attributes = menu_routing m
+					attributes = menu_routing(m)
 
 					html += "<li><a " + attributes + ">#{name}</a>"
 
@@ -115,6 +115,7 @@ module MenuHelper
 		existingData = make_hash menuOption.custom_data
 
 		# create generic variables
+		home_id = Setting.get('home_page')	
 		article_url = Setting.get('articles_slug')	
 		category_url = Setting.get('category_slug')	
 		tag_url = Setting.get('tag_slug')	
@@ -122,10 +123,10 @@ module MenuHelper
 		# start the string by defining the target 
 		atts = get_target(existingData['target'])
 
+
 		if menuOption.data_type == 'page'
 			p = Post.find(existingData['linkto'])
-			atts += " href='#{site_url(p.structured_url)}'"
-
+			atts += p.id == home_id.to_i ? " href='#{site_url()}'" : " href='#{site_url(p.structured_url)}'"
 		elsif menuOption.data_type == 'article'
 			p = Post.find(existingData['linkto'])
 			atts += " href='#{site_url(article_url +  p.structured_url)}'"

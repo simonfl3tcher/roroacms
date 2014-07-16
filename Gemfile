@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.4'
+gem 'rails', '4.0.4'
 
 gem 'pg'
 gem 'activerecord-postgresql-adapter'
@@ -14,6 +14,7 @@ gem 'devise'
 gem 'diffy'
 gem 'differ'
 gem 'breadcrumbs_on_rails'
+gem 'aws-s3', :require => 'aws/s3'
 
 # assets
 gem 'sass-rails',   '~> 4.0.3'

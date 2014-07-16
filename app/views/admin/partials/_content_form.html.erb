@@ -22,23 +22,23 @@
             <% if !@record.post_image.blank? %>
 
               <div class="well well-background" style="background-image: url('<%= @record.post_image %>');">
-                <center>
-                  <a style="margin:10px;" class="btn btn-xs btn-primary pull-right add-article-image" href="javascript:;"><span class="fa fa-picture-o"></span> <%= t("views.admin.generic.change_cover") %></a>
-                </center>
-                <%= f.file_field :post_image %>
+                  <a style="margin:10px;" class="btn btn-xs btn-primary pull-right add-article-image hidden" href="javascript:;"><span class="fa fa-picture-o"></span> <%= t("views.admin.generic.change_cover") %></a>
+                  <a class="btn btn-xs btn-danger pull-right remove-profile-image" href="javascript:;"><span class="fa fa-trash-o"></span> <%= t("views.admin.administrators.form.remove_cover") %></a>
               </div>
 
             <% else %>
 
               <div class="well well-background">
-                <a style="margin:10px;" class="btn btn-xs btn-primary pull-right add-article-image" href="javascript:;"><span class="fa fa-picture-o"></span> <%= t("views.admin.generic.change_cover") %></a>
-                <%= f.file_field :post_image %>
+                <a class="btn btn-xs btn-primary pull-right add-article-image" href="javascript:;"><span class="fa fa-picture-o"></span> <%= t("views.admin.generic.change_cover") %></a>
+                <a class="btn btn-xs btn-danger pull-right remove-profile-image hidden" href="javascript:;"><span class="fa fa-trash-o"></span> <%= t("views.admin.administrators.form.remove_cover") %></a>
               </div>
 
             <% end %>
+            <%= hidden_field_tag :has_post_image, @record.post_image.to_s  %>
+            <%= f.file_field :post_image %>
 
             <div class="form-group">
-              <%= f.hidden_field :admin_id, :value => session[:admin_id], size: 40 %>
+              <%= f.hidden_field :admin_id, :value => current_user.id, size: 40 %>
               <%= f.hidden_field :id %>
               <%= f.hidden_field :post_type, :value => @post_type %>
             </div>
@@ -83,8 +83,6 @@
               <div class="clearfix"></div>
             </div>
 
-            <% if @record.post_type == 'post' %>
-
             <div class="form-group">
              <%= f.label :post_author, :class => "col-sm-3 control-label"  %>
              <div class="col-sm-6">
@@ -92,8 +90,6 @@
              </div>
              <div class="clearfix"></div>
            </div>
-
-           <% end %>
 
            <div class="form-group">
             <%= f.label :parent_id, :class => "col-sm-3 control-label"  %>
