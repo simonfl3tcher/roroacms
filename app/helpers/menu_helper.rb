@@ -26,7 +26,7 @@ module MenuHelper
     (m.rgt - m.lft - 1)/2
   end
 
-	def get_menu(menu,  sub = false, c = '')
+	def obtain_menu(menu = nil,  sub = false, c = '')
 		if menu.is_a? Integer
 			data =
 				if sub 
@@ -36,17 +36,15 @@ module MenuHelper
 				end
 		else
 			m = Menu.find_by_key(menu)
-			if m.blank?
-				data = []
-			else
-				data = 
-					if sub 
-						MenuOption.where(:parent_id => MenuOption.find(m[:id]).option_id)
-					else 
-						MenuOption.where(:menu_id => m[:id], :parent_id => nil)
-					end
+			data = 
+				if m.blank? 
+					[]
+				elsif sub 
+					MenuOption.where(:parent_id => MenuOption.find(m[:id]).option_id)
+				else 
+					MenuOption.where(:menu_id => m[:id], :parent_id => nil)
+				end
 
-			end
 		end
 
 
@@ -81,7 +79,7 @@ module MenuHelper
 
 	end
 
-	def raw_menu(menu, sub = false)
+	def raw_menu_data(menu, sub = false)
 		if menu.is_a?(Integer)
 			data =
 				if sub 
@@ -123,28 +121,35 @@ module MenuHelper
 		# start the string by defining the target 
 		atts = get_target(existingData['target'])
 
-
 		if menuOption.data_type == 'page'
 			p = Post.find(existingData['linkto'])
-			atts += p.id == home_id.to_i ? " href='#{site_url()}'" : " href='#{site_url(p.structured_url)}'"
+			url = p.id == home_id.to_i ? site_url() : site_url(p.structured_url)
+			atts += " href='#{url}'"
 		elsif menuOption.data_type == 'article'
 			p = Post.find(existingData['linkto'])
-			atts += " href='#{site_url(article_url +  p.structured_url)}'"
+			url = site_url(article_url +  p.structured_url)
+			atts += " href='#{url}'"
 
 		elsif menuOption.data_type == 'category'
 			t = Term.find(existingData['linkto'])
-			atts += " href='#{site_url(article_url + '/' + category_url + t.structured_url)}'"
+			url = site_url(article_url + '/' + category_url + t.structured_url)
+			atts += " href='#{url}'"
 
 		elsif menuOption.data_type == 'tag'
 			t = Term.find(existingData['linkto'])
-			atts += " href='#{site_url(article_url + '/' + tag_url + t.structured_url)}'"
+			url = site_url(article_url + '/' + tag_url + t.structured_url)
+			atts += " href='#{url}'"
 
 		elsif menuOption.data_type == article_url && menuOption.option_id == 0
-			atts += " href='#{site_url(article_url)}'"
+			url = site_url(article_url)
+			atts += " href='#{url}'"
 
 		elsif menuOption.data_type == 'custom'
-			atts += " href='#{existingData['customlink']}'"
+			url = existingData['customlink']
+			atts += " href='#{url}'"
 		end
+
+		atts += " class='active'" if url == request.original_url
 
 		atts
 

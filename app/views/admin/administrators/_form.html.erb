@@ -20,21 +20,8 @@
                 <% end %>
               </center>
 
-              <% if @admin.cover_picture.blank? %>
-
-                <a class="btn btn-xs btn-primary pull-right add-profile-image" href="javascript:;"><span class="fa fa-picture-o"></span> <%= t("views.admin.generic.change_cover") %></a>
-                <a class="btn btn-xs btn-danger pull-right remove-profile-image hidden" href="javascript:;"><span class="fa fa-trash-o"></span> <%= t("views.admin.administrators.form.remove_cover") %></a>
-
-              <% else %>
-
-                <a class="btn btn-xs btn-primary pull-right add-profile-image hidden" href="javascript:;"><span class="fa fa-picture-o"></span> <%= t("views.admin.generic.change_cover") %></a>
-                <a class="btn btn-xs btn-danger pull-right remove-profile-image" href="javascript:;"><span class="fa fa-trash-o"></span> <%= t("views.admin.administrators.form.remove_cover") %></a>
-
-              <% end %>
-
-              <%= hidden_field_tag :has_cover_image, @admin.cover_picture.to_s  %>
-
-              <%= f.file_field :cover_picture, :class => "" %>
+              <%= render partial: 'admin/partials/cover_image', locals: { image: @admin.cover_picture } %>
+              <%= f.file_field :cover_picture, :class => "", :id => "cover_image" %>
             </div>
 
           <% else %>

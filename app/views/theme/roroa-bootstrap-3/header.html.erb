@@ -22,24 +22,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
                 <a class="navbar-brand" href="<%= site_url %>">Roroacms</a>
             </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <%= get_menu('header', false, 'nav navbar-nav navbar-right') %>
+                <%= obtain_menu('header', false, 'nav navbar-nav navbar-right') %>
             </div>
-            <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container -->
     </nav>
 
     <% if is_homepage? %>
 
 	    <div id="myCarousel" class="carousel slide">
 	       
-	        <!-- Wrapper for slides -->
 	        <div class="carousel-inner">
 	        	<% (1..3).each do |f, index| %>
 		            <div class="item <%= 'active' if f == 1 %>">
@@ -51,7 +46,6 @@
 	        	<% end %>
 	        </div>
 
-	        <!-- Controls -->
 	        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
 	            <span class="icon-prev"></span>
 	        </a>
@@ -127,6 +121,8 @@
           }
         </script>
     <% end %>
+
+    <%= abort obtain_children(95).inspect %>
 
 
    	<div class="section">

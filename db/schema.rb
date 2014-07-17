@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140715193601) do
+ActiveRecord::Schema.define(version: 20140717180731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 20140715193601) do
     t.datetime "post_date"
     t.text     "post_content"
     t.text     "post_title"
-    t.text     "post_image"
+    t.text     "cover_image"
     t.string   "post_status"
     t.string   "post_template"
     t.integer  "parent_id"
@@ -138,9 +138,9 @@ ActiveRecord::Schema.define(version: 20140715193601) do
     t.text     "structured_url"
     t.text     "description"
     t.integer  "parent"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.text     "cover_image"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
   end
 
 end

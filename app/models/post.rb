@@ -125,7 +125,7 @@ class Post < ActiveRecord::Base
   # will make sure that specific data is correctly formatted for the database
 
   def deal_with_abnormalaties
-    self.post_image = upload_images(post_image, post_type.to_s + '/' + id.to_s, 'posts') if post_image.class != String && post_image.class != NilClass
+    self.cover_image = upload_images(cover_image, post_type.to_s + '/' + id.to_s, 'posts') if cover_image.class != String && cover_image.class != NilClass
     # if the slug is empty it will take the title and create a slug
     self.post_slug = 
       if post_slug.blank?
@@ -184,7 +184,6 @@ class Post < ActiveRecord::Base
 
       post.post_status = 'Autosave'
       post.post_type = 'autosave'
-      self.ancestry = nil
 
 
       # save the post and its categories/tags
@@ -333,7 +332,7 @@ class Post < ActiveRecord::Base
   # If the has cover image has been removed this will be set to nothing and will update the cover image option agasint the admin
 
   def deal_with_cover has_cover
-    self.post_image = '' if defined?(has_cover) && has_cover.blank?
+    self.cover_image = '' if defined?(has_cover) && has_cover.blank?
   end
 
 end

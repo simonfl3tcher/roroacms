@@ -1,0 +1,13 @@
+<% if image.blank? %>
+
+<a class="btn btn-xs btn-primary pull-right add-cover-image" href="javascript:;"><span class="fa fa-picture-o"></span> <%= t("views.admin.generic.change_cover") %></a>
+<a class="btn btn-xs btn-danger pull-right remove-cover-image hidden" href="javascript:;"><span class="fa fa-trash-o"></span> <%= t("views.admin.administrators.form.remove_cover") %></a>
+
+<% else %>
+
+<a class="btn btn-xs btn-primary pull-right add-cover-image hidden" href="javascript:;"><span class="fa fa-picture-o"></span> <%= t("views.admin.generic.change_cover") %></a>
+<a class="btn btn-xs btn-danger pull-right remove-cover-image" href="javascript:;"><span class="fa fa-trash-o"></span> <%= t("views.admin.administrators.form.remove_cover") %></a>
+
+<% end %>
+
+<%= hidden_field_tag :has_cover_image, image.to_s  %>

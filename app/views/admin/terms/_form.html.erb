@@ -3,20 +3,18 @@
     <% if !@category.cover_image.blank? %>
 
       <div class="well well-background term<%= params[:action] == 'edit' ? '-large' : '' %>" style="background-image: url('<%= @category.cover_image %>');">
-          <a style="margin:10px;" class="btn btn-xs btn-primary pull-right add-term-image hidden" href="javascript:;"><span class="fa fa-picture-o"></span> <%= t("views.admin.generic.change_cover") %></a>
-          <a class="btn btn-xs btn-danger pull-right remove-profile-image" href="javascript:;"><span class="fa fa-trash-o"></span> <%= t("views.admin.administrators.form.remove_cover") %></a>
+          <%= render partial: 'admin/partials/cover_image', locals: { image: @category.cover_image } %>
       </div>
 
     <% else %>
 
       <div class="well well-background term">
-        <a class="btn btn-xs btn-primary pull-right add-term-image" href="javascript:;"><span class="fa fa-picture-o"></span> <%= t("views.admin.generic.change_cover") %></a>
-        <a class="btn btn-xs btn-danger pull-right remove-profile-image hidden" href="javascript:;"><span class="fa fa-trash-o"></span> <%= t("views.admin.administrators.form.remove_cover") %></a>
+        <%= render partial: 'admin/partials/cover_image', locals: { image: @category.cover_image } %>
       </div>
 
     <% end %>
+    <%= f.file_field :cover_image, :class => "", :id => "cover_image" %>
     <%= hidden_field_tag :has_post_image, @category.cover_image.to_s  %>
-    <%= f.file_field :cover_image %>
 
     <%= hidden_field_tag :type_taxonomy, @type %>
 
