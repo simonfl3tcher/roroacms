@@ -32,6 +32,8 @@ class Term < ActiveRecord::Base
   end
 
   # returns a redirect url depending on the type of taxonomy that you have edited
+  # Params:
+  # +params+:: the parameters
 
   def self.get_redirect_url(params = {})
 
@@ -44,6 +46,8 @@ class Term < ActiveRecord::Base
   end
 
   # returns a taxonomy type depending on the parameters for a message
+  # Params:
+  # +params+:: the parameters
 
   def self.get_type_of_term(params = {})
 
@@ -79,6 +83,10 @@ class Term < ActiveRecord::Base
   end
 
   # update the url in sub pages if the url changes
+  # Params:
+  # +term_id+:: ID of the term that you want to use as a reference
+  # +old_url+:: the url that you want to replace
+  # +initial+:: wether this is the top level term or a sub term of the given ID (mostly used to loop through the function with in the function)
 
   def update_slug_for_subcategories(term_id, old_url = nil, initial = true)
 
@@ -121,6 +129,8 @@ class Term < ActiveRecord::Base
 
   # is the bootstrap for the bulk update function. It takes in the call
   # and decides what function to call in order to get the correct output
+  # Params:
+  # +params+:: the parameters
 
   def self.bulk_update(params = {})
 
@@ -141,11 +151,17 @@ class Term < ActiveRecord::Base
 
   end
 
+  # return all of the terms
+  # Params:
+  # +type+:: the term type you want to return
+
   def self.term_cats(type = 'category')
     Term.includes(:term_anatomy).where(term_anatomies: {taxonomy: type}).order('name asc')
   end
 
   # If the has cover image has been removed this will be set to nothing and will update the cover image option agasint the admin
+  # Params:
+  # +has_cover+:: the has_cover parameter (string)
 
   def deal_with_cover(has_cover)
     self.cover_image = '' if defined?(has_cover) && has_cover.blank?

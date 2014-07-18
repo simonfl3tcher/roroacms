@@ -22,7 +22,9 @@ class Comment < ActiveRecord::Base
 
   # The bootstrap for the bulk update function. It takes in the call
   # and decides what function to call in order to get the correct output
-
+  # Params:
+  # +params+:: all parameters
+  
   def self.bulk_update(params)
 
     action = params[:to_do]

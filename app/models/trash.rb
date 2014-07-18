@@ -2,6 +2,8 @@ class Trash < ActiveRecord::Base
 
   # is the bootstrap for the bulk update function. It takes in the call
   # and decides what function to call in order to get the correct output
+  # Params:
+  # +params+:: the parameters
 
   def self.deal_with_form(params = {})
 
@@ -46,13 +48,17 @@ class Trash < ActiveRecord::Base
   private
 
   # update all of the given records to be reinstated
+  # Params:
+  # +posts+:: array of posts that you want to reinstate
 
   def self.reinstate_posts(posts)
     Post.where(:id => posts).update_all(:disabled => "N")
   end
 
   # delete all of the given records for good
-
+  # Params:
+  # +posts+:: array of posts that you want to reinstate
+  
   def self.delete_posts(posts)
     Post.where(:id => posts).destroy_all
   end

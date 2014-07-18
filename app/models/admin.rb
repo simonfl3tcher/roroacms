@@ -16,7 +16,6 @@ class Admin < ActiveRecord::Base
   validates :password, length: { in: 6..128 }, on: :create
   validates :password, length: { in: 6..128 }, on: :update, allow_blank: true
 
-
   ## callbacks ##
 
   before_create :deal_with_abnormalaties
@@ -28,26 +27,9 @@ class Admin < ActiveRecord::Base
 
   ## methods ##
 
-  # set the session data for the admin to allow/restrict the necessary areas
-
-  def self.set_sessions(session, admin)
-    session[:admin_id] = admin.id
-    session[:username] = admin.username
-  end
-
-  def self.set_sessions_manually(session, i, name)
-    session[:admin_id] = i
-    session[:username] = name
-  end
-
-
-  # destroy the session data - logging them out of the admin panel
-
-  def self.destroy_session(session)
-    session[:admin_id] = nil
-    session[:username] = nil
-  end
-
+  # a devise check to check against username as well as email address
+  # Params:
+  # +warden_conditions+:: devise parameters
 
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
@@ -58,15 +40,18 @@ class Admin < ActiveRecord::Base
     end
   end
 
-
-  def self.find_record(login)
-    where(["username = :value OR email = :value", { value: login }]).first
-  end
+  # sets the profile image to image being uploaded
+  # Params:
+  # +admin+:: user ID
+  # +image+:: image path
+  # +type+:: the column name you want to save the image against (almost always set to avatar)
 
   def self.deal_with_profile_images(admin, image, type)
     admin[type.to_sym] = image
     admin.save
   end
+
+  # returns the user group options - these can be set and created in the administration panel
 
   def self.access_levels
 
@@ -87,7 +72,9 @@ class Admin < ActiveRecord::Base
     self.avatar = 'https://s3.amazonaws.com/roroa/default-user-icon-profile.png'
   end
 
-  # If the has cover image has been removed this will be set to nothing and will update the cover image option agasint the admin
+  # checks if the cover image is blank and sets the cover image to blank if this is the case
+  # Params:
+  # +params+:: all parameters
 
   def deal_with_cover(params)
     self.cover_picture = '' if defined?(params[:has_cover_image]) && params[:has_cover_image].blank?

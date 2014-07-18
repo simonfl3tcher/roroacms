@@ -3,6 +3,8 @@ class Setting < ActiveRecord::Base
   after_save :reload_settings
 
   # get a certain settings value
+  # Params:
+  # +setting_name+:: the setting name that you want to return
 
   def self.get(setting_name)
     @reference ||= filter_settings
@@ -38,6 +40,10 @@ class Setting < ActiveRecord::Base
     h
   end
 
+  # manually validates the settings area as it is not stored in the tradiaitonal rails way
+  # Params:
+  # +params+:: the parameters
+
   def self.manual_validation(params)
 
     validate_arr = [:articles_slug, :category_slug, :tag_slug, :smtp_username, :smtp_password, :smtp_authentication]
@@ -49,6 +55,10 @@ class Setting < ActiveRecord::Base
     end
     errors
   end
+
+  # save the settings to the settings table
+  # Params:
+  # +params+:: the parameters
 
   def self.save(params)
 

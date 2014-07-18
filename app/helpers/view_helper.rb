@@ -4,19 +4,6 @@ module ViewHelper
   # will use in order to display the contents of either the content
   # or format other data
 
-  # Returns generic notifications if the flash data exists
-
-  def get_notifications
-    if flash[:notice]
-      html = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert'>x</button><strong>" + I18n.t("helpers.view_helper.generic.flash.success") + "!</strong> #{flash[:notice]}</div>"
-      render :inline => html.html_safe
-    elsif flash[:error]
-      html = "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>x</button><strong>" + I18n.t("helpers.view_helper.generic.flash.error") + "!</strong> #{flash[:error]}</div>"
-      render :inline => html.html_safe
-    end
-  end
-
-
   # Returns a nested list of the comments
   # Params:
   # +post_id+:: id of the post that you want to get comments for

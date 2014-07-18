@@ -122,7 +122,7 @@ module AdminRoroaHelper
 
   def theme_exists
 
-    if !Dir.exists?("app/views/theme/#{Setting.get('theme_folder'}/")
+    if !Dir.exists?("app/views/theme/#{Setting.get('theme_folder')}/")
       html = "<div class='alert alert-danger'><strong>" + I18n.t("helpers.admin_roroa_helper.theme_exists.warning") + "!</strong>" + I18n.t("helpers.admin_roroa_helper.theme_exists.message") + "!</div>"
       render :inline => html.html_safe
     end

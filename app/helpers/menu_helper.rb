@@ -26,6 +26,12 @@ module MenuHelper
     (m.rgt - m.lft - 1)/2
   end
 
+  # returns the menu in html format
+  # Params:
+  # +menu+:: the key of the menu that you want to return
+  # +sub+:: boolean as to wether the menu is a sub menu or not
+  # +c+:: class you want to give the UL
+
 	def obtain_menu(menu = nil,  sub = false, c = '')
 		if menu.is_a? Integer
 			data =
@@ -79,6 +85,11 @@ module MenuHelper
 
 	end
 
+	# returns the menu in a raw json format
+  # Params:
+  # +menu+:: the key of the menu that you want to return
+  # +sub+:: boolean as to wether the menu is a sub menu or not
+
 	def raw_menu_data(menu, sub = false)
 		if menu.is_a?(Integer)
 			data =
@@ -100,8 +111,6 @@ module MenuHelper
 		data
 
 	end
-
-	# HACK: Change into a case switch statement
 
 	# create the a links with the given attributes
 	# Params:

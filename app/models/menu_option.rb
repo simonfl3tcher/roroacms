@@ -8,6 +8,8 @@ class MenuOption < ActiveRecord::Base
 
   # saves the menu on the fly via an ajax call. This is a seperate function because
   # the ajax call sends through a json object. It decodes this, updates the values and saves the menu
+  # Params:
+  # +p+:: json object sent through from the menu page
 
   def self.save_menu_on_fly(p)
 

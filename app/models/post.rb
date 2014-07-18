@@ -46,6 +46,9 @@ class Post < ActiveRecord::Base
 
   # get all the posts/pages in the system - however if there is a search parameter
   # search the necessary fields for the given value
+  # Params:
+  # +params+:: all parameters
+  # +type+:: define a post type
 
   def self.setup_and_search_posts(params, type)
     type = type == 'page' ? 'page' : 'post'
@@ -55,6 +58,9 @@ class Post < ActiveRecord::Base
   end
 
   # get all the tags/categories for the system
+  # Params:
+  # +type+:: define a term type
+  # +id+:: ID of the term you want to retur
 
   def self.get_terms(type = 'category', id = nil)
     sql = Term.where(term_anatomies: {taxonomy: type})
@@ -65,6 +71,11 @@ class Post < ActiveRecord::Base
   end
 
   # gets called when a post gets saved to add categories/tags against the post
+  # Params:
+  # +post+:: post ID
+  # +cats+:: all the category params
+  # +tags+:: all the tags params
+  # +delete+:: boolean as to wether to remove the current relations to tag and categories
 
   def self.deal_with_categories(post, cats, tags, delete = false)
 
@@ -115,6 +126,8 @@ class Post < ActiveRecord::Base
   end
 
   # disables the post essentially putting it into the trash area
+  # Params:
+  # +post_id+:: post ID
 
   def self.disable_post(post_id)
     post = Post.find(post_id)
@@ -148,6 +161,8 @@ class Post < ActiveRecord::Base
   end
 
   # filter/format the additional fields and add the data to the post_additional_data field of the record.
+  # Params:
+  # +data+:: array of additional fields
 
   def additional_data(data)
 
@@ -161,6 +176,9 @@ class Post < ActiveRecord::Base
   end
 
   # creates a revision record of the post
+  # Params:
+  # +params+:: the parameters
+  # +post+:: the post that you want to create an autosave for
 
   def self.do_autosave(params, post)
 
@@ -242,7 +260,8 @@ class Post < ActiveRecord::Base
 
 
   # remove the unwanted keys from the hash to be able to successfully compare the hashes
-
+  # Params:
+  # +obj+:: the object to remove the keys from
 
   def self.remove_uncessary(obj)
 
@@ -265,6 +284,8 @@ class Post < ActiveRecord::Base
   end
 
   # restore the given post back to the revision record data
+  # Params:
+  # +post+:: the post autosave record that you want to restore the current post to 
 
   def self.restore(post)
 
@@ -284,6 +305,10 @@ class Post < ActiveRecord::Base
 
   # is the bootstrap for the bulk update function. It takes in the call
   # and decides what function to call in order to get the correct output
+  # Params:
+  # +params+:: the parameters
+  # +type+:: wether it is pages or posts you want to use
+
 
   def self.bulk_update(params, type)
 
@@ -330,6 +355,8 @@ class Post < ActiveRecord::Base
   end
 
   # If the has cover image has been removed this will be set to nothing and will update the cover image option agasint the admin
+  # Params:
+  # +has_cover+:: the has_cover parameter (string)
 
   def deal_with_cover(has_cover)
     self.cover_image = '' if defined?(has_cover) && has_cover.blank?

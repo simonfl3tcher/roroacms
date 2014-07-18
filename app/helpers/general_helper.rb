@@ -71,4 +71,18 @@ module GeneralHelper
     str.split(' ').select {|w| w.capitalize! || w }.join(' ')
   end
 
+  # set the session data for the admin to allow/restrict the necessary areas
+
+  def set_sessions(session, admin)
+    session[:admin_id] = admin.id
+    session[:username] = admin.username
+  end
+
+  # destroy the session data - logging them out of the admin panel
+
+  def destroy_session(session)
+    session[:admin_id] = nil
+    session[:username] = nil
+  end
+
 end
