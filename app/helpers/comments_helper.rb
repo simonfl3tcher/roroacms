@@ -2,7 +2,7 @@ module CommentsHelper
 
   # returns the html for the error display for the comments form
   # Params:
-  # +content+:: is the Comment db object with the errors
+  # +content+:: is the Comment ActiveRecord object with the errors
 
   def comments_error_display(content = nil)
 

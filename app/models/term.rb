@@ -45,7 +45,7 @@ class Term < ActiveRecord::Base
 
   # returns a taxonomy type depending on the parameters for a message
 
-  def self.get_type_of_term(params)
+  def self.get_type_of_term(params = {})
 
     taxonomy = params[:type_taxonomy]
 
@@ -122,7 +122,7 @@ class Term < ActiveRecord::Base
   # is the bootstrap for the bulk update function. It takes in the call
   # and decides what function to call in order to get the correct output
 
-  def self.bulk_update(params)
+  def self.bulk_update(params = {})
 
     if !params[:to_do].blank?
 
@@ -141,13 +141,13 @@ class Term < ActiveRecord::Base
 
   end
 
-  def self.term_cats type = 'category'
+  def self.term_cats(type = 'category')
     Term.includes(:term_anatomy).where(term_anatomies: {taxonomy: type}).order('name asc')
   end
 
   # If the has cover image has been removed this will be set to nothing and will update the cover image option agasint the admin
 
-  def deal_with_cover has_cover
+  def deal_with_cover(has_cover)
     self.cover_image = '' if defined?(has_cover) && has_cover.blank?
   end
 

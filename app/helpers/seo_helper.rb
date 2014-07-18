@@ -195,7 +195,7 @@ module SeoHelper
   end
 
 
-  # This includes the additional headers that you can set within the admin panel
+  # returns the additional headers that are set within the admin panel
 
   def get_additional_headers
     Setting.get('seo_additional_headers')
@@ -226,7 +226,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
   end
 
 
-  # if you set to use canonical urls in the admin panel it will return the html to allow this
+  # return the canonical meta tag if this is set to true in the admin panel
 
   def canonical_urls
     headtags = ''

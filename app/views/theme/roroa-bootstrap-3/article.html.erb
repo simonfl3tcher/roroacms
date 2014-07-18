@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12 col-md-12">
-		<h1 class="page-header"><%= display_title %></h1>
+		<h1 class="page-header"><%= obtain_the_title %></h1>
 	</div>
 </div>
 
@@ -14,20 +14,20 @@
 	<div class="col-md-8">
 
 		<hr>
-        <p><i class="fa fa-clock-o"></i> Posted on <%= display_date %> by <%= obtain_user_field('first_name') + ' ' + obtain_user_field('lsat_name') %></p>
+        <p><i class="fa fa-clock-o"></i> Posted on <%= obtain_the_date %> by <%= obtain_user_field('first_name') + ' ' + obtain_user_field('last_name') %></p>
         <hr>
 
-		<%= display_content %>
+		<%= obtain_the_content %>
 
 		<div class="well">
-			<strong>Tags:</strong>&nbsp;<%= tag_cloud %>
+			<strong>Tags:</strong>&nbsp;<%= obtain_tag_cloud('string') %>
 		</div>
 
 		<hr>
         <p><i class="fa fa-user"></i> <%= obtain_user_field('first_name') + ' ' + obtain_user_field('last_name') %></p>
         <p><%= obtain_user_field('description') %></p>
         <hr>
-        <%= display_comments_form %>
+        <%= obtain_comments_form %>
 
 	</div>
 

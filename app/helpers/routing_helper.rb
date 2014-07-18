@@ -90,6 +90,8 @@ module RoutingHelper
 
   end
 
+  # returns that type of page that you are currenly viewing
+
   def get_type_by_url
 
     return 'P' if params[:slug].blank?
@@ -301,7 +303,8 @@ module RoutingHelper
 
   end
 
-  # does the template file actually exist in the theme?
+  # returns a boolean as to wether the template file actually exist in the theme?
+
   def template_exists?(path)
     File.exists?("app/views/theme/#{current_theme}/" + path + '.' + get_theme_ext)
   end

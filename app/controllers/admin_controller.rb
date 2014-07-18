@@ -40,7 +40,7 @@ class AdminController < ApplicationController
   # Params:
   # +str+:: title
 
-  def set_title str = ''
+  def set_title(str = '')
     @title = str
   end
 

@@ -8,6 +8,7 @@ class PagesController < ApplicationController
 
   # Include the necessary helpers to load the file, RoutingHelper does the routing of the url to the correct data
   include ViewHelper
+  include NewViewHelper
   include RoutingHelper
   include GeneralHelper
 

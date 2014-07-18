@@ -331,7 +331,7 @@ class Post < ActiveRecord::Base
 
   # If the has cover image has been removed this will be set to nothing and will update the cover image option agasint the admin
 
-  def deal_with_cover has_cover
+  def deal_with_cover(has_cover)
     self.cover_image = '' if defined?(has_cover) && has_cover.blank?
   end
 

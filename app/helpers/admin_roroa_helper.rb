@@ -118,29 +118,11 @@ module AdminRoroaHelper
 
   end
 
-
-  # returns the site url + an extention if you give it one
-  # Params:
-  # +str+:: extension to add on to the end of the site url
-
-  def site_url(str = nil)
-    url = Setting.get('site_url')
-
-    str = str[1..-1] if !str.blank? && str[0,1] == '/'
-
-    url = url + '/' if !url.blank? && url[-1, 1] != '/'
-
-    return "#{url}#{str}"
-  end
-
-
   # checks if the current theme being used actually exists. If not it will return an error message to the user
 
   def theme_exists
 
-    current_theme = Setting.get('theme_folder')
-
-    if !Dir.exists?("app/views/theme/#{current_theme}/")
+    if !Dir.exists?("app/views/theme/#{Setting.get('theme_folder'}/")
       html = "<div class='alert alert-danger'><strong>" + I18n.t("helpers.admin_roroa_helper.theme_exists.warning") + "!</strong>" + I18n.t("helpers.admin_roroa_helper.theme_exists.message") + "!</div>"
       render :inline => html.html_safe
     end
@@ -149,7 +131,7 @@ module AdminRoroaHelper
 
   # get the last (#{limit}) comments
   # Params:
-  # +limit+:: count of how many you would like to get
+  # +limit+:: count of how many comments you would like to return
 
   def latest_comments(limit = 5)
     if !limit.blank?
@@ -211,145 +193,145 @@ module AdminRoroaHelper
 
   end
 
-    # lists all the controllers in the admin area and returns a formatted hash. This is used for the user group administration
-    # Params:
-    # +dir+:: directory that you want to list the controllers for
+  # lists all the controllers in the admin area and returns a formatted hash. This is used for the user group administration
+  # Params:
+  # +dir+:: the directory that you want to list the controllers for
 
-    def list_controllers(dir = 'admin')
-      hash = {}
-      controllers = list_controllers_raw(dir)
+  def list_controllers(dir = 'admin')
+    hash = {}
+    controllers = list_controllers_raw(dir)
 
-      controllers.each do |f|
+    controllers.each do |f|
 
-        key = f.sub('app/controllers/admin/', '')
-        value = key.sub('_controller.rb', '')
+      key = f.sub('app/controllers/admin/', '')
+      value = key.sub('_controller.rb', '')
 
-        next if value == 'dashboard'
+      next if value == 'dashboard'
 
-        v =
-          case value
-          when 'settings/general'
-            'Settings'
-          when 'terms'
-            'Categories & Tags'
-          when 'posts'
-            'Articles'
-          when 'administrators'
-            'Users'
-          else
-            value
-          end
-
-        hash[ucwords(v)] = key.sub('_controller.rb', '')
-
-      end
-
-      hash.sort
-
-    end
-
-    # get user group data and return the value for the given key
-    # Params:
-    # +key+:: user group name that is set in the admin panel
-
-    def get_user_group(key)
-
-      if !Setting.get('user_groups').blank?
-
-        arr = ActiveSupport::JSON.decode(Setting.get('user_groups').gsub("\\", ''))
-
-        if arr.has_key? key
-          arr[key]
+      v =
+        case value
+        when 'settings/general'
+          'Settings'
+        when 'terms'
+          'Categories & Tags'
+        when 'posts'
+          'Articles'
+        when 'administrators'
+          'Users'
         else
-          Array.new
+          value
         end
 
-      end
+      hash[ucwords(v)] = key.sub('_controller.rb', '')
+
     end
 
-    # is the user allowed access to the given controller - this function runs in the background.
-    # Params:
-    # +key+:: controller name
+    hash.sort
 
-    def check_controller_against_user(key)
-      get_user_group(current_user.access_level).include?(key)
-    end
+  end
 
-    # checks to see if the given path is the current page/link
-    # Params:
-    # +path+:: rake path of the link you want to check
+  # get user group data and return the value for the given key
+  # Params:
+  # +key+:: user group name that is set in the admin panel
 
-    def cp(path)
-      "active" if current_page?(path)
-    end
+  def get_user_group(key)
 
-    # .pluralize() but without the preceeding number
-    # Params:
-    # +count+:: how many
-    # +noun+:: the word that you want to pluralize
-    # +text+:: the text you want to append to the returning word
+    if !Setting.get('user_groups').blank?
 
-    def pluralize_without_count(count, noun, text = nil)
-      if count != 0
-        count == 1 ? "#{noun}#{text}" : "#{noun.pluralize}#{text}"
-      end
-    end
+      arr = ActiveSupport::JSON.decode(Setting.get('user_groups').gsub("\\", ''))
 
-    # displays the additional data on the page form
-    # Params:
-    # +data+:: data to loop through and display
-    # +key_exists+:: this is used to define if the data is a hash or an array if it is an array this should be set to false
-    # +key+:: if it is an array then it needs to use its parent key, this is provided via this vairable
-
-    def addition_data_loop(data, keys_exist = true, key = nil)
-      string = ''
-      if keys_exist
-        data.each do |key, value|
-          string +=
-            if value.is_a?(Array)
-              addition_data_loop(value, false, key)
-            else
-              (render :partial => 'admin/partials/post_additional_data_view', :locals => { key: key, value: value })
-            end
-        end
+      if arr.has_key? key
+        arr[key]
       else
-        data.each do |value|
-          string += (render :partial => 'admin/partials/post_additional_data_view', :locals => { key: key, value: value })
-        end
+        Array.new
       end
 
-      string.html_safe
-
     end
+  end
 
-    # decides the bootstrap column length depending on the records
-    # Params:
-    # +posts+:: first set of records
-    # +pages+:: second set of records
+  # is the user allowed access to the given controller - this function runs in the background.
+  # Params:
+  # +key+:: controller name
 
-    def respond_to_trash(posts, pages)
-      !posts.blank? && pages.blank? ? '6' : '12'
+  def check_controller_against_user(key)
+    get_user_group(current_user.access_level).include?(key)
+  end
+
+  # checks to see if the given path is the current page/link
+  # Params:
+  # +path+:: rake path of the link you want to check
+
+  def cp(path)
+    "active" if current_page?(path)
+  end
+
+  # .pluralize() but without the preceeding number
+  # Params:
+  # +count+:: how many
+  # +noun+:: the word that you want to pluralize
+  # +text+:: the text you want to append to the returning word
+
+  def pluralize_without_count(count, noun, text = nil)
+    if count != 0
+      count == 1 ? "#{noun}#{text}" : "#{noun.pluralize}#{text}"
     end
+  end
 
-    # clears the admin view cache.
-    # This is used when logging out or changing user profile or settings
+  # displays the additional data on the page form
+  # Params:
+  # +data+:: data to loop through and display
+  # +key_exists+:: this is used to define if the data is a hash or an array if it is an array this should be set to false
+  # +key+:: if it is an array then it needs to use its parent key, this is provided via this vairable
 
-    def clear_cache
-      expire_fragment('admin_header')
-      expire_fragment('admin_quick_links')
-      expire_fragment('admin_submit_bar_toggle')
-    end
-
-    # Returns generic notifications if the flash data exists
-
-    def get_notifications
-      if flash[:notice]
-        html = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert'>x</button><strong>" + I18n.t("helpers.view_helper.generic.flash.success") + "!</strong> #{flash[:notice]}</div>"
-        render :inline => html.html_safe
-      elsif flash[:error]
-        html = "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>x</button><strong>" + I18n.t("helpers.view_helper.generic.flash.error") + "!</strong> #{flash[:error]}</div>"
-        render :inline => html.html_safe
+  def addition_data_loop(data, keys_exist = true, key = nil)
+    string = ''
+    if keys_exist
+      data.each do |key, value|
+        string +=
+          if value.is_a?(Array)
+            addition_data_loop(value, false, key)
+          else
+            (render :partial => 'admin/partials/post_additional_data_view', :locals => { key: key, value: value })
+          end
+      end
+    else
+      data.each do |value|
+        string += (render :partial => 'admin/partials/post_additional_data_view', :locals => { key: key, value: value })
       end
     end
+
+    string.html_safe
+
+  end
+
+  # decides the bootstrap column length depending on the records
+  # Params:
+  # +posts+:: first set of records
+  # +pages+:: second set of records
+
+  def respond_to_trash(posts, pages)
+    !posts.blank? && pages.blank? ? '6' : '12'
+  end
+
+  # clears the admin view cache.
+  # This is used when logging out or changing user profile or settings
+
+  def clear_cache
+    expire_fragment('admin_header')
+    expire_fragment('admin_quick_links')
+    expire_fragment('admin_submit_bar_toggle')
+  end
+
+  # Returns generic notifications if the flash data exists
+
+  def get_notifications
+    if flash[:notice]
+      html = "<div class='alert alert-success'><button type='button' class='close' data-dismiss='alert'>x</button><strong>" + I18n.t("helpers.view_helper.generic.flash.success") + "!</strong> #{flash[:notice]}</div>"
+      render :inline => html.html_safe
+    elsif flash[:error]
+      html = "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert'>x</button><strong>" + I18n.t("helpers.view_helper.generic.flash.error") + "!</strong> #{flash[:error]}</div>"
+      render :inline => html.html_safe
+    end
+  end
 
   end

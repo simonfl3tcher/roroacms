@@ -3,7 +3,7 @@ class Trash < ActiveRecord::Base
   # is the bootstrap for the bulk update function. It takes in the call
   # and decides what function to call in order to get the correct output
 
-  def self.deal_with_form params
+  def self.deal_with_form(params = {})
 
     case params[:to_do].gsub(' ', '_').downcase
 

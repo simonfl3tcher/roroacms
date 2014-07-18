@@ -162,10 +162,7 @@ module MenuHelper
 
 	def get_target(target) 
 		ret = ''
-		if target == 'nt'
-			ret = 'target="_blank"'
-		end
-
+		ret = 'target="_blank"' if target == 'nt'
 		ret
 	end
 

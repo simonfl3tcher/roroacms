@@ -48,9 +48,6 @@ class Admin < ActiveRecord::Base
     session[:username] = nil
   end
 
-  # def self.find_for_database_authentication(conditions={})
-  #   self.where("username = ?", conditions[:email]).limit(1).first || self.where("email = ?", conditions[:email]).limit(1).first
-  # end
 
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
@@ -92,7 +89,7 @@ class Admin < ActiveRecord::Base
 
   # If the has cover image has been removed this will be set to nothing and will update the cover image option agasint the admin
 
-  def deal_with_cover params
+  def deal_with_cover(params)
     self.cover_picture = '' if defined?(params[:has_cover_image]) && params[:has_cover_image].blank?
   end
 

@@ -1,7 +1,7 @@
         <div class="row">
     		<div class="col-lg-12 col-md-12">
-    			<% if !get_term_type.blank? %>
-					<h1 class="page-header"><%= get_term_type %> - <%= get_term_name %></h1>
+    			<% if !obtain_term_type.blank? %>
+					<h1 class="page-header"><%= obtain_term_type %> - <%= obtain_term_title %></h1>
 				<% else %>
 					<h1 class="page-header">News</h1>
 				<% end %>
@@ -22,21 +22,21 @@
 
 		            
 
-		            <% if !get_category_data.blank?
+		            <% if !obtain_category_data.blank?
 
-					 	get_category_data.each do |p| %>
+					 	obtain_category_data.each do |p| %>
 
 					 		<div class="blogoption">
 						 		<div class="col-md-5">
-					                <a href="<%= get_the_permalink p %>">
+					                <a href="<%= obtain_the_permalink(p) %>">
 					                    <img src="http://placehold.it/600x325" class="img-responsive">
 					                </a>
 					            </div>
 					            <div class="col-md-6">
-					                <strong><a href="<%= get_the_permalink p %>"><%= get_the_title p %></a></strong>
-					                <p><%= get_the_date p %></p>
-					                <p><%= get_the_excerpt p, 100 %></p>
-					                <a class="btn btn-primary" href="<%= get_the_permalink p %>">Read More <i class="fa fa-angle-right"></i></a>
+					                <strong><a href="<%= obtain_the_permalink(p) %>"><%= obtain_the_title(p) %></a></strong>
+					                <p><%= obtain_the_date(p) %></p>
+					                <p><%= obtain_the_excerpt(p, 100) %></p>
+					                <a class="btn btn-primary" href="<%= obtain_the_permalink(p) %>">Read More <i class="fa fa-angle-right"></i></a>
 					            </div>
 					            <div class="clearfix"></div>
 					        </div>
@@ -52,7 +52,7 @@
 					<% end %>
 
 					<div class="col-md-12">
-						<%= paginate get_category_data %>
+						<%= paginate obtain_category_data %>
 					</div>
 
 		        </div>

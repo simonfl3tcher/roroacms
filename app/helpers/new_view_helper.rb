@@ -1,6 +1,21 @@
 module NewViewHelper
 
+  # Returns the url of site appended with the given string
+  # Params:
+  # +str+:: the string to append onto the end of the site url
+
+  def site_url(str = nil)
+    url = Setting.get('site_url')
+    str = str[1..-1] if !str.blank? && str[0,1] == '/'
+    url = url + '/' if !url.blank? && url[-1, 1] != '/'
+    "#{url}#{str}"
+  end
+
   # GENERIC Functions #
+
+  # INTERNAL FUNC - returns a hash of the posts but removes the autosave records 
+  # Params:
+  # +hash+:: a hash of post ActiveRecord::records
 
   def filter_results(hash)
     return [] if hash.blank?
@@ -74,7 +89,7 @@ module NewViewHelper
   # +check+:: ID, post_slug, or post_title - if this is nil it will use the @content variable (the current page)
   # +render+:: wether to render the link straight on to the page or return the link in a string
 
-  def obtain_permalink(check = nil, render_inline = true)
+  def obtain_the_permalink(check = nil, render_inline = true)
     site_url = Setting.get('site_url')
     post = obtain_record(check)
 
@@ -103,11 +118,9 @@ module NewViewHelper
   # +length+:: length of the string in characters
   # +omission+:: something to represent the omission of the content
 
-  def obtain_excerpt(check = nil, length = 250, omission = '...')
-  	
+  def obtain_the_excerpt(check = nil, length = 250, omission = '...')
   	post = obtain_record(check)
   	render :inline => truncate(post.post_content.to_s.gsub(/<[^>]*>/ui,'').html_safe, :omission => omission, :length => length) if !post.blank?
-  
   end
 
   # returns a boolean as to wether the post has cover image
@@ -184,7 +197,7 @@ module NewViewHelper
   # Params:
   # +check+:: ID, slug, or name of the category - if this is nil it will return the current category you are in
 
-  def obtain_category_title(check = nil)
+  def obtain_category_name(check = nil)
     segments = []
     if check.blank?
       return nil if  params[:slug].blank?
@@ -242,11 +255,43 @@ module NewViewHelper
   	!Post.includes(:terms => :term_anatomy).where(id: post.id, terms: { id: categoryid }, term_anatomies: { taxonomy: 'category' }).blank?
   end
 
-   def obtain_category_cover_image(check = nil)
+  def obtain_category_cover_image(check = nil)
     cat = obtain_term_check(check, nil, 'category')
     return !cat.blank? ? cat.cover_image : ''
   end
 
+  # Returns a list of the categories
+  # Params:
+  # +sub_only+:: show only the sub categories of the current category
+
+  def obtain_category_list(sub_only = false)
+
+    segments = params[:slug].split('/')
+    category_url = Setting.get('category_slug')
+    # variables and data
+
+    # check to see if we are on the category term type, that we just want the sub cateogries and the segments actually exist
+    if segments[1] == category_url && sub_only && !segments[2].blank?
+
+      # get the current category
+      parent_term = Term.where(term_anatomies: {taxonomy: 'category'}, :structured_url => "/" +  segments.drop(2).join('/')).includes(:term_anatomy).first
+
+      terms =
+        if !parent_term.blank?
+          # get all the records with the current category as its parent
+          Term.where(:parent => parent_term.id)
+        else
+          []
+        end
+
+    else
+      # get all the categories
+      terms = Term.where(term_anatomies: {taxonomy: 'category'}, :parent => nil).includes(:term_anatomy)
+    end
+
+    li_loop_for_terms(terms, category_url)
+
+  end
 
 
   # TAG Functions #
@@ -289,7 +334,7 @@ module NewViewHelper
   # Params:
   # +check+:: ID, slug, or name of the tag - if this is nil it will return the current tag you are on
 
-  def obtain_tag_title(check = nil)
+  def obtain_tag_name(check = nil)
     segments = []
   	if check.blank?
       return nil if  params[:slug].blank?
@@ -336,9 +381,64 @@ module NewViewHelper
 
   end
 
+  # returns the cover image of the given tag
+  # Params:
+  # +check+:: ID, slug, or name - if this is nil it will slug to work out the tag the system is currently viewing
+
   def obtain_tag_cover_image(check = nil)
     tag = obtain_term_check(check, nil, 'tag')
     return !tag.blank? ? tag.cover_image : ''
+  end
+
+  # returns the array of records to display
+
+  def obtain_category_data
+    @content
+  end
+
+  # returns either a list or a tag cloud of the tags - this shows ALL of the tags
+  # Params:
+  # +type+:: string or list style
+  # +sub_only+:: show only the sub tags of the current category
+
+  def obtain_tag_cloud(type, sub_only = false)
+
+    article_url = Setting.get('articles_slug')
+    tag_url = Setting.get('tag_slug')
+    segments = params[:slug].split('/')
+
+    if type == 'string'
+
+      terms = @content.terms.where(term_anatomies: {taxonomy: 'tag'}).includes(:term_anatomy)
+      return terms.all.map do |u|
+        url = article_url + '/' + tag_url + u.structured_url
+        "<a href='#{site_url(url)}'>" + u.name + "</a>"
+      end.join(', ').html_safe
+
+    elsif type == 'list'
+
+      # check to see if we are on the tag term type, that we just want the sub tags and the segments actually exist
+      if segments[1] == tag_url && sub_only && !segments[2].blank?
+
+        # get the current tag record
+        parent_term = Term.where(term_anatomies: {taxonomy: 'tag'}, :structured_url => "/" +  segments.drop(2).join('/')).includes(:term_anatomy).first
+
+        if !parent_term.blank?
+          # get all the records with the current tag as its parent
+          terms = Term.where(:parent => parent_term.id)
+        else
+          terms = []
+        end
+
+      else
+        # get all the tags
+        terms = Term.where(term_anatomies: {taxonomy: 'tag'}, :parent => nil).includes(:term_anatomy)
+      end
+      # if you want a list style
+      li_loop_for_terms(terms, tag_url)
+
+    end
+
   end
 
 
@@ -399,8 +499,74 @@ module NewViewHelper
 
   # returns all the archive records for the archive you are currently on 
 
-  def obtain_archives
+  def obtain_archive_data
     @content
+  end
+
+  # Returns a list of the archives
+  # Params:
+  # +type+:: has to be either Y (year) or M (month)
+
+  def obtain_archive_list(type, blockbydate = nil)
+
+    article_url = Setting.get('articles_slug')
+    category_url = Setting.get('category_slug')
+    h = {}
+
+    # if year
+    if type == 'Y'
+
+      # variables and data
+      p = Post.where(:post_type => 'post', :post_status => 'Published', :disabled => 'N').uniq.pluck("EXTRACT(year FROM post_date)")
+
+      if !p.blank?
+        p.each do |f|
+          h["#{article_url}/#{f}"] = f
+        end
+      end
+
+      # if month
+    elsif type == 'M'
+
+      # variables and data
+      p = Post.where("(post_type = 'post' AND post_status = 'Published' AND disabled = 'N') AND post_date <= CURRENT_TIMESTAMP").uniq.pluck("EXTRACT(year FROM post_date)")
+      lp = {}
+
+      if !p.blank?
+        p.each do |f|
+          lp["#{f}"] = Post.where("EXTRACT(year from post_date) = #{f}  AND (post_type = 'post' AND disabled = 'N' AND post_status = 'Published' AND post_date <= CURRENT_TIMESTAMP)").uniq.pluck("EXTRACT(MONTH FROM post_date)")
+        end
+      end
+
+      if !lp.blank?
+
+        lp.each do |k, i|
+
+          if blockbydate
+            h["#{article_url}/#{k.to_i}"] = k.to_i
+          end
+
+          i.each do |nm|
+            h["#{article_url}/#{k.to_i}/#{nm.to_i}"] = "#{get_date_name_by_number(nm.to_i)} - #{k.to_i}"
+          end
+
+        end
+
+      end
+
+    end
+
+    li_loop(h)
+
+  end
+
+
+  # returns the lastest article. By default this is 1 but you can get more than one if you want.
+  # Params:
+  # +how_many+:: how many records you want to return
+
+  def obtain_latest_article(how_many = 1)
+    Post.where("post_type ='post' AND disabled = 'N' AND post_status = 'Published' AND (post_date <= CURRENT_TIMESTAMP)").order('post_date DESC').limit(how_many)
   end
 
 
@@ -455,14 +621,12 @@ module NewViewHelper
 
   def is_page?(check = nil)
 
-    return false if @content.blank? || !@content[0].blank? || p.blank?
+    return false if @content.blank? || !@content[0].blank?
     return true if @content.post_type == 'page' && check.blank?
     return true if @content.id == check.to_i
     return false
 
   end
-
-
 
   # returns a boolean as to wether the current view is the blog homepage
 
@@ -612,7 +776,7 @@ module NewViewHelper
         Admin.find_by_id(@content.admin_id)
       end
     return '' if admin.blank?
-    admin.has_attribute?(field) ? admin[field] : nil
+    admin.has_attribute?(field) ? admin[field].to_s : ''
   end
 
 
@@ -681,6 +845,17 @@ module NewViewHelper
       end
     end
 
+  end
+
+  # Easy to understand function for getting the search form.
+  # this is created and displayed from the theme.
+
+  def obtain_search_form
+    if File.exists?("#{Rails.root}/app/views/theme/#{current_theme}/search_form." + get_theme_ext)
+      render :template => "theme/#{current_theme}/search_form." + get_theme_ext 
+    else
+      render :inline => 'search_form.html.erb does not exist in current theme'
+    end
   end
 
   # MISCELLANEOUS Functions #
@@ -752,6 +927,23 @@ module NewViewHelper
 
   end
 
+  # returns the title to the given term, the differnece between obtain_tag_name/obtain_category_name is that this will return the title if you do not know what term type you are on.
+  # Params:
+  # +check+:: ID, slug, or name of the category - if this is nil it will return the current category you are in
+
+  def obtain_term_title(check = nil)
+    segments = []
+    if check.blank?
+      return nil if  params[:slug].blank?
+      segments = params[:slug].split('/')
+    end
+
+    # get the taxonomy name and search the database for the record with this as its slug
+    t = obtain_term_check(check, segments)
+    t.name if !t.blank?
+
+  end
+
   # returns the additional data record
   # Params:
   # +key+:: the key to the additional data that you want to return - if this is nil it will return all of the additional data for the given record
@@ -796,6 +988,8 @@ module NewViewHelper
   # +check+:: ID, post_slug, or post_title of the post record - if this is nil it will use the @content variable (the current page)
 
   def obtain_record(check = nil, type = nil)
+    
+    return check if check.is_a?(ActiveRecord::Base)
 
     if check.blank? 
       return nil if @content.blank? || !@content[0].blank?
@@ -810,7 +1004,7 @@ module NewViewHelper
 
   end
 
-  # returns a full term record (this is used mainly internally to retrieve the data for other functions) 
+  # returns a full term record (this is used mainly internally to retrieve the data for above functions) 
   # Params:
   # +segments+:: URL segments
 
@@ -818,25 +1012,46 @@ module NewViewHelper
     Term.where(structured_url: ('/' + segments[2..-1].join('/')))
   end
 
+  # returns a full tag record (this is used mainly internally to retrieve the data for above functions) 
+  # Params:
+  # +check+:: ID, slug, or name of the term record - if this is nil it will use the url to work out the current tag that you are viewing
+  # +segments+:: pass in the segments of the url
+  # +type+:: wether you want to check the term type against tag or category
+
   def obtain_term_check(check = nil, segments = nil, type = nil)
-    if !check.blank? && !segments.blank? && !segments[2].blank?
-      Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/'), term_anatomies: { taxonomy: type }).last
-    else
-      Term.includes(:term_anatomy).where("name = :p OR slug = :p2 OR terms.id = :p3", { p: check.to_s, p2: check.to_s, p3: check.to_i }).where(term_anatomies: { taxonomy: type }).first
-    end
+    term =
+      if check.blank? && !segments.blank? && !segments[2].blank?
+        Term.includes(:term_anatomy).where(:structured_url => "/" +  segments.drop(2).join('/')).first
+      else
+        Term.includes(:term_anatomy).where("name = :p OR slug = :p2 OR terms.id = :p3", { p: check.to_s, p2: check.to_s, p3: check.to_i })
+      end
+
+    term = term.where(term_anatomies: { taxonomy: type }) if !type.blank?
+
+    term
+
   end
+
+  # returns wether the current url is the given term type
+  # Params:
+  # +type+:: the type of term you want to check against
+  # +segments+:: pass in the segments of the url
 
   def term_check(type, segments) 
     (Setting.get(type) == segments[1] && (term.first.name == check || term.first.id == check || term.first.slug == check) ) ? true : false
   end
 
+  # returns the users (this is used mainly internally to retrieve the data for above functions) 
+  # Params:
+  # +check+:: ID, email, or username of the user record - if this is nil it will return all users
+
   def obtain_users(check = nil)
     admin = Admin.select(user_select_fields)
-    if !check.blank?
-      admin = admin.where( 'id = :p OR email = :p2 OR username = :p3', { p: check.to_i, p2: check.to_s, p3: check.to_s} ).first
-    end
+    admin = admin.where( 'id = :p OR email = :p2 OR username = :p3', { p: check.to_i, p2: check.to_s, p3: check.to_s} ).first if !check.blank?
     admin
   end
+
+  # returns the fields that the user will be allowed to access when using the user functions (this is used mainly internally to retrieve the data for above functions) 
 
   def user_select_fields
     return 'admins.id, email, first_name, last_name, username, access_level, avatar, cover_picture, overlord'

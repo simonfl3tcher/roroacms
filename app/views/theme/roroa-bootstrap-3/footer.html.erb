@@ -15,15 +15,15 @@
 	                    <h2>Latest Blog Articles</h2>
 	                    <hr>
 	                </div>
-	                <% get_latest_article(3).each do |p|  %>
+	                <% obtain_latest_article(3).each do |p|  %>
 
 		                <div class="col-lg-4 col-md-4 col-sm-6">
-		                    <a href="<%= get_the_permalink(p) %>">
+		                    <a href="<%= obtain_the_permalink(p) %>">
 		                        <img class="img-responsive img-home-portfolio" src="http://placehold.it/700x450">
 		                    </a>
-		                    <strong><%= get_the_title(p) %></strong>
-							<p><%= get_the_excerpt(p, 255) %></p>
-							<small><a href="<%= get_the_permalink(p) %>">Read More</a></small>
+		                    <strong><%= obtain_the_title(p) %></strong>
+							<p><%= obtain_the_excerpt(p, 255) %></p>
+							<small><a href="<%= obtain_the_permalink(p) %>">Read More</a></small>
 		                </div>
 
 					<% end %> 
@@ -49,7 +49,7 @@
 			                <h4>Aliquam porttitor odio non diam dictum ultrices. Sed feugiat libero vel ultricies eleifend.</h4>
 			            </div>
 			            <div class="col-lg-4 col-md-4">
-			                <a class="btn btn-lg btn-primary pull-right" href="<%= get_the_permalink(1) %>">Contact Us!</a>
+			                <a class="btn btn-lg btn-primary pull-right" href="<%= obtain_the_permalink(1) %>">Contact Us!</a>
 			            </div>
 	        		</div>
 	        	</div>
