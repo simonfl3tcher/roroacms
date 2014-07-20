@@ -1,5 +1,11 @@
 class Term < ActiveRecord::Base
 
+  ## misc ##
+
+  has_ancestry
+
+  # has_ancestry
+
   include MediaHelper
 
   ## constants ##
@@ -12,6 +18,7 @@ class Term < ActiveRecord::Base
   has_many :term_relationships
   has_many :posts, :through => :term_relationships
   has_one :term_anatomy, :dependent => :destroy
+  has_many :children, :class_name => "Term", :foreign_key => "parent_id", :dependent => :destroy
 
   ## validations ##
 
@@ -96,7 +103,7 @@ class Term < ActiveRecord::Base
     if initial
       str_url = '/' + term.slug
       # make sure you prepend the parent structured url if parent exitst
-      str_url = (Term.find(term.parent.to_i).structured_url + str_url) if !term.parent.blank?
+      str_url = (term.parent.structured_url + str_url) if !term.parent_id.blank?
       
       term.structured_url = str_url
       term.save(:validate => false)
@@ -104,15 +111,13 @@ class Term < ActiveRecord::Base
 
 
     if term.structured_url != old_url
-      Term.where(parent: term.id).each do |f|
-        t = Term.find(f.id)
+      term.children.each do |f|
+        url_old = f.structured_url
 
-        url_old = t.structured_url
+        f.structured_url = f.structured_url.gsub(old_url + '/', term.structured_url + '/')
+        f.save
 
-        t.structured_url = t.structured_url.gsub(old_url + '/', term.structured_url + '/')
-        t.save
-
-        update_slug_for_subcategories(t.id, url_old, false) if !t.parent.blank?
+        update_slug_for_subcategories(f.id, url_old, false) if !f.parent_id.blank?
 
       end
     end
@@ -155,8 +160,11 @@ class Term < ActiveRecord::Base
   # Params:
   # +type+:: the term type you want to return
 
-  def self.term_cats(type = 'category')
-    Term.includes(:term_anatomy).where(term_anatomies: {taxonomy: type}).order('name asc')
+  def self.term_cats(type = 'category', do_not_include = nil, do_arrange = false)
+    t = Term.joins(:term_anatomy).where(term_anatomies: {taxonomy: type})
+    t = t.where.not(id: do_not_include) if !do_not_include.blank?
+    t = t.order("name").arrange if do_arrange
+    t
   end
 
   # If the has cover image has been removed this will be set to nothing and will update the cover image option agasint the admin

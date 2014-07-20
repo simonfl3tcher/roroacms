@@ -7,9 +7,12 @@
     
         <%= render 'menu_list' %>
 
-        <hr>
 
-        <button class="btn btn-primary btn-block btn-sm update-menu"><i class="fa fa-check"></i>&nbsp; <%= t("views.admin.generic.save") %></button>
+          <div class="saveWrapper <%= @menu.menu_options.blank? ? 'hidden' : '' %>">
+            <hr>
+
+            <button class="btn btn-primary btn-block btn-sm update-menu"><i class="fa fa-check"></i>&nbsp; <%= t("views.admin.generic.save") %></button>
+          </div>
 
       </div>
     </div>

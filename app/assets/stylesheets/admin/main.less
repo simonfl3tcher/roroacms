@@ -3462,12 +3462,14 @@ input[type=checkbox] {
   .list-group {
     margin-bottom:0px;
   }
-  .list-group-item:hover, a.list-group-item:focus {text-decoration: none;background-color: rgb(245, 245, 245);}
+  .list-group-item:not(.no-background):hover, a.list-group-item:not(.no-background):focus {
+    text-decoration: none;background-color: rgb(245, 245, 245);
+  }
   .list-group-item {
     border:none;
     border-radius: 0px;
     display: block;
-    height: 66px;
+    min-height: 66px;
     margin-bottom: -1px;
     padding: 19px 16px;
     position: relative;
@@ -3476,6 +3478,19 @@ input[type=checkbox] {
     padding:3px 9px;
   }
 }
+
+.nested_comments {
+  > li {
+    padding: 19px 16px 19px 60px !important;
+  }
+}
+
+table tr .fa.fa-minus {
+  color: #D7DCDE;
+  font-size: 11px;
+  margin-left:-1px;
+}
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */
@@ -3487,7 +3502,7 @@ input[type=checkbox] {
     
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767px) {#D7DCDE
     ul.timeline:before {
         left: 40px;
     }

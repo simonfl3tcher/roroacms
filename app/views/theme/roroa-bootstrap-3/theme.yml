@@ -1,6 +1,6 @@
 name: 'Roroa Bootsrap 3 Theme'
 author: 'Simon Fletcher'
-description: 'Basic Bootstrap 3 theme built for roroacms'
+description: 'Very Basic Bootstrap 3 theme built for roroacms'
 version: '1.0'
 foldername: 'roroa-bootstrap-3'
 view_extension: 'html.erb'

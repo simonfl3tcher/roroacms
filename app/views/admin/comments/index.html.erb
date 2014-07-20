@@ -26,14 +26,14 @@
 
               <td class="hidden-xs"><%= check_box_tag 'comments[]', comment.id %></td>
               <td>
-                <%= link_to page_path(comment.post), :target => '_blank' do %>
+                <%= link_to edit_admin_article_path(comment.post) do %>
                   <%= comment.post.post_title %>
                 <% end %>
              
               </td>
               <td class="hidden-xs">
                 <small><%= t("views.admin.comments.index.comment_submitted_on") %> <%= comment.submitted_on.strftime "%d-%m-%Y" %></small><br />
-                <%= excerpt comment.comment, 50 %>
+                <%= create_excerpt(comment.comment, 50) %>
               </td>
               <td class="hidden-xs center">
 

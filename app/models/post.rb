@@ -21,7 +21,7 @@ class Post < ActiveRecord::Base
   has_many :attachments
   has_many :term_relationships, :dependent => :destroy
   has_many :terms, :through => :term_relationships
-  # has_many :child, :class_name => "Post", :foreign_key => "parent_id", conditions: "post_type != 'autosave'"
+  has_many :child, :class_name => "Post", :foreign_key => "parent_id", conditions: "post_type != 'autosave'"
 
   ## validations ##
 
@@ -52,7 +52,11 @@ class Post < ActiveRecord::Base
 
   def self.setup_and_search_posts(params, type)
     type = type == 'page' ? 'page' : 'post'
-    posts = Post.where("disabled ='N' and post_type = ?", type).order("ancestry")
+    if type == 'page'
+      posts = Post.where("disabled ='N' and post_type = ?", type).order("post_title").arrange
+    else
+      posts = Post.where("disabled ='N' and post_type = ?", type).order("post_title")
+    end
     posts
 
   end
@@ -64,9 +68,7 @@ class Post < ActiveRecord::Base
 
   def self.get_terms(type = 'category', id = nil)
     sql = Term.where(term_anatomies: {taxonomy: type})
-    if !id.blank?
-      sql = sql.where('terms.id != ?', id)
-    end
+    sql = sql.where('terms.id != ?', id) if !id.blank?
     sql.order('name asc').includes(:term_anatomy)
   end
 
@@ -164,13 +166,17 @@ class Post < ActiveRecord::Base
   # Params:
   # +data+:: array of additional fields
 
-  def additional_data(data)
+  def additional_data(data = '')
+
+    # abort data.inspect
 
     if !data.blank?
       data.each do |key, value|
         data[key.to_sym] = value[0] if value.size < 2
       end
       self.post_additional_data = ActiveSupport::JSON.encode(data)
+    else
+      self.post_additional_data = ''
     end
 
   end
@@ -360,6 +366,13 @@ class Post < ActiveRecord::Base
 
   def deal_with_cover(has_cover)
     self.cover_image = '' if defined?(has_cover) && has_cover.blank?
+  end
+
+  def self.parent_records(record)
+    rec = Post.where("disabled ='N' and post_type = 'page'").order("post_title")
+    rec = rec.where.not(id: record) if !record.blank?
+    rec.arrange
+
   end
 
 end

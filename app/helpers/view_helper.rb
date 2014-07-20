@@ -19,7 +19,7 @@ module ViewHelper
       end
 
     if comments.size > 0
-      html = "<h3 id='comments-title'>#{comments.count}" + I18n.t("helpers.view_helper.display_comments_loop.response") + " #{display_title}</h3>"
+      html = "<h3 id='comments-title'>#{comments.count}" + I18n.t("helpers.view_helper.display_comments_loop.response") + " #{obtain_the_title}</h3>"
     end
 
     html = nested_comments obtain_comments.arrange(:order => 'created_at ASC')
@@ -65,6 +65,13 @@ module ViewHelper
     end.join.html_safe
   end
 
+  def admin_nested_comments(messages)
+    messages.map do |message, sub_messages|
+      @comment = message
+      render('admin/partials/admin_comment') + content_tag(:ul, admin_nested_comments(sub_messages), :class => "list-group nested_comments")
+    end.join.html_safe
+  end
+
 
   # Returns a list of the given data
   # Params:
@@ -91,11 +98,9 @@ module ViewHelper
     article_url = Setting.get('articles_slug')
 
     html = '<ul class="' + initial + '">'
-    arr.each do |f|
-      html += "<li><a href='#{site_url}#{article_url}/#{term_type}#{f.structured_url}'>#{f.name}</a>"
-      children = Term.where(:parent => f.id)
-      html +=li_loop_for_terms(children, term_type, 'sub') unless children.blank?
-      html += "</li>"
+    arr.each do |key, val|
+      html += "<li><a href='#{site_url}#{article_url}/#{term_type}#{key.structured_url}'>#{key.name}</a>"
+      html += li_loop_for_terms(val, term_type, 'sub') unless val.blank?
     end
     html += '</ul>'
 

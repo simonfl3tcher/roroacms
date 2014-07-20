@@ -8,7 +8,7 @@
 
     <% else %>
 
-      <div class="well well-background term">
+      <div class="well well-background term<%= params[:action] == 'edit' ? '-large' : '' %>">
         <%= render partial: 'admin/partials/cover_image', locals: { image: @category.cover_image } %>
       </div>
 
@@ -24,11 +24,11 @@
       <%= errors_for @category, :name %>
     </div>
     <div class="form-group">
-      <%= f.label :parent %>
+      <%= f.label :parent_id %>
       <% if @type == 'category' %>
-        <%= f.select(:parent, Term::CATEGORIES.collect {|p| [ p.name, p.id ] }, { include_blank: t("views.admin.generic.none"), selected: @category.id }, { class: "form-control" } )%>
+        <%= f.select(:parent_id, nested_dropdown(Term.term_cats('category', @category.id), 'name'), { include_blank: t("views.admin.generic.none"), selected: @category.parent_id }, { class: "form-control" } )%>
       <% else %>
-        <%= f.select(:parent, Term::TAGS.collect {|p| [ p.name, p.id ] }, { include_blank: t("views.admin.generic.none"), selected: @category.id }, { class: "form-control" }) %>
+        <%= f.select(:parent_id, nested_dropdown(Term.term_cats('tag', @category.id), 'name'), { include_blank: t("views.admin.generic.none"), selected: @category.parent_id }, { class: "form-control" }) %>
       <% end %>
     </div>
     <div class="form-group">

@@ -13,7 +13,10 @@
 
             <div class="well well-background" style="background-image: url('<%= @admin.cover_picture %>');">
               <center>
-                <img src="<%= @admin.avatar %>" name="aboutme" width="140" height="140" class="img-circle">
+                <div class="imr-wrapper">
+                  <img src="<%= @admin.avatar %>" name="aboutme" width="140" height="140" class="img-circle">
+                  <span></span>
+                </div>
                 <h3><%= @admin.username %></h3>
                 <% if !@admin.first_name.blank? %>
                   <small><%= @admin.first_name + ' ' + @admin.last_name %></small>
@@ -28,7 +31,7 @@
 
             <div class="well well-background">
               <center>
-                <img src="https://s3.amazonaws.com/roroa/default-user-icon-profile.png" name="aboutme" width="140" height="140" class="img-circle">
+                <%= image_tag("default-profile.jpg", size: "140", class: "img-circle") %>
               </center>
               <a style="margin:10px;" class="btn btn-xs btn-primary pull-right add-profile-image" href="javascript:;"><span class="fa fa-picture-o"></span> <%= t("views.admin.generic.change_cover") %></a>
               <a class="btn btn-xs btn-danger pull-right remove-profile-image hidden" href="javascript:;"><span class="fa fa-trash-o"></span> <%= t("views.admin.administrators.form.remove_cover") %></a>
@@ -75,6 +78,7 @@
               <span class="file-input btn btn-primary btn-file btn-sm">
                 <%= t("views.admin.generic.browse") %><%= f.file_field :avatar, :class => "" %>
               </span>
+              <small><%= t("views.admin.administrators.form.ideal_size") %></small>
             </div>
             <div class="clearfix"></div>
           </div>
@@ -82,16 +86,17 @@
 
           <% if is_overlord? || @admin.id == nil %>
 
-          <div class="form-group">
-            <%= f.label :access_level, :class => "col-sm-3 control-label"  %>
-            <div class="col-sm-6">
-              <%= f.select :access_level, Admin.access_levels,  { prompt: t("views.admin.administrators.form.select_access_level") }, { class: "form-control" } %>
-              <%= errors_for @admin, :access_level %>
+            <div class="form-group">
+              <%= f.label :access_level, :class => "col-sm-3 control-label"  %>
+              <div class="col-sm-6">
+                <%= f.select :access_level, Admin.access_levels,  { prompt: t("views.admin.administrators.form.select_access_level") }, { class: "form-control" } %>
+                <%= errors_for @admin, :access_level %>
+              </div>
+              <div class="clearfix"></div>
             </div>
-            <div class="clearfix"></div>
-          </div>
 
           <% end %>
+
           <div class="form-group">
             <%= f.label :description, :class => "col-sm-3 control-label"  %>
             <div class="col-sm-6">

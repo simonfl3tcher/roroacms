@@ -279,17 +279,17 @@ module NewViewHelper
       terms =
         if !parent_term.blank?
           # get all the records with the current category as its parent
-          Term.where(:parent => parent_term.id)
+          Term.where(:parent_id => parent_term.id)
         else
           []
         end
 
     else
       # get all the categories
-      terms = Term.where(term_anatomies: {taxonomy: 'category'}, :parent => nil).includes(:term_anatomy)
+      terms = Term.where(term_anatomies: {taxonomy: 'category'}, :parent_id => nil).includes(:term_anatomy)
     end
 
-    li_loop_for_terms(terms, category_url)
+    li_loop_for_terms(terms.arrange, category_url)
 
   end
 
@@ -425,17 +425,17 @@ module NewViewHelper
 
         if !parent_term.blank?
           # get all the records with the current tag as its parent
-          terms = Term.where(:parent => parent_term.id)
+          terms = Term.where(:parent_id => parent_term.id)
         else
           terms = []
         end
 
       else
         # get all the tags
-        terms = Term.where(term_anatomies: {taxonomy: 'tag'}, :parent => nil).includes(:term_anatomy)
+        terms = Term.where(term_anatomies: {taxonomy: 'tag'}, :parent_id => nil).includes(:term_anatomy)
       end
       # if you want a list style
-      li_loop_for_terms(terms, tag_url)
+      li_loop_for_terms(terms.arrange, tag_url)
 
     end
 

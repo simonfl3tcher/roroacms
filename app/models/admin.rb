@@ -1,5 +1,7 @@
 class Admin < ActiveRecord::Base
 
+  include NewViewHelper
+
   ## constants ##
 
   GET_ADMINS = Admin.all
@@ -69,7 +71,7 @@ class Admin < ActiveRecord::Base
 
   def deal_with_abnormalaties
     self.overlord = 'N'
-    self.avatar = 'https://s3.amazonaws.com/roroa/default-user-icon-profile.png'
+    self.avatar = site_url('assets/default-profile.jpg')
   end
 
   # checks if the cover image is blank and sets the cover image to blank if this is the case

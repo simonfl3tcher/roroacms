@@ -8,6 +8,7 @@ module SeoHelper
 
     # decide wether it is a page or it is a template displying other content i.e. the category page
 
+
     if !@content.nil?
 
       # if it has ACTUAL content then generate meta from the page content
@@ -116,7 +117,7 @@ module SeoHelper
   # +override+:: override the content with the data provided
 
   def get_page_title(overide = nil)
-
+    
     # if override has content, use this content to create the meta title
 
     if !overide.blank?
@@ -126,6 +127,7 @@ module SeoHelper
       return "<title>#{title}</title>"
 
     else
+
 
       # if seo title is not blank then use that
       if !@content.post_seo_title.blank?
@@ -184,8 +186,8 @@ module SeoHelper
     title = "seo_#{type}_title"
     description = "seo_#{type}_description"
 
-    headtags = "<title>#{Setting.get('title')}</title>\n"
-    headtags += "<meta name=\"description\" content=\"#{Setting.where('description')}\" />\n"
+    headtags = "<title>#{Setting.get(title)}</title>\n"
+    headtags += "<meta name=\"description\" content=\"#{Setting.get(description)}\" />\n"
     headtags += "#{get_additional_headers}\n"
     headtags += "#{get_google_analytics}\n"
     headtags += "#{canonical_urls}"

@@ -29,7 +29,7 @@ class Admin::PagesController < AdminController
 
   def create
     @record = Post.new(page_params)
-    @record.additional_data(params[:additional_data]) if !params[:additional_data].blank?
+    @record.additional_data(params[:additional_data])
 
 
     respond_to do |format|
@@ -67,7 +67,7 @@ class Admin::PagesController < AdminController
 
   def update
     @record = Post.find(params[:id])
-    @record.additional_data(params[:additional_data]) if !params[:additional_data].blank?
+    @record.additional_data(params[:additional_data])
     @record.deal_with_cover(params[:has_cover_image])
 
     respond_to do |format|

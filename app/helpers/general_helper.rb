@@ -85,4 +85,23 @@ module GeneralHelper
     session[:username] = nil
   end
 
+  def strip_url(url)
+    url.sub!(/https\:\/\/www./, '') if url.include? "https://www."
+
+    url.sub!(/http\:\/\/www./, '')  if url.include? "http://www."
+
+    url.sub!(/www./, '')            if url.include? "www."
+
+    return url
+  end
+
+  def nested_dropdown(items, text = 'post_title')
+      result = []
+      items.map do |item, sub_items|
+          result << [('- ' * item.depth) + item[text.to_sym], item[:id]]
+          result += nested_dropdown(sub_items) unless sub_items.blank?
+      end
+      result
+  end
+
 end

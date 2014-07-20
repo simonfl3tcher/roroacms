@@ -74,7 +74,6 @@ module RoutingHelper
 
     status = "(post_status = 'Published' AND post_date <= CURRENT_TIMESTAMP AND disabled = 'N')"
     # is it a article post or a page post
-
     case get_type_by_url
     when "CT"
       render_category segments, article_url, true, status
@@ -185,7 +184,7 @@ module RoutingHelper
 
       if segments[2].blank?
         # if segment 2 is blank then you want to disply the top level article page
-        redirect_to article_url
+        redirect_to site_url(article_url)
       else
         term_type = 
           if segments[1] == category_url

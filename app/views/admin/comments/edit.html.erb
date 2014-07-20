@@ -3,3 +3,23 @@
     <%= render 'form' %>
   </div>
 </div>
+
+<% if !@comment.ancestors.blank? %>
+
+	<div class="col-md-12 hidden-xs">
+	  <div class="panel panel-default">
+	    <div class="panel-heading">
+	      <h3 class="panel-title">Thread</h3>
+	      <div class="actions pull-right">
+	        <i class="fa fa-chevron-down"></i>
+	      </div>
+	    </div>
+	    <div class="panel-body no-padding">
+	      <ul class="list-group">
+			<%= admin_nested_comments(@comment.ancestors.arrange(:order => 'created_at ASC')) %>
+		  </ul>
+	    </div>
+	  </div>
+	</div>
+
+<% end %>

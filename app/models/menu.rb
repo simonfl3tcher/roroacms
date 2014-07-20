@@ -8,4 +8,10 @@ class Menu < ActiveRecord::Base
 
   validates :name, :key, :presence => true
 
+  before_save :deal_with_key
+
+  def deal_with_key
+  	self.key = key.gsub(' ', '-')
+  end
+
 end

@@ -46,7 +46,7 @@ class Setting < ActiveRecord::Base
 
   def self.manual_validation(params)
 
-    validate_arr = [:articles_slug, :category_slug, :tag_slug, :smtp_username, :smtp_password, :smtp_authentication]
+    validate_arr = [:site_url, :articles_slug, :category_slug, :tag_slug, :smtp_username, :smtp_password, :smtp_authentication]
     errors = {}
     validate_arr.each do |f|
       if defined?(params[f.to_s]) && params[f.to_s].blank?
@@ -56,14 +56,16 @@ class Setting < ActiveRecord::Base
     errors
   end
 
+
   # save the settings to the settings table
   # Params:
   # +params+:: the parameters
 
-  def self.save(params)
+  def self.save_data(params)
 
     params.each do |key, value|
       value = ActiveSupport::JSON.encode(value) if key == 'user_groups'
+      value = value.gsub(/[^0-9]/i, '') if key == 'pagination_per_fe'
       set = Setting.where("setting_name = ?", key).update_all('setting' => value)
     end
 
@@ -94,7 +96,7 @@ class Setting < ActiveRecord::Base
       {
         :address 	=> Setting.get('smtp_address'),
         :domain 	=> Setting.get('smtp_domain'),
-        :port 		=> Setting.get('smtp_port').blank? ? '25' : Setting.get('smtp_port'),
+        :port 		=> Setting.get('smtp_port').blank? ? 25 : Setting.get('smtp_port').to_i,
         :user_name 	=> Setting.get('smtp_username'),
         :password 	=> Setting.get('smtp_password'),
         :authentication => sym

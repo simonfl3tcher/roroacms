@@ -30,6 +30,7 @@
                 <%= label_tag(:site_url, t("views.admin.settings.tab_content.site_url"), class: "col-sm-3 control-label") %>
                 <div class="col-sm-6">
                   <%= text_field_tag(:site_url, @settings['site_url'], class: 'form-control') %>
+                  <%= setting_errors_for @settings, :site_url %>
                 </div>
                 <div class="clearfix"></div>
               </div>
@@ -37,16 +38,16 @@
                 <%= label_tag(:pagination_per, t("views.admin.settings.tab_content.pagination_per"), class: "col-sm-3 control-label") %>
                 <div class="col-sm-6">
                   <label class="radio-inline">
-                    <%= radio_button_tag(:pagination_per, nil, 10, :checked => @settings['pagination_per'].to_i == 10 ? true : false) %> 10
+                    <%= radio_button_tag(:pagination_per, 10, @settings['pagination_per'].to_i == 10 ? true : false) %> 10
                   </label>
                   <label class="radio-inline">
-                    <%= radio_button_tag(:pagination_per, nil, 25, :checked => @settings['pagination_per'].to_i == 25 ? true : false) %> 25
+                    <%= radio_button_tag(:pagination_per, 25, @settings['pagination_per'].to_i == 25 ? true : false) %> 25
                   </label>
                   <label class="radio-inline">
-                    <%= radio_button_tag(:pagination_per, nil, 50, :checked => @settings['pagination_per'].to_i == 50 ? true : false) %> 50
+                    <%= radio_button_tag(:pagination_per, 50, @settings['pagination_per'].to_i == 50 ? true : false) %> 50
                   </label>
                   <label class="radio-inline">
-                    <%= radio_button_tag(:pagination_per, nil, 100, :checked => @settings['pagination_per'].to_i == 100 ? true : false) %> 100
+                    <%= radio_button_tag(:pagination_per, 100, @settings['pagination_per'].to_i == 100 ? true : false) %> 100
                   </label>
                 </div>
                 <div class="clearfix"></div>
@@ -146,13 +147,13 @@
                 <div class="col-sm-6">
                   <div class="">
                     <label class="radio-inline">
-                      <%= radio_button_tag(:smtp_authentication, nil, "plain", :checked => @settings['smtp_authentication'] == 'plain' ? true : false) %> <%= t("views.admin.settings.tab_content.plain") %>
+                      <%= radio_button_tag(:smtp_authentication, "plain", @settings['smtp_authentication'] == 'plain' ? true : false) %> <%= t("views.admin.settings.tab_content.plain") %>
                     </label>
                     <label class="radio-inline">
-                      <%= radio_button_tag(:smtp_authentication, nil, "login", :checked => @settings['smtp_authentication'] == 'login' ? true : false) %> <%= t("views.admin.settings.tab_content.login") %>
+                      <%= radio_button_tag(:smtp_authentication, "login", @settings['smtp_authentication'] == 'login' ? true : false) %> <%= t("views.admin.settings.tab_content.login") %>
                     </label>
                     <label class="radio-inline">
-                      <%= radio_button_tag(:smtp_authentication, nil, "cram_md5", :checked => @settings['smtp_authentication'] == 'cram_md5' ? true : false) %> <%= t("views.admin.settings.tab_content.cram") %>
+                      <%= radio_button_tag(:smtp_authentication, "cram_md5", @settings['smtp_authentication'] == 'cram_md5' ? true : false) %> <%= t("views.admin.settings.tab_content.cram") %>
                     </label>
                   </div>
                   <%= setting_errors_for @settings, :smtp_authentication %>
@@ -168,10 +169,8 @@
                 <%= label_tag(:article_comments, t("views.admin.settings.tab_content.article_comments"), class: "col-sm-3 control-label") %>
                 <div class="col-sm-6">
                   <div class="">
-                    <label class="radio-inline">
                       <%= hidden_field_tag :article_comments, 'N' %>
                       <%= check_box_tag :article_comments, 'Y', @settings['article_comments'] == 'Y' ? true : false %>
-                    </label>
                   </div>
                 </div>
                 <div class="clearfix"></div>
@@ -181,10 +180,10 @@
                 <div class="col-sm-6">
                   <div class="">
                     <label class="radio-inline">
-                      <%= radio_button_tag(:article_comment_type, nil, "R", :checked => @settings['article_comment_type'] == 'R' ? true : false) %> <%= t("views.admin.settings.tab_content.system_comments") %>
+                      <%= radio_button_tag(:article_comment_type, "R", @settings['article_comment_type'] == 'R' ? true : false) %> <%= t("views.admin.settings.tab_content.system_comments") %>
                     </label>
                     <label class="radio-inline">
-                      <%= radio_button_tag(:article_comment_type, nil, "F", :checked => @settings['article_comment_type'] == 'F' ? true : false) %> <%= t("views.admin.settings.tab_content.facebook_comments") %>
+                      <%= radio_button_tag(:article_comment_type, "F", @settings['article_comment_type'] == 'F' ? true : false) %> <%= t("views.admin.settings.tab_content.facebook_comments") %>
                     </label>
                   </div>
                 </div>
@@ -240,9 +239,7 @@
               <%= hidden_field_tag :seo_rewrite_titles, 'N' %>
               <%= label_tag(:seo_rewrite_titles, t("views.admin.settings.tab_content.seo_rewrite_titles"), class: "col-sm-3 control-label") %>
               <div class="col-sm-6">
-                <label class="radio-inline">
-                  <%= check_box_tag :seo_rewrite_titles, 'Y', @settings['seo_rewrite_titles'] == 'Y' ? true : false %>
-                </label>
+                <%= check_box_tag :seo_rewrite_titles, 'Y', @settings['seo_rewrite_titles'] == 'Y' ? true : false %>
               </div>
               <div class="clearfix"></div>
             </div>
@@ -251,9 +248,7 @@
               <%= hidden_field_tag :seo_no_index_categories, 'N' %>
               <%= label_tag(:seo_no_index_categories, t("views.admin.settings.tab_content.seo_no_index_categories"), class: "col-sm-3 control-label") %>
               <div class="col-sm-6">
-                <label class="radio-inline">
-                  <%= check_box_tag :seo_no_index_categories, 'Y', @settings['seo_no_index_categories'] == 'Y' ? true : false %>
-                </label>
+                <%= check_box_tag :seo_no_index_categories, 'Y', @settings['seo_no_index_categories'] == 'Y' ? true : false %>
               </div>
               <div class="clearfix"></div>
             </div>
@@ -262,9 +257,7 @@
               <%= hidden_field_tag :seo_no_index_archives, 'N' %>
               <%= label_tag(:seo_no_index_archives, t("views.admin.settings.tab_content.seo_no_index_archives"), class: "col-sm-3 control-label") %>
               <div class="col-sm-6">
-                <label class="radio-inline">
-                  <%= check_box_tag :seo_no_index_archives, 'Y', @settings['seo_no_index_archives'] == 'Y' ? true : false %>
-                </label>
+                <%= check_box_tag :seo_no_index_archives, 'Y', @settings['seo_no_index_archives'] == 'Y' ? true : false %>
               </div>
               <div class="clearfix"></div>
             </div>
@@ -273,9 +266,7 @@
               <%= hidden_field_tag :seo_autogenerate_descriptions, 'N' %>
               <%= label_tag(:seo_autogenerate_descriptions, t("views.admin.settings.tab_content.seo_autogenerate_descriptions"), class: "col-sm-3 control-label") %>
               <div class="col-sm-6">
-                <label class="radio-inline">
-                  <%= check_box_tag :seo_autogenerate_descriptions, 'Y', @settings['seo_autogenerate_descriptions'] == 'Y' ? true : false %>
-                </label>
+                <%= check_box_tag :seo_autogenerate_descriptions, 'Y', @settings['seo_autogenerate_descriptions'] == 'Y' ? true : false %>
               </div>
               <div class="clearfix"></div>
             </div>

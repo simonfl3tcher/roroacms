@@ -37,7 +37,10 @@ $(document).ready ->
       dataType: "html"
       success: (data) ->
         populate data, selector
-        do_checkboxes()
+        $("input").iCheck
+          checkboxClass: "icheckbox_flat-grey"
+          radioClass: "iradio_flat-grey"
+        $('.saveWrapper').removeClass 'hidden'
         return
 
     return
@@ -104,6 +107,7 @@ $(document).ready ->
         html = "<li class=\"dd-item\" style=\"\" data-id=\"option_" + data[1]["value"] + "\" id=\"" + data[0]["value"] + "_" + randomnumber + "\" data-type=\"" + data[0]["value"] + "\" data-data=\"" + dataString + "\"><div class=\"dd-handle\">" + label + "<i class=\"fa fa-plus pull-right handler\"></i></div>"
         $("ol.sortable").append html
         build_under_form data, "#" + data[0]["value"] + "_" + randomnumber
+    $(this)[0].reset()
     return
 
   ### 

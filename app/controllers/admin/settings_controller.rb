@@ -21,9 +21,9 @@ class Admin::SettingsController < AdminController
 
     respond_to do |format|
       if validation.blank?
-        Setting.save(params)
+        Setting.save_data(params)
         clear_cache
-        format.html { redirect_to admin_settings_path, notice: I18n.t("generic.success") }
+        format.html { redirect_to admin_settings_path, notice: I18n.t("controllers.admin.settings.general.create.flash.success") }
       else
         format.html {
           # add breadcrumb and set title

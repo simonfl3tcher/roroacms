@@ -242,6 +242,8 @@ en:
         words: "words"
         preview: "Preview"
         says: "says"
+        said: "said"
+        on: "on"
         reply: "Reply"
         view: "View"
         none: "None"
@@ -285,6 +287,7 @@ en:
         form:
           remove_cover: "Remove cover"
           select_access_level: "Select access level"
+          ideal_sie: "Ideal size is around 150px X 150px"
         index:
           name: "Name"
           username: "Username"

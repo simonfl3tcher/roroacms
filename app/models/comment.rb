@@ -16,7 +16,7 @@ class Comment < ActiveRecord::Base
   ## callbacks ##
 
   before_create :set_defaults
-  before_validation :strip_html
+  before_save :deal_with_abnormalaties
 
   ## methods ##
 
@@ -61,8 +61,13 @@ class Comment < ActiveRecord::Base
 
   # strip any sort of html, we don't want javascrpt injection
 
-  def strip_html
+  def deal_with_abnormalaties
     self.comment = comment.to_s.gsub(%r{</?[^>]+?>}, '').gsub(/<script.*?>[\s\S]*<\/script>/i, "")
+    website = self.website.sub(/^https?\:\/\//, '').sub(/^www./,'')
+    unless self.website[/\Awww.\/\//] || self.website[/\Awww.\/\//]
+      website = "www.#{website}"
+    end
+    self.website = "http://#{website}"
   end
 
   # set default values of the record before adding to the database

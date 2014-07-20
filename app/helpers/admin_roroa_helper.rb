@@ -87,13 +87,13 @@ module AdminRoroaHelper
   # Params:
   # +options+:: is a hash of all of the record that you want to display in a nested table
 
-  def nested_table(options)
+  def nested_table(options, row)
     options.map do |opt, sub_messages|
       @content = opt
       # set the sub to be sub messages. The view checks its not blank and runs this function again
       @sub = sub_messages
 
-      render('admin/partials/table_row')
+      render(row)
 
     end.join.html_safe
   end
@@ -110,9 +110,11 @@ module AdminRoroaHelper
 
     i = 0
     while i < cont.ancestor_ids.length  do
-      html += "<i class=\"icon-minus\"></i>"
+      html += "<i class=\"fa fa-minus\"></i>"
       i += 1
     end
+
+    html += "&nbsp;" if !html.blank?
 
     render :inline =>  html.html_safe
 
@@ -310,7 +312,7 @@ module AdminRoroaHelper
   # +pages+:: second set of records
 
   def respond_to_trash(posts, pages)
-    !posts.blank? && pages.blank? ? '6' : '12'
+    !posts.blank? && !pages.blank? ? '6' : '12'
   end
 
   # clears the admin view cache.
@@ -334,4 +336,4 @@ module AdminRoroaHelper
     end
   end
 
-  end
+end

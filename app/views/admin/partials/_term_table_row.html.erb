@@ -1,0 +1,23 @@
+<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+
+	<td class="hidden-xs"><%= check_box_tag 'categories[]', @content.id %></td>
+	<td><%= ancestory_indent(@content) %><%= @content.name %></td>
+	<td class="hidden-xs"><%= @content.slug %></td>
+	<td class="center">
+		<div class="btn-group pull-right">
+		  <%= link_to edit_admin_term_path(@content), :class => 'btn btn-xs btn-default' do %>
+		    <i class="fa fa-pencil"></i>
+		  <% end %>        
+		  <%= link_to admin_term_path(@content), :class => 'btn btn-xs btn-danger', method: :delete, data: { confirm: t("views.admin.generic.confirm") } do %>
+		    <i class="fa fa-trash-o"></i>
+		  <% end %>
+		</div>
+	</td>
+
+</tr>
+
+<% if !@sub.blank? %>
+
+  <%= nested_table(@sub, 'admin/partials/term_table_row') %>
+
+<% end %>
