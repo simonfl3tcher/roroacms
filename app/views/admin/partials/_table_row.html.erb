@@ -2,7 +2,13 @@
 
   <td class="hidden-xs"><%= check_box_tag 'pages[]', @content.id %></td>
   
-  <td><%= ancestory_indent @content %><%= @content.post_title %><%= @content.post_status == "Draft" ? t("views.admin.partials.articles_table.draft") : '' %></td>
+  <td>
+    <%= ancestory_indent @content %><%= @content.post_title %>
+    <% if !@content.parent.blank? && @content.parent['disabled'] == 'Y' %>
+      <strong>(parent: <%= @content.parent['post_title'] %>)</strong>
+    <% end %>
+    <%= @content.post_status == "Draft" ? t("views.admin.partials.articles_table.draft") : '' %>
+  </td>
   <td class="hidden-xs"><%= @content.post_date.strftime "%d-%m-%Y" %></td>
   <td class="center">
 

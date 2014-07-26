@@ -26,6 +26,7 @@ app = do ->
       unless $(".sidebar-right").hasClass(".sidebar-toggle-right")
         $(".sidebar-right").removeClass "sidebar-toggle-right"
         $(".main-content-wrapper").removeClass "main-content-toggle-right"
+        console.log getCookie("menu_contracted")
         if getCookie("menu_contracted") is ""
           createCookie "menu_contracted", "true", 30
         else

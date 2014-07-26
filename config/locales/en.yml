@@ -287,7 +287,7 @@ en:
         form:
           remove_cover: "Remove cover"
           select_access_level: "Select access level"
-          ideal_sie: "Ideal size is around 150px X 150px"
+          ideal_size: "Ideal size is around 150px X 150px"
         index:
           name: "Name"
           username: "Username"
@@ -397,7 +397,7 @@ en:
         autosave_table:
           date: "Date Created"
           only_revision: "This is the only revision for this post"
-          revision_saved_at: "Revision saved at %{date}"
+          revision_saved_at: "Revision saved at"
         edit:
           keycode: "Keycode"
           added: "What will be added"
@@ -441,7 +441,7 @@ en:
           login: "Login"
           cram: "Cram MD5"
           system_comments: "System Comments"
-          facebook_comments: "Facebook Comments"
+          facebook_comments: "Other"
       terms:
         table:
           slug: "Slug"

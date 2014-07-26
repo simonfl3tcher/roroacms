@@ -7,6 +7,7 @@ class Admin::TermsController < AdminController
     add_breadcrumb I18n.t("generic.categories"), :admin_article_categories_path, :title => I18n.t("controllers.admin.terms.categories.breadcrumb_title")
     set_title(I18n.t("generic.categories"))
     @type = 'category'
+    @records = Term.term_cats('category', nil, true)
 
     # render view template as it is the same as the tag view
     render 'view'
@@ -20,6 +21,7 @@ class Admin::TermsController < AdminController
     add_breadcrumb I18n.t("generic.tags"), :admin_article_tags_path, :title => I18n.t("controllers.admin.terms.tags.breadcrumb_title")
     set_title(I18n.t("generic.tags"))
     @type = 'tag'
+    @records = Term.term_cats('tag', nil, true)
     # render view template as it is the same as the category view
     render 'view'
   end

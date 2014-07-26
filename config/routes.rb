@@ -47,14 +47,14 @@ Roroacms::Application.routes.draw do
     end
 
 
-    resources :articles, :except => [:show] do
+    resources :articles do
       collection do
         post 'bulk_update'
         post 'autosave_create'
         post 'create_additional_data'
+        post 'autosave'
         put 'autosave_update'
       end
-      member{ post 'update_from_air' }
     end
 
     resources :pages do
@@ -81,5 +81,5 @@ Roroacms::Application.routes.draw do
   end 
 
   root to: 'pages#index'
-  match '/*slug', :to => 'pages#dynamic_page', via: [:get]
+  match '/*slug', :to => 'pages#dynamic_page', via: [:get], :constraints => lambda{|req| req.path !~ /\.(png|jpg|js|css)$/ }
 end

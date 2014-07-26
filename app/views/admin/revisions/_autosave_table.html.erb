@@ -12,7 +12,7 @@ if revisions.length > 0 %>
     <% revisions.each do |d| %>
 
       <tr <%= d.id == @revision['revision'].id ? 'class=active' : '' %>>
-        <td><%= t("views.admin.partials.revisions.autosave_table.revision_saved_at", date: d.created_at.strftime("%d %B, %Y at %H:%M")) %></td>
+        <td><%= t("views.admin.partials.revisions.autosave_table.revision_saved_at") %> <%= d.created_at.strftime("%d %B, %Y at %H:%M") %></td>
         <td><%= (d.post_status.downcase == 'user-autosave' || d.post_type.downcase == 'page') ? d.admin.username : t("views.admin.generic.system") %></td>
         <td>
           <div class="btn-group pull-right">

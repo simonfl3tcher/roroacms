@@ -32,6 +32,7 @@ class Admin::PagesController < AdminController
     @record.additional_data(params[:additional_data])
 
 
+
     respond_to do |format|
 
       if @record.save
@@ -93,7 +94,7 @@ class Admin::PagesController < AdminController
   # deletes the post
 
   def destroy
-    Post.disable_post params[:id]
+    Post.disable_post(params[:id])
     respond_to do |format|
       format.html { redirect_to admin_pages_path, notice: I18n.t("controllers.admin.pages.destroy.flash.success") }
     end
@@ -108,7 +109,7 @@ class Admin::PagesController < AdminController
 
   def bulk_update
     # returns a message to disply to the user
-    notice = Post.bulk_update params, 'pages'
+    notice = Post.bulk_update(params, 'pages')
     respond_to do |format|
       format.html { redirect_to admin_pages_path, notice: notice }
     end

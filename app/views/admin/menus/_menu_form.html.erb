@@ -1,6 +1,7 @@
 <%= form_for [:admin, @menu] do |f| %>
 
   <div class="form-group">
+    <%= f.hidden_field :id %>
     <%= f.label :name, :class => "col-sm-3 control-label"  %>
     <div class="col-sm-6">
       <%= f.text_field :name, size: 40, :class => "form-control" %>

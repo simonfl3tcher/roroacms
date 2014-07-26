@@ -11,7 +11,7 @@ class Comment < ActiveRecord::Base
   ## validations ##
 
   validates :email, presence: true, :format => { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, on: :create }
-  validates :author, :comment, :presence => true
+  validates :post_id, :author, :comment, :presence => true
 
   ## callbacks ##
 
@@ -63,11 +63,13 @@ class Comment < ActiveRecord::Base
 
   def deal_with_abnormalaties
     self.comment = comment.to_s.gsub(%r{</?[^>]+?>}, '').gsub(/<script.*?>[\s\S]*<\/script>/i, "")
-    website = self.website.sub(/^https?\:\/\//, '').sub(/^www./,'')
-    unless self.website[/\Awww.\/\//] || self.website[/\Awww.\/\//]
-      website = "www.#{website}"
+    if !self.website.blank?
+      website = self.website.sub(/^https?\:\/\//, '').sub(/^www./,'') 
+      unless self.website[/\Awww.\/\//] || self.website[/\Awww.\/\//]
+        website = "www.#{website}"
+      end
+      self.website = "http://#{website}"
     end
-    self.website = "http://#{website}"
   end
 
   # set default values of the record before adding to the database

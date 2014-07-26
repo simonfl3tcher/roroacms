@@ -23,7 +23,6 @@ module SeoHelper
           # use the page content to generate the meta data
           headtags = "#{get_page_title}\n"
           headtags += "#{get_meta_description}\n"
-          headtags += "#{get_additional_headers}\n"
           headtags += "#{get_google_analytics}\n"
           headtags += "#{get_robots_tag}"
         end
@@ -65,7 +64,6 @@ module SeoHelper
           end
 
           headtags = "#{get_page_title new_string}\n"
-          headtags += "#{get_additional_headers}\n"
           headtags += "#{get_google_analytics}\n"
           headtags += "#{get_robots_tag robots_var}"
 
@@ -188,21 +186,12 @@ module SeoHelper
 
     headtags = "<title>#{Setting.get(title)}</title>\n"
     headtags += "<meta name=\"description\" content=\"#{Setting.get(description)}\" />\n"
-    headtags += "#{get_additional_headers}\n"
     headtags += "#{get_google_analytics}\n"
     headtags += "#{canonical_urls}"
 
     headtags
 
   end
-
-
-  # returns the additional headers that are set within the admin panel
-
-  def get_additional_headers
-    Setting.get('seo_additional_headers')
-  end
-
 
   # returns the google analytics code with the given UI tracking code that you set in the admin settings
 

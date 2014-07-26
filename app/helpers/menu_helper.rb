@@ -131,13 +131,17 @@ module MenuHelper
 		atts = get_target(existingData['target'])
 
 		if menuOption.data_type == 'page'
-			p = Post.find(existingData['linkto'])
-			url = p.id == home_id.to_i ? site_url() : site_url(p.structured_url)
-			atts += " href='#{url}'"
+			p = Post.find_by_id(existingData['linkto'])
+			if !p.blank?
+				url = p.id == home_id.to_i ? site_url() : site_url(p.structured_url)
+				atts += " href='#{url}'"
+			end
 		elsif menuOption.data_type == 'article'
-			p = Post.find(existingData['linkto'])
-			url = site_url(article_url +  p.structured_url)
-			atts += " href='#{url}'"
+			p = Post.find_by_id(existingData['linkto'])
+			if !p.blank?
+				url = site_url(article_url +  p.structured_url)
+				atts += " href='#{url}'"
+			end
 
 		elsif menuOption.data_type == 'category'
 			t = Term.find(existingData['linkto'])

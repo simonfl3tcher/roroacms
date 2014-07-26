@@ -5,7 +5,7 @@ class Post < ActiveRecord::Base
 
   ## misc ##
 
-  has_ancestry
+  has_ancestry :orphan_strategy => :adopt 
   attr_accessor :skip_slug_uniqueness
 
   ## constants ##
@@ -21,7 +21,6 @@ class Post < ActiveRecord::Base
   has_many :attachments
   has_many :term_relationships, :dependent => :destroy
   has_many :terms, :through => :term_relationships
-  has_many :child, :class_name => "Post", :foreign_key => "parent_id", conditions: "post_type != 'autosave'"
 
   ## validations ##
 
@@ -32,14 +31,15 @@ class Post < ActiveRecord::Base
 
   ## named scopes ##
 
-  scope :from_this_year, where("post_date > ? AND post_date < ?", Time.now.beginning_of_year, Time.now.end_of_year)
+  scope :from_this_year, -> { where("post_date > ? AND post_date < ?", Time.now.beginning_of_year, Time.now.end_of_year) }
 
 
   ## callbacks ##
 
   before_validation :deal_with_abnormalaties
-  before_save :deal_with_slug_update, on: :update
   after_update :create_user_backup_record, on: :update
+  before_save :deal_with_structured_url
+  after_save :deal_with_slug_update, on: :update
 
 
   ## methods ##
@@ -109,22 +109,10 @@ class Post < ActiveRecord::Base
 
   end
 
-  # if the post slug is not the same as the old slug. it will update the structured url against the record
-
-  def deal_with_slug_update
-    # updates the old url and replaces it with the new URL if the name has changed.
-    if post_slug_changed?
-      old_slug = changes['post_slug'][0]
-      new_slug = changes['post_slug'][1]
-      p = Post.where("(structured_url like ?)", "%#{old_slug}%")
-      p.each do |pst|
-        pst.structured_url = pst.structured_url.gsub("/#{old_slug}", "/#{new_slug}")
-        pst.save
-      end
-    else
-      # Do nothing then
-    end
-
+  def deal_with_structured_url
+    path = self.path.pluck(:post_slug)
+    path = path.push(self.post_slug) if self.id.blank?
+    self.structured_url = "/" + path.join('/') if !path.blank?
   end
 
   # disables the post essentially putting it into the trash area
@@ -134,7 +122,7 @@ class Post < ActiveRecord::Base
   def self.disable_post(post_id)
     post = Post.find(post_id)
     post.disabled = "Y"
-    post.save
+    post.save(validate: false)
   end
 
   # will make sure that specific data is correctly formatted for the database
@@ -209,7 +197,6 @@ class Post < ActiveRecord::Base
       post.post_status = 'Autosave'
       post.post_type = 'autosave'
 
-
       # save the post and its categories/tags
       if post.save(:validate => false)
 
@@ -244,11 +231,12 @@ class Post < ActiveRecord::Base
     if self.post_slug_changed? || self.post_content_changed? || self.post_title_changed?
 
       post = self.attributes
-      post['parent_id'] = post['id'].to_i
+      post['parent_id'] = post['id']
       post['structured_url'] = nil
       post['updated_at'] = nil
       post['created_at'] = nil
       post['id'] = nil
+      post.delete('ancestry')
 
 
       if post['post_slug'].blank?
@@ -258,10 +246,23 @@ class Post < ActiveRecord::Base
       post['post_status'] = 'User-Autosave'
       post['post_type'] = 'autosave'
 
-      Post.new(post.symbolize_keys).save(:validate => false) and return true;
+      begin
+        Post.new(post.symbolize_keys).save(validate: false) and return true
+      rescue
+        abort "Error #{$!}".inspect
+      end
 
     end
 
+  end
+
+  def deal_with_slug_update
+    if defined?(self.changes[:post_slug]) && !self.changes[:post_slug].blank?
+      self.subtree.each do |f|
+        self.structured_url = "/" + self.path.pluck(:post_slug).join('/')
+        f.save
+      end
+    end
   end
 
 
@@ -270,22 +271,23 @@ class Post < ActiveRecord::Base
   # +obj+:: the object to remove the keys from
 
   def self.remove_uncessary(obj)
-
-    if !obj.blank?
-      obj.post_content = obj.post_content.gsub("\n", ' ').gsub("\r", ' ').squeeze(' ')
-      obj = obj.attributes
-      obj.delete('id')
-      obj.delete('created_at')
-      obj.delete('updated_at')
-      obj.delete('ancestry')
-      obj.delete('structured_url')
-      obj.delete('post_visible')
-      obj.delete('post_status')
-      obj.delete('post_type')
-      obj.delete('parent_id')
+    o = obj
+    if !o.blank?
+      # o.post_content = o.post_content.gsub("\n", ' ').gsub("\r", ' ').squeeze(' ')
+      o.post_additional_data = "" if o.post_additional_data.blank?
+      o = o.attributes
+      o.delete('id')
+      o.delete('created_at')
+      o.delete('updated_at')
+      o.delete('ancestry')
+      o.delete('structured_url')
+      o.delete('post_visible')
+      o.delete('post_status')
+      o.delete('post_type')
+      o.delete('parent_id')
     end
 
-    obj
+    o
 
   end
 

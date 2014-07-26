@@ -37,7 +37,6 @@
             <%= f.file_field :cover_image, :class => "", :id => "cover_image" %>
 
             <div class="form-group">
-              <%= f.hidden_field :admin_id, :value => current_user.id, size: 40 %>
               <%= f.hidden_field :id %>
               <%= f.hidden_field :post_type, :value => @post_type %>
             </div>
@@ -85,13 +84,12 @@
             <div class="form-group">
              <%= f.label :post_author, :class => "col-sm-3 control-label"  %>
              <div class="col-sm-6">
-               <%= f.select :admin_id, Admin::GET_ADMINS.collect {|p| [ p.username, p.id ] }, { prompt: 'Select a Author' }, { class: "form-control" } %>
+               <%= f.select :admin_id, Admin::GET_ADMINS.collect {|p| [ p.username, p.id ] }, { :selected => @record.admin_id.blank? ? current_user.id : @record.admin_id }, { class: "form-control" } %>
              </div>
              <div class="clearfix"></div>
            </div>
 
            <% if @post_type == 'page' %>
-
              <div class="form-group">
               <%= f.label :parent_id, :class => "col-sm-3 control-label"  %>
               <div class="col-sm-6">
@@ -138,26 +136,7 @@
 
         </div>
         <div class="tab-pane" id="content">
-          <div class="features">
-            <section class="editor">
-              <div class="outer">
-                <div class="editorwrap">
-                  <section class="entry-markdown">
-                    <header class="floating-header"><%= t("views.admin.pages.new.tab_content.markdown") %> <a href="javascript:;" data-toggle="modal" data-target="#mdModal"><i class="fa fa-info-circle pull-right"></i></a></header>
-                    <section class="entry-markdown-content">
-                      <%= f.text_area :post_content, :class => 'editor', :value => @record.post_content.blank? ? '...' : @record.post_content %>
-                    </section>
-                  </section>
-                  <section class="entry-preview active">
-                    <header class="floating-header">&nbsp; <%= t("views.admin.generic.preview") %> <span class="entry-word-count">0 <%= t("views.admin.generic.words") %></span> </header>
-                    <section class="entry-preview-content">
-                      <div class="rendered-markdown"></div>
-                    </section>
-                  </section>
-                </div>
-              </div>
-            </section>
-          </div>
+          <%= f.text_area :post_content, :class => 'editor', :value => @record.post_content.blank? ? '' : @record.post_content %>
         </div>
 
         <div class="tab-pane" id="revisions">

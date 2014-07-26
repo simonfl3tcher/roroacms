@@ -14,15 +14,13 @@
         </div>
         <div class="col-md-8">
 
-          <% if (@type == 'category' ? Term.term_cats : Term.term_cats('tag')).blank? %>
-          
+          <% if @records.size > 0 %>
+            <%= render 'table' %>
+          <% else %>
+
             <div class="span8" style="text-align:center;">
               <strong style="margin-top:100px; font-size:25px; display:block; "><%= t("views.admin.terms.view.have_no", type: pluralize_without_count(2, @type)) %></strong>
             </div>
-
-          <% else %>
-
-            <%= render 'table' %>
 
           <% end %>
 

@@ -94,7 +94,6 @@ class Admin::ArticlesController < AdminController
     end
   end
 
-
   # delete the post
 
   def destroy
@@ -109,7 +108,7 @@ class Admin::ArticlesController < AdminController
   # is called via an ajax call on BOTH post/page this saves the current state post every 2 mins
   # and saves it as a "autosave" these posts are then displayed as revisions underneath the post editor
 
-  def autosave_update
+  def autosave
     post = Post.new(post_params)
     ret = Post.do_autosave params, post
 

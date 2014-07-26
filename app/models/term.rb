@@ -2,7 +2,7 @@ class Term < ActiveRecord::Base
 
   ## misc ##
 
-  has_ancestry
+  has_ancestry :orphan_strategy => :adopt 
 
   # has_ancestry
 
@@ -18,7 +18,6 @@ class Term < ActiveRecord::Base
   has_many :term_relationships
   has_many :posts, :through => :term_relationships
   has_one :term_anatomy, :dependent => :destroy
-  has_many :children, :class_name => "Term", :foreign_key => "parent_id", :dependent => :destroy
 
   ## validations ##
 
@@ -27,10 +26,9 @@ class Term < ActiveRecord::Base
   validates_uniqueness_of :slug, :on => :create
 
   ## callbacks ##
-
   before_validation :deal_with_abnormalaties
-  after_create :deal_with_structured_url
-  after_save :deal_with_structured_url
+  before_save :deal_with_structured_url
+  after_save :deal_with_slug_update, on: :update
 
   ## methods ##
 
@@ -89,45 +87,19 @@ class Term < ActiveRecord::Base
 
   end
 
-  # update the url in sub pages if the url changes
-  # Params:
-  # +term_id+:: ID of the term that you want to use as a reference
-  # +old_url+:: the url that you want to replace
-  # +initial+:: wether this is the top level term or a sub term of the given ID (mostly used to loop through the function with in the function)
-
-  def update_slug_for_subcategories(term_id, old_url = nil, initial = true)
-
-    # find all the records with the old url - change the url to use the new one
-    term = Term.find(term_id)
-
-    if initial
-      str_url = '/' + term.slug
-      # make sure you prepend the parent structured url if parent exitst
-      str_url = (term.parent.structured_url + str_url) if !term.parent_id.blank?
-      
-      term.structured_url = str_url
-      term.save(:validate => false)
-    end
-
-
-    if term.structured_url != old_url
-      term.children.each do |f|
-        url_old = f.structured_url
-
-        f.structured_url = f.structured_url.gsub(old_url + '/', term.structured_url + '/')
-        f.save
-
-        update_slug_for_subcategories(f.id, url_old, false) if !f.parent_id.blank?
-
-      end
-    end
-
-  end
 
   def deal_with_structured_url
-    if defined?(self.changes[:structured_url]) && !self.changes[:structured_url].blank?
-      old = (defined?(self.changes[:structured_url][0]) && !self.changes[:structured_url][0].blank?) ? self.changes[:structured_url][0] : ''
-      update_slug_for_subcategories(self.id, old)
+    path = self.path.pluck(:slug)
+    path = path.push(self.slug) if self.id.blank?
+    self.structured_url = "/" + path.join('/') if !path.blank?
+  end
+
+  def deal_with_slug_update
+    if defined?(self.changes[:slug]) && !self.changes[:slug].blank?
+      self.subtree.each do |f|
+        self.structured_url = "/" + self.path.pluck(:slug).join('/')
+        f.save
+      end
     end
   end
 
@@ -161,10 +133,16 @@ class Term < ActiveRecord::Base
   # +type+:: the term type you want to return
 
   def self.term_cats(type = 'category', do_not_include = nil, do_arrange = false)
-    t = Term.joins(:term_anatomy).where(term_anatomies: {taxonomy: type})
+    t = Term.joins(:term_anatomy).where(term_anatomies: {taxonomy: type}).order('name')
     t = t.where.not(id: do_not_include) if !do_not_include.blank?
-    t = t.order("name").arrange if do_arrange
+    t = t.arrange if do_arrange
     t
+  end
+
+  def self.get_records(type = 'tag', record = nil)
+    rec = Term.joins(:term_anatomy).where(term_anatomies: {taxonomy: type}).order('name')
+    rec = rec.where.not(id: record) if !record.blank?
+    rec.arrange
   end
 
   # If the has cover image has been removed this will be set to nothing and will update the cover image option agasint the admin

@@ -21,7 +21,8 @@ module RoutingHelper
 
     else
 
-      @content = Post.find(Setting.get('home_page'))
+      @content = Post.find_by_id(Setting.get('home_page'))
+      render_404 and return if @content.blank? || @content.post_status != 'Published'
       # make the content avalible to the view
       gloalize @content
       render_template 'home'

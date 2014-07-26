@@ -14,6 +14,7 @@
     <!-- Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
     <%= stylesheet_link_tag "admin/application", :media => "all" %>
     <%= javascript_include_tag 'admin/application' %>
@@ -41,7 +42,7 @@
                 <ul>
                     <li class="profile-photo">
                         <%= link_to edit_admin_administrator_path(session[:admin_id]) do %>
-                          <img src="<%= current_user.avatar %>" class="img-circle" width="35">
+                          <img src="<%= current_user.avatar %>" class="img-circle" width="35" height="35">
                         <% end %>
                     </li>
                 </ul>

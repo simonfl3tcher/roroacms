@@ -7,7 +7,7 @@ class Admin::RevisionsController < AdminController
     # gets the individual post
     @post = Post.find(params[:id])
 
-    @revision = { 'parent' => Post.find(@post.ancestry), 'revision' => @post}
+    @revision = { 'parent' => Post.find(@post.parent_id), 'revision' => @post}
 
     # set title
     add_breadcrumb I18n.t("generic.revisions")

@@ -26,7 +26,7 @@
 
               <td class="hidden-xs"><%= check_box_tag 'comments[]', comment.id %></td>
               <td>
-                <%= link_to edit_admin_article_path(comment.post) do %>
+                <%= link_to edit_admin_article_path(comment.post.id) do %>
                   <%= comment.post.post_title %>
                 <% end %>
              

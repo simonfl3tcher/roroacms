@@ -10,7 +10,7 @@
         <th class="center" style="min-width:50px;">&nbsp;</th>
       </tr>
     </thead>
-    <%= nested_table(@type == 'category' ? Term.term_cats('category', nil, true): Term.term_cats('tag', nil, true), 'admin/partials/term_table_row') %>
+    <%= nested_table(@records, 'admin/partials/term_table_row') %>
     
     </table>
     <div class="hidden-xs">

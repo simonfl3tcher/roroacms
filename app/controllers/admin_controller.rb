@@ -4,7 +4,6 @@ class AdminController < ApplicationController
   # but also includes any admin specific helpers and changes the general layout
   before_filter :load_title
   after_filter :save_title
-  require 'differ'
 
   helper GeneralHelper
   helper AdminRoroaHelper

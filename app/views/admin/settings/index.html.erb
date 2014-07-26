@@ -20,13 +20,6 @@
             <%= render :partial => 'admin/partials/submit_bar' %>
             <div class="tab-pane active" id="general">
               <div class="form-group">
-                <%= label_tag(:display_url, t("views.admin.settings.tab_content.display_url"), class: "col-sm-3 control-label") %>
-                <div class="col-sm-6">
-                  <%= text_field_tag(:display_url, @settings['display_url'], class: 'form-control') %>
-                </div>
-                <div class="clearfix"></div>
-              </div>
-              <div class="form-group">
                 <%= label_tag(:site_url, t("views.admin.settings.tab_content.site_url"), class: "col-sm-3 control-label") %>
                 <div class="col-sm-6">
                   <%= text_field_tag(:site_url, @settings['site_url'], class: 'form-control') %>

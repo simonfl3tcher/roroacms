@@ -98,10 +98,23 @@ module GeneralHelper
   def nested_dropdown(items, text = 'post_title')
       result = []
       items.map do |item, sub_items|
-          result << [('- ' * item.depth) + item[text.to_sym], item[:id]]
-          result += nested_dropdown(sub_items) unless sub_items.blank?
+          name = text == 'post_title' && !item.parent.blank? && item.parent.disabled == 'Y' ? item[text.to_sym] + " (parent: #{item.parent.post_title})" : item[text.to_sym]
+          result << [('- ' * item.depth) + name.html_safe, item[:id]]
+          result += nested_dropdown(sub_items, text) unless sub_items.blank?
       end
       result
+  end
+
+  def get_closest_revision(revisions, current, status)
+    if status == 'user-autosave'
+      revisions.each_with_index do |f, index|
+          return f if f.post_status.downcase == 'user-autosave' && index > current 
+      end
+      return nil
+    end
+    return revisions[current+1] if !revisions[current+1].blank?
+    return revisions[0].parent
+
   end
 
 end
