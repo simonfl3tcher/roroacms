@@ -275,6 +275,7 @@ class Post < ActiveRecord::Base
     if !o.blank?
       # o.post_content = o.post_content.gsub("\n", ' ').gsub("\r", ' ').squeeze(' ')
       o.post_additional_data = "" if o.post_additional_data.blank?
+      o.cover_image = "" if o.cover_image.blank?
       o = o.attributes
       o.delete('id')
       o.delete('created_at')
