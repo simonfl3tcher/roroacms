@@ -49,7 +49,7 @@ RSpec.describe Admin::SettingsController, :type => :controller do
         @settings['articles_slug'] = nil
         @settings = @settings.symbolize_keys!
         post :create, @settings
-        expect(Setting.get('articles_slug')).to eq('news')
+        expect(Setting.get('articles_slug')).to eq('blog')
       end
 
       it "should re-render the index method" do

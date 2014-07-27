@@ -7,13 +7,13 @@ RSpec.describe Setting, :type => :model do
   end
 
   it "should get the value for the given setting" do
-    expect(Setting.get('articles_slug')).to eq('news')
+    expect(Setting.get('articles_slug')).to eq('blog')
   end
 
   it "should return all settings" do
     expect(@settings).to be_a_kind_of(Hash)
-    expect(@settings['articles_slug']).to eq('news')
-    expect(@settings['pagination_per']).to eq("2")
+    expect(@settings['articles_slug']).to eq('blog')
+    expect(@settings['pagination_per']).to eq("25")
   end
 
   it "is invalid if articles slug is blank" do
@@ -54,7 +54,7 @@ RSpec.describe Setting, :type => :model do
 
   it "should save the value against the given field" do
     @settings['articles_slug'] = 'hello'
-    Setting.save(@settings)
+    Setting.save_data(@settings)
     expect(Setting.get_all['articles_slug']).to eq('hello')
 
   end

@@ -47,7 +47,7 @@ RSpec.describe Term, :type => :model do
   end
 
   it "should update the slug subcategories" do
-    sub_term = FactoryGirl.create(:term, name: 'Testing Term Title', parent: term.id)
+    sub_term = FactoryGirl.create(:term, name: 'Testing Term Title', parent_id: term.id)
     t = Term.find(term.id)
     t.slug = 'hello'
     t.save

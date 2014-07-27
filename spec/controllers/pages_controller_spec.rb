@@ -10,7 +10,7 @@ RSpec.describe PagesController, :type => :controller do
     it "should show any post" do
       get :show, id: record_draft.id
       expect(response.status).to eq(302)
-      expect(response).to redirect_to record_draft.structured_url
+      expect(response).to redirect_to "#{record_draft.structured_url}?admin_preview=true"
     end
 
   end

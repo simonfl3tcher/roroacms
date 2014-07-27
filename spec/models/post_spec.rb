@@ -32,7 +32,7 @@ RSpec.describe Post, :type => :model do
 
   it "should return all pages" do
     pages = Post.setup_and_search_posts({}, 'page')
-    sample = pages.sample.post_type
+    sample = pages.first[0].post_type
     expect(pages).to_not be_nil
     expect(sample).to eq('page')
   end
@@ -46,14 +46,14 @@ RSpec.describe Post, :type => :model do
 
   it "should return all tags" do
     tags = Post.get_terms('tag')
-    sample = tags.sample.term_anatomy.taxonomy
-    expect(sample).to eq('tag')
+    sample = tags[0].name
+    expect(sample).to eq('tag1')
   end
 
   it "should return all categories" do
     categories = Post.get_terms('category')
-    sample = categories.sample.term_anatomy.taxonomy
-    expect(sample).to eq('category')
+    sample = categories[0].name
+    expect(sample).to eq('cat1')
   end
 
   it "should set default values" do
