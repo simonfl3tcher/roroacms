@@ -33,6 +33,7 @@ module Roroacms
         redirect_to admin_path, flash: { error: I18n.t("controllers.admin.misc.authorize_admin_access_error") }
       end
     end
+    
 
     def after_sign_out_path_for(resource_or_scope)
       clear_cache
