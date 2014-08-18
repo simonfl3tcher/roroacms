@@ -2,6 +2,7 @@
 
 Roroacms is an Rails-based content management system which allows you to easily introduce a page and article management to your Rails 4 applications. Roroacms has come far over the years it started out as a project to learn more about the ins & outs of Ruby on Rails and seemlessly evolved to grow into a fully grown CMS. In this second release I have moved the CMS into an engine and given the system a complete make over visually and technically.
 
+![GemVersion](https://badge.fury.io/rb/roroacms.png)
 
 ### Documentation & Demo 
 
