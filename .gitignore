@@ -8,6 +8,7 @@ capybara-*.html
 /vendor/bundle
 /log/*
 /log/development.log
+/spec/dummy/log/development.log
 /tmp/*
 /config/database.yml
 /config/config.yml
@@ -15,5 +16,7 @@ capybara-*.html
 /config/initializers/bullet.rb
 /public/*
 .project
+.gem
+.gemspec
 .DS_Store
 brakeman.html
