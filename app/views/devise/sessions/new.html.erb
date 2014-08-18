@@ -3,9 +3,12 @@
       <div class="brandLogin"></div>    
   </div>
   <div class="panel-body">
-        
-    <p class="notice"><%= flash[:notice] %></p>
-    <p class="error"><%= flash[:error] %></p>
+
+    <% if !flash[:notice].blank? %>
+      <p class="notice"><%= flash[:notice] %></p>
+    <% elsif !flash[:error].blank? %>
+      <p class="error"><%= flash[:error] %></p>
+    <% end %>
 
       <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => { class: 'form-horizontal' }) do |f| %>
         <%= devise_error_messages! %>

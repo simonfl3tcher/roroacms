@@ -1,0 +1,8 @@
+development:
+  adapter: postgresql
+  host: localhost
+  encoding: unicode
+  database: roroacms_development
+  pool: 5
+  username: smnfletch
+  password:

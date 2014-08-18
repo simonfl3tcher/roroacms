@@ -1,0 +1,62 @@
+<div class="panel panel-primary animated">
+  
+  <div class="panel-heading">
+      <div class="brandLogin"></div>    
+  </div>
+  <div class="panel-body">
+
+  	<div class="row">
+
+  		  <div class="col-md-12">
+
+
+			<% if current_theme.blank? %>
+	  		  
+	  		  	<div class="form-group col-md-12">
+		  		  	<h2><%= t("generic.theme_issues.title") %></h2>
+		  		  	<hr>
+		  		</div>
+
+				<div class="clearfix"></div>
+
+				<div class="text-center" class="top-margin-60 bottom-margin-60">
+		  		  	<span class="warning-text"><%= t("views.admin.theme_issues.no_active") %></span><br>
+		  		  	<p><%= t("views.admin.theme_issues.no_active_ctoa") %></p>
+				</div>
+
+	  		<% else %>
+
+  			<div class="form-group col-md-12">
+	  		  	<h2 class="theme-issues-title"><%= t("generic.theme_issues.title") %> - <small><%= t("views.admin.theme_issues.content") %></small></h2>
+	  		  	<hr>
+	  		</div>
+
+			<div class="clearfix"></div>
+
+	  		<div class="col-md-12">
+		  		<ul class="theme-issues">
+
+		  		  	<% @missing.each do |file, value| %>
+		  		  		<li>
+		  		  			<% if value == 'Y' %>
+		  		  				<i class="fa fa-check"></i>&nbsp;
+		  		  			<% else %>
+		  		  				<i class="fa fa-times"></i>&nbsp;
+		  		  			<% end %>
+		  		  			<%= file %>
+		  		  		</li>
+		  		  	<% end %>
+
+	  		  	</ul>
+
+	  		</div>
+
+	  		<% end %>
+
+  		  </div>
+
+  	</div>
+
+  </div>
+
+</div>

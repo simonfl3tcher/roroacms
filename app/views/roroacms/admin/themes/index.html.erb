@@ -1,0 +1,81 @@
+<div class="row">
+
+  <% if @theme_options.blank? %>
+
+    <div class="col-md-12 text-center">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <span class="warning-text top-margin-60 bottom-margin-60"><%= t("views.admin.themes.no_themes") %></span>
+        </div>
+      </div>
+    </div>
+
+  <% else %>
+
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">&nbsp;</h3>
+          <div class="actions pull-right">
+              <i class="fa fa-chevron-down"></i>
+          </div>
+        </div>
+        <div class="panel-body">
+          <%= form_tag(admin_themes_path) do %>
+            <table class="table table-hover table_vam">
+              <thead>
+                <tr>
+                  <th>&nbsp;</th>
+                  <th><%= t("views.admin.themes.index.theme") %></th>
+                  <th class="hidden-xs"><%= t("views.admin.themes.index.description") %></th>
+                  <th class="hidden-xs"><%= t("views.admin.generic.author") %></th>
+                  <th class="hidden-xs"><%= t("views.admin.themes.index.version") %></th>
+                  <th>&nbsp;</th>
+                </tr>
+              </thead>
+              <% @theme_options.each do |theme| %>
+                <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+
+                <td>
+                  <label class="">
+                    <%= radio_button_tag  'theme', theme['foldername'], theme['foldername'] == @current ? true : false, :style => "position: absolute; opacity: 0;", :class => "icheck" %>
+                  </label>
+                </td>
+                <td>
+                  <%= theme['name'] %>
+                </td>
+                <td class="hidden-xs">
+                  <%= theme['description'] %>
+                </td>
+                <td class="hidden-xs">
+                  <%= theme['author'] %>
+                </td>
+                <td class="hidden-xs">
+                  <%= theme['version'] %>
+                </td>
+                  <td class="center">
+                      <% if theme['foldername'] != @current %> 
+                        <%= link_to "/admin/themes/#{theme['foldername']}", method: :delete, data: { confirm: t("views.admin.generic.confirm") }, :class => 'btn btn-xs btn-danger pull-right' do %>       
+                          <i class="fa fa-trash-o"></i>
+                        <% end %>
+                      <% end %>
+                  </td>
+                  
+                </tr>
+              <% end %>
+            </table>
+
+            <hr>
+
+            <div class="formSepUpp">
+              <div class="field">
+                <button type="submit" class="btn btn-block btn-sm btn-primary"><i class="fa fa-refresh"></i>&nbsp;<%= t("views.admin.generic.update") %></button>
+              </div>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

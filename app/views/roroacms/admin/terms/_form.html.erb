@@ -1,0 +1,50 @@
+<%= form_for [:admin, @category ||= Roroacms::Term.new], :html => { :multipart => true } do |f| %>
+          
+    <% if !@category.cover_image.blank? %>
+
+      <div class="well well-background term<%= params[:action] == 'edit' ? '-large' : '' %>" style="background-image: url('<%= @category.cover_image %>');">
+          <%= render partial: 'roroacms/admin/partials/cover_image', locals: { image: @category.cover_image } %>
+      </div>
+
+    <% else %>
+
+      <div class="well well-background term<%= params[:action] == 'edit' ? '-large' : '' %>">
+        <%= render partial: 'roroacms/admin/partials/cover_image', locals: { image: @category.cover_image } %>
+      </div>
+
+    <% end %>
+    <%= f.hidden_field :id %>
+    <%= f.file_field :cover_image, :class => "", :id => "cover_image" %>
+    <%= hidden_field_tag :has_post_image, @category.cover_image.to_s  %>
+
+    <%= hidden_field_tag :type_taxonomy, @type %>
+
+    <div class="form-group">
+      <%= f.label :name, :class => 'control-label' %>
+      <%= f.text_field :name, size: 40, :class => "form-control" %>
+      <%= errors_for @category, :name %>
+    </div>
+    <div class="form-group">
+      <%= f.label :parent_id %>
+
+      <% if @type == 'category' %>
+        <%= f.select(:parent_id, nested_dropdown(Roroacms::Term.term_cats('category', @category.id, true), 'name'), { include_blank: t("views.admin.generic.none"), selected: @category.parent_id }, { class: "form-control" } )%>
+      <% else %>
+        <%= f.select(:parent_id, nested_dropdown(Roroacms::Term.term_cats('tag', @category.id, true), 'name'), { include_blank: t("views.admin.generic.none"), selected: @category.parent_id }, { class: "form-control" }) %>
+      <% end %>
+
+    </div>
+    <div class="form-group">
+      <%= f.label :slug, :class => 'control-label' %>
+      <%= f.text_field :slug, size: 40, :class => "form-control" %>
+      <%= errors_for @category, :slug %>
+    </div>
+    <div class="form-group">
+      <%= f.label :description %>
+      <%= f.text_area :description, :rows => "5", :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-small btn-primary"><%= t("views.admin.generic.save") %></button>
+    </div>
+
+<% end %>

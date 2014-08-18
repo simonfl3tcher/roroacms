@@ -1,0 +1,19 @@
+<li class="list-group-item no-background">
+    <div class="row">
+        <div class="col-xs-2 col-md-1">
+            <%= image_tag("roroacms/default-profile.jpg", size: "80", class: "img-circle img-responsive") %>
+        </div>
+        <div class="col-xs-10 col-md-11">
+            <div>
+                <a href='http://<%= @comment.website %>' target='_blank'><%= @comment.author %></a> <%= t("views.admin.generic.said") %>:
+                <br />
+                <small class="mic-info">
+                    <%= @comment.submitted_on.strftime("%b %e %Y, %l:%M %p") %>
+                </small>
+            </div>
+            <div class="comment-text">
+                <%= @comment.comment.html_safe %>
+            </div>
+        </div>
+    </div>
+</li>

@@ -1,0 +1,22 @@
+<div class="features">
+  <section class="editor">
+    <div class="outer">
+      <div class="editorwrap">
+        <section class="entry-markdown">
+          <header class="floating-header"><%= t("views.admin.pages.new.tab_content.markdown") %> <a href="javascript:;" data-toggle="modal" data-target="#mdModal"><i class="fa fa-info-circle pull-right"></i></a></header>
+          <section class="entry-markdown-content">
+            <%= f.text_area field.to_sym, :class => 'markdown_editor', :value => content.blank? ? '...' : content %>
+          </section>
+        </section>
+        <section class="entry-preview active">
+          <header class="floating-header">&nbsp; <%= t("views.admin.generic.preview") %> <span class="entry-word-count">0 <%= t("views.admin.generic.words") %></span> </header>
+          <section class="entry-preview-content">
+            <div class="rendered-markdown"></div>
+          </section>
+        </section>
+      </div>
+    </div>
+  </section>
+</div>
+
+<%= render 'roroacms/admin/partials/markdown_modal' %>

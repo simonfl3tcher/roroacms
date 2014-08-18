@@ -1,0 +1,289 @@
+<%= form_for [:admin, @record], :url => { action: @action.to_sym } do |f| %>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="tab-wrapper tab-left ">
+        <ul class="nav nav-tabs">
+
+          <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-cog"></i> <%= t("views.admin.generic.general") %></a></li>
+          <li><a class="contentReload" href="#content" data-toggle="tab"><i class="fa fa-desktop"></i> <%= t("views.admin.generic.content") %></a></li>
+          <li><a href="#revisions" data-toggle="tab"><i class="fa fa-history"></i> <%= t("views.admin.pages.new.tabs.history") %></a></li>
+          <li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> <%= t("views.admin.generic.search_engine_optimisation") %></a></li>
+          <% if @post_type == 'post' %>
+            <li><a href="#categories" data-toggle="tab"><i class="fa fa-sitemap"></i> <%= t("views.admin.pages.new.tabs.tags_and_categories") %></a></li>
+          <% end %>
+          <li><a href="#additional" data-toggle="tab"><i class="fa fa-paperclip"></i> <%= t("views.admin.pages.new.tabs.additional") %></a></li>
+
+        </ul>
+        <div class="tab-content">
+          <%= render :partial => 'roroacms/admin/partials/submit_bar', :locals => { post_record: @record }  %>
+          <div class="tab-pane active" id="general">
+
+
+            <% if !@record.cover_image.blank? %>
+
+              <div class="well well-background" style="background-image: url('<%= @record.cover_image %>');">
+                <%= render partial: 'roroacms/admin/partials/cover_image', locals: { image: @record.cover_image } %>
+              </div>
+
+            <% else %>
+
+              <div class="well well-background">
+                <%= render partial: 'roroacms/admin/partials/cover_image', locals: { image: @record.cover_image } %>
+              </div>
+
+            <% end %>
+            
+            <%= f.file_field :cover_image, :class => "", :id => "cover_image" %>
+
+            <div class="form-group">
+              <%= f.hidden_field :id %>
+              <%= f.hidden_field :post_type, :value => @post_type %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :post_title, :class => "col-sm-3 control-label"  %>
+              <div class="col-sm-6">
+                <%= f.text_field :post_title, size: 40, :class => "form-control" %>
+                <%= errors_for @record, :post_title %>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :post_slug, :class => "col-sm-3 control-label"  %>
+              <div class="col-sm-6">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    /
+                  </span>
+                  <%= f.text_field :post_slug, size: 40, :class => "form-control" %>
+                </div>
+                <%= errors_for @record, :post_slug %>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :post_visible, :class => "col-sm-3 control-label"  %>
+              <div class="col-sm-6">
+                <%= f.check_box :post_visible, {}, 'N', 'Y'  %>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :post_status, :class => "col-sm-3 control-label"  %>
+              <div class="col-sm-6">
+                <%= f.select :post_status, Roroacms::Post::POST_STATUS, {:selected => @record.post_status.blank? ? 'Draft' : @record.post_status}, { class: "form-control" }  %>
+                <%= errors_for @record, :post_status %>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="form-group">
+             <%= f.label :post_author, :class => "col-sm-3 control-label"  %>
+             <div class="col-sm-6">
+               <%= f.select :admin_id, Roroacms::Admin::GET_ADMINS.collect {|p| [ p.username, p.id ] }, { :selected => @record.admin_id.blank? ? current_user.id : @record.admin_id }, { class: "form-control" } %>
+             </div>
+             <div class="clearfix"></div>
+           </div>
+
+           <% if @post_type == 'page' %>
+             <div class="form-group">
+              <%= f.label :parent_id, :class => "col-sm-3 control-label"  %>
+              <div class="col-sm-6">
+                <%= f.select :parent_id, nested_dropdown(Roroacms::Post.parent_records(@record.id)), { include_blank: t("views.admin.generic.none") }, { class: "form-control" } %>
+                <%= errors_for @record, :parent_id %>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+          <% end %>
+
+          <% if !get_template_dropdown(@record.post_template).blank? %>
+
+          <div class="form-group">
+            <%= f.label :post_template, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.select :post_template, get_template_dropdown(@record.post_template), { include_blank: t("views.admin.generic.none") }, { class: "form-control" } %>
+              <%= errors_for @record, :post_template %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <% end %>
+
+          <div class="form-group">
+            <%= f.label :sort_order, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.text_field :sort_order, size: 5, :class => "form-control sort-input" %>
+              <%= errors_for @record, :sort_order %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+
+          <div class="form-group">
+            <%= f.label :post_date, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= t("views.admin.generic.date") %>
+              <%= f.datetime_select :post_date, { order: [:day, :month, :year, :hour, :minute], use_short_month: true, time_separator: '', datetime_separator: t("views.admin.generic.datetime_separator") }, :class => 'form-control' %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+
+        </div>
+        <div class="tab-pane" id="content">
+<!-- 
+          <%= f.text_area :post_content, :class => 'editor', :value => @record.post_content.blank? ? '' : @record.post_content %>
+           -->
+
+          <div class="features">
+              <section class="editor">
+                <div class="outer">
+                  <div class="editorwrap">
+                    <section class="entry-markdown">
+                      <header class="floating-header"><%= t("views.admin.pages.new.tab_content.markdown") %> <a href="javascript:;" data-toggle="modal" data-target="#mdModal"><i class="fa fa-info-circle pull-right"></i></a></header>
+                      <section class="entry-markdown-content">
+                        <%= f.text_area :post_content, :class => 'markdown_editor', :value => @record.post_content.blank? ? '...' : @record.post_content %>
+                      </section>
+                    </section>
+                    <section class="entry-preview active">
+                      <header class="floating-header">&nbsp; <%= t("views.admin.generic.preview") %> <span class="entry-word-count">0 <%= t("views.admin.generic.words") %></span> </header>
+                      <section class="entry-preview-content">
+                        <div class="rendered-markdown"></div>
+                      </section>
+                    </section>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+        </div>
+
+ 
+        <div class="tab-pane" id="revisions">
+          <%= render 'roroacms/admin/partials/revision_tree' %>
+        </div>
+
+        <div class="tab-pane" id="seo">
+
+          <div class="form-group">
+            <%= f.label :post_seo_title, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.text_field :post_seo_title, size: 40, :class => "form-control" %>
+              <%= errors_for @record, :post_seo_title %>
+              <small><%= t("views.admin.pages.new.tab_content.seo.seo_title_content") %></small>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :post_seo_description, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.text_field :post_seo_description, size: 40, :class => "form-control" %>
+              <%= errors_for @record, :post_seo_description %>
+              <small><%= t("views.admin.pages.new.tab_content.seo.seo_description_content") %></small>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :post_seo_is_disabled, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.check_box :post_seo_is_disabled, {}, 'Y', 'N'  %>
+              <small><%= t("views.admin.pages.new.tab_content.seo.seo_disabled_content") %></small>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :post_seo_no_index, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.check_box :post_seo_no_index, {}, 'Y', 'N'  %>
+              <small><%= t("views.admin.pages.new.tab_content.seo.seo_no_index_content") %></small>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :post_seo_no_follow, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.check_box :post_seo_no_follow, {}, 'Y', 'N'  %>
+              <small><%= t("views.admin.pages.new.tab_content.seo.seo_no_follow_content") %></small>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+        </div>
+        <% if @post_type == 'post' %>
+        <div class="tab-pane" id="categories">
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label"><%= t("generic.categories") %></label>
+            <div class="col-sm-6">
+
+              <% cats = Roroacms::Term.term_cats('category')
+              if !cats.blank? %>
+              <%= select_tag 'category_ids[]', options_for_select(cats.map {|c| [c.name, c.id]}, @record.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
+              <% else %>
+              <div class="text-center">
+                <strong><%= t("views.admin.pages.new.tab_content.categories.no_categories") %></strong>
+              </div>
+              <% end %>
+
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label"><%= t("generic.tags") %></label>
+            <div class="col-sm-6">
+
+
+              <% tags = Roroacms::Term.term_cats('tag')
+              if !tags.blank? %>
+              <%= select_tag 'tag_ids[]', options_for_select(tags.map {|c| [c.name, c.id]}, @record.terms.map {|t| t.id}), multiple: true, class: "chosen-select" %>
+              <% else %>
+              <div class="text-center">
+                <strong><%= t("views.admin.pages.new.tab_content.categories.no_tags") %></strong>
+              </div>
+              <% end %>
+
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+        </div>
+        <% end %>
+        <div class="tab-pane" id="additional">
+
+          <div class="additionalDataOptions">
+
+            <% if !@record.post_additional_data.blank? %>
+            <%= addition_data_loop(@json.decode(@record.post_additional_data)) %>
+            <% end %>
+
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label"><%= t("views.admin.pages.new.tab_content.additional.key") %></label>
+            <div class="col-sm-6">
+              <div class="input-group">
+                <input type="text" class="form-control" id="addAdditionalDataInput">
+                <span class="input-group-btn">
+                  <button class="btn btn-primary addAdditionalDataInput" type="button"><i class="fa fa-plus margin-0"></i></button>
+                </span>
+              </div><!-- /input-group -->
+
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+<% end %>

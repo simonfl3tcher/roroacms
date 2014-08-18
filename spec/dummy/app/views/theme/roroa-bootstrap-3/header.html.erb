@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= get_meta_headers %>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>           
+    <%= stylesheet_link_tag 'theme', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'theme', 'data-turbolinks-track' => true %>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="<%= site_url %>">Roroacms</a>
+            </div>
+
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <%= obtain_menu('header', false, 'nav navbar-nav navbar-right') %>
+            </div>
+        </div>
+    </nav>
+
+    <% if is_homepage? %>
+
+      <div id="myCarousel" class="carousel slide">
+         
+          <div class="carousel-inner">
+            <% (1..3).each do |f, index| %>
+                <div class="item <%= 'active' if f == 1 %>">
+                    <div class="fill" style="background-image:url('http://placehold.it/1900x1080');"></div>
+                    <div class="carousel-caption">
+                        <h1>Slide <%= f.to_s %></h1>
+                    </div>
+                </div>
+            <% end %>
+          </div>
+
+          <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+              <span class="icon-prev"></span>
+          </a>
+          <a class="right carousel-control" href="#myCarousel" data-slide="next">
+              <span class="icon-next"></span>
+          </a>
+      </div>
+
+    <% elsif is_page?(10) %>
+              
+        <div id="map" style="height: 65%;"></div>
+
+        <script type="text/javascript">
+          var locations = [
+                    ["", 51.510879,-0.119405, 1],
+                    ["", 40.731492, -73.988952, 1],
+                    ["", 33.795470, -118.203511, 1],
+                    ["", 51.440889, 5.471219, 1],
+                    ["", 18.520222, 73.856273, 1],
+                    ["", 35.166107, 33.366948, 1],
+                    ["", 53.352404, -6.263711, 1],
+                    ["", 35.776669, -78.642653, 1]
+            ];
+
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 3,
+            center: new google.maps.LatLng(39.662989, -8.705100),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          });
+
+            var styles = [
+            {
+              stylers: [
+                { hue: "#FF4533" },
+                { saturation: +200 }
+              ]
+            },{
+              featureType: "road",
+              elementType: "geometry",
+              stylers: [
+                { lightness: 50 },
+                { visibility: "simplified" }
+              ]
+            },{
+              featureType: "road",
+              elementType: "labels",
+              stylers: [
+                { visibility: "off" }
+              ]
+            }
+          ];
+
+          var styledMap = new google.maps.StyledMapType(styles,
+            {name: "Styled Map"});
+
+          var infowindow = new google.maps.InfoWindow();
+
+          var marker, i;
+
+          for (i = 0; i < locations.length; i++) {  
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+              map: map
+            });
+
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+              return function() {
+                infowindow.setContent(locations[i][0]);
+                infowindow.open(map, marker);
+              }
+            })(marker, i));
+          }
+        </script>
+    <% end %>
+
+   	<div class="section">
+
+        <div class="container">
+
+		  

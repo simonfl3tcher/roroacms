@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">&nbsp;</h3>
+        <div class="actions pull-right">
+          <i class="fa fa-chevron-down"></i>
+        </div>
+      </div>
+      <div class="panel-body">
+        <%= form_tag bulk_update_admin_comments_path do %>
+          <table id="dtable" class="table table-hover" cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th class="checkboxth hidden-xs"><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
+                <th><%= t("views.admin.generic.article") %></th>
+                <th class="hidden-xs"><%= t("views.admin.generic.comment") %></th>
+                <th class="hidden-xs center"><%= t("views.admin.comments.index.status") %></th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
+
+            <tbody>
+             <% Roroacms::Comment.order('created_at desc').includes(:post).each do |comment| %>
+              <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+
+              <td class="hidden-xs"><%= check_box_tag 'comments[]', comment.id %></td>
+              <td>
+                <%= link_to edit_admin_article_path(comment.post.id) do %>
+                  <%= comment.post.post_title %>
+                <% end %>
+             
+              </td>
+              <td class="hidden-xs">
+                <small><%= t("views.admin.comments.index.comment_submitted_on") %> <%= comment.submitted_on.strftime "%d-%m-%Y" %></small><br />
+                <%= create_excerpt(comment.comment, 50) %>
+              </td>
+              <td class="hidden-xs center">
+
+                <% if comment.comment_approved == 'Y' %>
+                  <%= t("views.admin.generic.approved") %>
+                <% elsif comment.comment_approved == 'S' %>
+                  <%= t("views.admin.generic.spam") %>
+                <% else %>
+                  <%= t("views.admin.comments.index.unapproved") %>
+                <% end %>
+                
+              </td>
+                <td class="center">
+                  <div class="btn-group pull-right">
+                    <%= link_to edit_admin_comment_path(comment), :class => 'btn btn-xs btn-default' do %>
+                      <i class="fa fa-pencil"></i>
+                    <% end %>
+                     <%= link_to mark_as_spam_admin_comment_path(comment), :class => 'btn btn-xs btn-default' do %>
+                      <i class="fa fa-fire"></i>
+                    <% end %>              
+                    <%= link_to admin_comment_path(comment), method: :delete, data: { confirm: t("views.admin.generic.confirm") }, :class => 'btn btn-xs btn-danger' do %>
+                      <i class="fa fa-trash-o"></i>
+                    <% end %>
+                  </div>
+                </td>
+                
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+          <div class="hidden-xs">
+            <hr>
+            <%= bulk_update_dropdown Hash[
+                                        'unapprove' => t("views.admin.generic.bulk_update_options.unapprove"),
+                                        'approve' => t("views.admin.generic.bulk_update_options.approve"), 
+                                        'mark_as_spam' => t("views.admin.generic.bulk_update_options.mark_as_spam"), 
+                                        'destroy' => t("views.admin.generic.bulk_update_options.destroy")
+                                        ] %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

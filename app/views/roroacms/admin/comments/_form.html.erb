@@ -1,0 +1,86 @@
+<%= form_for [:admin, @comment] do |f| %>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="tab-wrapper tab-left ">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-comment"></i> <%= t("views.admin.generic.comment") %></a></li>
+      </ul>
+      <div class="tab-content">
+        <%= render :partial => 'roroacms/admin/partials/submit_bar' %>
+        <div class="tab-pane active" id="general">
+
+          <div class="form-group">
+            <%= f.label "Post", :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= link_to edit_admin_article_path(@comment.post_id) do %>
+                <%= @comment.post.post_title %>
+              <% end %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :author, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.text_field :author, size: 40, :class => "form-control" %>
+              <%= errors_for @comment, :author %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :email, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.text_field :email, size: 40, :class => "form-control" %>
+              <%= errors_for @comment, :email %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :website, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= f.text_field :website, size: 40, :class => "form-control" %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :comment_approved, class: "col-sm-3 control-label" %>
+              <div class="col-sm-6">
+                <div class="">
+                  <label class="radio-inline">
+                    <%= f.radio_button :comment_approved, "Y", :checked => @comment.comment_approved == 'Y' ? true : false %><%= t("views.admin.generic.approved") %>
+                  </label>
+                  <label class="radio-inline">
+                    <%= f.radio_button :comment_approved, "N", :checked => @comment.comment_approved == 'N' ? true : false %><%= t("views.admin.comments.form.radio_2") %>
+                  </label>
+                  <label class="radio-inline">
+                    <%= f.radio_button :comment_approved, "S", :checked => @comment.comment_approved == 'S' ? true : false %><%= t("views.admin.generic.spam") %>
+                  </label>
+                </div>
+              </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :submitted_on, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+              <%= t("views.admin.generic.date") %>
+              <%= f.datetime_select :submitted_on, { order: [:day, :month, :year, :hour, :minute], :use_short_month => true, :time_separator => '', datetime_separator: t("views.admin.generic.datetime_separator") }, :class => 'form-control' %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :comment, :class => "col-sm-3 control-label"  %>
+            <div class="col-sm-6">
+               <%= f.text_area :comment, :class => 'form-control'%>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

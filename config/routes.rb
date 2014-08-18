@@ -1,14 +1,23 @@
-Roroacms::Application.routes.draw do
-  
-  devise_for :admins, :path => "admin", :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'reset', :confirmation => 'verification', :unlock => 'unblock', :registration => 'register', :sign_up => 'register' }, skip: :registrations
+Roroacms::Engine.routes.draw do
 
+  devise_for :admins, class_name: "Roroacms::Admin", :path => "admin", :path_names => { :sign_in => 'login', :sign_out => 'logout', :password => 'reset', :confirmation => 'verification', :unlock => 'unblock', :registration => 'register', :sign_up => 'register' }, skip: :registrations, module: :devise
+  
   devise_scope :admin do
     get "admin/login", :to => "devise/sessions#new"
-    get "admin/logout", :to => "devise/sessions#destroy"
+    get "admin/logout", :to => "devise/sessions#new"
   end
-
+  
   resources :pages
   resources :comments
+
+  resources :setup do 
+    member { get 'tour_complete' }
+    collection do 
+      get 'administrator'
+      post 'create_user'
+      post 'tour_complete'
+    end
+  end
   
   namespace :admin do
     get '', to: 'dashboard#index'
@@ -16,7 +25,8 @@ Roroacms::Application.routes.draw do
     get 'article/categories', to: 'terms#categories', as: 'article_categories'
     get 'article/tags', to: 'terms#tags', as: 'article_tags'
     
-    resources :login, :users, :themes
+    resources :users, :themes
+
 
     resources :administrators, :except => [:show]
 
@@ -82,4 +92,5 @@ Roroacms::Application.routes.draw do
 
   root to: 'pages#index'
   match '/*slug', :to => 'pages#dynamic_page', via: [:get], :constraints => lambda{|req| req.path !~ /\.(png|jpg|js|css)$/ }
+	
 end

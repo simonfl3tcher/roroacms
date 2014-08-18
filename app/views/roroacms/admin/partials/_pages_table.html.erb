@@ -1,0 +1,26 @@
+<%= render partial: 'roroacms/admin/partials/table_header', locals: {path: new_admin_page_path, name: t("views.admin.pages.index.add_new_page"), id: "add-new-page" } %>
+
+<%= form_tag bulk_update_admin_pages_path do %>
+
+  <table id="dtable" class="table table-hover"  width="100%">
+    <thead>
+      <tr>
+        <th class="checkboxth hidden-xs"><%= check_box_tag 'all', 'all', false, :id => 'check_all' %></th>
+        <th><%= t("views.admin.partials.pages_table.page_title") %></th>
+        <th class="hidden-xs"><%= t("views.admin.generic.published_date") %></th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <%= nested_table(@pages, 'roroacms/admin/partials/table_row') %>
+  </table>
+  <hr>
+  <div class="hidden-xs">
+    <%= bulk_update_dropdown Hash[
+                                'publish' => t("views.admin.generic.bulk_update_options.publish"), 
+                                'draft' => t("views.admin.generic.bulk_update_options.draft"), 
+                                'move_to_trash' => t("views.admin.generic.bulk_update_options.move_to_trash")
+                                ] %>
+  </div>
+  <div id="paginationWrapper"></div>
+
+<% end %>

@@ -5,8 +5,14 @@ en:
   generic: 
     comments: "Comments"
     home: "Home"
+    admin: "Admin"
     dashboard: "Dashboard"
     settings: "Settings"
+    installation:
+      one: "Installation - Settings"
+      two: "Installation - Administrator"
+    theme_issues:
+      title: "Theme Issues"
     add_new_user: "Add New User"
     profile: "Profile"
     users: "Users"
@@ -21,6 +27,8 @@ en:
     search: "Search"
     nothing: "Nothing was done"
     cannot_be_blank: "cannot be blank"
+    validation:
+      no_passed: 'Some fields did not pass validation'
   controllers:
     application:
       unauthorized: "Not Authorized"
@@ -36,6 +44,10 @@ en:
       misc:
         dashboard_breadcrumb_title: "Back to dashboard"
         authorize_admin_access_error: "You do not have the necessary access level to view this"
+      setup:
+        general:
+          success: 'You are all set up! Log in to get started'
+          already_setup: "You have already set up your Roroacms platform"
       settings:
         general:
           create:
@@ -185,7 +197,7 @@ en:
       generic:
         back_to: "Back to %{word}"
       render_template:
-        template_error: "You have to have page.html.erb tempalte included in your theme"
+        template_error: "You have to have page.html.erb template included in your theme"
     view_helper:
       generic:
         flash:
@@ -238,6 +250,8 @@ en:
     admin:
       generic:
         save: "Save"
+        save_and_continue: "Save & Continue"
+        save_and_complete: "Save & Complete"
         by: "by"
         words: "words"
         preview: "Preview"
@@ -303,6 +317,13 @@ en:
         administrators: "Administrators"
         quick_links: "Quick Links"
         latest_5_comments: "Latest 5 Comments"
+      installation:
+        content: "Welcome to Roroas installation process, in order for you to get started on the most extendable and boundless Ruby On Rails content management system we need a few details..."
+        content_two: "Before you are let loose we just need to create you some login details and then we really are done!"
+      theme_issues:
+        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam molestie magna eget vulputate venenatis. Maecenas eu ligula erat. Mauris bibendum tempus mattis. Nullam nec fermentum mi, in posuere sem. Quisque a vestibulum lacus. Proin leo libero"
+        no_active: "You currently do not have an active theme"
+        no_active_ctoa: "Please create a theme and activate it in the admin panel to get started"
       menus:
         generic:
           remove: "Remove"
@@ -409,6 +430,7 @@ en:
         tabs:
           email_config: "Email Configuration"
           user_groups: "User Groups"
+          aws: "Amazon S3"
         tab_content:
           display_url: "Display URL"
           site_url: "Site URL"
@@ -418,6 +440,7 @@ en:
           articles_slug: "Articles Slug"
           category_slug: "Category Slug"
           tag_slug: "Tag Slug"
+          breadcrumb_seperator: "Breadcrumb Seperator"
           home_page: "Home Page"
           smtp_username: "Server E-mail Address"
           smtp_password: "SMTP password"
@@ -436,18 +459,24 @@ en:
           seo_rewrite_titles: "Rewrite Titles"
           seo_no_index_categories: "No index categories"
           seo_no_index_archives: "No index archives"
+          seo_canonical_urls: "Canonical URLs"
           seo_autogenerate_descriptions: "Autogenerate Decriptions"
           plain: "Plain"
           login: "Login"
           cram: "Cram MD5"
           system_comments: "System Comments"
           facebook_comments: "Other"
+          aws_access_key_id: "AWS S3 - Access Key ID"
+          aws_secret_access_key: "AWS S3 - Secret Access Key ID"
+          aws_bucket_name: "AWS S3 - Bucket name"
+          url_prefix: "URL prefix"
       terms:
         table:
           slug: "Slug"
         view:
           have_no: "You currently have no %{type}"
       themes:
+        no_themes: "Please create a theme to get started"
         index:
           theme: "Theme Name"
           description: "Description"
@@ -459,7 +488,9 @@ en:
         total: "Total Count"
       layouts:
         admin:
-          meta_title: "Dashboard | Roroa"
+          meta_title: "Dashboard | RoroaCMS"
+          meta_title_installation: "Installation | RoroaCMS"
+          meta_title_theme_issues: "Theme Issues | RoroaCMS"
           navigation:
             logout: "Logout"
             add_new_page: "Add New Page"
@@ -518,7 +549,7 @@ en:
         odd: "must be odd"
         even: "must be even"
     attributes:
-      admin:
+      roroacms/admin:
         email: 'Email address'
         description: 'Author description'
         first_name: 'First name'
@@ -527,7 +558,7 @@ en:
         access_level: 'Access'
         usernmae: 'Username'
         cover_picture: 'Cover image'
-      comment:
+      roroacms/comment:
         author: 'Author'
         email: 'Email address'
         website: 'Website'
@@ -535,15 +566,15 @@ en:
         comment_approved: 'Is comment approved?'
         parent_id: 'Parent'
         is_spam: 'Is spam?'
-      contact:
+      roroacms/contact:
         name: 'Name'
         message: 'Message'
         email: 'Email Address'
         subject: 'Subject'
-      menu:
+      roroacms/menu:
         name: 'Name'
         key: 'Key'
-      post:
+      roroacms/post:
         admin_id: 'User'
         post_slug: 'URL'
         post_title: 'Title'
@@ -561,11 +592,11 @@ en:
         post_seo_no_follow: 'No Follow'
         disabled: 'Is disabled?'
         post_image: 'Cover image'
-      term:
+      roroacms/term:
         name: 'Name'
         slug: 'Slug'
         description: 'Description'
-      setting: 
+      roroacms/setting: 
         setting_name: 'Name'
         setting: 'Value'
         type_of_setting: 'Type of setting'

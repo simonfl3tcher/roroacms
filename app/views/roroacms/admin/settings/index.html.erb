@@ -1,0 +1,351 @@
+<div class="row settings-area">
+
+  <div class="col-md-12">
+
+    <%= form_tag(admin_settings_path, :html => { class: 'form-horizontal' }) do %>
+
+    <%= hidden_field_tag 'redirect', 'general' %>
+
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="tab-wrapper tab-left ">
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-cog"></i> <%= t("views.admin.generic.general") %></a></li>
+            <li><a href="#email" data-toggle="tab"><i class="fa fa-envelope-o"></i> <%= t("views.admin.settings.tabs.email_config") %></a></li>
+            <li><a href="#amazon" data-toggle="tab"><i class="fa fa-cloud-upload"></i> <%= t("views.admin.settings.tabs.aws") %></a></li>
+            <li><a href="#comment" data-toggle="tab"><i class="fa fa-comments"></i> <%= t("generic.comments") %></a></li>
+            <li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> <%= t("views.admin.generic.search_engine_optimisation") %></a></li>
+            <li><a href="#user-groups" data-toggle="tab"><i class="fa fa-users"></i> <%= t("views.admin.settings.tabs.user_groups") %></a></li>
+          </ul>
+          <div class="tab-content">
+            <%= render :partial => 'roroacms/admin/partials/submit_bar' %>
+            <div class="tab-pane active" id="general">
+              <div class="form-group">
+                <%= label_tag(:site_url, t("views.admin.settings.tab_content.site_url"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= text_field_tag(:site_url, @settings['site_url'], class: 'form-control') %>
+                  <%= setting_errors_for @settings, :site_url %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="form-group">
+                <%= label_tag(:url_prefix, t("views.admin.settings.tab_content.url_prefix"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= select_tag :url_prefix, options_for_select(['http://', 'https://', 'http://www.', 'https://www.'], @settings['url_prefix']), class: 'form-control' %>
+                  <%= setting_errors_for @settings, :url_prefix %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="form-group">
+                <%= label_tag(:pagination_per, t("views.admin.settings.tab_content.pagination_per"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <label class="radio-inline">
+                    <%= radio_button_tag(:pagination_per, 10, @settings['pagination_per'].to_i == 10 ? true : false) %> 10
+                  </label>
+                  <label class="radio-inline">
+                    <%= radio_button_tag(:pagination_per, 25, @settings['pagination_per'].to_i == 25 ? true : false) %> 25
+                  </label>
+                  <label class="radio-inline">
+                    <%= radio_button_tag(:pagination_per, 50, @settings['pagination_per'].to_i == 50 ? true : false) %> 50
+                  </label>
+                  <label class="radio-inline">
+                    <%= radio_button_tag(:pagination_per, 100, @settings['pagination_per'].to_i == 100 ? true : false) %> 100
+                  </label>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="form-group">
+                <%= label_tag(:pagination_per_fe, t("views.admin.settings.tab_content.pagination_per_fe"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= text_field_tag(:pagination_per_fe, @settings['pagination_per_fe'], class: 'form-control') %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="form-group">
+                <%= label_tag(:site_email, t("views.admin.settings.tab_content.site_email"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= text_field_tag(:site_email, @settings['site_email'], class: 'form-control') %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="form-group">
+                <%= label_tag(:articles_slug, t("views.admin.settings.tab_content.articles_slug"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= text_field_tag(:articles_slug, @settings['articles_slug'], class: 'form-control') %>
+                  <%= setting_errors_for @settings, :articles_slug %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="form-group">
+                <%= label_tag(:category_slug, t("views.admin.settings.tab_content.category_slug"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= text_field_tag(:category_slug, @settings['category_slug'], class: 'form-control') %>
+                  <%= setting_errors_for @settings, :category_slug %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="form-group">
+                <%= label_tag(:tag_slug, t("views.admin.settings.tab_content.tag_slug"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= text_field_tag(:tag_slug, @settings['tag_slug'], class: 'form-control') %>
+                  <%= setting_errors_for @settings, :tag_slug %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="form-group">
+                <%= label_tag(:breadcrumb_seperator, t("views.admin.settings.tab_content.breadcrumb_seperator"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= text_field_tag(:breadcrumb_seperator, @settings['breadcrumb_seperator'], class: 'form-control') %>
+                  <%= setting_errors_for @settings, :breadcrumb_seperator %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="form-group">
+                <%= label_tag(:home_page, t("views.admin.settings.tab_content.home_page"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= select_tag :home_page, options_for_select(Roroacms::Post.where(:post_type => 'page').collect {|p| [ p.post_title, p.id ] }, @settings['home_page']), prompt: t("views.admin.generic.select_homepage"), class: 'form-control' %>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="email">
+
+              <div class="form-group">
+                <%= label_tag(:smtp_username, t("views.admin.settings.tab_content.smtp_username"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= text_field_tag(:smtp_username, @settings['smtp_username'], class: 'form-control') %>
+                  <%= setting_errors_for @settings, :smtp_username %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+
+              <div class="form-group">
+                <%= label_tag(:smtp_password, t("views.admin.settings.tab_content.smtp_password"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= password_field_tag(:smtp_password, @settings['smtp_password'], class: 'form-control') %>
+                  <%= setting_errors_for @settings, :smtp_password %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+
+              <div class="form-group">
+                <%= label_tag(:smtp_address, t("views.admin.settings.tab_content.smtp_address"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= text_field_tag(:smtp_address, @settings['smtp_address'], class: 'form-control') %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+
+              <div class="form-group">
+                <%= label_tag(:smtp_domain, t("views.admin.settings.tab_content.smtp_domain"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= text_field_tag(:smtp_domain, @settings['smtp_domain'], class: 'form-control') %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+
+              <div class="form-group">
+                <%= label_tag(:smtp_port, t("views.admin.settings.tab_content.smtp_port"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= text_field_tag(:smtp_port, @settings['smtp_port'], class: 'form-control') %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+
+              <div class="form-group">
+                <%= label_tag(:smtp_authentication, t("views.admin.settings.tab_content.smtp_authentication"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <div class="">
+                    <label class="radio-inline">
+                      <%= radio_button_tag(:smtp_authentication, "plain", @settings['smtp_authentication'] == 'plain' ? true : false) %> <%= t("views.admin.settings.tab_content.plain") %>
+                    </label>
+                    <label class="radio-inline">
+                      <%= radio_button_tag(:smtp_authentication, "login", @settings['smtp_authentication'] == 'login' ? true : false) %> <%= t("views.admin.settings.tab_content.login") %>
+                    </label>
+                    <label class="radio-inline">
+                      <%= radio_button_tag(:smtp_authentication, "cram_md5", @settings['smtp_authentication'] == 'cram_md5' ? true : false) %> <%= t("views.admin.settings.tab_content.cram") %>
+                    </label>
+                  </div>
+                  <%= setting_errors_for @settings, :smtp_authentication %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+
+
+
+            </div>
+            <div class="tab-pane" id="amazon">
+              <div class="form-group">
+                <%= label_tag(:aws_access_key_id, t("views.admin.settings.tab_content.aws_access_key_id "), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= text_field_tag(:aws_access_key_id, @settings['aws_access_key_id'], class: 'form-control') %>
+                  <%= setting_errors_for @settings, :aws_access_key_id %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="form-group">
+                <%= label_tag(:aws_secret_access_key, t("views.admin.settings.tab_content.aws_secret_access_key"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= text_field_tag(:aws_secret_access_key, @settings['aws_secret_access_key'], class: 'form-control') %>
+                  <%= setting_errors_for @settings, :aws_secret_access_key %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="form-group">
+                <%= label_tag(:aws_bucket_name, t("views.admin.settings.tab_content.aws_bucket_name"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= text_field_tag(:aws_bucket_name, @settings['aws_bucket_name'], class: 'form-control') %>
+                  <%= setting_errors_for @settings, :aws_bucket_name %>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+            <div class="tab-pane" id="comment">
+              <div class="form-group">
+                <%= label_tag(:article_comments, t("views.admin.settings.tab_content.article_comments"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <div class="">
+                      <%= hidden_field_tag :article_comments, 'N' %>
+                      <%= check_box_tag :article_comments, 'Y', @settings['article_comments'] == 'Y' ? true : false %>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="form-group">
+                <%= label_tag(:article_comment_type, t("views.admin.settings.tab_content.article_comment_type"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <div class="">
+                    <label class="radio-inline">
+                      <%= radio_button_tag(:article_comment_type, "R", @settings['article_comment_type'] == 'R' ? true : false) %> <%= t("views.admin.settings.tab_content.system_comments") %>
+                    </label>
+                    <label class="radio-inline">
+                      <%= radio_button_tag(:article_comment_type, "F", @settings['article_comment_type'] == 'F' ? true : false) %> <%= t("views.admin.settings.tab_content.facebook_comments") %>
+                    </label>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+
+            <div class="tab-pane" id="seo">
+             <div class="form-group">
+              <%= label_tag(:seo_site_title, t("views.admin.settings.tab_content.seo_site_title"), class: "col-sm-3 control-label") %>
+              <div class="col-sm-6">
+                <%= text_field_tag(:seo_site_title, @settings['seo_site_title'], class: 'form-control') %>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="form-group">
+              <%= label_tag(:seo_home_title, t("views.admin.settings.tab_content.seo_home_title"), class: "col-sm-3 control-label") %>
+              <div class="col-sm-6">
+                <%= text_field_tag(:seo_home_title, @settings['seo_home_title'], class: 'form-control') %>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="form-group">
+              <%= label_tag(:seo_home_description, t("views.admin.settings.tab_content.seo_home_description"), class: "col-sm-3 control-label") %>
+              <div class="col-sm-6">
+                <%= text_area_tag(:seo_home_description, @settings['seo_home_description'], class: 'form-control') %>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="form-group">
+              <%= label_tag(:seo_404_title, t("views.admin.settings.tab_content.seo_404_title"), class: "col-sm-3 control-label") %>
+              <div class="col-sm-6">
+                <%= text_field_tag(:seo_404_title, @settings['seo_404_title'], class: 'form-control') %>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="form-group">
+              <%= label_tag(:seo_404_description, t("views.admin.settings.tab_content.seo_404_description"), class: "col-sm-3 control-label") %>
+              <div class="col-sm-6">
+                <%= text_area_tag(:seo_404_description, @settings['seo_404_description'], class: 'form-control') %>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="form-group">
+              <%= label_tag(:seo_google_analytics_code, t("views.admin.settings.tab_content.seo_google_analytics_code"), class: "col-sm-3 control-label") %>
+              <div class="col-sm-6">
+                <%= text_field_tag(:seo_google_analytics_code, @settings['seo_google_analytics_code'], class: 'form-control') %>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="form-group">
+              <%= hidden_field_tag :seo_rewrite_titles, 'N' %>
+              <%= label_tag(:seo_rewrite_titles, t("views.admin.settings.tab_content.seo_rewrite_titles"), class: "col-sm-3 control-label") %>
+              <div class="col-sm-6">
+                <%= check_box_tag :seo_rewrite_titles, 'Y', @settings['seo_rewrite_titles'] == 'Y' ? true : false %>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="form-group">
+              <%= hidden_field_tag :seo_canonical_urls, 'N' %>
+              <%= label_tag(:seo_canonical_urls, t("views.admin.settings.tab_content.seo_canonical_urls"), class: "col-sm-3 control-label") %>
+              <div class="col-sm-6">
+                <%= check_box_tag :seo_canonical_urls, 'Y', @settings['seo_canonical_urls'] == 'Y' ? true : false %>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="form-group">
+              <%= hidden_field_tag :seo_no_index_categories, 'N' %>
+              <%= label_tag(:seo_no_index_categories, t("views.admin.settings.tab_content.seo_no_index_categories"), class: "col-sm-3 control-label") %>
+              <div class="col-sm-6">
+                <%= check_box_tag :seo_no_index_categories, 'Y', @settings['seo_no_index_categories'] == 'Y' ? true : false %>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="form-group">
+              <%= hidden_field_tag :seo_no_index_archives, 'N' %>
+              <%= label_tag(:seo_no_index_archives, t("views.admin.settings.tab_content.seo_no_index_archives"), class: "col-sm-3 control-label") %>
+              <div class="col-sm-6">
+                <%= check_box_tag :seo_no_index_archives, 'Y', @settings['seo_no_index_archives'] == 'Y' ? true : false %>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+
+            <div class="form-group">
+              <%= hidden_field_tag :seo_autogenerate_descriptions, 'N' %>
+              <%= label_tag(:seo_autogenerate_descriptions, t("views.admin.settings.tab_content.seo_autogenerate_descriptions"), class: "col-sm-3 control-label") %>
+              <div class="col-sm-6">
+                <%= check_box_tag :seo_autogenerate_descriptions, 'Y', @settings['seo_autogenerate_descriptions'] == 'Y' ? true : false %>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+          <div class="tab-pane" id="user-groups">
+
+            <div class="userGroupOptions">
+
+              <% @json.decode(@settings['user_groups'].gsub('\\', '')).each do |key, value| %>
+
+              <%= render :partial => 'roroacms/admin/partials/user_group_view', :locals => { key: key, value: value } %>
+
+              <% end %>
+
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-3 control-label">&nbsp;</label>
+              <div class="col-sm-6">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="addGroupInput">
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary addGroupInput" type="button"><i class="fa fa-plus margin-0"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+                
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
+</div>

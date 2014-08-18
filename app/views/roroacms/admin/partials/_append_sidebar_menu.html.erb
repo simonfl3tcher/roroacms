@@ -1,0 +1,52 @@
+<% if menu_block[:sub_menu].blank? %>
+
+	<% if menu_block[:user_groups].blank? || (!menu_block[:user_groups].blank? && menu_block[:user_groups].include?(current_user.access_level)) %>
+		
+		<li class="">
+			
+			<%= link_to menu_block[:link] do %>
+				<% if !menu_block[:icon].blank? %>
+					<%= menu_block[:icon].html_safe %>
+				<% end %>
+				<%= menu_block[:title] %>
+			<% end %>
+			
+		</li>
+
+	<% end %>
+
+<% else %>
+
+	<% if menu_block[:user_groups].blank? || (!menu_block[:user_groups].blank? && menu_block[:user_groups].include?(current_user.access_level)) %>
+		
+		<li class="sub-menu">
+			<a href="javascript:;">
+				<% if !menu_block[:icon].blank? %>
+					<%= menu_block[:icon].html_safe %>
+				<% end %>
+				<%= menu_block[:title] %>
+				<i class="arrow fa fa-angle-right pull-right"></i>
+			</a>
+			<ul>
+
+				<% menu_block[:sub_menu].each do |link| %>
+
+					<% if link[:user_groups].blank? || (!link[:user_groups].blank? && link[:user_groups].include?(current_user.access_level)) %>
+						<li class="">
+							<%= link_to link[:link] do %>
+								<% if !link[:icon].blank? %>
+									<%= link[:icon].html_safe %>
+								<% end %>
+								<%= link[:title] %>
+							<% end %>
+						</li>
+					<% end %>
+
+				<% end %>
+
+			</ul>
+		</li>
+
+	<% end %>
+
+<% end %>

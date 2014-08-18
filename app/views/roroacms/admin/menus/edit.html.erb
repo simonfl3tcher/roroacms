@@ -1,0 +1,30 @@
+<div class="row">
+  
+  <div class="col-md-7" id="menu-sortable-fields">
+
+    <div class="panel panel-default">
+      <div class="panel-body">
+    
+        <%= render 'menu_list' %>
+
+
+          <div class="saveWrapper <%= @menu.menu_options.blank? ? 'hidden' : '' %>">
+            <hr>
+
+            <button class="btn btn-primary btn-block btn-sm update-menu"><i class="fa fa-check"></i>&nbsp; <%= t("views.admin.generic.save") %></button>
+          </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col-md-5" id="menu-forms">
+
+    <%= render 'roroacms/admin/menus/partials/menu_content_accordion' %>
+
+    <%= render 'roroacms/admin/menus/partials/menu_custom_accordion' %> 
+
+  </div>
+
+</div>
