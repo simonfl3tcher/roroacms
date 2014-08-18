@@ -16,6 +16,6 @@ capybara-*.html
 /config/initializers/bullet.rb
 /public/*
 .project
-.gem
-.gemspec
+*.gem
+*.gemspec
 .DS_Store
