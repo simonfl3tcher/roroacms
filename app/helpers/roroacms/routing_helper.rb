@@ -200,7 +200,7 @@ module Roroacms
           term = Term.where(:structured_url => '/' + segments.join('/')).first
 
           # do a search for the content
-          gloalize Post.joins(terms: :term_anatomy).where("post_status = 'Published' AND post_type != 'autosave' AND post_date <= CURRENT_TIMESTAMP AND disabled = 'N' AND terms.id = ? ", term).where(term_anatomies: {taxonomy: term_type}).order('post_date DESC').page(params[:page]).per(Setting.get('pagination_per_fe'))
+          gloalize Post.joins(terms: :term_anatomy).where("post_status = 'Published' AND post_type != 'autosave' AND post_date <= CURRENT_TIMESTAMP AND disabled = 'N' AND roroacms_terms.id = ? ", term).where(roroacms_term_anatomies: {taxonomy: term_type}).order('post_date DESC').page(params[:page]).per(Setting.get('pagination_per_fe'))
 
           # add the breadcrumbs
           add_breadcrumb "#{article_url.capitalize}", "/#{article_url}", :title => I18n.t("helpers.routing_helper.generic.back_to", word: article_url.capitalize)
@@ -275,7 +275,7 @@ module Roroacms
       add_breadcrumb "#{segments[1]}", "/#{article_url}/#{segments[1]}", :title => I18n.t("helpers.routing_helper.generic.back_to", word: segments[1])
 
       # build SQL variable
-      build_sql = Post.where("(disabled = 'N' AND post_status = 'Published') AND post_type = 'Post' AND (EXTRACT(year from post_date) = ?)", segments[1])
+      build_sql = Post.where("(disabled = 'N' AND post_status = 'Published') AND post_type = 'post' AND (EXTRACT(year from post_date) = ?)", segments[1])
 
 
       if !segments[2].blank?
@@ -306,7 +306,7 @@ module Roroacms
     # returns a boolean as to wether the template file actually exist in the theme?
 
     def template_exists?(path)
-      File.exists?("#{Rails.root}/app/views/theme/#{current_theme}/" + path + '.' + get_theme_ext)
+      File.exists?("#{Rails.root}/app/views/themes/#{current_theme}/" + path + '.' + get_theme_ext)
     end
 
     # checks for the top level file, but returns the file that it can actually use
@@ -319,27 +319,27 @@ module Roroacms
       when 'archive'
 
         if template_exists?("archive")
-          render :template => "theme/#{current_theme}/archive." + get_theme_ext
+          render :template => "themes/#{current_theme}/archive." + get_theme_ext
         elsif template_exists?("category")
-          render :template => "theme/#{current_theme}/category." + get_theme_ext
+          render :template => "themes/#{current_theme}/category." + get_theme_ext
         else
-          render :template => "theme/#{current_theme}/page." + get_theme_ext
+          render :template => "themes/#{current_theme}/page." + get_theme_ext
         end
 
       when 'category'
 
         if template_exists?("category")
-          render :template => "theme/#{current_theme}/category." + get_theme_ext
+          render :template => "themes/#{current_theme}/category." + get_theme_ext
         else
-          render :template => "theme/#{current_theme}/page." + get_theme_ext
+          render :template => "themes/#{current_theme}/page." + get_theme_ext
         end
 
       when 'search'
 
         if template_exists?("category")
-          render :template => "theme/#{current_theme}/search." + get_theme_ext
+          render :template => "themes/#{current_theme}/search." + get_theme_ext
         else
-          render :tempalte => "theme/#{current_theme}/page." + get_theme_ext
+          render :tempalte => "themes/#{current_theme}/page." + get_theme_ext
         end
 
       end
@@ -357,16 +357,16 @@ module Roroacms
         # check if the template file actually exists
         if template_exists?("template-#{@content.post_template.downcase}")
 
-          render :template => "theme/#{current_theme}/template-#{@content.post_template.downcase}." + get_theme_ext
+          render :template => "themes/#{current_theme}/template-#{@content.post_template.downcase}." + get_theme_ext
 
         else
 
           # check if a file with the given name exists
           if template_exists?(name)
-            render :template => "theme/#{current_theme}/#{name}." + get_theme_ext
+            render :template => "themes/#{current_theme}/#{name}." + get_theme_ext
           elsif template_exists?("page")
             # if not use the page.html.erb template which has to be included in the theme
-            render :template => "theme/#{current_theme}/page." + get_theme_ext
+            render :template => "themes/#{current_theme}/page." + get_theme_ext
           else
             render :inline => I18n.t("helpers.routing_helper.render_template.template_error")
           end
@@ -377,10 +377,10 @@ module Roroacms
 
         # check if a file with the given name exists
         if template_exists?(name)
-          render :template => "theme/#{current_theme}/#{name}." + get_theme_ext
+          render :template => "themes/#{current_theme}/#{name}." + get_theme_ext
         elsif template_exists?("page")
           # if not use the page.html.erb template which has to be included in the theme
-          render :template => "theme/#{current_theme}/page." + get_theme_ext
+          render :template => "themes/#{current_theme}/page." + get_theme_ext
         else
           render :inline => I18n.t("helpers.routing_helper.render_template.template_error")
         end

@@ -42,17 +42,16 @@ module Roroacms
       Devise::ConfirmationsController.layout "roroacms/login"
       Devise::UnlocksController.layout "roroacms/login"
       Devise::PasswordsController.layout "roroacms/login"
-      ApplicationController.helper(ActionView::Helpers::ThemeHelper) if File.exists?("#{Rails.root}/app/helpers/theme_helper.rb")
     end
     
     require "#{Roroacms::Engine.root}/app/models/roroacms/setting.rb"
 
     initializer :assets do |config|
       
-        Rails.application.config.assets.paths << "#{Dir.pwd}/app/views/theme/#{Setting.get('theme_folder')}/assets/stylesheets"
-        Rails.application.config.assets.paths << "#{Dir.pwd}/app/views/theme/#{Setting.get('theme_folder')}/assets/javascripts"
-        Rails.application.config.assets.paths << "#{Dir.pwd}/app/views/theme/#{Setting.get('theme_folder')}/assets/font"
-        Rails.application.config.assets.paths << "#{Dir.pwd}/app/views/theme/#{Setting.get('theme_folder')}/assets/images"
+        Rails.application.config.assets.paths << "#{Dir.pwd}/app/views/themes/#{Setting.get('theme_folder')}/assets/stylesheets"
+        Rails.application.config.assets.paths << "#{Dir.pwd}/app/views/themes/#{Setting.get('theme_folder')}/assets/javascripts"
+        Rails.application.config.assets.paths << "#{Dir.pwd}/app/views/themes/#{Setting.get('theme_folder')}/assets/font"
+        Rails.application.config.assets.paths << "#{Dir.pwd}/app/views/themes/#{Setting.get('theme_folder')}/assets/images"
         Rails.application.config.assets.paths << "#{Dir.pwd}/app/assets/images/roroacms"
         Rails.application.config.assets.paths << "#{Dir.pwd}/app/assets/javascripts/roroacms" if Dir.exists?("#{Dir.pwd}/app/assets/javascripts/roroacms")
         Rails.application.config.assets.paths << "#{Dir.pwd}/app/assets/stylesheets/roroacms" if Dir.exists?("#{Dir.pwd}/app/assets/stylesheets/roroacms")

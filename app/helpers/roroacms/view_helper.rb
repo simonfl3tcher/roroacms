@@ -137,7 +137,7 @@ module Roroacms
     # +name+:: the name of the template file that you want to check exists
 
     def view_file_exists?(name)
-      File.exists?("#{Rails.root}/app/views/theme/#{current_theme}/template-#{name}." + get_theme_ext )
+      File.exists?("#{Rails.root}/app/views/themes/#{current_theme}/template-#{name}." + get_theme_ext )
     end
 
 
@@ -154,19 +154,19 @@ module Roroacms
     # +append+:: the name of the file that you want to render
 
     def theme_url(append)
-      "theme/#{current_theme}/#{append}"
+      "themes/#{current_theme}/#{append}"
     end
 
     # displays the header.  + get_theme_ext template in the theme if the file exists
 
     def display_header
-      render :template => "/theme/#{current_theme}/header." + get_theme_ext  if File.exists?("#{Rails.root}/app/views/theme/#{current_theme}/header." + get_theme_ext )
+      render :template => "/themes/#{current_theme}/header." + get_theme_ext  if File.exists?("#{Rails.root}/app/views/themes/#{current_theme}/header." + get_theme_ext )
     end
 
     # displays the header. + get_theme_ext template in the theme if the file exists
 
     def display_footer
-      render :template => "theme/#{current_theme}/footer." + get_theme_ext  if File.exists?("#{Rails.root}/app/views/theme/#{current_theme}/footer." + get_theme_ext )
+      render :template => "themes/#{current_theme}/footer." + get_theme_ext  if File.exists?("#{Rails.root}/app/views/themes/#{current_theme}/footer." + get_theme_ext )
     end
 
   end

@@ -15,7 +15,7 @@ module Roroacms
     def get_theme_options
 
       hash = []
-      Dir.glob("#{Rails.root}/app/views/theme/*/") do |themes|
+      Dir.glob("#{Rails.root}/app/views/themes/*/") do |themes|
         opt = themes.split('/').last
         if File.exists?("#{themes}theme.yml")
           info = YAML.load(File.read("#{themes}theme.yml"))
@@ -33,7 +33,7 @@ module Roroacms
 
     def destory_theme(theme)
       require 'fileutils'
-      FileUtils.rm_rf("#{Rails.root}/app/views/theme/#{theme}")
+      FileUtils.rm_rf("#{Rails.root}/app/views/themes/#{theme}")
     end
 
     # retuns a hash of the template files within the current theme
@@ -42,7 +42,7 @@ module Roroacms
       hash = []
       current_theme = Setting.get('theme_folder')
 
-      Dir.glob("#{Rails.root}/app/views/theme/#{current_theme}/template-*.html.erb") do |my_text_file|
+      Dir.glob("#{Rails.root}/app/views/themes/#{current_theme}/template-*.html.erb") do |my_text_file|
         opt = my_text_file.split('/').last
         opt['template-'] = ''
         opt['.html.erb'] = ''
@@ -125,7 +125,7 @@ module Roroacms
 
     def theme_exists
 
-      if !Dir.exists?("app/views/theme/#{Setting.get('theme_folder')}/")
+      if !Dir.exists?("app/views/themes/#{Setting.get('theme_folder')}/")
         html = "<div class='alert alert-danger'><strong>" + I18n.t("helpers.admin_roroa_helper.theme_exists.warning") + "!</strong> " + I18n.t("helpers.admin_roroa_helper.theme_exists.message") + "!</div>"
         render :inline => html.html_safe
       end

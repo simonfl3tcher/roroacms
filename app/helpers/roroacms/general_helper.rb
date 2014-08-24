@@ -6,8 +6,8 @@ module Roroacms
     # +key+:: YAML key of the value that you want to retrive
 
     def theme_yaml(key = nil)
-      if File.exists?("#{Rails.root}/app/views/theme/#{current_theme}/theme.yml")
-        theme_yaml = YAML.load(File.read("#{Rails.root}/app/views/theme/#{current_theme}/theme.yml"))
+      if File.exists?("#{Rails.root}/app/views/themes/#{current_theme}/theme.yml")
+        theme_yaml = YAML.load(File.read("#{Rails.root}/app/views/themes/#{current_theme}/theme.yml"))
         theme_yaml[key]
       else
         'html.erb'
@@ -18,10 +18,10 @@ module Roroacms
 
     def rewrite_theme_helper
 
-      if File.exists?("#{Rails.root}/app/views/theme/#{current_theme}/theme_helper.rb")
+      if File.exists?("#{Rails.root}/app/views/themes/#{current_theme}/theme_helper.rb")
 
         # get the theme helper from the theme folder
-        file = File.open("#{Rails.root}/app/views/theme/#{current_theme}/theme_helper.rb", "rb")
+        file = File.open("#{Rails.root}/app/views/themes/#{current_theme}/theme_helper.rb", "rb")
         contents = file.read
 
         # check if the first line starts with the module name or not
@@ -46,7 +46,7 @@ module Roroacms
     # do a check to see if theme has theme.yml file
 
     def check_theme_folder
-      if !File.exists?("#{Rails.root}/app/views/theme/#{current_theme}/theme.yml")
+      if !File.exists?("#{Rails.root}/app/views/themes/#{current_theme}/theme.yml")
         render :inline => I18n.t("helpers.general_helper.check_theme_folder.message") and return
       end
     end
@@ -55,17 +55,17 @@ module Roroacms
       change = false
       hash = {'theme.yml' => 'Y', 'layout.html.erb' => 'Y', 'page.html.erb' => 'Y'}
 
-      if !File.exists?("#{Rails.root}/app/views/theme/#{current_theme}/theme.yml")
+      if !File.exists?("#{Rails.root}/app/views/themes/#{current_theme}/theme.yml")
         hash['theme.yml'] = 'N'
         change = true
       end 
 
-      if !File.exists?("#{Rails.root}/app/views/theme/#{current_theme}/layout.html.erb")
+      if !File.exists?("#{Rails.root}/app/views/themes/#{current_theme}/layout.html.erb")
         hash['layout.html.erb'] = 'N'
         change = true
       end
 
-      if !File.exists?("#{Rails.root}/app/views/theme/#{current_theme}/page.html.erb")
+      if !File.exists?("#{Rails.root}/app/views/themes/#{current_theme}/page.html.erb")
         hash['page.html.erb'] = 'N'
         change = true
       end

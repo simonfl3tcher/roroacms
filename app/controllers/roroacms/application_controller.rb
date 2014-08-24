@@ -24,10 +24,12 @@ module Roroacms
     # Override the generic 404 page to use the 404 in the theme directory
 
     def render_404
-      render( :template => "theme/#{current_theme}/error_404", :layout => 'layouts/roroacms/application', :status => :not_found) if File.exists?("#{Rails.root}/app/views/theme/#{current_theme}/error_404.html.erb")
+      if File.exists?("#{Rails.root}/app/views/themes/#{current_theme}/error_404.html.erb")
+        render( :template => "themes/#{current_theme}/error_404", :layout => 'layouts/roroacms/application', :status => :not_found) 
+      else
+        raise ActionController::RoutingError.new('404: Page was not found')
+      end
     end
-    
-
 
     # Get the current theme being used by the application
 

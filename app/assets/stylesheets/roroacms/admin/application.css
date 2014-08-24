@@ -1,5 +1,7 @@
 /*
- *= require ../vendor/jquery/jquery-ui
- *= require_tree ../vendor
- *= require_directory .
+*= require ../vendor/jquery/jquery-ui
+*= require_tree ../vendor
+*= require_directory .
+*= require_tree .
+*= require_self
 */

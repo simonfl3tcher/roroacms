@@ -1,7 +1,16 @@
 <li class='comment'>
   <article class='comment'>
     <section class='comment-content comment'>
-      <div class='comment-meta' data-author='<%= @comment.author %>'><a href='http://<%= @comment.website %>' target='_blank'><%= @comment.author %></a> <%= t("views.admin.generic.says") %>:-</div>
+      <div class='comment-meta' data-author='<%= @comment.author %>'>
+      	<% if @comment.website.blank? %>
+	      	<%= @comment.author %>
+      	<% else %>
+	      	<a href='http://<%= @comment.website %>' target='_blank'>
+	      		<%= @comment.author %>
+	      	</a> 
+      	<% end %>
+      		<%= t("views.admin.generic.said") %>:-
+      	</div>
       <span class='date'><%= @comment.submitted_on.strftime("%b %e %Y, %l:%M %p") %></span>
       <%= @comment.comment.html_safe %>
     </section>

@@ -249,7 +249,7 @@ h1, .h1 {
 }
 
 .divide_shadow {
-  background-image: url("/assets/theme/divide.jpg");
+  background-image: url("/assets/themes/divide.jpg");
   background-repeat: no-repeat;
   background-position: center top;
   height: 15px;
@@ -345,8 +345,8 @@ h1, .h1 {
   .logo {
     display: block;
     float: left;
-    /*background-image: url(/assets/theme/frontend-logo-2.png);*/
-    background-image: url(/assets/theme/companylogo.jpg );
+    /*background-image: url(/assets/themes/frontend-logo-2.png);*/
+    background-image: url(/assets/themes/companylogo.jpg );
     background-repeat: no-repeat;
     background-position: 0 36px;
     height: 135px;
@@ -433,7 +433,7 @@ h1, .h1 {
   }
   input[type=submit] {
     background-color: #FFFFFF;
-    background-image: url("/assets/theme/search.jpg");
+    background-image: url("/assets/themes/search.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     border-style: none;
@@ -458,7 +458,7 @@ h1, .h1 {
     display: block;
     float: right;
     overflow: hidden;
-    background-image: url(/assets/theme/pager.png);
+    background-image: url(/assets/themes/pager.png);
     background-repeat: no-repeat;
     background-position: left top;
     height: 14px;
@@ -482,14 +482,14 @@ h1, .h1 {
   }
   .footer_logo {
     display: block;
-    background-image: url(/assets/theme/footer-poweredby2.jpg);
+    background-image: url(/assets/themes/footer-poweredby2.jpg);
     background-repeat: no-repeat;
     background-position: 0 top;
     height: 43px;
     width: 326px;
   }
   .social {
-    background-image: url(/assets/theme/social.jpg);
+    background-image: url(/assets/themes/social.jpg);
     background-repeat: no-repeat;
     background-position: right top;
     height: 50px;
@@ -615,7 +615,7 @@ h1, .h1 {
     margin: 20px 0 0 0;
   }
   .person {
-    background-image: url(/assets/theme/t.jpg);
+    background-image: url(/assets/themes/t.jpg);
     background-repeat: no-repeat;
     background-position: left top;
     font-family: Arial, Helvetica, sans-serif;

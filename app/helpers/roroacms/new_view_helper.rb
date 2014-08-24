@@ -409,7 +409,7 @@ module Roroacms
       segments = params[:slug].split('/')
 
       if type == 'string'
-
+        return '' if not defined?(@content.terms)
         terms = @content.terms.where(roroacms_term_anatomies: {taxonomy: 'tag'}).includes(:term_anatomy)
         return terms.all.map do |u|
           url = article_url + '/' + tag_url + u.structured_url
@@ -533,6 +533,7 @@ module Roroacms
         p = Post.where("(post_type = 'post' AND post_status = 'Published' AND disabled = 'N') AND post_date <= CURRENT_TIMESTAMP").uniq.pluck("EXTRACT(year FROM post_date)")
         lp = {}
 
+
         if !p.blank?
           p.each do |f|
             lp["#{f}"] = Post.where("EXTRACT(year from post_date) = #{f}  AND (post_type = 'post' AND disabled = 'N' AND post_status = 'Published' AND post_date <= CURRENT_TIMESTAMP)").uniq.pluck("EXTRACT(MONTH FROM post_date)")
@@ -547,7 +548,7 @@ module Roroacms
               h["#{article_url}/#{k.to_i}"] = k.to_i
             end
 
-            i.each do |nm|
+            i.sort.each do |nm|
               h["#{article_url}/#{k.to_i}/#{nm.to_i}"] = "#{get_date_name_by_number(nm.to_i)} - #{k.to_i}"
             end
 
@@ -839,8 +840,8 @@ module Roroacms
     	if Setting.get('article_comments') == 'Y'
         type = Setting.get('article_comment_type')
         @new_comment = Comment.new
-        if File.exists?("#{Rails.root}/app/views/theme/#{current_theme}/comments_form." + get_theme_ext)
-          render(:template => "theme/#{current_theme}/comments_form." + get_theme_ext , :layout => nil, :locals => { type: type }).to_s
+        if File.exists?("#{Rails.root}/app/views/themes/#{current_theme}/comments_form." + get_theme_ext)
+          render(:template => "themes/#{current_theme}/comments_form." + get_theme_ext , :layout => nil, :locals => { type: type }).to_s
         else
           render :inline => 'comments_form.html.erb does not exist in current theme'
         end
@@ -852,8 +853,8 @@ module Roroacms
     # this is created and displayed from the theme.
 
     def obtain_search_form
-      if File.exists?("#{Rails.root}/app/views/theme/#{current_theme}/search_form." + get_theme_ext)
-        render :template => "theme/#{current_theme}/search_form." + get_theme_ext 
+      if File.exists?("#{Rails.root}/app/views/themes/#{current_theme}/search_form." + get_theme_ext)
+        render :template => "themes/#{current_theme}/search_form." + get_theme_ext 
       else
         render :inline => 'search_form.html.erb does not exist in current theme'
       end

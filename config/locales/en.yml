@@ -321,7 +321,7 @@ en:
         content: "Welcome to Roroas installation process, in order for you to get started on the most extendable and boundless Ruby On Rails content management system we need a few details..."
         content_two: "Before you are let loose we just need to create you some login details and then we really are done!"
       theme_issues:
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam molestie magna eget vulputate venenatis. Maecenas eu ligula erat. Mauris bibendum tempus mattis. Nullam nec fermentum mi, in posuere sem. Quisque a vestibulum lacus. Proin leo libero"
+        content: "There seems to be a few files missing, in order to get started on your theme please make sure that all three files below exist in your theme folder."
         no_active: "You currently do not have an active theme"
         no_active_ctoa: "Please create a theme and activate it in the admin panel to get started"
       menus:

@@ -14,6 +14,7 @@ module Roroacms
 
       if !@content.nil?
 
+
         # if it has ACTUAL content then generate meta from the page content
         if !(@content.respond_to? :length)
 
@@ -24,7 +25,7 @@ module Roroacms
             headtags = get_manual_metadata 'home'
           else
             # use the page content to generate the meta data
-            headtags = "#{@seo_title}\n"
+            headtags = "#{get_page_title}\n"
             headtags += "#{get_meta_description}\n"
             headtags += "#{get_google_analytics}\n"
             headtags += "#{get_robots_tag}"

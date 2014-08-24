@@ -4,7 +4,5 @@
 //= require ../vendor/datatables/js/datatables.bootstrap.js
 //= require_tree ../vendor
 //= require jquery_ujs
-//= require_tree .
 //= require_directory .
-
-console.log('23123123');
+//= require_tree .
