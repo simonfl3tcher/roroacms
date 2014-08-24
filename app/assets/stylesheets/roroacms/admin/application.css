@@ -3,5 +3,4 @@
 *= require_tree ../vendor
 *= require_directory .
 *= require_tree .
-*= require_self
 */

@@ -503,9 +503,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 	padding: 65px 0 40px 0
 }
 @media (max-width: 860px), (max-width: 860px) {
-.features .editor .CodeMirror-lines {
-	/*padding: 25px 0 30px 0*/
-}
+
 }
 @media (max-width: 400px), (max-width: 400px) {
 .features .editor .CodeMirror-lines {

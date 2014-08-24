@@ -110,7 +110,9 @@ module Roroacms
 
     def strip_url(url)
 
-      url.sub!(/www./, '')            if url.include? "www."
+      return url if url.blank?
+
+      url.sub!(/www./, '')        if url.include? "www."
       
       url.sub!(/https\:\/\//, '') if url.include? "https://"
 

@@ -62,7 +62,7 @@
     display:  block;
     width:  12px;
     height:  12px;
-    background:  url('chosen-sprite.png') -42px 1px no-repeat;
+    background:  url(<%=asset_path "roroacms/admin/chosen-sprite.png"%>) -42px 1px no-repeat;
     font-size:  1px;
 }
 .chosen-container-single .chosen-single abbr:hover {
@@ -83,7 +83,7 @@
     display:  block;
     width:  100%;
     height:  100%;
-    background:  url('chosen-sprite.png') no-repeat 0px 2px;
+    background:  url(<%=asset_path "roroacms/admin/chosen-sprite.png"%>) no-repeat 0px 2px;
 }
 .chosen-container-single .chosen-search {
     position:  relative;
@@ -102,8 +102,8 @@
     height:  auto;
     outline:  0;
     border:  1px solid #ddd;
-    background:  white url('chosen-sprite.png') no-repeat 100% -20px;
-    background:  url('chosen-sprite.png') no-repeat 100% -20px;
+    background:  white url(<%=asset_path "roroacms/admin/chosen-sprite.png"%>) no-repeat 100% -20px;
+    background:  url(<%=asset_path "roroacms/admin/chosen-sprite.png"%>) no-repeat 100% -20px;
     font-size:  1em;
     font-family:  sans-serif;
     line-height:  normal;
@@ -227,7 +227,7 @@
     display:  block;
     width:  12px;
     height:  12px;
-    background:  url('chosen-sprite.png') -42px 1px no-repeat;
+    background:  url(<%=asset_path "roroacms/admin/chosen-sprite.png"%>) -42px 1px no-repeat;
     font-size:  1px;
 }
 .chosen-container-multi .chosen-choices li.search-choice .search-choice-close:hover {
@@ -346,8 +346,8 @@
 }
 .chosen-rtl .chosen-search input[type="text"] {
     padding:  4px 5px 4px 20px;
-    background:  white url('chosen-sprite.png') no-repeat -30px -20px;
-    background:  url('chosen-sprite.png') no-repeat -30px -20px;
+    background:  white url(<%=asset_path "roroacms/admin/chosen-sprite.png"%>) no-repeat -30px -20px;
+    background:  url(<%=asset_path "roroacms/admin/chosen-sprite.png"%>) no-repeat -30px -20px;
     direction:  rtl;
 }
 .chosen-rtl.chosen-container-single .chosen-single div b {
@@ -358,7 +358,7 @@
 }
 /* @end *//* @group Retina compatibility */@media only screen and (-webkit-min-device-pixel-ratio: 2),  only screen and (min-resolution: 144dpi) {
     .chosen-rtl .chosen-search input[type="text"],  .chosen-container-single .chosen-single abbr,  .chosen-container-single .chosen-single div b,  .chosen-container-single .chosen-search input[type="text"],  .chosen-container-multi .chosen-choices .search-choice .search-choice-close,  .chosen-container .chosen-results-scroll-down span,  .chosen-container .chosen-results-scroll-up span {
-    background-image:  url('chosen-sprite@2x.png') !important;
+    background-image:  url(<%=asset_path "roroacms/admin/chosen-sprite@2x.png"%>) !important;
     background-size:  52px 37px !important;
     background-repeat:  no-repeat !important;
 }

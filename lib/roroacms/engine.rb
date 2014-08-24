@@ -42,6 +42,7 @@ module Roroacms
       Devise::ConfirmationsController.layout "roroacms/login"
       Devise::UnlocksController.layout "roroacms/login"
       Devise::PasswordsController.layout "roroacms/login"
+      ApplicationController.helper(ActionView::Helpers::ThemeHelper) if File.exists?("#{Rails.root}/app/helpers/theme_helper.rb")
     end
     
     require "#{Roroacms::Engine.root}/app/models/roroacms/setting.rb"

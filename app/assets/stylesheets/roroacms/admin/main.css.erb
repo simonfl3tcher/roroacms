@@ -1,6 +1,3 @@
-/* ==========================================================================
-   Base styles
-   ========================================================================== */
 body {
   color: #5D5F63;
   background: #293949;
@@ -8,7 +5,6 @@ body {
   padding: 0px;
   margin: 0px;
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
 }
 
 body.grey {
@@ -55,9 +51,6 @@ h3.underline {
 ::-moz-selection {
   background: #fff7dd;
 }
-/* ==========================================================================
-   Layout
-   ========================================================================== */
 #container {
   width: 100%;
   height: 100%;
@@ -73,9 +66,8 @@ h3.underline {
   min-height: 80px;
   padding: 0 0 0 10px;
   position: relative;
-  background: #5ce0aa url(/assets/roroacms/admin/roroafull.png) no-repeat center center;
+  background: #5ce0aa url(<%=asset_path "roroacms/admin/roroafull.png"%>) no-repeat center center;
 }
-/* Header */
 #header {
   z-index: 200;
   background: #fff;
@@ -93,7 +85,7 @@ h3.underline {
   min-height: 80px;
   padding: 0 0 0 10px;
   position: relative;
-  background: #5ce0aa url(/assets/roroacms/admin/roroa-logo.png) no-repeat 23px 22px;
+  background: #5ce0aa url(<%=asset_path "roroacms/admin/roroa-logo.png"%>) no-repeat 23px 22px;
 }
 #header .logo {
   color: #fff;
@@ -159,13 +151,9 @@ h3.underline {
 #header .user-nav ul li.profile-photo:hover {
   transform: scale(1.1);
   -ms-transform: scale(1.1);
-  /* IE 9 */
   -moz-transform: scale(1.1);
-  /* Firefox */
   -webkit-transform: scale(1.1);
-  /* Safari and Chrome */
   -o-transform: scale(1.1);
-  /* Opera */
 }
 #header .user-nav ul li.dropdown.messages .dropdown-menu {
   width: 350px;
@@ -342,7 +330,7 @@ h3.underline {
   line-height: 4px;
 }
 #header .user-nav li.userDetails span {
-  color: $primaryColor !important;
+  color: #a5a5a5 !important;
   margin-left: 10px;
   display: inline-block;
   vertical-align: middle;
@@ -363,7 +351,6 @@ h3.underline {
 .dashboard .action-buttons {
   margin-top: 13px;
 }
-/* Sidebar */
 .sidebar {
   width: 240px;
   height: 100%;
@@ -439,7 +426,6 @@ h3.underline {
 .btn-primary + .dropdown-menu > li > a:active {
   background-color: #16a086;
 }
-/* Sidebar Right */
 .sidebar-right {
   width: 240px;
   height: 100%;
@@ -558,9 +544,6 @@ table th.center {
   border-left: 4px solid #40ACD6;
   color: #40ACD6;
 }
-/* ==========================================================================
-   Main Content 
-   ========================================================================== */
 .main-content-wrapper {
   margin-left: 240px;
   margin-right: 0;
@@ -593,9 +576,6 @@ table th.center {
 .main-content-toggle-right {
   margin-right: 240px;
 }
-/* ==========================================================================
-   Tiles
-   ========================================================================== */
 .dashboard-tile {
   background-color: #fff;
   color: #555;
@@ -714,9 +694,6 @@ table th.center {
   font-size: 40px;
   padding: 8px;
 }
-/* ==========================================================================
-  Forms
-   ========================================================================== */
 .form-control {
   color: #717171;
   outline: 0;
@@ -796,11 +773,6 @@ label.valid {
 .icheck .radio {
   margin-bottom: 10px;
 }
-/*------------------------------------------------------------------
- 
-Shortcuts
-
-------------------------------------------------------------------- */
 .shortcuts {
   text-align: center;
 }
@@ -848,9 +820,6 @@ Shortcuts
     font-size: 11px;
   }
 }
-/* ==========================================================================
-  Buttons
-   ========================================================================== */
 .btn {
   border: none;
   font-size: 15px;
@@ -885,7 +854,6 @@ Shortcuts
   opacity: 0.7;
   filter: alpha(opacity=70);
 }
-/* Default Buttons*/
 .btn-default,
 a.btn-default:link,
 a.btn-default:visited {
@@ -1136,7 +1104,6 @@ fieldset[disabled] .btn-warning.active {
   background-color: #f1c40f;
   border-color: #f1c40f;
 }
-/* 3d Buttons*/
 .btn.btn-3d {
   -webkit-transform: translate(0, 0);
   -moz-transform: translate(0, 0);
@@ -1240,7 +1207,6 @@ fieldset[disabled] .btn-warning.active {
 .btn-danger.btn-3d:focus {
   background-color: #eb6154;
 }
-/* square buttons */
 .btn-square {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -1248,7 +1214,6 @@ fieldset[disabled] .btn-warning.active {
   -o-border-radius: 0;
   border-radius: 0;
 }
-/* Transparent buttons */
 .btn-default.btn-trans {
   color: #bdc3c7;
   background-color: transparent;
@@ -1321,7 +1286,6 @@ fieldset[disabled] .btn-warning.active {
   background-color: #eb6154;
   border: solid thin #eb6154;
 }
-/* Button Sizes */
 .btn-lg {
   padding: 10px 16px;
   font-size: 18px;
@@ -1347,9 +1311,7 @@ fieldset[disabled] .btn-warning.active {
   -o-border-radius: 3px;
   border-radius: 3px;
 }
-/* ==========================================================================
-  Badges
-   ========================================================================== */
+
 .badge.badge-success {
   background-color: #2dcc70;
   color: #fff;
@@ -1366,9 +1328,6 @@ fieldset[disabled] .btn-warning.active {
   background-color: #eb6154;
   color: #fff;
 }
-/* ==========================================================================
- Sliders
-   ========================================================================== */
 .slider.slider-horizontal {
   margin: 10px 0;
 }
@@ -1416,9 +1375,6 @@ fieldset[disabled] .btn-warning.active {
   -o-border-radius: 3px;
   border-radius: 3px;
 }
-/* ==========================================================================
-   Progress Bars
-   ========================================================================== */
 .progress-bar-default {
   background-color: #bdc3c7;
 }
@@ -1437,9 +1393,6 @@ fieldset[disabled] .btn-warning.active {
 .progress-bar-danger {
   background-color: #eb6154;
 }
-/* ==========================================================================
-   Nestable Sortable
-   ========================================================================== */
 .dd {
   position: relative;
   display: block;
@@ -1573,9 +1526,6 @@ fieldset[disabled] .btn-warning.active {
   -webkit-box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.1);
   box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.1);
 }
-/* ==========================================================================
-   Button Menu
-   ========================================================================== */
 .dropdown-menu {
   background-color: #F6F6F6;
   border-color: #cbd0d3;
@@ -1626,18 +1576,12 @@ fieldset[disabled] .btn-warning.active {
   background-color: #c1392b;
   color: #fff !important;
 }
-/* ==========================================================================
-   Breadcrumbs
-   ========================================================================== */
 .breadcrumb {
   background: none;
 }
 .breadcrumb > li {
   font-size: 12px;
 }
-/* ==========================================================================
-  Modal
-   ========================================================================== */
 .modal-footer .btn + .btn {
   margin-bottom: 5px;
 }
@@ -1645,9 +1589,6 @@ fieldset[disabled] .btn-warning.active {
   max-height: 300px;
   overflow-y: auto;
 }
-/* ==========================================================================
-   FlotChart
-   ========================================================================== */
 .chart-tooltip {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -1660,9 +1601,6 @@ fieldset[disabled] .btn-warning.active {
   padding: 10px 20px !important;
   font-size: 13px;
 }
-/* ==========================================================================
-   Icons
-   ========================================================================== */
 .fa-hover {
   margin: 5px 0;
 }
@@ -1671,9 +1609,6 @@ fieldset[disabled] .btn-warning.active {
   margin-right: 5px;
   width: 20px;
 }
-/* ==========================================================================
-   Tabs
-   ========================================================================== */
 .tab-wrapper {
   margin-bottom: 20px;
 }
@@ -1758,9 +1693,6 @@ fieldset[disabled] .btn-warning.active {
 .tab-primary.tab-wrapper.tab-bottom > .nav-tabs > li.active > a {
   border-bottom-color: #5ce0aa;
 }
-/* ==========================================================================
-   Panels
-   ========================================================================== */
 .panel {
   border: none;
   box-shadow: none;
@@ -1875,9 +1807,6 @@ fieldset[disabled] .btn-warning.active {
   color: #fff;
   border: none;
 }
-/* ==========================================================================
-   Wizard
-   ========================================================================== */
 .step-content {
   border: 1px solid #D4D4D4;
   border-top: 0;
@@ -2039,9 +1968,6 @@ fieldset[disabled] .btn-warning.active {
 .form-group .title {
   text-align: right;
 }
-/* ==========================================================================
-   Mail
-   ========================================================================== */
 .mail-option ul li {
   list-style: none;
 }
@@ -2182,9 +2108,6 @@ fieldset[disabled] .btn-warning.active {
 .table-inbox .fa-star {
   color: #f1c40f;
 }
-/* ==========================================================================
-   Google Maps
-   ========================================================================== */
 .overlay {
   display: block;
   text-align: center;
@@ -2222,9 +2145,6 @@ fieldset[disabled] .btn-warning.active {
   border-right: 16px solid transparent;
   border-bottom: 16px solid #5ce0aa;
 }
-/* ==========================================================================
-   Login
-   ========================================================================== */
 #login-container {
   width: 100%;
   height: 100%;
@@ -2275,7 +2195,7 @@ section#login-container div#error_explanation ul li {
   display: inline-block;
 }
 #login-wrapper .logo:before {
-  background-image: url(assets/roroacms/admin/logo.png);
+  background-image: url(<%=asset_path "roroacms/admin/logo.png"%>);
   background-position: left center;
   background-repeat: no-repeat;
   padding: 0 20px;
@@ -2292,9 +2212,6 @@ section#login-container div#error_explanation ul li {
 #login-wrapper #confrimPassword {
   padding-left: 32px;
 }
-/* ==========================================================================
-   Error Pages 404 and 500
-   ========================================================================== */
 #error-container {
   width: 100%;
   height: 100%;
@@ -2306,21 +2223,13 @@ section#login-container div#error_explanation ul li {
   transition: all 3s ease-in-out;
   color: #fff;
   background: #405d8c;
-  /* Old browsers */
   background: -moz-radial-gradient(center, ellipse cover, #405d8c 0%, #293949 100%);
-  /* FF3.6+ */
   background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #405d8c), color-stop(100%, #293949));
-  /* Chrome,Safari4+ */
   background: -webkit-radial-gradient(center, ellipse cover, #405d8c 0%, #293949 100%);
-  /* Chrome10+,Safari5.1+ */
   background: -o-radial-gradient(center, ellipse cover, #405d8c 0%, #293949 100%);
-  /* Opera 12+ */
   background: -ms-radial-gradient(center, ellipse cover, #405d8c 0%, #293949 100%);
-  /* IE10+ */
   background: radial-gradient(ellipse at center, #405d8c 0%, #293949 100%);
-  /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#405d8c', endColorstr='#293949', GradientType=1);
-  /* IE6-9 fallback on horizontal gradient */
 }
 #error-container .block-error {
   width: 400px;
@@ -2338,9 +2247,6 @@ section#login-container div#error_explanation ul li {
 #error-container p {
   margin: 10px 0 40px 0;
 }
-/* ==========================================================================
-   Timeline
-   ========================================================================== */
 .timeline {
   border-collapse: collapse;
   border-spacing: 0;
@@ -2632,9 +2538,6 @@ h3.timeline-title {
 .timeline-single-body > p + p {
   margin-top: 5px;
 }
-/* ==========================================================================
-   Calendar
-   ========================================================================== */
 #cal {
   background: #fff;
   padding: 20px;
@@ -2677,9 +2580,6 @@ h3.timeline-title {
 .external-event.ui-draggable:hover {
   cursor: move;
 }
-/* ==========================================================================
-   Pagination
-   ========================================================================== */
 .pagination > .active > a,
 .pagination > .active > span,
 .pagination > .active > a:hover,
@@ -2693,9 +2593,6 @@ h3.timeline-title {
 .pagination > li > span {
   color: #5ce0aa;
 }
-/* ==========================================================================
-   Colors
-   ========================================================================== */
 .default-bg {
   background-color: #bdc3c7;
 }
@@ -2750,17 +2647,11 @@ h3.timeline-title {
 .label-danger {
   background-color: #eb6154;
 }
-/* ==========================================================================
-   Charts JS
-   ========================================================================== */
 .canvas-container {
   min-height: 300px;
   max-height: 600px;
   position: relative;
 }
-/* ==========================================================================
-   Settings Area
-   ========================================================================== */
 .settings-area .form-group {
   margin-bottom: 30px;
 }
@@ -2894,9 +2785,6 @@ ol.sortable .item-information {
 .item-information input[type="text"] {
   width: 96%;
 }
-/* ==========================================================================
-   Datatables 
-   ========================================================================== */
 #dtable_filter {
   display: none;
 }
@@ -2954,9 +2842,6 @@ ol.sortable .item-information {
 .features .editor .CodeMirror pre {
   padding: 0 20px;
 }
-/*
-  Timeline Styling
-*/
 .list-group.list-categories {
   overflow: hidden;
   max-height: 300px !important;
@@ -3352,7 +3237,6 @@ ol.sortable .item-information {
 .diff li:hover {
   background: #ffffcc;
 }
-/* try 'whitespace:pre;' if you don't want lines to wrap */
 .diff del,
 .diff ins,
 .diff span {
@@ -3562,15 +3446,13 @@ table tr .fa.fa-minus {
   margin-left: -1px;
 }
 
-.btn {
-  /*border-radius: 0px;*/
-}
 
 ::selection {
-  background: #B7FFE1; /* WebKit/Blink Browsers */
+  background: #B7FFE1; 
 }
+
 ::-moz-selection {
-  background: #B7FFE1; /* Gecko Browsers */
+  background: #B7FFE1; 
 }
 
 ul.theme-issues {
@@ -3624,14 +3506,7 @@ ul.theme-issues li i.fa-check {
   border-radius:0px;
 }
 
-/*ul.theme-issues li i.fa-times {
-  color: #f9525d;
-}*/
-/* ==========================================================================
-   Media Queries
-   ========================================================================== */
 @media only screen and (max-width: 767px) and (min-width: 480px) {
-  /* Main Content */
   #main-content .h1 {
     font-size: 35px;
   }
@@ -3639,11 +3514,6 @@ ul.theme-issues li i.fa-check {
 @media (max-width: 767px) {
   #D7DCDE ul.timeline:before {
     left: 40px;
-  }
-  ul.timeline > li > .timeline-panel {
-    width: calc(10%);
-    width: -moz-calc(10%);
-    width: -webkit-calc(10%);
   }
   ul.timeline > li > .timeline-badge {
     left: 15px;
@@ -3755,7 +3625,6 @@ ul.theme-issues li i.fa-check {
   }
 }
 @media only screen and (max-width: 479px) {
-  /* Main Content */
   #main-content .h1 {
     font-size: 22px;
   }
