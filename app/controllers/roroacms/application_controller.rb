@@ -6,6 +6,7 @@ module Roroacms
     before_filter :set_vars
     before_filter :check_setup
     before_filter :add_breadcrumb_fe
+    before_filter :authorize_demo, :except => [:index, :show, :edit, :new]
 
     protect_from_forgery
     helper Roroacms::PrepcontentHelper
@@ -97,7 +98,7 @@ module Roroacms
     # checks if the admin is logged in before anything else
 
     def authorize_admin
-      redirect_to admin_login_path, error: I18n.t("controllers.application.unauthorized") and return if current_user.nil?
+      redirect_to admin_login_path, flash: { error: I18n.t("controllers.application.unauthorized") } and return if current_user.nil?
     end
 
 
@@ -121,6 +122,15 @@ module Roroacms
     def add_breadcrumb(name, url = 'javascript:;', atts = {})
       hash = { name: name, url: url, atts: atts }
       @breadcrumbs << hash
+    end
+
+    def authorize_demo
+      if !request.xhr? && !request.get? && ( !current_user.blank? && current_user.username.downcase == 'demo' && Setting.get('demonstration_mode') == 'Y' )
+        redirect_to :back, flash: { error: I18n.t('generic.demo_notification') } and return 
+      end
+
+      render :inline => 'demo' and return if params[:action] == 'save_menu'
+
     end
 
 

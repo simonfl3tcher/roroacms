@@ -51,7 +51,7 @@ $(document).ready(function() {
   $("body").on("click", ".addAdditionalDataInput", function() {
     $.ajax({
       type: "POST",
-      url: settings.attr('data-site-url') + "admin/articles/create_additional_data",
+      url: $('.js-settings').attr('data-site-url') + "admin/articles/create_additional_data",
       data: "key=" + $("#addAdditionalDataInput").val(),
       dataType: "html",
       success: function(data) {

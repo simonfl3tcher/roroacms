@@ -12,7 +12,9 @@
           <ul class="nav nav-tabs">
             <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-cog"></i> <%= t("views.admin.generic.general") %></a></li>
             <li><a href="#email" data-toggle="tab"><i class="fa fa-envelope-o"></i> <%= t("views.admin.settings.tabs.email_config") %></a></li>
-            <li><a href="#amazon" data-toggle="tab"><i class="fa fa-cloud-upload"></i> <%= t("views.admin.settings.tabs.aws") %></a></li>
+            <% if current_user.username.downcase != 'demo' && Roroacms::Setting.get('demonstration_mode') == 'Y' %>
+              <li><a href="#amazon" data-toggle="tab"><i class="fa fa-cloud-upload"></i> <%= t("views.admin.settings.tabs.aws") %></a></li>
+            <% end %>
             <li><a href="#comment" data-toggle="tab"><i class="fa fa-comments"></i> <%= t("generic.comments") %></a></li>
             <li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> <%= t("views.admin.generic.search_engine_optimisation") %></a></li>
             <li><a href="#user-groups" data-toggle="tab"><i class="fa fa-users"></i> <%= t("views.admin.settings.tabs.user_groups") %></a></li>
@@ -93,6 +95,14 @@
                 <div class="clearfix"></div>
               </div>
               <div class="form-group">
+                <%= label_tag(:home_page, t("views.admin.settings.tab_content.home_page"), class: "col-sm-3 control-label") %>
+                <div class="col-sm-6">
+                  <%= select_tag :home_page, options_for_select(Roroacms::Post.where(:post_type => 'page').collect {|p| [ p.post_title, p.id ] }, @settings['home_page']), prompt: t("views.admin.generic.select_homepage"), class: 'form-control' %>
+                  
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="form-group">
                 <%= label_tag(:breadcrumb_seperator, t("views.admin.settings.tab_content.breadcrumb_seperator"), class: "col-sm-3 control-label") %>
                 <div class="col-sm-6">
                   <%= text_field_tag(:breadcrumb_seperator, @settings['breadcrumb_seperator'], class: 'form-control') %>
@@ -101,11 +111,14 @@
                 <div class="clearfix"></div>
               </div>
               <div class="form-group">
-                <%= label_tag(:home_page, t("views.admin.settings.tab_content.home_page"), class: "col-sm-3 control-label") %>
+                <%= label_tag(:demonstration_mode, t("views.admin.settings.tab_content.demonstration_mode"), class: "col-sm-3 control-label") %>
                 <div class="col-sm-6">
-                  <%= select_tag :home_page, options_for_select(Roroacms::Post.where(:post_type => 'page').collect {|p| [ p.post_title, p.id ] }, @settings['home_page']), prompt: t("views.admin.generic.select_homepage"), class: 'form-control' %>
-                  
+                  <div class="">
+                      <%= hidden_field_tag :demonstration_mode, 'N' %>
+                      <%= check_box_tag :demonstration_mode, 'Y', @settings['demonstration_mode'] == 'Y' ? true : false %>
+                  </div>
                 </div>
+                <div class="clearfix"></div>
               </div>
             </div>
             <div class="tab-pane" id="email">
@@ -174,32 +187,34 @@
 
 
             </div>
-            <div class="tab-pane" id="amazon">
-              <div class="form-group">
-                <%= label_tag(:aws_access_key_id, t("views.admin.settings.tab_content.aws_access_key_id "), class: "col-sm-3 control-label") %>
-                <div class="col-sm-6">
-                  <%= text_field_tag(:aws_access_key_id, @settings['aws_access_key_id'], class: 'form-control') %>
-                  <%= setting_errors_for @settings, :aws_access_key_id %>
+            <% if current_user.username.downcase != 'demo' && Roroacms::Setting.get('demonstration_mode') == 'Y' %>
+              <div class="tab-pane" id="amazon">
+                <div class="form-group">
+                  <%= label_tag(:aws_access_key_id, t("views.admin.settings.tab_content.aws_access_key_id "), class: "col-sm-3 control-label") %>
+                  <div class="col-sm-6">
+                    <%= text_field_tag(:aws_access_key_id, @settings['aws_access_key_id'], class: 'form-control') %>
+                    <%= setting_errors_for @settings, :aws_access_key_id %>
+                  </div>
+                  <div class="clearfix"></div>
                 </div>
-                <div class="clearfix"></div>
-              </div>
-              <div class="form-group">
-                <%= label_tag(:aws_secret_access_key, t("views.admin.settings.tab_content.aws_secret_access_key"), class: "col-sm-3 control-label") %>
-                <div class="col-sm-6">
-                  <%= text_field_tag(:aws_secret_access_key, @settings['aws_secret_access_key'], class: 'form-control') %>
-                  <%= setting_errors_for @settings, :aws_secret_access_key %>
+                <div class="form-group">
+                  <%= label_tag(:aws_secret_access_key, t("views.admin.settings.tab_content.aws_secret_access_key"), class: "col-sm-3 control-label") %>
+                  <div class="col-sm-6">
+                    <%= text_field_tag(:aws_secret_access_key, @settings['aws_secret_access_key'], class: 'form-control') %>
+                    <%= setting_errors_for @settings, :aws_secret_access_key %>
+                  </div>
+                  <div class="clearfix"></div>
                 </div>
-                <div class="clearfix"></div>
-              </div>
-              <div class="form-group">
-                <%= label_tag(:aws_bucket_name, t("views.admin.settings.tab_content.aws_bucket_name"), class: "col-sm-3 control-label") %>
-                <div class="col-sm-6">
-                  <%= text_field_tag(:aws_bucket_name, @settings['aws_bucket_name'], class: 'form-control') %>
-                  <%= setting_errors_for @settings, :aws_bucket_name %>
+                <div class="form-group">
+                  <%= label_tag(:aws_bucket_name, t("views.admin.settings.tab_content.aws_bucket_name"), class: "col-sm-3 control-label") %>
+                  <div class="col-sm-6">
+                    <%= text_field_tag(:aws_bucket_name, @settings['aws_bucket_name'], class: 'form-control') %>
+                    <%= setting_errors_for @settings, :aws_bucket_name %>
+                  </div>
+                  <div class="clearfix"></div>
                 </div>
-                <div class="clearfix"></div>
               </div>
-            </div>
+            <% end %>
             <div class="tab-pane" id="comment">
               <div class="form-group">
                 <%= label_tag(:article_comments, t("views.admin.settings.tab_content.article_comments"), class: "col-sm-3 control-label") %>

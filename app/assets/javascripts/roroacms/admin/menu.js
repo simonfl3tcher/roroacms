@@ -9,7 +9,13 @@ $(document).ready(function() {
       url: $('.js-settings').attr('data-site-url') + "admin/menus/save_menu",
       data: data,
       dataType: "html",
-      success: function(data) {}
+      success: function(data) {
+        if(data == 'demo'){
+          do_demo_alert();
+        } else {
+          do_alert();
+        }
+      }
     });
   };
   do_alert = function() {
@@ -18,6 +24,13 @@ $(document).ready(function() {
       scrollTop: $("#header").offset().top
     }, "slow");
   };
+
+  do_demo_alert = function(){
+    $("#main-content .row > .col-md-12 .alert-wrapper").html("<div class=\"alert alert-danger\"><button data-dismiss=\"alert\" class=\"close\" type=\"button\">x</button><strong>Error!</strong> You are working in demo mode so no CRUD functions will be undertaken</div>");
+    $("html,body").animate({
+      scrollTop: $("#header").offset().top
+    }, "slow");
+  }
   build_under_form = function(data, selector) {
     $.ajax({
       type: "POST",
@@ -43,7 +56,6 @@ $(document).ready(function() {
   });
   $(".update-menu").bind("click", function(e) {
     do_update_function();
-    do_alert();
   });
   $("ol.sortable").on("click", "i.handler", function() {
     var container;

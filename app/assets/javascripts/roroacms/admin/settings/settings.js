@@ -9,7 +9,7 @@ $(document).ready(function() {
   $("body").on("click", ".addGroupInput", function() {
     $.ajax({
       type: "POST",
-      url: settings.attr('data-site-url') + "admin/settings/create_user_group",
+      url: $('.js-settings').attr('data-site-url') + "admin/settings/create_user_group",
       data: "key=" + $("#addGroupInput").val(),
       dataType: "html",
       success: function(data) {

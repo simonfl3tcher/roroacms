@@ -13,6 +13,7 @@ en:
       two: "Installation - Administrator"
     theme_issues:
       title: "Theme Issues"
+    demo_notification: "You are working in demo mode so no CRUD functions will be undertaken"
     add_new_user: "Add New User"
     profile: "Profile"
     users: "Users"
@@ -441,6 +442,7 @@ en:
           category_slug: "Category Slug"
           tag_slug: "Tag Slug"
           breadcrumb_seperator: "Breadcrumb Seperator"
+          demonstration_mode: "Demonstration Mode"
           home_page: "Home Page"
           smtp_username: "Server E-mail Address"
           smtp_password: "SMTP password"
