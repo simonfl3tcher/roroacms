@@ -3,12 +3,20 @@
   <div class="col-md-12">
 
     <div class="panel panel-default">
-      <div class="panel-body">
+      <div class="panel-body" id="collapsed_tabs">
         <div class="tab-wrapper tab-left ">
           <ul class="nav nav-tabs">
-            <li class="active"><a href="#new" data-toggle="tab"><i class="fa fa-plus"></i> <%= t("views.admin.menus.index.new_menu") %></a></li>
+            <li class="tooltipState active" data-toggle="tooltip" data-placement="right" data-title="<%= t("views.admin.menus.index.new_menu") %>">
+              <a href="#new" data-toggle="tab">
+                <i class="fa fa-plus"></i>
+              </a>
+            </li>
             <% @all_menus.each_with_index do |m, index| %>
-              <li><a href="#<%= m.key + '-' + index.to_s %>" data-toggle="tab"><i class="fa fa-list"></i> <%= m.name %></a></li>
+              <li class="tooltipState" data-toggle="tooltip" data-placement="right" title="<%= m.name %>">
+                <a href="#<%= m.key + '-' + index.to_s %>" data-toggle="tab">
+                  <i class="fa fa-list"></i>
+                </a>
+              </li>
             <% end %>
           </ul>
           <div class="tab-content">

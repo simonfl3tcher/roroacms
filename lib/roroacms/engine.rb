@@ -58,8 +58,8 @@ module Roroacms
         Rails.application.config.assets.paths << "#{Dir.pwd}/app/assets/stylesheets/roroacms" if Dir.exists?("#{Dir.pwd}/app/assets/stylesheets/roroacms")
         Rails.application.config.assets.precompile += %w( roroacms/roroacms.js )  if File.exists?("#{Dir.pwd}/app/assets/javascripts/roroacms/roroacms.js")
         Rails.application.config.assets.precompile += %w( roroacms/roroacms.css ) if File.exists?("#{Dir.pwd}/app/assets/stylesheets/roroacms/roroacms.css")
-        Rails.application.config.assets.precompile += %w( theme.css )
-        Rails.application.config.assets.precompile += %w( theme.js )
+        Rails.application.config.assets.precompile += ["theme.css", "theme.js", "theme.scss", "theme.coffee"]
+        Rails.application.config.assets.precompile += ["#{Dir.pwd}/app/views/themes/#{Setting.get('theme_folder')}/assets/images/*"]
 
     end
 

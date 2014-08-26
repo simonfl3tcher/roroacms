@@ -1,18 +1,43 @@
 <%= form_for [:admin, @record], :url => { action: @action.to_sym } do |f| %>
 
   <div class="panel panel-default">
-    <div class="panel-body">
+    <div class="panel-body" id="collapsed_tabs">
       <div class="tab-wrapper tab-left ">
         <ul class="nav nav-tabs">
 
-          <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-cog"></i> <%= t("views.admin.generic.general") %></a></li>
-          <li><a class="contentReload" href="#content" data-toggle="tab"><i class="fa fa-desktop"></i> <%= t("views.admin.generic.content") %></a></li>
-          <li><a href="#revisions" data-toggle="tab"><i class="fa fa-history"></i> <%= t("views.admin.pages.new.tabs.history") %></a></li>
-          <li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> <%= t("views.admin.generic.search_engine_optimisation") %></a></li>
+          <li class="active tooltipState" data-toggle="tooltip" data-placement="right" data-title="<%= t("views.admin.generic.general") %>">
+            <a href="#general" data-toggle="tab">
+              <i class="fa fa-cog"></i>
+            </a>
+          </li>
+          
+          <li class="tooltipState" data-toggle="tooltip" data-placement="right" data-title="<%= t("views.admin.generic.content") %>">
+            <a class="contentReload" href="#content" data-toggle="tab">
+              <i class="fa fa-desktop"></i>
+            </a>
+          </li>
+          <li class="tooltipState" data-toggle="tooltip" data-placement="right" data-title="<%= t("views.admin.pages.new.tabs.history") %>">
+            <a href="#revisions" data-toggle="tab">
+              <i class="fa fa-history"></i> 
+            </a>
+          </li>
+          <li class="tooltipState" data-toggle="tooltip" data-placement="right" data-title="<%= t("views.admin.generic.search_engine_optimisation") %>">
+            <a href="#seo" data-toggle="tab">
+              <i class="fa fa-bar-chart-o"></i> 
+            </a>
+          </li>
           <% if @post_type == 'post' %>
-            <li><a href="#categories" data-toggle="tab"><i class="fa fa-sitemap"></i> <%= t("views.admin.pages.new.tabs.tags_and_categories") %></a></li>
+            <li class="tooltipState" data-toggle="tooltip" data-placement="right" data-title="<%= t("views.admin.pages.new.tabs.tags_and_categories") %>">
+              <a href="#categories" data-toggle="tab">
+                <i class="fa fa-sitemap"></i> 
+              </a>
+            </li>
           <% end %>
-          <li><a href="#additional" data-toggle="tab"><i class="fa fa-paperclip"></i> <%= t("views.admin.pages.new.tabs.additional") %></a></li>
+          <li class="tooltipState" data-toggle="tooltip" data-placement="right" data-title="<%= t("views.admin.pages.new.tabs.additional") %>">
+            <a href="#additional" data-toggle="tab">
+              <i class="fa fa-paperclip"></i> 
+            </a>
+          </li>
 
         </ul>
         <div class="tab-content">
@@ -136,22 +161,24 @@
 
         </div>
         <div class="tab-pane" id="content">
-<!-- 
-          <%= f.text_area :post_content, :class => 'editor', :value => @record.post_content.blank? ? '' : @record.post_content %>
-           -->
 
-          <div class="features">
+            <div class="features">
+    
               <section class="editor">
                 <div class="outer">
                   <div class="editorwrap">
                     <section class="entry-markdown">
-                      <header class="floating-header"><%= t("views.admin.pages.new.tab_content.markdown") %> <a href="javascript:;" data-toggle="modal" data-target="#mdModal"><i class="fa fa-info-circle pull-right"></i></a></header>
+                      <header class="floatingheader">
+                        &nbsp;&nbsp; <%= t("views.admin.pages.new.tab_content.markdown") %> <a href="javascript:;" data-toggle="modal" data-target="#mdModal"><i class="fa fa-info-circle pull-right"></i></a>
+                      </header>
                       <section class="entry-markdown-content">
-                        <%= f.text_area :post_content, :class => 'markdown_editor', :value => @record.post_content.blank? ? '...' : @record.post_content %>
+           <%= f.text_area :post_content, :class => 'markdown_editor', :value => @record.post_content.blank? ? '...' : @record.post_content %>
                       </section>
                     </section>
                     <section class="entry-preview active">
-                      <header class="floating-header">&nbsp; <%= t("views.admin.generic.preview") %> <span class="entry-word-count">0 <%= t("views.admin.generic.words") %></span> </header>
+                      <header class="floatingheader">
+                        &nbsp;&nbsp; <%= t("views.admin.generic.preview") %> <span class="entry-word-count">0 <%= t("views.admin.generic.words") %></span>
+                      </header>
                       <section class="entry-preview-content">
                         <div class="rendered-markdown"></div>
                       </section>
@@ -159,6 +186,7 @@
                   </div>
                 </div>
               </section>
+              
             </div>
 
         </div>

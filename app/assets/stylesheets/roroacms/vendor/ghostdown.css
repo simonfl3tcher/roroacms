@@ -301,11 +301,11 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 }
 }
 .features .editor .editorwrap {
-	max-width: 100%;
+	max-width: 1180px;
 	padding: 40px 0;
 	margin: 0 auto;
 	position: relative;
-	height: 450px
+	height: 700px
 }
 @media (max-width: 860px), (max-width: 860px) {
 .features .editor .editorwrap {
@@ -386,8 +386,10 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 	box-shadow: rgba(0,0,0,0.1) 0 -2px 3px inset;
 	padding: 10px 0;
 }
-.entry-preview {
-	display: none !important;
+
+.editor {
+	position: relative; 
+	margin-top: 40px !important;
 }
 .features .editor .entry-markdown .floatingheader a, .features .editor .entry-preview .floatingheader a {
 	color: #fff
@@ -407,11 +409,15 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 .features .editor .entry-markdown.active header, .features .editor .entry-preview.active header {
 	cursor: auto;
 	color: #aaa9a2;
+	color:#5d5f63;
 	background: #fff;
 	box-shadow: #edece4 0 1px 0 inset, #edece4 1px 0 0 inset, #edece4 -1px 0 0 inset
 }
 .features .editor .entry-markdown.active header a, .features .editor .entry-preview.active header a {
 	color: #aaa9a2
+}
+.features .editor .entry-markdown .floatingheader, .features .editor .entry-preview .floatingheader {
+	color: #aaa9a2;
 }
 }
 @media (max-width: 400px), (max-width: 400px) {
@@ -503,7 +509,9 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 	padding: 65px 0 40px 0
 }
 @media (max-width: 860px), (max-width: 860px) {
-
+.features .editor .CodeMirror-lines {
+	padding: 25px 0 30px 0
+}
 }
 @media (max-width: 400px), (max-width: 400px) {
 .features .editor .CodeMirror-lines {

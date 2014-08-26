@@ -1,11 +1,4 @@
 <div class="form-toolbar"> 
-    <% cache('admin_submit_bar_toggle') do %>
-      <div class="toggle-navigation toggle-left pull-left">
-        <button type="button" class="btn btn-default shrink">
-          <i class="fa fa-bars"></i>
-        </button>
-      </div>
-    <% end %>
     <div class="btn-group pull-right"> 
       <% if ! defined?(unbuttoned) %>
           <% if defined?(post_record) && !post_record.id.blank? %>

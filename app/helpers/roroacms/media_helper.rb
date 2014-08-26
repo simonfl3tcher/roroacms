@@ -14,7 +14,7 @@ module Roroacms
     S3 = AWS::S3.new
 
     def upload_images(file, type, initial_folder = 'users')
-        path = "#{BUCKET}/" + initial_folder.to_s + "/" + type.to_s + "/" + file.original_filename
+        path = "#{BUCKET}/" + Setting.get("aws_folder") + "/" + initial_folder.to_s + "/" + type.to_s + "/" + file.original_filename
         begin
             obj = S3.buckets[BUCKET].objects["#{path}"].write(:file => file, :acl => :public_read)
             unauthenticated_url(obj)

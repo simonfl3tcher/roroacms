@@ -7,17 +7,41 @@
     <%= hidden_field_tag 'redirect', 'general' %>
 
     <div class="panel panel-default">
-      <div class="panel-body">
+      <div class="panel-body" id="collapsed_tabs">
         <div class="tab-wrapper tab-left ">
           <ul class="nav nav-tabs">
-            <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-cog"></i> <%= t("views.admin.generic.general") %></a></li>
-            <li><a href="#email" data-toggle="tab"><i class="fa fa-envelope-o"></i> <%= t("views.admin.settings.tabs.email_config") %></a></li>
+            <li class="tooltipState active" data-toggle="tooltip" data-placement="right" data-title="<%= t("views.admin.generic.general") %>">
+              <a href="#general" data-toggle="tab">
+                <i class="fa fa-cog"></i> 
+              </a>
+            </li>
+            <li class="tooltipState" data-toggle="tooltip" data-placement="right" data-title="<%= t("views.admin.settings.tabs.email_config") %>">
+              <a href="#email" data-toggle="tab">
+                <i class="fa fa-envelope-o"></i> 
+              </a>
+            </li>
             <% if current_user.username.downcase != 'demo' && Roroacms::Setting.get('demonstration_mode') == 'Y' %>
-              <li><a href="#amazon" data-toggle="tab"><i class="fa fa-cloud-upload"></i> <%= t("views.admin.settings.tabs.aws") %></a></li>
+              <li class="tooltipState" data-toggle="tooltip" data-placement="right" data-title="<%= t("views.admin.settings.tabs.aws") %>">
+                <a href="#amazon" data-toggle="tab">
+                  <i class="fa fa-cloud-upload"></i> 
+                </a>
+              </li>
             <% end %>
-            <li><a href="#comment" data-toggle="tab"><i class="fa fa-comments"></i> <%= t("generic.comments") %></a></li>
-            <li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> <%= t("views.admin.generic.search_engine_optimisation") %></a></li>
-            <li><a href="#user-groups" data-toggle="tab"><i class="fa fa-users"></i> <%= t("views.admin.settings.tabs.user_groups") %></a></li>
+            <li class="tooltipState" data-toggle="tooltip" data-placement="right" data-title="<%= t("generic.comments") %>">
+              <a href="#comment" data-toggle="tab">
+                <i class="fa fa-comments"></i> 
+              </a>
+            </li>
+            <li class="tooltipState" data-toggle="tooltip" data-placement="right" data-title="<%= t("views.admin.generic.search_engine_optimisation") %>">
+              <a href="#seo" data-toggle="tab">
+                <i class="fa fa-bar-chart-o"></i> 
+              </a>
+            </li>
+            <li class="tooltipState" data-toggle="tooltip" data-placement="right" data-title="<%= t("views.admin.settings.tabs.user_groups") %>">
+              <a href="#user-groups" data-toggle="tab">
+                <i class="fa fa-users"></i> 
+              </a>
+            </li>
           </ul>
           <div class="tab-content">
             <%= render :partial => 'roroacms/admin/partials/submit_bar' %>
@@ -210,6 +234,14 @@
                   <div class="col-sm-6">
                     <%= text_field_tag(:aws_bucket_name, @settings['aws_bucket_name'], class: 'form-control') %>
                     <%= setting_errors_for @settings, :aws_bucket_name %>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="form-group">
+                  <%= label_tag(:aws_folder, t("views.admin.settings.tab_content.aws_folder"), class: "col-sm-3 control-label") %>
+                  <div class="col-sm-6">
+                    <%= text_field_tag(:aws_folder, @settings['aws_folder'], class: 'form-control') %>
+                    <%= setting_errors_for @settings, :aws_folder %>
                   </div>
                   <div class="clearfix"></div>
                 </div>

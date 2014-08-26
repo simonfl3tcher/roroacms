@@ -37,7 +37,7 @@ app = (function() {
         $(".sidebar").addClass("sidebar-toggle");
         $(".main-content-wrapper").addClass("main-content-toggle-left");
       }
-      $(".sidebar-right").toggleClass("sidebar-toggle-right animated bounceInRight");
+      $(".sidebar-right").toggleClass("sidebar-toggle-right bounceInRight");
       $(".main-content-wrapper").toggleClass("main-content-toggle-right");
       if ($(window).width() < 660) {
         $(".sidebar").removeClass("sidebar-toggle");

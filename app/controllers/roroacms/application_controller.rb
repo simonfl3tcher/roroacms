@@ -98,7 +98,7 @@ module Roroacms
     # checks if the admin is logged in before anything else
 
     def authorize_admin
-      redirect_to admin_login_path, flash: { error: I18n.t("controllers.application.unauthorized") } and return if current_user.nil?
+      redirect_to admin_login_path and return if current_user.nil?
     end
 
 

@@ -36,6 +36,7 @@ Roroacms::Setting.create(:setting_name => 'theme_folder', :type_of_setting => 'T
 Roroacms::Setting.create(:setting_name => 'aws_access_key_id', :type_of_setting => 'AWS')
 Roroacms::Setting.create(:setting_name => 'aws_secret_access_key', :type_of_setting => 'AWS')
 Roroacms::Setting.create(:setting_name => 'aws_bucket_name', :type_of_setting => 'AWS')
+Roroacms::Setting.create(:setting_name => 'aws_folder', :type_of_setting => 'AWS')
 Roroacms::Setting.create(:setting_name => 'smtp_address', :type_of_setting => 'EMAIL')
 Roroacms::Setting.create(:setting_name => 'smtp_domain', :type_of_setting => 'EMAIL')
 Roroacms::Setting.create(:setting_name => 'smtp_port', :type_of_setting => 'EMAIL')
@@ -46,6 +47,7 @@ Roroacms::Setting.create(:setting_name => 'setup_complete', :type_of_setting => 
 Roroacms::Setting.create(:setting_name => 'tour_taken', :type_of_setting => 'G', :setting => 'N')
 Roroacms::Setting.create(:setting_name => 'url_prefix', :type_of_setting => 'G', :setting => 'http://')
 Roroacms::Setting.create(:setting_name => 'breadcrumb_seperator', :type_of_setting => 'G', :setting => '/')
+Roroacms::Setting.create(:setting_name => 'demonstration_mode', :type_of_setting => 'G', :setting => 'N')
 Roroacms::Setting.create(:setting_name => 'user_groups', :type_of_setting => 'G', :setting => '{"admin":["posts","banners","terms","comments","media","menus","pages","revisions","settings","themes","trash","administrators","articles","banners","terms","comments","media","menus","pages","revisions","themes","trash","markdown"]}')
 
 Roroacms::Post.create(:post_title => 'Sample page', :post_type => 'page', :post_status => 'Published', :post_slug => 'sample', :structured_url => '/sample', :post_date => Time.now.to_s(:db), :admin_id => '1', :post_content => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sollicitudin a orci ut tempor. Praesent in diam sagittis ligula sodales iaculis. Suspendisse ante nisi, sagittis quis elementum ac, tempor at nisi. Vestibulum convallis luctus nisi, ac tincidunt velit facilisis at. Duis eget rhoncus mi, sit amet fringilla felis. Pellentesque egestas, nisi ullamcorper venenatis vehicula, ipsum sem congue velit, sit amet molestie orci massa quis sapien. Aliquam in nisl quis augue ultricies interdum. Aenean pretium, lacus et posuere porttitor, velit erat placerat mi, tristique bibendum tellus magna sit amet elit. Donec turpis tellus, elementum nec consequat vel, tempus et turpis. Nunc quis elit volutpat, congue justo ac, sollicitudin diam. Etiam rhoncus nibh at ipsum porttitor mollis.</p>

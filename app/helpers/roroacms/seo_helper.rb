@@ -105,12 +105,14 @@ module Roroacms
         # if seo description is not blank then use that
         if !@content.post_seo_description.blank?
           return "<meta name=\"description\" content=\"#{@content.post_seo_description}\" />\n<meta name=\"author\" content=\"#{Setting.get('seo_site_title')}\">"
-        else
-          # if worst comes to worst use the page title
+        elsif Setting.get('seo_autogenerate_descriptions') == 'Y'
+          # if worst comes to worst use the page content
           description = truncate(prep_content(@content), :length => 100, :separator => ' ').gsub(/\r?\n|\r/, "")
           return "<meta name=\"description\" content=\"#{strip_tags(description)}\" />\n<meta name=\"author\" content=\"#{Setting.get('seo_site_title')}\">"
         end
       end
+
+      return ''
 
     end
 

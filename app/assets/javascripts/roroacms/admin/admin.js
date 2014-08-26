@@ -91,4 +91,5 @@ $(document).ready(function() {
   $("#tableFilter").keyup(function() {
     dTable.fnFilter($(this).val());
   });
+  $('.tooltipState:not(.active)').tooltip({delay: {show:1000, hide:100}});
 });

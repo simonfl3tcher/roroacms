@@ -1719,6 +1719,10 @@ fieldset[disabled] .btn-warning.active {
   font-size: 1em;
   margin: 0 3px;
 }
+
+.panel .actions i.fa-chevron-down {
+  display: none;
+}
 .panel .actions i:hover {
   cursor: pointer;
 }
@@ -2719,8 +2723,8 @@ h3.timeline-title {
   margin-bottom: 10px;
 }
 .radio-inline:first-child {
-  margin-left: 0px;
-  padding-left: 0px;
+/*  margin-left: 0px;
+  padding-left: 0px;*/
 }
 select.form-control {
   margin-bottom: 10px;
@@ -2823,7 +2827,7 @@ ol.sortable .item-information {
 .well small {
   color: #5D5F63;
 }
-.floating-header {
+.floatingheader {
   -moz-box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0) !important;
   background-image: linear-gradient(to bottom, #ffffff 0%, #ffffff 25%, rgba(255, 255, 255, 0.9) 100%) !important;
@@ -2836,7 +2840,7 @@ ol.sortable .item-information {
   top: 0;
   z-index: 400;
 }
-.floating-header i {
+.floatingheader i {
   margin-top: 5px;
 }
 .features .editor .CodeMirror pre {
@@ -3506,13 +3510,29 @@ ul.theme-issues li i.fa-check {
   border-radius:0px;
 }
 
+.tooltip-inner {
+background-color: #EEEEEE;
+color:#5D5F63;
+opacity: 1;
+}
+
+.tooltip.right .tooltip-arrow {
+border-right: 5px solid #EEEEEE;
+
+}
+
+input, textarea, select, input[type=submit] {
+  -webkit-appearance: none;
+}
+
+
 @media only screen and (max-width: 767px) and (min-width: 480px) {
   #main-content .h1 {
     font-size: 35px;
   }
 }
 @media (max-width: 767px) {
-  #D7DCDE ul.timeline:before {
+  ul.timeline:before {
     left: 40px;
   }
   ul.timeline > li > .timeline-badge {
@@ -3538,6 +3558,15 @@ ul.theme-issues li i.fa-check {
   .shrink {
     display: none;
   }
+
+  .floatingheader > a, .floatingheader .entry-word-count {
+    display: none;
+  }
+
+  .radio-inline, .checkbox-inline {
+    display: block;
+    padding:0px;
+  }
 }
 @media only screen and (max-width: 960px) {
   strong {
@@ -3552,6 +3581,9 @@ ul.theme-issues li i.fa-check {
   #dtable_wrapper > .row .col-xs-6 input {
     margin-left: 0px;
     width: 100%;
+  }
+  .panel .actions i.fa-chevron-down {
+    display: none;
   }
 }
 @media only screen and (max-width: 767px) {
