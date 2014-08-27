@@ -363,6 +363,8 @@ module Roroacms
         end
     end
 
+    # appends any extra menu items that are set in the applications configurations
+
     def append_application_menu      
       html = ''
       Roroacms.append_menu.each do |f|
@@ -370,6 +372,8 @@ module Roroacms
       end
       html.html_safe
     end
+
+    # checks to see if the stylesheets/javascript override files exist in the application
 
     def application_admin_file_exists?(file, ext)
       folder = ext == 'js' ? 'javascripts' : 'stylesheets'

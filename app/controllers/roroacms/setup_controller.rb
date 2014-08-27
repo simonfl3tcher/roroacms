@@ -8,12 +8,16 @@ module Roroacms
     helper Roroacms::AdminRoroaHelper
     include Roroacms::AdminRoroaHelper
 
+    # Show setup page
+
     def index
   		  Setting.reload_settings
       	@settings = Setting.get_all
         @settings['site_url'] = root_url if @settings['site_url'].blank?
       	@title = I18n.t("generic.installation.one")
   	end
+
+    # Create the settings for the Admin panel to work!
 
   	def create 
   	  # To do update this table we loop through the fields and update the key with the value.
@@ -41,6 +45,8 @@ module Roroacms
 
   	end
 
+    # create a new admin user
+
     def create_user
       @admin = Admin.new(administrator_params)
       @admin.access_level = 'admin'
@@ -58,22 +64,21 @@ module Roroacms
 
     end
 
+    # create a new admin object
+
     def administrator
       @title = I18n.t("generic.installation.two")
       @admin = Admin.new
     end
 
-  	def remove_unwanted_keys
-      params.delete :utf8
-      params.delete :authenticity_token
-      params.delete :commit
-      params.delete :redirect
-    end
+    # Check to see if the setup has been completed, if it has then show 404 page
 
     def check_setup 
       @meta_translation = I18n.t("views.admin.layouts.admin.meta_title_installation")
       render_404 if Setting.get('setup_complete') == 'Y' && params[:action] != 'tour_complete'
     end
+
+    # complete the tour of the administration panel
 
     def tour_complete 
       Setting.save_data({tour_taken: 'Y'})
@@ -86,6 +91,13 @@ module Roroacms
 
     def administrator_params
       params.require(:admin).permit(:email, :username, :password, :password_confirmation)
+    end
+
+  	def remove_unwanted_keys
+      params.delete :utf8
+      params.delete :authenticity_token
+      params.delete :commit
+      params.delete :redirect
     end
 
   end

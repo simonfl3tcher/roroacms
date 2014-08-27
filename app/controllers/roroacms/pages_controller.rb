@@ -29,6 +29,7 @@ module Roroacms
       route_index_page params
     end
 
+    # Shows the page via the ID, simlply pass in the ID of the page that you would like to view via params
 
     def show
       redirect_to show_url(params)
@@ -41,6 +42,9 @@ module Roroacms
     def dynamic_page
       route_dynamic_page params
     end
+
+
+    # Check to see if there is a theme installed and if so has it got all the necessary files
 
     def check_theme_folder_new
       @meta_translation = I18n.t("views.admin.layouts.admin.meta_title_theme_issues")

@@ -111,19 +111,27 @@ module Roroacms
 
     end
 
+    # check that the setup is complete if not redirect to the setup area
+
     def check_setup
        redirect_to setup_index_path and return if Setting.get('setup_complete') != 'Y' && params[:controller] != 'roroacms/setup'
     end
 
+    # add the home breadcrumb for the front end
+
     def add_breadcrumb_fe
       add_breadcrumb I18n.t("generic.home"), '/', :title => I18n.t("generic.home") if !params[:controller].include?('admin/')
     end
+
+    # add a breadcrumb to the breadcrumb hash
 
     def add_breadcrumb(name, url = 'javascript:;', atts = {})
       hash = { name: name, url: url, atts: atts }
       @breadcrumbs << hash
     end
 
+    # restricts any CRUD functions if you are logged in as the username of demo and you have demonstration mode turned on
+    
     def authorize_demo
       if !request.xhr? && !request.get? && ( !current_user.blank? && current_user.username.downcase == 'demo' && Setting.get('demonstration_mode') == 'Y' )
         redirect_to :back, flash: { error: I18n.t('generic.demo_notification') } and return 
