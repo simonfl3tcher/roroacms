@@ -66,7 +66,7 @@ h3.underline {
   min-height: 80px;
   padding: 0 0 0 10px;
   position: relative;
-  background: #5ce0aa url(<%=asset_path "roroacms/admin/roroafull.png"%>) no-repeat center center;
+  background: #5ce0aa url(roroafull.png) no-repeat center center;
 }
 #header {
   z-index: 200;
@@ -85,7 +85,7 @@ h3.underline {
   min-height: 80px;
   padding: 0 0 0 10px;
   position: relative;
-  background: #5ce0aa url(<%=asset_path "roroacms/admin/roroa-logo.png"%>) no-repeat 23px 22px;
+  background: #5ce0aa url(roroafull.png) no-repeat center center;
 }
 #header .logo {
   color: #fff;
@@ -2199,7 +2199,7 @@ section#login-container div#error_explanation ul li {
   display: inline-block;
 }
 #login-wrapper .logo:before {
-  background-image: url(<%=asset_path "roroacms/admin/logo.png"%>);
+  background-image: url(logo.png);
   background-position: left center;
   background-repeat: no-repeat;
   padding: 0 20px;
@@ -2723,8 +2723,8 @@ h3.timeline-title {
   margin-bottom: 10px;
 }
 .radio-inline:first-child {
-/*  margin-left: 0px;
-  padding-left: 0px;*/
+  margin-left: 0px;
+  padding-left: 0px;
 }
 select.form-control {
   margin-bottom: 10px;

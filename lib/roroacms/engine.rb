@@ -25,6 +25,7 @@ module Roroacms
     isolate_namespace Roroacms
 
     DB = YAML.load_file(Dir.pwd + "/config/database.yml")
+
     require 'active_record'
     
     ActiveRecord::Base.establish_connection(
@@ -59,13 +60,12 @@ module Roroacms
         Rails.application.config.assets.precompile += %w( roroacms/roroacms.js )  if File.exists?("#{Dir.pwd}/app/assets/javascripts/roroacms/roroacms.js")
         Rails.application.config.assets.precompile += %w( roroacms/roroacms.css ) if File.exists?("#{Dir.pwd}/app/assets/stylesheets/roroacms/roroacms.css")
         Rails.application.config.assets.precompile += ["theme.css", "theme.js", "theme.scss", "theme.coffee"]
-        Rails.application.config.assets.precompile += ["#{Dir.pwd}/app/views/themes/#{Setting.get('theme_folder')}/assets/images/*"]
-
+        Rails.application.config.assets.precompile += ["#{Dir.pwd}/app/views/themes/#{Setting.get('theme_folder')}/assets/*"]
+        
     end
 
     config.assets.precompile += %w( *.js *.css )
     config.serve_static_assets = true
-
 
     config.i18n.default_locale = :en
     config.assets.initialize_on_precompile = true
