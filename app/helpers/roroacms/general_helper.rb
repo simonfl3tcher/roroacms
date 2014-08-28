@@ -108,6 +108,10 @@ module Roroacms
       session[:username] = nil
     end
 
+    # strips the url of all the variable data so that the URLs are always the same
+    # Params:
+    # +url+:: the URL that you want to strip down
+
     def strip_url(url)
 
       return url if url.blank?
@@ -121,15 +125,27 @@ module Roroacms
       return url
     end
 
+    # reutrns a nested menu
+    # Params:
+    # +item+:: hash of menu items 
+    # +text+:: the hash value that you want to use as the title text 
+
     def nested_dropdown(items, text = 'post_title')
-        result = []
-        items.map do |item, sub_items|
-            name = text == 'post_title' && !item.parent.blank? && item.parent.disabled == 'Y' ? item[text.to_sym] + " (parent: #{item.parent.post_title})" : item[text.to_sym]
-            result << [('- ' * item.depth) + name.html_safe, item[:id]]
-            result += nested_dropdown(sub_items, text) unless sub_items.blank?
-        end
-        result
+      result = []
+      items.map do |item, sub_items|
+        name = text == 'post_title' && !item.parent.blank? && item.parent.disabled == 'Y' ? item[text.to_sym] + " (parent: #{item.parent.post_title})" : item[text.to_sym]
+        result << [('- ' * item.depth) + name.html_safe, item[:id]]
+        result += nested_dropdown(sub_items, text) unless sub_items.blank?
+      end
+      result
     end
+
+
+    # returns the closest revision to the current revision been displayed - this is an internal functon that no-body should have to worry about or touch
+    # Params:
+    # +revisions+:: ActiveRecord hash of revisions
+    # +current+:: integer of the current record
+    # +status+:: what status of the revisions you want to check against
 
     def get_closest_revision(revisions, current, status)
       if status == 'user-autosave'
@@ -138,10 +154,11 @@ module Roroacms
         end
         return nil
       end
+
       return revisions[current+1] if !revisions[current+1].blank?
       return revisions[0].parent
-
     end
 
   end
+
 end
