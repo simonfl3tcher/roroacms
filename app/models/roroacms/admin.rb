@@ -2,7 +2,7 @@ module Roroacms
   class Admin < ActiveRecord::Base
 
     include GeneralHelper
-    include NewViewHelper
+    include ViewHelper
 
     ## constants ##
 

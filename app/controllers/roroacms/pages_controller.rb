@@ -13,7 +13,6 @@ module Roroacms
 
     # Include the necessary helpers to load the file, RoutingHelper does the routing of the url to the correct data
     include Roroacms::ViewHelper
-    include Roroacms::NewViewHelper
     include Roroacms::RoutingHelper
     include Roroacms::GeneralHelper
 

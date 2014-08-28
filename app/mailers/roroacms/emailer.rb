@@ -2,7 +2,7 @@ module Roroacms
   class Emailer < ActionMailer::Base
     default from: "from@example.com"
     add_template_helper(Roroacms::AdminRoroaHelper)
-	  add_template_helper(Roroacms::NewViewHelper)
+	  add_template_helper(Roroacms::ViewHelper)
 	  default from: Setting.get('smtp_domain')
 
 	  class MailSettingsInterceptor
