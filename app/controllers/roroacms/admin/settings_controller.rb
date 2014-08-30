@@ -42,6 +42,7 @@ module Roroacms
 
     end
 
+    # creates a user group via an ajax call and returns the HTML for that user group
 
     def create_user_group
       @key = params[:key]

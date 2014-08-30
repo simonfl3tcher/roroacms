@@ -10,6 +10,8 @@ module Roroacms
 
     def get_meta_headers
 
+      headtags = ''
+
       # decide wether it is a page or it is a template displying other content i.e. the category page
 
       if !@content.nil?
@@ -25,11 +27,13 @@ module Roroacms
             headtags = get_manual_metadata 'home'
           else
             # use the page content to generate the meta data
-            headtags = "#{get_page_title}\n"
-            headtags += "#{get_meta_description}\n"
-            headtags += "#{get_google_analytics}\n"
-            headtags += "#{get_robots_tag}"
-            headtags += "#{canonical_urls}"
+            if @content.post_seo_is_disabled != 'Y'
+              headtags = "#{get_page_title}\n"
+              headtags += "#{get_meta_description}\n"
+              headtags += "#{get_google_analytics}\n"
+              headtags += "#{get_robots_tag}"
+              headtags += "#{canonical_urls}"
+            end
           end
 
           render :inline => headtags

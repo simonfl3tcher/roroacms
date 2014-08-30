@@ -73,7 +73,6 @@ module Roroacms
 
     def deal_with_abnormalaties
       self.overlord = 'N'
-      self.avatar = site_url('assets/roroacms/default-profile.jpg')
     end
 
     # checks if the cover image is blank and sets the cover image to blank if this is the case

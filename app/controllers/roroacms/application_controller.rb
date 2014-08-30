@@ -52,7 +52,7 @@ module Roroacms
 
     def current_user
       if !session["warden.user.admin.key"].blank?
-        @current_admin ||= Admin.find(session["warden.user.admin.key"][0][0])
+        @current_admin ||= Admin.find_by_id(session["warden.user.admin.key"][0][0])
       else
         nil
       end
@@ -137,7 +137,7 @@ module Roroacms
         redirect_to :back, flash: { error: I18n.t('generic.demo_notification') } and return 
       end
 
-      render :inline => 'demo' and return if params[:action] == 'save_menu'
+      render :inline => 'demo' and return if params[:action] == 'save_menu' && !current_user.blank? && current_user.username.downcase == 'demo' && Setting.get('demonstration_mode') == 'Y'
 
     end
 

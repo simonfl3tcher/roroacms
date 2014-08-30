@@ -201,36 +201,7 @@ module Roroacms
     # +dir+:: the directory that you want to list the controllers for
 
     def list_controllers(dir = 'admin')
-      hash = {}
-      controllers = list_controllers_raw(dir)
-
-      controllers.each do |f|
-
-        key = f.sub("#{Roroacms::Engine.root}/app/controllers/roroacms/admin/", '')
-        value = key.sub('_controller.rb', '')
-
-        next if value == 'dashboard'
-
-        v =
-          case value
-          when 'settings/general'
-            'Settings'
-          when 'terms'
-            'Categories & Tags'
-          when 'posts'
-            'Articles'
-          when 'administrators'
-            'Users'
-          else
-            value
-          end
-
-        hash[ucwords(v)] = key.sub('_controller.rb', '')
-
-      end
-
-      hash.sort
-
+      Setting.list_controllers(dir)
     end
 
     # get user group data and return the value for the given key

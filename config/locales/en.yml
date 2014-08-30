@@ -471,7 +471,7 @@ en:
           aws_access_key_id: "AWS S3 - Access Key ID"
           aws_secret_access_key: "AWS S3 - Secret Access Key ID"
           aws_bucket_name: "AWS S3 - Bucket name"
-          aws_folder: "AWS S3 - folder name"
+          aws_folder: "AWS S3 - prefixed folder structure"
           url_prefix: "URL prefix"
       terms:
         table:

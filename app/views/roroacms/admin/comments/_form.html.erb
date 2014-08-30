@@ -1,9 +1,13 @@
 <%= form_for [:admin, @comment] do |f| %>
-<div class="panel panel-default">
+<div class="panel panel-default" id="collapsed_tabs">
   <div class="panel-body">
     <div class="tab-wrapper tab-left ">
       <ul class="nav nav-tabs">
-        <li class="active"><a href="#general" data-toggle="tab"><i class="fa fa-comment"></i> <%= t("views.admin.generic.comment") %></a></li>
+        <li class="active tooltipState" data-toggle="tooltip" data-placement="right" data-title="<%= t("views.admin.generic.comment") %>">
+          <a href="#general" data-toggle="tab">
+            <i class="fa fa-comment"></i> 
+          </a>
+        </li>
       </ul>
       <div class="tab-content">
         <%= render :partial => 'roroacms/admin/partials/submit_bar' %>

@@ -124,12 +124,12 @@ module Roroacms
     end
 
 
-    # Delete the admin, one thing to remember is you are not allowed to destory the super user.
-    # You are only allowed to destroy yourself unless you are the super user.
+    # Delete the admin, one thing to remember is you are not allowed to destory the overlord.
+    # You are only allowed to destroy yourself unless you are the overlord.
 
     def destroy
       @admin = Admin.find(params[:id])
-      @admin.destroy
+      @admin.destroy if @admin.overlord == 'N'
 
       respond_to do |format|
         format.html { redirect_to admin_administrators_path, notice: I18n.t("controllers.admin.administrators.destroy.flash.success") }

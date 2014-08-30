@@ -1,6 +1,9 @@
 module Roroacms   
   class Setting < ActiveRecord::Base
 
+    include GeneralHelper
+    include AdminRoroaHelper
+
     after_save :after_reload_settings
 
     # get a certain settings value
@@ -9,8 +12,8 @@ module Roroacms
 
     def self.get(setting_name)
       @reference ||= filter_settings
+      ret = @reference[setting_name]
       ret = @reference[setting_name].gsub("\\", '') if setting_name == 'user_groups'
-      ret =  @reference[setting_name]
       ret
     end
 
@@ -67,14 +70,26 @@ module Roroacms
     # +params+:: the parameters
 
     def self.save_data(params)
+
       params.each do |key, value|
-        value = ActiveSupport::JSON.encode(value) if key == 'user_groups'
+        value = ActiveSupport::JSON.encode(user_group_check(value)) if key == 'user_groups'
+        value = Setting.strip_url(value) if key == 'site_url'
         value = value.gsub(/[^0-9]/i, '') if key == 'pagination_per_fe'
         set = Setting.where("setting_name = ?", key).update_all('setting' => value)
       end
 
       Setting.reload_settings
 
+    end
+
+    def self.user_group_check(hash)
+      h = []
+      Setting.list_controllers.each do |k,v|
+        h << v
+      end
+      hash['admin'] = h
+      hash.keys.sort
+      return hash
     end
 
 
@@ -86,6 +101,66 @@ module Roroacms
 
     def self.reload_settings
        @reference = Setting.filter_settings
+    end
+
+    def self.list_controllers(dir = 'admin')
+      hash = {}
+      controllers = Setting.list_controllers_raw(dir)
+
+      controllers.each do |f|
+
+        key = f.sub("#{Roroacms::Engine.root}/app/controllers/roroacms/admin/", '')
+        value = key.sub('_controller.rb', '')
+
+        next if value == 'dashboard'
+
+        v =
+          case value
+          when 'settings/general'
+            'Settings'
+          when 'terms'
+            'Categories & Tags'
+          when 'posts'
+            'Articles'
+          when 'administrators'
+            'Users'
+          else
+            value
+          end
+        v = v.split(' ').select {|w| w.capitalize! || w }.join(' ')
+        hash[v] = key.sub('_controller.rb', '')
+
+      end
+
+      hash.sort
+    end
+
+
+    # list controllers in given directory
+    # Params:
+    # +dir+:: directory that you want to list all of the controllers from
+
+    def self.list_controllers_raw(dir = "")
+      dir = dir + "/**/" if !dir.blank?
+      controller_list = Array.new
+      Dir["#{Roroacms::Engine.root}/app/controllers**/roroacms/#{dir}*.rb"].each do |file|
+        controller_list.push(file.split('/').last.sub!("_controller.rb",""))
+      end
+    end
+
+
+    def self.strip_url(url)
+      return url if url.blank?
+
+      url.sub!(/www./, '')        if url.include? "www."
+      
+      url.sub!(/https\:\/\//, '') if url.include? "https://"
+
+      url.sub!(/http\:\/\//, '')  if url.include? "http://"
+
+      url = url[0...-1] if url[-1, 1] == '/'
+
+      return url
     end
 
 

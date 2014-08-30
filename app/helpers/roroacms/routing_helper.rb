@@ -146,7 +146,7 @@ module Roroacms
       if !current_user.blank? && !params[:admin_preview].blank? && params[:admin_preview] == 'true'
         @content = Post.where("post_type = 'page' AND post_visible = 'Y' AND (post_status = 'Published' OR post_status = 'Draft')").find_by_structured_url("/#{url}")
       else
-        @content = Post.where(status, :post_type => 'page', :post_status => 'Published', :post_visible => 'Y').find_by_structured_url("/#{url}")
+        @content = Post.where(status + " AND post_type = 'page' AND post_visible = 'Y'").find_by_structured_url("/#{url}")
       end
 
       # add a breadcrumb for each of its parents by running through each segment
@@ -242,7 +242,7 @@ module Roroacms
       if !current_user.blank? && !params[:admin_preview].blank? && params[:admin_preview] == 'true'
         @content = Post.where("post_type = 'post' AND post_visible = 'Y' AND (post_status = 'Published' OR post_status = 'Draft')").find_by_post_slug(segments[1])
       else
-        @content = Post.where(status, :post_type => 'post', :disabled => 'N', :post_visible => 'Y').find_by_post_slug(segments[1])
+        @content = Post.where(status + " AND post_type = 'post' AND post_visible = 'Y'").find_by_post_slug(segments[1])
       end
 
       render_404 and return if @content.nil?

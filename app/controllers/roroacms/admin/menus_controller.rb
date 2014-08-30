@@ -65,7 +65,7 @@ module Roroacms
     # saves the menu on the fly via ajax. This usually gets called if there is any change to the menu object
 
     def save_menu
-      if MenuOption.save_menu_on_fly params
+      if MenuOption.save_menu_on_fly(params)
         render :inline => 'done'
       end
     end

@@ -46,6 +46,8 @@ module Roroacms
       ApplicationController.helper(ActionView::Helpers::ThemeHelper) if File.exists?("#{Rails.root}/app/helpers/theme_helper.rb")
     end
     
+    require "#{Roroacms::Engine.root}/app/helpers/roroacms/general_helper.rb"
+    require "#{Roroacms::Engine.root}/app/helpers/roroacms/admin_roroa_helper.rb"
     require "#{Roroacms::Engine.root}/app/models/roroacms/setting.rb"
 
     initializer :assets do |config|
@@ -61,6 +63,7 @@ module Roroacms
         Rails.application.config.assets.precompile += %w( roroacms/roroacms.css ) if File.exists?("#{Dir.pwd}/app/assets/stylesheets/roroacms/roroacms.css")
         Rails.application.config.assets.precompile += ["theme.css", "theme.js", "theme.scss", "theme.coffee"]
         Rails.application.config.assets.precompile += ["#{Dir.pwd}/app/views/themes/#{Setting.get('theme_folder')}/assets/*"]
+        Rails.application.config.assets.precompile += %w( roroacms/default-profile.jpg )
         
     end
 

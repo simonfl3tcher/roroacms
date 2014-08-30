@@ -3525,6 +3525,16 @@ input, textarea, select, input[type=submit] {
   -webkit-appearance: none;
 }
 
+.modal-content {
+    border: 1px solid #ffffff;
+    box-shadow: none;
+}
+
+small.mic-info {
+  display: block;
+  padding:10px 0px;
+}
+
 
 @media only screen and (max-width: 767px) and (min-width: 480px) {
   #main-content .h1 {

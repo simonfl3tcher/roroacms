@@ -15,6 +15,13 @@
                   <i class="fa fa-search"></i>&nbsp;<%= t("views.admin.generic.view") %>
               <% end %>  
           <% end %>
+          <% if defined?(admin_record) && !admin_record.id.blank? %>
+              <% if admin_record.overlord != "Y" %>
+                <%= link_to admin_administrator_path(admin_record), method: :delete, data: { confirm: t("views.admin.generic.confirm") }, :class => 'btn btn-sm btn-danger pull-left' do %>
+                    <i class="fa fa-trash-o"></i>&nbsp;<%= t("views.admin.generic.delete") %>
+                <% end %>
+              <% end %> 
+          <% end %>
           <button type="submit" class="btn btn-primary btn-sm pull-right"><i class="fa fa-check"></i>&nbsp;<%= t("views.admin.generic.save") %></button>
       <% else %>
           &nbsp;

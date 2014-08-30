@@ -8,8 +8,7 @@ module Roroacms
     def site_url(str = nil)
       url = Setting.get('site_url')
       str = str[1..-1] if !str.blank? && str[0,1] == '/'
-      url = url + '/' if !url.blank? && url[-1, 1] != '/'
-      "#{Setting.get('url_prefix')}#{strip_url(url)}#{str}"
+      "#{Setting.get('url_prefix')}#{strip_url(url)}/#{str}"
     end
 
     # GENERIC Functions #

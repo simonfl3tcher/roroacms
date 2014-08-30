@@ -263,10 +263,10 @@
                 <div class="col-sm-6">
                   <div class="">
                     <label class="radio-inline">
-                      <%= radio_button_tag(:article_comment_type, "R", @settings['article_comment_type'] == 'R' ? true : false) %> <%= t("views.admin.settings.tab_content.system_comments") %>
+                      <%= radio_button_tag(:article_comment_type, "R", @settings['article_comment_type'] == 'R' && @settings['article_comments'] == 'Y' ? true : false) %> <%= t("views.admin.settings.tab_content.system_comments") %>
                     </label>
                     <label class="radio-inline">
-                      <%= radio_button_tag(:article_comment_type, "F", @settings['article_comment_type'] == 'F' ? true : false) %> <%= t("views.admin.settings.tab_content.facebook_comments") %>
+                      <%= radio_button_tag(:article_comment_type, "F", @settings['article_comment_type'] == 'F' && @settings['article_comments'] == 'Y' ? true : false) %> <%= t("views.admin.settings.tab_content.facebook_comments") %>
                     </label>
                   </div>
                 </div>

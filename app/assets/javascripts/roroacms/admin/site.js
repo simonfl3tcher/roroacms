@@ -234,6 +234,15 @@ responsive_app = (function() {
       });
     }
   };
+  shrink = function() {
+    $('.tab-wrapper').parent().attr('id', 'collapsed_tabs');
+    return $(".settings-area .nav-tabs a:not([data-textref])").each(function() {
+    var text;
+    text = $(this).text().replace(" ", "");
+    $(this).attr("data-textref", text);
+    $(this).html($(this).html().replace(/&amp;/, "&").replace(text, ""));
+    });
+  };
   respond = function() {
     if (app.getCookie("internal_menu_contracted") === "true") {
       shrink();

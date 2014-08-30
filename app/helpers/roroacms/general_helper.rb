@@ -73,18 +73,6 @@ module Roroacms
       change ? hash : nil
     end
 
-    # list controllers in given directory
-    # Params:
-    # +dir+:: directory that you want to list all of the controllers from
-
-    def list_controllers_raw(dir = "")
-      dir = dir + "/**/" if !dir.blank?
-      controller_list = Array.new
-      Dir["#{Roroacms::Engine.root}/app/controllers**/roroacms/#{dir}*.rb"].each do |file|
-        controller_list.push(file.split('/').last.sub!("_controller.rb",""))
-      end
-    end
-
     # capitalizes all words in a string
     # Params:
     # +str+:: the string
@@ -114,15 +102,8 @@ module Roroacms
 
     def strip_url(url)
 
-      return url if url.blank?
-
-      url.sub!(/www./, '')        if url.include? "www."
+      Setting.strip_url(url)
       
-      url.sub!(/https\:\/\//, '') if url.include? "https://"
-
-      url.sub!(/http\:\/\//, '')  if url.include? "http://"
-
-      return url
     end
 
     # reutrns a nested menu

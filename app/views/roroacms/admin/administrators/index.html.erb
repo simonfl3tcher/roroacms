@@ -23,7 +23,11 @@
             <% @admins.each do |admin| %>
             <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
               <td>
-                <img src="<%= admin.avatar %>" class="img-circle hidden-xs" width="35" height="35">&nbsp;
+                <% if admin.avatar.blank? %>
+                  <%= image_tag 'roroacms/default-profile.jpg', height: '35', width: '35', class: "img-circle hidden-xs" %>
+                <% else %>
+                  <img src="<%= admin.avatar %>" class="img-circle hidden-xs" width="35" height="35">&nbsp;
+                <% end %>
               </td>
               <td>
                 <%= admin.username %>
@@ -35,8 +39,10 @@
                     <%= link_to edit_admin_administrator_path(admin), :class => 'btn btn-default btn-xs' do %>
                       <i class="fa fa-pencil"></i>
                     <% end %> 
-                    <%= link_to admin_administrator_path(admin), method: :delete, data: { confirm: t("views.admin.generic.confirm") }, :class => 'btn btn-danger btn-xs' do %>
-                      <i class="fa fa-trash-o"></i>
+                    <% if admin.overlord != 'Y' %>
+                      <%= link_to admin_administrator_path(admin), method: :delete, data: { confirm: t("views.admin.generic.confirm") }, :class => 'btn btn-danger btn-xs' do %>
+                        <i class="fa fa-trash-o"></i>
+                      <% end %>
                     <% end %>
                   </div>
                 <% end %>
