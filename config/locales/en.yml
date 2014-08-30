@@ -4,6 +4,7 @@
 en:
   generic: 
     comments: "Comments"
+    unseen_comments: "Unseen Comments"
     home: "Home"
     admin: "Admin"
     dashboard: "Dashboard"
