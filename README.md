@@ -50,14 +50,13 @@ If you'd like to help with this project, please get in touch with me. The best p
 
 Licensed under the [MIT License](http://creativecommons.org/licenses/MIT/)
 
-Copyright 2012 [Simon Fletcher](https://github.com/fletcher890)
+Copyright 2012-2014 [Simon Fletcher](https://github.com/fletcher890)
 
 Icons from [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
 
 ### Other Information
 
-Project homepage: http://roroacms.co.uk
+Project homepage: [http://roroacms.co.uk](http://roroacms.co.uk)
 
-Wiki : https://github.com/fletcher890/roroacms/wiki
 
 Version: 2.0
