@@ -2154,14 +2154,18 @@ a.wy-text-neutral:hover {
 }
 h1, h2, h3, h4, h5, h6, legend {
     margin-top: 0;
-    font-weight: 700;
-    font-family: "Roboto Slab", "ff-tisa-web-pro", "Georgia", Arial, sans-serif;
+    font-family: "Source Sans Pro",Arial,sans-serif;
+    font-weight: 300;
+    line-height: 41px;
+    margin: 0;
+    color:#5d5f63;
 }
 p {
     line-height: 24px;
     margin: 0;
     font-size: 16px;
     margin-bottom: 24px;
+    color:#5d5f63;
 }
 h1 {
     font-size: 175%}
@@ -2623,13 +2627,12 @@ div[class^='highlight'] pre {
     color: #b3b3b3;
 }
 .wy-menu-vertical a:hover {
-    background-color: #4e4a4a;
+    color: #5ce0aa;
     cursor: pointer;
 }
 .wy-menu-vertical a:active {
-    background-color: #5ce0aa;
     cursor: pointer;
-    color: #fff;
+
 }
 .wy-side-nav-search {
     z-index: 200;
@@ -2673,8 +2676,7 @@ div[class^='highlight'] pre {
     color: #b3b3b3;
 }
 .wy-nav .wy-menu-vertical a:hover {
-    background-color: #5ce0aa;
-    color: #fff;
+    color: #5ce0aa;
 }
 [data-menu-wrap] {
     -webkit-transition: all 0.2s ease-in;
@@ -2958,7 +2960,7 @@ footer p {
     height: 30px;
     line-height: 30px;
     padding: 0 6px;
-    display: block;
+    display: none;
     text-align: center;
 }
 @media screen and (max-width: 768px) {
@@ -3073,7 +3075,7 @@ img {
     margin-bottom: 24px;
     font-size: 100%}
 .rst-content .highlighted {
-    background: #f1c40f;
+    background: #5ce0aa;
     display: inline-block;
     font-weight: bold;
     padding: 0 6px;
