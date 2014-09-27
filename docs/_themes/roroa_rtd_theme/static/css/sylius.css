@@ -10,6 +10,10 @@
     background-image: url("../img/logo.png");
     background-repeat: no-repeat;
     background-position: center center;
+    display: block;
+    min-height:50px;
+    width:100%;
+    height:auto;
 }
 
 .wy-menu-vertical li.current a:hover {
