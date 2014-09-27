@@ -20,7 +20,7 @@
                 <i class="fa fa-envelope-o"></i> 
               </a>
             </li>
-            <% if current_user.username.downcase != 'demo' && Roroacms::Setting.get('demonstration_mode') == 'Y' %>
+            <% if Roroacms::Setting.get('demonstration_mode') != 'Y' %>
               <li class="tooltipState" data-toggle="tooltip" data-placement="right" data-title="<%= t("views.admin.settings.tabs.aws") %>">
                 <a href="#amazon" data-toggle="tab">
                   <i class="fa fa-cloud-upload"></i> 
@@ -211,7 +211,7 @@
 
 
             </div>
-            <% if current_user.username.downcase != 'demo' && Roroacms::Setting.get('demonstration_mode') == 'Y' %>
+            <% if Roroacms::Setting.get('demonstration_mode') != 'Y' %>
               <div class="tab-pane" id="amazon">
                 <div class="form-group">
                   <%= label_tag(:aws_access_key_id, t("views.admin.settings.tab_content.aws_access_key_id "), class: "col-sm-3 control-label") %>
