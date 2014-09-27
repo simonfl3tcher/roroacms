@@ -3,6 +3,13 @@
     background-position: -20px bottom;
     background-size: 20% auto;
     background-repeat: no-repeat;
+    background-color: #ffffff;
+}
+
+.logo {
+    background-image: url("../img/logo.png");
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 .wy-menu-vertical li.current a:hover {
@@ -27,8 +34,9 @@
     border-bottom: 0;
 }
 .wy-side-nav-logo {
+    background-color: #5ce0aa;
+    min-height: 80px;
     padding: 20px;
-    background-color: #fff;
     text-align: center;
 }
 .wy-side-nav-search {
