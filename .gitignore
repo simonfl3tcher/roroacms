@@ -17,5 +17,4 @@ capybara-*.html
 /public/*
 .project
 *.gem
-*.gemspec
 .DS_Store
