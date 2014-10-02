@@ -47,7 +47,7 @@
           </header>
         <% end %>
         <!--sidebar left start-->
-          <aside class="sidebar <%= !cookies[:header_menu_contracted].blank? ? 'sidebar-toggle' : '' %>">
+          <aside class="sidebar <%= !cookies[:header_menu_contracted].blank? ? 'sidebar-toggle manual' : '' %>">
             <div id="leftside-navigation" class="nano">
                 <ul class="nano-content">
                     <li class="<%= cp(roroacms.admin_path) %>">
@@ -148,7 +148,7 @@
           </aside>
 
 
-        <section class="main-content-wrapper <%= !cookies[:header_menu_contracted].blank? ? 'main-content-toggle-left' : '' %>">
+        <section class="main-content-wrapper <%= !cookies[:header_menu_contracted].blank? ? 'main-content-toggle-left manual' : '' %>">
             <section id="main-content">
                 <%= theme_exists %>
                 <% if !current_page?(roroacms.admin_path) %>

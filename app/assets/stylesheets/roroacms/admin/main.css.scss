@@ -3535,6 +3535,11 @@ small.mic-info {
   padding:10px 0px;
 }
 
+.features .editor .editorwrap {
+  width:100%;
+  max-width: 100%;
+}
+
 
 @media only screen and (max-width: 767px) and (min-width: 480px) {
   #main-content .h1 {
@@ -3633,6 +3638,15 @@ small.mic-info {
   }
   .view-all-revisions {
     width: 100%;
+  }
+
+  .main-content-toggle-left.manual {
+    margin-left:0px;
+  }
+
+  .sidebar-toggle.manual {
+     margin-left: -240px;
+     width: 240px;
   }
 }
 @media only screen and (max-width: 660px) {

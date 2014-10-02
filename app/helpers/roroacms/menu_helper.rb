@@ -129,41 +129,52 @@ module Roroacms
 			
 			# start the string by defining the target 
 			atts = get_target(existingData['target'])
+			p = Post.find_by_id(existingData['linkto'])
+			blog = false
 
-			if menuOption.data_type == 'page'
-				p = Post.find_by_id(existingData['linkto'])
-				if !p.blank?
-					url = p.id == home_id.to_i ? site_url() : site_url(p.structured_url)
-					atts += " href='#{url}' class='menu_link'"
-				end
-			elsif menuOption.data_type == 'article'
-				p = Post.find_by_id(existingData['linkto'])
-				if !p.blank?
-					url = site_url(article_url +  p.structured_url)
-					atts += " href='#{url}' class='menu_link'"
-				end
+			if menuOption.data_type == 'page' && !p.blank?
+				
+				url = p.id == home_id.to_i ? site_url() : site_url(p.structured_url)
+				atts += " href='#{url}' class='menu_link'"
+
+			elsif menuOption.data_type == 'article' && !p.blank?
+
+				url = site_url(article_url +  p.structured_url)
+				atts += " href='#{url}' class='menu_link'"
 
 			elsif menuOption.data_type == 'category'
+
 				t = Term.find(existingData['linkto'])
 				url = site_url(article_url + '/' + category_url + t.structured_url)
 				atts += " href='#{url}' class='menu_link'"
 
 			elsif menuOption.data_type == 'tag'
+
 				t = Term.find(existingData['linkto'])
 				url = site_url(article_url + '/' + tag_url + t.structured_url)
 				atts += " href='#{url}' class='menu_link'"
 
-			elsif menuOption.data_type == article_url && menuOption.option_id == 0
+			elsif menuOption.data_type == article_url && menuOption.option_id == 0 
+
 				url = site_url(article_url)
-				atts += " href='#{url}'"
+				atts += " href='#{url}' class='menu_link'"
+				blog = true
 
 			elsif menuOption.data_type == 'custom'
+
 				url = existingData['customlink']
 				atts += " href='#{url}' class='menu_link'"
+
 			end
 
 			atts = (atts[0..-2] + " #{existingData['class']}'") if !existingData['class'].blank?
-			atts = (atts[0..-2] + " active'") if url == request.original_url
+
+			if blog && request.original_url.include?(url)
+				atts = (atts[0..-2] + " active'") 	
+			else
+				atts = (atts[0..-2] + " active'") if url == request.original_url
+			end
+
 
 			atts
 

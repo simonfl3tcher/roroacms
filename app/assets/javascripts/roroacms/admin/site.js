@@ -22,10 +22,17 @@ app = (function() {
   };
   toggleMenuLeft = function() {
     $("#toggle-left").bind("click", function(e) {
+
+      if($(".sidebar").hasClass('manual') && $(window).width() < 767){
+        $(".sidebar").removeClass('manual').removeClass('sidebar-toggle');
+        $(".main-content-wrapper").removeClass('manual').removeClass("main-content-toggle-left");
+      } 
+
       if (!$(".sidebar-right").hasClass(".sidebar-toggle-right")) {
         $(".sidebar-right").removeClass("sidebar-toggle-right");
         $(".main-content-wrapper").removeClass("main-content-toggle-right");
       }
+
       $(".sidebar").toggleClass("sidebar-toggle");
       $(".main-content-wrapper").toggleClass("main-content-toggle-left");
       e.stopPropagation();
