@@ -9,6 +9,7 @@ require 'redcarpet'
 require 'twitter-bootstrap-rails'
 require 'pg'
 
+
 module Roroacms
 
   class << self
