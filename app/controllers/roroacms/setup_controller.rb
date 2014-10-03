@@ -56,6 +56,7 @@ module Roroacms
         if @admin.save
           Setting.save_data({setup_complete: 'Y'})
           clear_cache
+          session[:setup_complete] = true
           format.html { redirect_to admin_path, notice: I18n.t("controllers.admin.setup.general.success") }
         else
           format.html { render action: "administrator" }

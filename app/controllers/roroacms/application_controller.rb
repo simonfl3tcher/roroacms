@@ -105,7 +105,7 @@ module Roroacms
     # devise settings
 
     def after_sign_in_path_for(resource)
-      
+      session[:setup_complete] = nil
       set_sessions(session, current_user)
       admin_path
 
@@ -114,7 +114,7 @@ module Roroacms
     # check that the setup is complete if not redirect to the setup area
 
     def check_setup
-       redirect_to setup_index_path and return if Setting.get('setup_complete') != 'Y' && params[:controller] != 'roroacms/setup'
+       redirect_to setup_index_path and return if Setting.get('setup_complete') != 'Y' && params[:controller] != 'roroacms/setup' && session[:setup_complete].blank?
     end
 
     # add the home breadcrumb for the front end
