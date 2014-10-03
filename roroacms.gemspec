@@ -10,6 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["info@roroacms.co.uk"]
   spec.summary       = %q{A full Ruby On Rails CMS engine providing content management functionality for any Rails 4 application that is fully extendable and is completely boundless}
   spec.homepage      = "http://www.roroacms.co.uk"
+  spec.description   = %q{A full Ruby On Rails CMS engine that is built soley for the purpose of extensibility}
   spec.license       = "MIT"
   spec.post_install_message = "Thanks for installing RoroaCMS!"
 
@@ -20,7 +21,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rails", ">= 4.0.0", "< 5.0"
   spec.add_dependency "bcrypt-ruby", "~> 3.1", ">= 3.1.2"
-  spec.add_dependency "ransack", "~> 1.2"
   spec.add_dependency "kaminari", ">= 0.14.1", "< 0.16"
   spec.add_dependency "ancestry"
   spec.add_dependency "devise"
@@ -33,9 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "twitter-bootstrap-rails"
   spec.add_dependency "pg"
 
-  spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "guard"
   spec.add_development_dependency "rb-fsevent"
   spec.add_development_dependency "rspec"
-  spec.add_development_dependency "rake", "~> 10.0"
 end
