@@ -9,6 +9,7 @@ module Roroacms
 			rake 'roroacms:install:migrations'
 			rake 'db:migrate'
 			rake 'roroacms:db:seed'
+			rake 'db:seed'
 			puts 'You are all setup! run "rails s" to check out your roroacms platform'
 		end
 

@@ -105,7 +105,7 @@ module Roroacms
     # devise settings
 
     def after_sign_in_path_for(resource)
-      session[:setup_complete] = nil
+      
       set_sessions(session, current_user)
       admin_path
 
