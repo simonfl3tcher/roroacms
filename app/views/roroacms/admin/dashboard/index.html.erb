@@ -3,8 +3,12 @@
       <div class="col-md-4 col-sm-6">
           <div class="dashboard-tile detail tile-turquoise">
               <div class="content">
-                  <h1 class="text-left timer"><%= get_count_post('page') %></h1>
-                  <p><%= t("generic.pages") %></p>
+                  <h1 class="text-left timer"><%= @counts[:page] %></h1>
+                  <% if @counts[:page] > 1 %>
+                    <p><%= t("generic.pages") %></p>
+                  <% else %>
+                    <p><%= t("generic.page") %></p>
+                  <% end %>
               </div>
               <div class="icon"><i class="fa fa-files-o"></i>
               </div>
@@ -13,8 +17,12 @@
       <div class="col-md-4 col-sm-6">
           <div class="dashboard-tile detail tile-turquoise">
               <div class="content">
-                  <h1 class="text-left timer"><%= get_count_post('post') %></h1>
-                  <p><%= t("generic.articles") %></p>
+                  <h1 class="text-left timer"><%= @counts[:post] %></h1>
+                  <% if @counts[:post] > 1 %>
+                    <p><%= t("generic.articles") %></p>
+                  <% else %>
+                    <p><%= t("generic.article") %></p>
+                  <% end %>
               </div>
               <div class="icon"><i class="fa fa-file-text-o"></i>
               </div>
@@ -23,8 +31,12 @@
       <div class="col-md-4 col-sm-6">
           <div class="dashboard-tile detail tile-turquoise">
               <div class="content">
-                  <h1 class="text-left timer"><%= @comments.size %></h1>
-                  <p><%= t("generic.unseen_comments") %></p>
+                  <h1 class="text-left timer"><%= @counts[:comments] %></h1>
+                  <% if @counts[:comments] == 1 %>
+                    <p><%= t("generic.unseen_comment") %></p>
+                  <% else %>
+                    <p><%= t("generic.unseen_comments") %></p>
+                  <% end %>
               </div>
               <div class="icon"><i class="fa fa fa-comments"></i>
               </div>

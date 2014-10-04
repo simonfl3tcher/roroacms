@@ -93,6 +93,9 @@
               <%= f.label :post_visible, :class => "col-sm-3 control-label"  %>
               <div class="col-sm-6">
                 <%= f.check_box :post_visible, {}, 'N', 'Y'  %>
+                <a href="javascript:;" class="pop" data-trigger="hover" data-toggle="popover" data-content="<%= t('views.admin.generic.invisible_url', type: @post_type) %>" data-container="body" data-placement="top">
+                  <i class="fa fa-question-circle" ></i>
+                </a>
               </div>
               <div class="clearfix"></div>
             </div>
@@ -222,7 +225,9 @@
             <%= f.label :post_seo_is_disabled, :class => "col-sm-3 control-label"  %>
             <div class="col-sm-6">
               <%= f.check_box :post_seo_is_disabled, {}, 'Y', 'N'  %>
-              <small><%= t("views.admin.pages.new.tab_content.seo.seo_disabled_content") %></small>
+              <a href="javascript:;" class="pop" data-trigger="hover" data-toggle="popover" data-content="<%= t("views.admin.pages.new.tab_content.seo.seo_disabled_content") %>" data-container="body" data-placement="top">
+                  <i class="fa fa-question-circle" ></i>
+              </a>
             </div>
             <div class="clearfix"></div>
           </div>
@@ -231,7 +236,9 @@
             <%= f.label :post_seo_no_index, :class => "col-sm-3 control-label"  %>
             <div class="col-sm-6">
               <%= f.check_box :post_seo_no_index, {}, 'Y', 'N'  %>
-              <small><%= t("views.admin.pages.new.tab_content.seo.seo_no_index_content") %></small>
+              <a href="javascript:;" class="pop" data-trigger="hover" data-toggle="popover" data-content="<%= t("views.admin.pages.new.tab_content.seo.seo_no_index_content") %>" data-container="body" data-placement="top">
+                  <i class="fa fa-question-circle" ></i>
+              </a>
             </div>
             <div class="clearfix"></div>
           </div>
@@ -240,7 +247,9 @@
             <%= f.label :post_seo_no_follow, :class => "col-sm-3 control-label"  %>
             <div class="col-sm-6">
               <%= f.check_box :post_seo_no_follow, {}, 'Y', 'N'  %>
-              <small><%= t("views.admin.pages.new.tab_content.seo.seo_no_follow_content") %></small>
+              <a href="javascript:;" class="pop" data-trigger="hover" data-toggle="popover" data-content="<%= t("views.admin.pages.new.tab_content.seo.seo_no_follow_content") %>" data-container="body" data-placement="top">
+                  <i class="fa fa-question-circle" ></i>
+              </a>
             </div>
             <div class="clearfix"></div>
           </div>

@@ -22,7 +22,7 @@ module Roroacms
     def new
       # add breadcrumb and set title
       add_breadcrumb I18n.t("generic.add_new_user")
-      set_title(I18n.t("generic.profile"))
+      set_title(I18n.t("generic.add_new_user"))
 
       @admin = Admin.new
       @action = 'create'

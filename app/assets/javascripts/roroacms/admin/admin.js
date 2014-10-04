@@ -92,4 +92,7 @@ $(document).ready(function() {
     dTable.fnFilter($(this).val());
   });
   $('.tooltipState').tooltip({delay: {show:500, hide:100}});
+
+  $('.pop').popover();
+
 });

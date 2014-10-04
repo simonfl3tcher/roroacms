@@ -2168,8 +2168,16 @@ fieldset[disabled] .btn-warning.active {
   color: #8ecf67;
 }
 #login-container .error {
-  font-size: 12px;
   color: #F74E4D;
+  display: block;
+  font-size: 12px;
+  margin: 0 0 15px;
+  text-align: center;
+  padding:7px;
+}
+
+a.pop {
+  color:#5d5f63;
 }
 section#login-container div#error_explanation h2 {
   font-size: 12px;

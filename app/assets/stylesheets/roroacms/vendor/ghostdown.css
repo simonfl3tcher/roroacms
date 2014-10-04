@@ -275,6 +275,10 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 	background: #ffa;
 	background: rgba(255,255,0,0.4)
 }
+
+.rendered-markdown hr {
+	border-color:#6c7379 !important;
+}
 .CodeMirror span {
 *vertical-align:text-bottom
 }
