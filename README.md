@@ -14,23 +14,26 @@ I am currently working relentlessly on creating a good demo and documentation fo
 To get up and running with Roroacms in a new Rails application is simple. Just follow the
 instructions below and you'll be up and running in minutes.
 
-Roroacms works with Rails 4 onwards. You can add it to your Gemfile with:
+RoroaCMS works with Rails 4 onwards. To get up and running with RoroaCMS in a new Rails application just follow the instructions below and you'll be up and running in minutes:
 
 ```ruby
 gem 'roroacms'
-```
-
-Run the bundle command to install it.
-
-After you install Roroacms and add it to your Gemfile, you need to run the generator:
-
-```console
+bundle install
 rails generate roroacms:install
-```
+rake assets:clean
+rake assets:precompile
 
-After you have installed Roroacms start the server
 
-```console
+rails new my_web
+cd my_web
+echo "gem 'roroacms'
+bundle install
+rails generate roroacms:install
+
+If you want to go straight into production mode
+RAILS_ENV=production rake assets:clean
+RAILS_ENV=production rake assets:precompile
+
 rails server
 ```
 
