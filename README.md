@@ -61,5 +61,4 @@ Icons from [Font Awesome](http://fortawesome.github.io/Font-Awesome/)
 
 Project homepage: [http://roroacms.co.uk](http://roroacms.co.uk)
 
-
-Version: 2.0
+Version: 1.0
